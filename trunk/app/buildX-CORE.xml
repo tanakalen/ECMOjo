@@ -1,0 +1,634 @@
+<project name="Core Build file - Define init in subfile and include.">	
+  <target name="pre-init">          
+    <!-- Global Release time -->
+    <tstamp>
+      <format property="TSTAMP" pattern="HH:mm:ss"/>
+      <format property="MINUTESTAMP" pattern="HHmm"/>
+      <format property="DAYSTAMP" pattern="dd"/>
+      <format property="MONTHSTAMP" pattern="MM"/>
+      <format property="YEARSTAMP" pattern="yyyy" />
+    </tstamp>
+    <property name="date" value="${MONTHSTAMP}/${DAYSTAMP}/${YEARSTAMP}"/>
+    <property name="time" value="${TSTAMP}"/>
+    <property name="release.time" value="${YEARSTAMP}-${MONTHSTAMP}-${DAYSTAMP}.${MINUTESTAMP}"/>  	
+    <!-- Global directories -->
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="conf.dir" value="${basedir}/conf"/>
+    <property name="resource.dir" value="${basedir}/resource"/>
+    <property name="scenario.dir" value="${basedir}/scenario"/>
+    <property name="extra.dir" value="${basedir}/extra"/>
+    <property name="extra-special.dir" value="${basedir}/extra-special"/>
+    <property name="doc.dir" value="${basedir}/doc"/>
+    <property name="web.dir" value="${basedir}/web"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="lib.ant.dir" value="${lib.dir}/ant"/>
+    <property name="lib.project.dir" value="${lib.dir}/project"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="post-init" depends="init">          
+  	<!-- Global Test files -->
+    <property name="test.files" value="**/Test*"/>    
+    <!-- Global directories -->
+    <property name="build.dir" value="${basedir}/build/${subname}"/>
+    <property name="build.src.dir" value="${build.dir}/src"/>
+    <property name="build.dest.dir" value="${build.dir}/classes"/>
+    <property name="build.src_html.dir" value="${build.dir}/src_html"/>
+    <property name="build.api.dir" value="${build.dir}/api"/>
+    <property name="build.size.dir" value="${build.dir}/size_data"/>
+    <property name="build.test.dir" value="${build.dir}/test_output"/>        
+    <property name="build.library.dir" value="${build.dir}/library"/>
+    <property name="build.libconf.dir" value="${build.dir}/libconf"/>
+    <property name="build.app.dir" value="${build.dir}/application"/>
+    <property name="build.webstart.dir" value="${build.dir}/webstart"/>
+    <property name="build.obfuscate.dir" value="${build.dir}/obfuscate"/>
+    <property name="build.webapp.dir" value="${build.dir}/webapp"/>
+    <property name="build.war.dir" value="${build.dir}/war"/>
+  	<!-- Load additional ant tasks -->
+    <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
+    <!-- Jakarta-Tomcat (Catalina) - ant tasks -->
+    <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"    classpath="${lib.ant.dir}/catalina-ant.jar" />
+    <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask"    classpath="${lib.ant.dir}/catalina-ant.jar" />
+    <taskdef name="start"     classname="org.apache.catalina.ant.StartTask"     classpath="${lib.ant.dir}/catalina-ant.jar" />
+    <taskdef name="stop"      classname="org.apache.catalina.ant.StopTask"      classpath="${lib.ant.dir}/catalina-ant.jar" />
+    <taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask"  classpath="${lib.ant.dir}/catalina-ant.jar" />
+  </target>  
+  <!-- *********************************************************************** -->
+  <target name="clean" depends="post-init"
+          description="Delete build/ and misc other files.">
+    <delete dir="${build.dir}"/>
+    <!-- Delete backup files left by IDE and JRefactory. -->
+    <delete>
+      <fileset dir="${basedir}" defaultexcludes="no" includes="**/*~"/>
+      <fileset dir="${basedir}" includes="src/**/*.java.*"/>
+    </delete>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="eclipse-properties" if="eclipse.running">
+  	<!-- Use different eclipse compiler if eclipse is running -->
+    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="prepare" depends="post-init,eclipse-properties">
+    <!-- Prepare directories -->
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${build.src.dir}"/>
+    <mkdir dir="${build.dest.dir}"/>
+    <!-- Copy src files after touching the release file to update release. -->
+    <touch file="${release.file}"/>
+    <copy todir="${build.src.dir}" filtering="on">
+      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <fileset dir="${src.dir}">
+        <exclude name="**/*.class" />
+      </fileset>
+    </copy>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="compile" depends="prepare">
+    <!-- compile to dest directory -->
+    <javac srcdir="${build.src.dir}"
+           destdir="${build.dest.dir}"
+           nowarn="on">
+      <compilerarg value="-Xlint:deprecation"/>
+      <classpath>
+	      <fileset dir="${lib.project.dir}">
+	        <include name="**/*.jar"/>
+	      </fileset>
+      </classpath>
+    </javac>
+    <!-- copy xml (hibernate) files -->
+    <copy todir="${build.dest.dir}">
+      <fileset dir="${build.src.dir}">
+        <include name="**/hibernate.cfg.xml" />
+        <include name="**/*.hbm.xml" />
+        <include name="**/*.properties" />
+      </fileset>
+    </copy>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="checkstyle" depends="compile">
+    <taskdef resource="checkstyletask.properties" classpath="${lib.ant.dir}/checkstyle-all-4.2.jar"/>
+    <!-- checkstyle now: take out: <module name="RedundantThrows"/> because it crashes checkstyle. -->
+    <checkstyle config="${resource.dir}/Checkstyle/Checkstyle.xml">
+      <classpath>
+        <pathelement location="${build.dest.dir}"/>
+	      <fileset dir="${lib.project.dir}">
+	        <include name="**/*.jar"/>
+	      </fileset>
+      </classpath>
+      <fileset dir="${build.src.dir}">
+         <include name="**/*.java"/>
+      </fileset>
+    </checkstyle>
+  </target>  
+  <!-- *********************************************************************** -->
+  <target name="test" depends="checkstyle"
+          description="Run JUnit tests (classes whose name starts with Test) and generate a report.">
+    <mkdir dir="${build.test.dir}"/>
+		<!-- add scenario dir for testing -->
+    <copy todir="${build.test.dir}/scenario">
+      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <fileset dir="${scenario.dir}/write"/>
+    </copy>
+    <copy todir="${build.test.dir}/scenario" overwrite="true">
+      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <fileset dir="${scenario.dir}/write-over"/>
+    </copy>
+    <!-- Run the tests, which are all classes whose name starts with 'Test'. -->
+		<junit printsummary="yes" haltonfailure="no" dir="${build.test.dir}">
+		  <classpath>
+		    <pathelement location="${build.libconf.dir}/${name}-conf.jar"/>
+		    <pathelement location="${build.dest.dir}"/>
+		    <pathelement path="${lib.project.dir}"/>
+		  </classpath>
+		  <formatter type="xml"/>		
+		  <batchtest fork="yes" todir="${build.test.dir}">
+		    <fileset dir="${build.src.dir}">
+          <include name="${test.files}" />
+		    </fileset>
+		  </batchtest>
+		</junit>
+		<!-- Build report in HTML format. -->
+		<junitreport todir="${build.test.dir}">
+		  <fileset dir="${build.test.dir}">
+		    <include name="TEST-*.xml"/>
+		  </fileset>
+		  <report format="frames" todir="${build.test.dir}"/>
+		</junitreport>
+		<!-- remove scenario dir -->
+		<delete dir="${build.test.dir}/scenario"/>
+    <echo message="JUnit results in ${build.test.dir}/index.html" />
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="j2h" depends="checkstyle"
+          description="Create a html version of source code.">
+    <taskdef name="java2html" classname="com.java2html.Java2HTMLTask" classpath="${lib.ant.dir}/j2h.jar" />
+	<java2html title="Example" simple="no" tabsize="2" marginsize="2" header="true" footer="true" 
+	           destination="${build.src_html.dir}">
+		<fileset dir="${build.src.dir}" includes="**/*.java"/>
+	</java2html>
+    <echo message="j2h files can be found in ${build.src_html.dir}"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="locc" depends="compile" description="Compute the total size of the source code.">
+    <taskdef name="locc" classname="csdl.locc.tools.ant.LOCCTaskdef"
+                         classpath="${lib.ant.dir}/locc-all-5.1.jar"/>
+    <mkdir dir="${build.size.dir}"/>
+    <locc sizetype="javaline" outfile="locc-all.xml" outdir="${build.size.dir}" failOnError="yes">
+      <fileset dir="${build.src.dir}" includes="**/*.java"/>
+    </locc>
+    <locc sizetype="javaline" outformat="csv" outfile="locc-all.csv" outdir="${build.size.dir}" failOnError="yes">
+      <fileset dir="${build.src.dir}" includes="**/*.java"/>
+    </locc>
+    <echo message="Size info can be found in ${build.size.dir}"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="javadoc" depends="checkstyle"
+          description="Creates the JavaDoc API documentation.">
+    <mkdir dir="${build.api.dir}"/>
+    <!-- copy images -->
+    <copy todir="${build.api.dir}">
+      <fileset dir="${resource.dir}/overview" includes="images/*.jpg,images/*.gif"/>
+    </copy>
+    <!-- create javadoc -->
+    <javadoc packagenames="**.*"
+             classpath="${java.class.path}"
+             sourcepath="${build.src.dir}"
+             destdir="${build.api.dir}"
+             author="true"
+             version="true"
+             use="true"
+             package="true"
+             splitindex="true"
+             overview="${resource.dir}/overview/overview.html"
+             noindex="false"
+             windowtitle="${name} ${release.version} API"
+             doctitle="${name} ${release.version} API"/>
+    <echo message="Javadoc can be found in ${build.api.dir}"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="library" depends="checkstyle"
+  	      description="Creates the jar files containing all the java classes.">
+    <mkdir dir="${build.library.dir}"/>
+    <!-- The jar file of the project -->
+    <jar destfile="${build.library.dir}/${name}.jar">
+      <fileset dir="${build.dest.dir}">
+        <include name="**/*.class"/>
+        <include name="**/hibernate.cfg.xml" />
+        <include name="**/*.hbm.xml" />
+        <include name="**/*.properties" />
+        <exclude name="${test.files}"/>
+      </fileset>
+      <manifest><attribute name="Built-By" value="${author}"/></manifest>
+    </jar>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="libconf" depends="post-init"
+  	      description="Creates the jar files containing all the files in conf directory.">
+    <mkdir dir="${build.libconf.dir}"/>
+    <!-- Create temp dir to copy conf files first. -->
+    <mkdir dir="${build.libconf.dir}/temp"/>
+    <mkdir dir="${build.libconf.dir}/temp/conf"/>
+    <copy todir="${build.libconf.dir}/temp/conf">
+      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <fileset dir="${conf.dir}"/>
+    </copy>
+    <!-- Create conf jar -->
+    <jar destfile="${build.libconf.dir}/${name}-conf.jar">
+      <fileset dir="${build.libconf.dir}/temp"/>
+      <manifest><attribute name="Built-By" value="${author}"/></manifest>
+    </jar>
+    <!-- delete temp dir -->
+    <delete dir="${build.libconf.dir}/temp"/>  	
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="executable">
+    <!-- Convert path, depending on os -->
+  	<property name="os.target.name" value="windows"/>
+    <pathconvert targetos="${os.target.name}" property="java.class.path.absolute" >
+      <path>
+        <fileset dir="${structure.dir}/lib" includes="*.jar"/>
+      </path>
+    </pathconvert>
+    <pathconvert targetos="${os.target.name}" property="build.app.dir.absolute" >
+      <path location="${structure.dir}" />
+    </pathconvert>
+    <pathconvert targetos="${os.target.name}" property="java.lib.class.path">
+      <path path="${java.class.path.absolute}"/>
+      <map from="${build.app.dir.absolute}\" to=""/>
+    </pathconvert>
+    <!-- Create executable file (windows, unix or mac) use: -Dsun.java2d.noddraw=true -->
+    <echo file="${structure.dir}/${executable.file.name}.bat"
+          message="&quot;%JAVA_HOME%\jre\bin\java&quot; -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${java.lib.class.path} ${executable.run} ${executable.args}"/>   
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="webjnlp">
+  	<!-- create jnlp file -->
+  	<jnlp toFile="${structure.dir}/${executable.file.name}.jnlp"
+	      spec="1.0+" 
+	      encoding="utf-8"
+	      codebase="${webstart.url}/webstart"
+	      href="${executable.file.name}.jnlp">
+	  <information>
+	    <title>${webstart.title}</title>
+	    <vendor>${webstart.author}</vendor>
+	    <homepage href="${webstart.url}"/>
+	    <description>${webstart.description}</description>
+	    <icon href="webstart-logo.gif"/>
+	  </information>
+	  <security>
+	    <all_permissions/>
+	  </security>
+	  <resources>
+	    <j2se version="1.5+" href="http://java.sun.com/products/autodl/j2se" initial_heap_size="${executable.memory}M" max_heap_size="${executable.memory}M"/>
+	  	<jar href="${name}.jar"/>
+        <fileset dir="${structure.dir}/unpacked" includes="*.jar">
+          <exclude name="${name}.jar"/>
+	  	</fileset>
+	    <!-- <property name="sun.java2d.noddraw" value="true"/> -->
+	    <property name="webstart" value="true"/>
+	  	<property name="webstart.dir" value="${webstart.scenario.dir}"/>
+	  	<property name="webstart.extra.dir" value="${webstart.url}/webstart/extra"/>
+	  	<!-- Java3D extensions (Depending on Project if to be added) -->
+	  	<!-- <extension href="https://j3d-webstart.dev.java.net/release/java3d-1.3.2.jnlp"/> -->
+	  </resources>
+	  <application_desc main_class="${executable.run}">
+	    <argument>${executable.args}</argument>
+	  </application_desc>
+	</jnlp>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="obfuscate" depends="library"
+  	      description="Obfuscates files so they are not anymore readable."> 
+    <!-- Proguard code obfuscator -->
+    <mkdir dir="${build.obfuscate.dir}"/>
+  	<delete file="${build.obfuscate.dir}/${name}.jar"/> 	
+  	<taskdef resource="proguard/ant/task.properties" classpath="${lib.ant.dir}/proguard.jar" />
+  	<!-- Please note that [obfuscate="false"]: it's an open source project... -->
+  	<proguard printseeds="true" optimize="false" obfuscate="false"
+  	          printmapping="${resource.dir}/obfuscate/proguard-mapping-${name}-${release.version}-${release.time}.txt" 
+  	          defaultpackage="cg">
+  	  <!-- Specify the input jars, output jars, and library jars. -->
+  	  <injar  file="${build.library.dir}/${name}.jar"/>
+  	  <outjar file="${build.obfuscate.dir}/${name}.jar"/>
+  	  <libraryjar file="${java.home}/lib/rt.jar"/> 
+  	  <libraryjar file="${java.home}/lib/jsse.jar"/> <!-- maybe not needed in later releases? -->
+  	  <libraryjar file="${lib.project.dir}">
+        <fileset dir="${lib.project.dir}" includes="${library.files}"/>
+      </libraryjar>
+  	  <!-- Preserve all public applications. -->
+  	  <keepclasseswithmembers access="public">
+  	    <method access    ="public static"
+  	            type      ="void"
+  	            name      ="main"
+  	            parameters="java.lang.String[]" />
+  	  </keepclasseswithmembers>
+  	  <!-- Preserve all native method names and the names of their classes. -->
+  	  <keepclasseswithmembernames>
+  	    <method access="native" />
+  	  </keepclasseswithmembernames>
+  	  <!-- Preserve custom Java Swing UI elements. -->
+      <keepclassmembers extends="javax.swing.plaf.ComponentUI">
+        <method access="public static"
+                type="javax.swing.plaf.ComponentUI"
+                name="createUI"
+                parameters="javax.swing.JComponent" />
+      </keepclassmembers>
+      <!-- Enums need to be preserved, as of Java 5.0 they are self-modifying! -->
+      <keepclassmembers extends="java.lang.Enum">
+        <method access="public static"
+                type="**[]"
+                name="values"
+                parameters="" />
+        <method access="public static"
+                type="**"
+                name="valueOf"
+                parameters="java.lang.String" />
+      </keepclassmembers>
+  	  <!-- Explicitly preserve all serialization members. The Serializable
+  	       interface is only a marker interface, so it wouldn't save them.
+  	       You can comment this out if your library doesn't use serialization.
+  	       If your code contains serializable classes that have to be backward
+  	       compatible, please refer to the manual. -->
+      <!-- NOT NEEDED FOR THIS PROJECT  
+        <keepnames implements="java.io.Serializable"/>
+  	  -->
+  	  <keepclassmembers implements="java.io.Serializable">
+  	      <field  access    ="final"
+  	              type      ="long"
+  	              name      ="serialVersionUID" />
+  	  	  <field  access    ="!static !transient"/>
+  	      <method access    ="private"
+  	              type      ="void"
+  	              name      ="writeObject"
+  	              parameters="java.io.ObjectOutputStream" />
+  	      <method access    ="private"
+  	              type      ="void"
+  	              name      ="readObject"
+  	              parameters="java.io.ObjectOutputStream" />
+  	      <method type      ="java.lang.Object"
+  	              name      ="writeReplace"
+  	              parameters="" />
+  	      <method type      ="java.lang.Object"
+  	              name      ="readResolve"
+  	              parameters="" />
+  	  </keepclassmembers>
+  	</proguard> 
+    <!-- Sign all the jars (Eclipse problem: Preferences>Java>Installed JRE: Put JDK instead of JRE directory) -->
+	  <signjar alias="${keystore.alias}" keystore="${keystore.file}" storepass="${keystore.storepass}">
+      <fileset dir="${build.obfuscate.dir}" includes="*.jar"/>
+    </signjar>
+    <echo message="Obfuscated and signed jar files can be found in ${build.obfuscate.dir}"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="application" depends="library, libconf"
+  	      description="Create Microsoft Windows executable(s) of the software for testing.">
+    <!-- copy external jar files -->
+    <copy todir="${build.app.dir}/lib">
+      <fileset dir="${lib.project.dir}" includes="${library.files}"/>
+    </copy>
+  	<!-- copy project jar files -->
+    <copy todir="${build.app.dir}/lib">
+      <fileset dir="${build.library.dir}"/>
+    </copy>
+    <copy todir="${build.app.dir}/lib">
+      <fileset dir="${build.libconf.dir}"/>
+    </copy>
+    <!-- copy scenario directory -->
+    <copy todir="${build.app.dir}/scenario">
+      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <fileset dir="${scenario.dir}/write"/>
+    </copy>
+    <copy todir="${build.app.dir}/scenario" overwrite="true">
+      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <fileset dir="${scenario.dir}/write-over"/>
+    </copy>
+    <!-- copy extra directory -->
+    <copy todir="${build.app.dir}/extra" overwrite="true">
+      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <fileset dir="${extra.dir}"/>
+    </copy>
+    <copy todir="${build.app.dir}/extra" overwrite="true">
+      <fileset dir="${extra-special.dir}/${specialdir}"/>
+    </copy>
+    <!-- copy java package - to run the software -->
+    <!--
+      <copy todir="${build.app.dir}/java">
+        <fileset dir="${java.home}"/>   Java from JAVA_HOME
+      </copy>
+    -->
+    <!-- copy dlls -->
+    <!--
+      <copy todir="${build.app.dir}/java/bin">
+        <fileset dir="${lib.project.dir}/bin/windows"/>
+      </copy>
+    -->
+    <!-- Create executable files. -->
+  	<for list="${executables.list}" param="executable" delimiter="+">
+  	  <sequential>
+  	  	<propertyregex property="exe.file" select="\1" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<propertyregex property="exe.memory" select="\2" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<propertyregex property="exe.class" select="\3" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<propertyregex property="exe.args" select="\4" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<antcall target="executable">
+  	      <param name="executable.file.name" value="${exe.file}"/>
+  	      <param name="executable.memory" value="${exe.memory}"/>
+  	      <param name="executable.run" value="${exe.class}"/>
+  	      <param name="executable.args" value="${exe.args}"/>
+          <param name="structure.dir" value="${build.app.dir}"/>
+  	    </antcall>
+  	  </sequential>
+  	</for>
+    <echo message="The ${name} Application can be found in ${build.app.dir}"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="webstart" depends="obfuscate, libconf"
+          description="Creates Java Web Start executable(s).">
+  	<!-- Create scenario.zip and put it into jar -->
+  	<delete file="${build.webstart.dir}/${name}-scenario.jar"/>
+    <mkdir dir="${build.webstart.dir}/scenario"/>
+    <copy todir="${build.webstart.dir}/scenario/write">
+      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <fileset dir="${scenario.dir}/write"/>
+    </copy>
+    <copy todir="${build.webstart.dir}/scenario/write-over">
+      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <fileset dir="${scenario.dir}/write-over"/>
+    </copy>
+    <zip destfile="${build.webstart.dir}/scenario.zip" 
+         basedir="${build.webstart.dir}/scenario"
+         includes="**/*" />
+    <delete dir="${build.webstart.dir}/scenario"/>  	
+    <jar destfile="${build.webstart.dir}/${name}-scenario.jar">
+      <fileset dir="${build.webstart.dir}">
+    	<include name="scenario.zip"/>
+      </fileset>
+      <manifest><attribute name="Built-By" value="${author}"/></manifest>
+    </jar>  	
+  	<delete file="${build.webstart.dir}/scenario.zip"/>
+    <!-- copy extra directory -->
+    <copy todir="${build.webstart.dir}/extra" overwrite="true">
+      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <fileset dir="${extra.dir}"/>
+    </copy>
+    <copy todir="${build.webstart.dir}/extra" overwrite="true">
+      <fileset dir="${extra-special.dir}/${specialdir}"/>
+    </copy>
+    <!-- Copy external jar files -->
+    <copy todir="${build.webstart.dir}">
+      <fileset dir="${lib.project.dir}" includes="${library.files}" excludes="${webstart.files.exclude}"/>
+    </copy>
+    <!-- Copy project jar files -->
+    <copy todir="${build.webstart.dir}">
+      <fileset dir="${build.obfuscate.dir}"/>
+    </copy>
+    <copy todir="${build.webstart.dir}">
+      <fileset dir="${build.libconf.dir}"/>
+    </copy>  
+    <!-- Copy info -->
+    <copy todir="${build.webstart.dir}">
+      <fileset dir="${doc.dir}" includes="*.rss2"/>
+    </copy>  
+    <!-- repack all jars -->
+    <delete dir="${build.webstart.dir}/packed"/>  	
+    <delete dir="${build.webstart.dir}/unpacked"/>  	
+    <mkdir dir="${build.webstart.dir}/packed"/>
+    <mkdir dir="${build.webstart.dir}/unpacked"/>
+    <taskdef name="pack200" classname="com.sun.tools.apache.ant.pack200.Pack200Task" classpath="${lib.ant.dir}/Pack200Task.jar"/>
+    <for param="jarpath">
+      <fileset dir="${build.webstart.dir}" includes="*.jar" />
+      <sequential>
+	    <propertyregex override="yes"
+	      property="pack.jar" input="@{jarpath}"
+	      regexp=".*\\([^\\]*)\.jar" select="\1.jar"/>
+        <pack200 src="${build.webstart.dir}/${pack.jar}" destfile="${build.webstart.dir}/unpacked/${pack.jar}" repack="true" />
+      </sequential>
+    </for>
+    <delete>
+	  <fileset dir="${build.webstart.dir}" includes="*.jar" />
+	</delete>
+    <!-- Sign all the jars (Eclipse problem: Preferences>Java>Installed JRE: Put JDK instead of JRE directory) -->
+	<signjar alias="${keystore.alias}" keystore="${keystore.file}" storepass="${keystore.storepass}">
+      <fileset dir="${build.webstart.dir}/unpacked" includes="*.jar"/>
+    </signjar>
+    <!-- Pack200: final pack -->
+    <for param="jarpath">
+      <fileset dir="${build.webstart.dir}/unpacked" includes="*.jar" />
+      <sequential>
+	    <propertyregex override="yes"
+	      property="pack.jar" input="@{jarpath}"
+	      regexp=".*\\([^\\]*)\.jar" select="\1.jar"/>
+        <pack200 src="${build.webstart.dir}/unpacked/${pack.jar}" destfile="${build.webstart.dir}/packed/${pack.jar}.pack.gz" gzipoutput="true" />
+        <echo file="${build.webstart.dir}/${pack.jar}.var">URI: packed/${pack.jar}.pack.gz
+Content-Type: x-java-archive
+Content-Encoding: pack200-gzip
+
+URI: unpacked/${pack.jar}
+Content-Type: x-java-archive
+        </echo>
+      </sequential>
+    </for>
+    <copy file="${resource.dir}/webstart/.htaccess" todir="${build.webstart.dir}"/>
+    <!-- Copy logo and required runtime version for installer -->
+    <copy file="${resource.dir}/webstart/webstart-logo.gif" todir="${build.webstart.dir}"/>
+    <copy file="${resource.dir}/webstart/RequiredWebstartRunner.version" todir="${build.webstart.dir}"/>
+    <!-- Create jnlp files for web start. -->
+    <taskdef classpath="${lib.ant.dir}/roxes-ant-tasks-1.2-2004-01-30.jar" resource="com/roxes/tools/ant/taskdefs.properties"/>  
+  	<for list="${executables.list}" param="executable" delimiter="+">
+  	  <sequential>
+  	  	<propertyregex property="exe.file" select="\1" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<propertyregex property="exe.memory" select="\2" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<propertyregex property="exe.class" select="\3" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<propertyregex property="exe.args" select="\4" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<antcall target="webjnlp">
+  	      <param name="executable.file.name" value="${exe.file}"/>
+  	      <param name="executable.memory" value="${exe.memory}"/>
+  	      <param name="executable.run" value="${exe.class}"/>
+  	      <param name="executable.args" value="${exe.args}"/>
+          <param name="structure.dir" value="${build.webstart.dir}"/>
+  	    </antcall>
+  	  </sequential>
+  	</for>  	
+    <!-- Copy .html for applet. -->
+    <path id="applet.class.path">
+      <fileset dir="${build.webstart.dir}/unpacked" includes="*.jar" />
+	  </path>	
+	  <pathconvert property="applet.class.path.property" refid="applet.class.path" pathsep=",">
+	    <mapper type="flatten"/>
+	  </pathconvert>
+    <copy file="${resource.dir}/webstart/applet.inc" todir="${build.webstart.dir}" overwrite="true">
+      <filterset>                                
+        <filter token="applet.class.main" value="${prg.classfile}"/>
+        <filter token="applet.class.codebase" value="${webstart.url}/webstart/unpacked"/>
+        <filter token="applet.class.archive" value="${applet.class.path.property}"/>
+        <filter token="applet.param.width" value="800"/>
+        <filter token="applet.param.height" value="600"/>
+        <filter token="applet.class.image" value="applet-loading.gif"/>
+        <filter token="applet.class.boxmessage" value="Loading ECMOjo..."/>
+        <filter token="applet.class.args" value="noargs"/>
+        <filter token="applet.class.webstart.dir" value="${webstart.scenario.dir}"/>
+        <filter token="applet.class.webstart.extra.dir" value="${webstart.url}/webstart/extra"/>
+      </filterset>
+    </copy>
+    <copy todir="${build.webstart.dir}">
+      <fileset dir="${resource.dir}/webstart" includes="jquery*,applet*"/>
+    </copy>  
+	  <!-- Output info -->
+    <echo message="The ${name} Web Start Application can be found in ${build.webstart.dir}"/>  </target>
+  <!-- *********************************************************************** -->
+  <target name="warfile" depends="library, libconf"
+          description="Jakarta *.war File Creator.">
+    <mkdir dir="${build.webapp.dir}"/>
+    <!-- copy web files and WEB-INF stuff -->
+    <copy todir="${build.webapp.dir}">
+      <fileset dir="${web.dir}"/>
+    </copy>
+    <!-- Copy external jar files -->
+    <mkdir dir="${build.webapp.dir}/WEB-INF/lib"/>
+    <copy todir="${build.webapp.dir}/WEB-INF/lib">
+      <fileset dir="${lib.project.dir}" includes="${library.files}" excludes="servlet-api.jar"/>
+    </copy>
+    <!-- Copy project jar files -->
+    <copy todir="${build.webapp.dir}/WEB-INF/lib">
+      <fileset dir="${build.library.dir}"/>
+    </copy>
+    <copy todir="${build.webapp.dir}/WEB-INF/lib">
+      <fileset dir="${build.libconf.dir}"/>
+    </copy>
+    <!-- Build war file -->
+    <mkdir dir="${build.war.dir}"/>
+    <delete file="${build.war.dir}/${name}.war"/>
+    <jar jarfile="${build.war.dir}/${name}.war">
+      <fileset dir="${build.webapp.dir}" includes="**"/>
+    </jar>  
+    <echo message="The ${name}.war file can be found in ${build.war.dir}"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="webapp-reload" description="webapp: Reloads the Web Application" depends="post-init">
+      <reload url="${webapp.manager.url}" username="${webapp.username}" password="${webapp.password}" path="/${webapp.name}"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="webapp-deploy" description="webapp: Deploys the Web Application" depends="warfile">
+      <deploy url="${webapp.manager.url}" username="${webapp.username}" password="${webapp.password}" path="/${webapp.name}"
+              war="${build.war.dir}/${name}.war"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="webapp-undeploy" description="webapp: Undeploys the Web Application" depends="post-init">
+      <undeploy url="${webapp.manager.url}" username="${webapp.username}" password="${webapp.password}" path="/${webapp.name}"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <!-- Fix for redeploy/file lock problem (ehcache-1.1.jar):
+       Edit %CATALINA_HOME%\conf\context.xml. Find the root <Context> and add these two attributes:
+       <Context antiJARLocking="true" antiResourceLocking="true"> -->
+  <target name="webapp-redeploy" description="webapp: Redeploys the Web Application" depends="webapp-undeploy,webapp-deploy">
+      <!-- does undeploy + deploy (webapp needs to be deployed beforehand) -->
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="webapp-start" description="webapp: Start the Web Application" depends="post-init">
+      <start url="${webapp.manager.url}" username="${webapp.username}" password="${webapp.password}" path="/${webapp.name}"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="webapp-stop" description="webapp: Stop the Web Application" depends="post-init">
+      <stop url="${webapp.manager.url}" username="${webapp.username}" password="${webapp.password}" path="/${webapp.name}"/>
+  </target>
+</project>
+
