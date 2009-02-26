@@ -1,0 +1,9 @@
+<project name="ECMO App" default="application">	
+  <!-- *********************************************************************** -->
+  <target name="globals">  
+  	<!-- Globals for projects -->
+    <property name="global.release.version" value="2.1.0a"/>
+  </target>	
+  <!-- *********************************************************************** -->
+</project>
+
