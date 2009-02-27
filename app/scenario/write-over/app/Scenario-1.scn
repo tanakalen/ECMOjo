@@ -1,0 +1,24 @@
+1
+
+# Scenario Information
+name = Scenario 1
+desc = VA ECMO hour 84 (d3.5) for 5 kg LGA infant with MAS. Improving pulmonary function. Muscle relaxation was discontinued soon after decannulation and infant is sedated with morphine sulfate infusion; however, he is easily agitated. Change of shift is occurring and the environmental noise has increased.
+
+# Goal Information
+goal = Baseline
+time = 300
+
+# Baseline Values
+baseline-bleeding = false;
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+
+# Patient Information
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
+patient-heart-function = good
+patient-bleeding = false
+
+# Heater
+heater-temperature = 37

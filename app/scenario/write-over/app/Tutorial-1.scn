@@ -1,0 +1,31 @@
+1
+
+# Scenario Information
+name = Tutorial 1
+desc = Run the tutorial for an introduction of ECMOjo. 
+
+# Goal Information
+goal = Tutorial
+tutorial-item1-text = Welcome to the ECMOjo component tutorial. Let us explain the basic ECMO components to you.
+tutorial-item1-trigger = N/A
+tutorial-item2-text = Task 1: Click on the pump.
+tutorial-item2-trigger = Action:View:PumpComponent
+tutorial-item3-text = Task 2: Increase the flow.
+tutorial-item3-trigger = Action:Pump
+tutorial-item4-text = Congratulations, you successfully completed the tutorial!
+tutorial-item4-trigger = N/A
+
+# Baseline Values
+baseline-bleeding = false;
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+
+# Patient Information
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
+patient-heart-function = good
+patient-bleeding = false
+
+# Heater
+heater-temperature = 37

@@ -1,0 +1,35 @@
+edu.hawaii.jabsom.tri.ecmo.app.ECMOApp -> edu.hawaii.jabsom.tri.ecmo.app.ECMOApp:
+    void main(java.lang.String[]) -> main
+edu.hawaii.jabsom.tri.ecmo.app.ECMOPanel -> ao.i:
+king.lib.access.Access -> ao.f:
+    king.lib.access.Access access -> a
+    void init() -> a
+king.lib.access.AccessApplication -> ao.b:
+    boolean browserInitDone -> a
+king.lib.access.AccessException -> ao.e:
+king.lib.access.AccessWebstart -> ao.d:
+    boolean browserInitDone -> a
+    java.lang.String scenarioDir -> b
+    java.lang.String extraDir -> c
+    java.lang.String extraRemoteDir -> d
+    java.lang.String getScenarioDir() -> b
+king.lib.access.Hookup -> ao.a:
+    javax.swing.JPanel trackerComponent -> a
+king.lib.access.ResourceHookup -> ao.j:
+    king.lib.access.ResourceHookup resourceAccess -> a
+    java.lang.ClassLoader classLoader -> b
+    king.lib.access.ResourceHookup getInstance() -> a
+    java.io.InputStream getInputStream(java.lang.String) -> a
+king.lib.access.WebstartRunner -> king.lib.access.WebstartRunner:
+    void run(java.lang.String,int) -> a
+    void main(java.lang.String[]) -> main
+king.lib.out.Error -> ao.g:
+    king.lib.out.OutputUnit outputUnit -> a
+    void out(java.lang.Exception) -> a
+king.lib.out.ErrorOutputUnit -> ao.c:
+    void formattedOut(java.lang.String) -> a
+king.lib.out.OutputUnit -> ao.h:
+    boolean showTime -> a
+    void out(java.lang.String) -> b
+    void out(java.lang.Exception) -> a
+    void formattedOut(java.lang.String) -> a

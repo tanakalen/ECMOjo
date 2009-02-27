@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>    
+<head>
+  <title>ECMOjo Applet</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script type="text/javascript" src="jquery-1.2.5.min.js"></script>
+</head>    
+<body bgcolor="#ffffff">
+  <center>
+    <font size="3" color="#000000" face="Arial"><b>ECMOjo Applet</b></font><br>
+
+    <div id="applet_location" style="width: 800px; border: 1px solid #000000;"><img id="applet_placeholder" src="applet-placeholder.gif" style="cursor: pointer;"></div>
+    <script type="text/javascript">
+      $("#applet_placeholder").click(function() {
+        $("#applet_placeholder").attr("src", "applet-loading.gif");
+        $("#applet_location").load("applet.inc");
+      });
+    </script>
+  
+  </center>
+</body>
+</html>
