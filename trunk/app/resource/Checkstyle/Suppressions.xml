@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.0//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+
+<!--
+  Suppressions on what not to check.
+-->
+
+<suppressions>
+    <!-- not used yet because not yet supported by Eclipse as of April 2005 -->
+</suppressions>
+
+

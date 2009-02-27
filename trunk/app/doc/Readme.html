@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Readme</title>
+  </head>
+  <body>
+    <h1 align="center">Readme</h1>
+    The project has the following directories:
+    <ul>
+      <li><strong>build</strong> - Created during execution of ant. Contains
+        <em>library</em>, <em>application</em>, <em>webstart</em>,
+        <em>obfuscate</em> if the Ant core tasks are executed.
+      <li><strong>conf</strong> - Configuration files which will not be
+          altered when the program is running.
+      <li><strong>data</strong> - Some data needed to create the software.
+      <li><strong>doc</strong> - Developer documentation. 
+      <li><strong>lib</strong> - Library files of the project.
+      <li><strong>resource</strong> - Resources needed during the build of the
+          software.
+      <li><strong>scenario</strong> - Scenario files, that might be altered
+          during program execution.
+      <li><strong>src</strong> - Contains all the java source files.
+      <li><strong>web</strong> - Contains all the web project related web files.
+    </ul>
+    <p>
+    The project's And build.xml file consists of the following tasks:
+    <ul>
+      <li>Core Tasks (not all tasks apply - depending on project):
+        <ul>
+          <li><strong>application</strong> - Builds the application of the project.
+          <li><strong>webstart</strong> - Builds the Java Web Start of the project.
+          <li><strong>webapp-*</strong> - To deploy and undeploy a web application (.war).
+          <li><strong>library</strong> - Builds the library jar file of the project.
+          <li><strong>libconf</strong> - Builds the jar file for the conf directory.
+          <li><strong>obfuscate</strong> - Obfuscates and signs the library jar file of the project.
+          <li><strong>warfile</strong> - Builds the web application .war file to deploy in a web server.
+        </ul>
+      <li>Maintenance Tasks:
+        <ul>
+          <li><strong>clean</strong> - Cleans project from all redundant files.
+          <li><strong>test</strong> - Executes all the test cases to check if
+              the software works as required.
+        </ul>
+      <li>Documentation Tasks:
+        <ul>
+          <li><strong>javadoc</strong> - Creates the javadoc of the software.
+          <li><strong>j2h</strong> - Creates the HTML version of the Java source
+              files.
+          <li><strong>size</strong> - Returns the project size.
+        </ul>
+    </ul>
+  </body>
+</html>
