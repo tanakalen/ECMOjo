@@ -1,0 +1,1 @@
+keytool -genkey -keystore keystore -keyalg rsa -dname "CN=ECMO Project, OU=Telehealth Research Institute, O=John A. Burns School of Medicine, L=Honolulu, ST=HI,C=US" -alias kalias -validity 3650 -keypass kpassword -storepass kpassword
