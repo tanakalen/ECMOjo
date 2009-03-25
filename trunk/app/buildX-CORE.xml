@@ -243,7 +243,12 @@
   <!-- *********************************************************************** -->
   <target name="executable">
     <!-- Convert path, depending on os -->
-  	<property name="os.target.name" value="windows"/>
+  	<condition property="os.target.name" value="windows">
+  		<os family="windows"/>
+  	</condition>
+  	<condition property="os.target.name" value="unix">
+  		<os family="unix"/>
+  	</condition>
     <pathconvert targetos="${os.target.name}" property="java.class.path.absolute" >
       <path>
         <fileset dir="${structure.dir}/lib" includes="*.jar"/>
@@ -256,9 +261,16 @@
       <path path="${java.class.path.absolute}"/>
       <map from="${build.app.dir.absolute}\" to=""/>
     </pathconvert>
+  	<condition property="jreloc" value="&quot;%JAVA_HOME%\jre\bin\java&quot;">
+  		<os family="windows"/>
+  	</condition>
+  	<condition property="jreloc" value="java">
+  	  	<os family="unix"/>
+  	</condition>
     <!-- Create executable file (windows, unix or mac) use: -Dsun.java2d.noddraw=true -->
     <echo file="${structure.dir}/${executable.file.name}.bat"
-          message="&quot;%JAVA_HOME%\jre\bin\java&quot; -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${java.lib.class.path} ${executable.run} ${executable.args}"/>   
+          message="${jreloc} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${java.lib.class.path} ${executable.run} ${executable.args}"/>
+  	<chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx"/>
   </target>
   <!-- *********************************************************************** -->
   <target name="webjnlp">
