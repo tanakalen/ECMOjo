@@ -25,7 +25,7 @@ public class PhysiologicMonitorComponent extends Component {
    * @return the mean blood pressure.
    */
   public double getMeanBloodPressure() {
-    return diastolicBloodPressure + ((systolicBloodPressure + diastolicBloodPressure) / 3);
+    return ((systolicBloodPressure + 2*diastolicBloodPressure) / 3);
   }
 
   /**
