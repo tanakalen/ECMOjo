@@ -39,6 +39,8 @@ public abstract class DefaultDialog extends AbstractDialog {
     JPanel contentPane = new JPanel() {
       @Override
       protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
         // set antialiased text
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -51,7 +53,7 @@ public abstract class DefaultDialog extends AbstractDialog {
         g.setFont(g.getFont().deriveFont(Font.BOLD, 20f));
         g.drawString(getTitle(), 35, 27);
         
-        super.repaint(); // lt_add: displays dialog for mac jdk 1.5
+        // Is this needed? super.repaint(); // lt_add: displays dialog for mac jdk 1.5
       }
     };
     setContentPane(contentPane);

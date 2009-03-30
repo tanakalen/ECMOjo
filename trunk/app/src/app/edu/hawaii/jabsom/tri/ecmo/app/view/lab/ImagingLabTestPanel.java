@@ -177,9 +177,10 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
             ImagingLabTest labTest = (ImagingLabTest)getCellEditorValue();
             Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
             JLabel imageLabel = new JLabel(new ImageIcon(image));
+            imageLabel.setSize(image.getWidth(null), image.getHeight(null));
             
             // open dialog           
-            imageDialog = new AbstractDialog(viewButton) {
+            imageDialog = new AbstractDialog(ImagingLabTestPanel.this) {
               // not used
             };
             imageDialog.getContentPane().add(imageLabel);
