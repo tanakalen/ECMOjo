@@ -23,27 +23,27 @@ public class HematologyLabTest extends LabTest {
   private double ptt;
   /** The fibrinogen in mg/dl [0, 1000]. */
   private double fibrinogen;
-  /** The fsp (fibrin split products) in mcg/ml [0, 25]. */
-  private double fsp;
+//  /** The fsp (fibrin split products) in mcg/ml [0, 25]. */ // Mark wants to delete
+//  private double fsp;
   
-  
-  /**
-   * Returns the fsp (fibrin split products).
-   *
-   * @return  The fsp (fibrin split products).
-   */
-  public double getFsp() {
-    return fsp;
-  }
-
-  /**
-   * Sets the fsp (fibrin split products).
-   *
-   * @param fsp  The fsp (fibrin split products) to set.
-   */
-  public void setFsp(double fsp) {
-    this.fsp = fsp;
-  }
+// Mark wants to delete  
+//  /**
+//   * Returns the fsp (fibrin split products).
+//   *
+//   * @return  The fsp (fibrin split products).
+//   */
+//  public double getFsp() {
+//    return fsp;
+//  }
+//
+//  /**
+//   * Sets the fsp (fibrin split products).
+//   *
+//   * @param fsp  The fsp (fibrin split products) to set.
+//   */
+//  public void setFsp(double fsp) {
+//    this.fsp = fsp;
+//  }
 
   /**
    * Returns the fibrinogen.

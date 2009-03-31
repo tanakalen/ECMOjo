@@ -64,8 +64,8 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
         return size + 1;
       }
       public int getRowCount() {
-        // hematology has 8 values!
-        return 8;
+        // hematology has 7 values! (Mark wants FSP deleted)
+        return 7;
       }
       public String getColumnName(int col) {
         if (col == 0) {
@@ -87,18 +87,16 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
             case 0:
               return "Fibrinogen";
             case 1:
-              return "Fsp";
-            case 2:
               return "Hct";
-            case 3:
+            case 2:
               return "Hgb";
-            case 4:
+            case 3:
               return "Platelets";
-            case 5:
+            case 4:
               return "Pt";
-            case 6:
+            case 5:
               return "Ptt";
-            case 7:
+            case 6:
               return "Wbc";              
             default:
               // error condition
@@ -112,18 +110,16 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
               case 0:
                 return ((HematologyLabTest)component.getResults().get(size - col)).getFibrinogen();
               case 1:
-                return ((HematologyLabTest)component.getResults().get(size - col)).getFsp();
-              case 2:
                 return ((HematologyLabTest)component.getResults().get(size - col)).getHct();
-              case 3:
+              case 2:
                 return ((HematologyLabTest)component.getResults().get(size - col)).getHgb();
-              case 4:
+              case 3:
                 return ((HematologyLabTest)component.getResults().get(size - col)).getPlatelets();
-              case 5:
+              case 4:
                 return ((HematologyLabTest)component.getResults().get(size - col)).getPt();
-              case 6:
+              case 5:
                 return ((HematologyLabTest)component.getResults().get(size - col)).getPtt();
-              case 7:
+              case 6:
                 return ((HematologyLabTest)component.getResults().get(size - col)).getWbc();                
               default:
                 // error condition
@@ -146,8 +142,6 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
                 return "N/A";
               case 6:
                 return "N/A";
-              case 7:
-                return "N/A";                
               default:
                 // error condition
                 return null;
