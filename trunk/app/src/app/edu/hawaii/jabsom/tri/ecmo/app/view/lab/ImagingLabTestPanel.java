@@ -191,7 +191,10 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
             contentPane.add(imageLabel);
             
             imageDialog.setContentPane(contentPane);
-            imageDialog.setComponentZOrder(contentPane, 1); // lt add: Mac fix for z-order
+            if ((System.getProperty("os.name").equals("Mac OS X")) 
+              && (System.getProperty("os.version").startsWith("10.4"))) {
+              imageDialog.setComponentZOrder(contentPane, 1); // lt add: Mac fix for z-order
+            }
             imageDialog.setUndecorated(true);
             imageDialog.setSize(700, 500);
             imageDialog.pack();
