@@ -22,7 +22,7 @@ import java.util.Calendar;
 
 import javax.swing.JFrame;
 
-import edu.hawaii.jabsom.tri.ecmo.app.gui.plaf.GameLookAndFeel;
+//import edu.hawaii.jabsom.tri.ecmo.app.gui.plaf.GameLookAndFeel;
 import edu.hawaii.jabsom.tri.ecmo.app.state.LoadState;
 import edu.hawaii.jabsom.tri.ecmo.app.state.StateMachine;
 
@@ -64,10 +64,23 @@ public final class ECMOApp extends JApplet {
     
     // set look and feel
     try {
-      UIManager.setLookAndFeel(new GameLookAndFeel());      
+      //UIManager.setLookAndFeel(new GameLookAndFeel());
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); // lt_add: broken mac LAF
     }
     catch (UnsupportedLookAndFeelException e) {
       Error.out(e);
+    }
+    catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    catch (InstantiationException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    catch (IllegalAccessException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
 
     // load configuration
