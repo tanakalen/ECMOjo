@@ -143,7 +143,7 @@ public class ManagerPanel extends JPanel {
     java.awt.Component[] components = getComponents();
     for (java.awt.Component component: components) {
       if (componentType.isAssignableFrom(component.getClass())) {
-        setComponentZOrder(component, getComponentCount() - 1);
+//        setComponentZOrder(component, getComponentCount() - 1); // Cycles once, TubeComp set to 19
         return;
       }
     }
@@ -158,6 +158,6 @@ public class ManagerPanel extends JPanel {
     super.paintComponent(g);
     
     // draws the image as background
-    g.drawImage(background, 0, 0, this);
+    g.drawImage(background, 0, 0, this);    
   }
 }

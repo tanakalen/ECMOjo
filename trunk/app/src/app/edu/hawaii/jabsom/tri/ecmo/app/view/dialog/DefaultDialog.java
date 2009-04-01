@@ -32,15 +32,12 @@ public abstract class DefaultDialog extends AbstractDialog {
    
     // set look
     setUndecorated(true);
-    //setBackground(new Color(0, 0, 0, 0)); // lt_add: Mac OS X specific setting for transparency
 
     // set content pane
     final Image backgroundImage = ImageLoader.getInstance().getImage("conf/gui/dialog.png");
     JPanel contentPane = new JPanel() {
       @Override
       protected void paintComponent(Graphics g) {
-        //super.paintComponent(g);
-        
         // set antialiased text
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -52,10 +49,9 @@ public abstract class DefaultDialog extends AbstractDialog {
         g.setColor(Color.BLACK);
         g.setFont(g.getFont().deriveFont(Font.BOLD, 20f));
         g.drawString(getTitle(), 35, 27);
-        
-        super.repaint(); // lt_add: displays dialog for mac jdk 1.5
       }
     };
     setContentPane(contentPane);
+    setComponentZOrder(contentPane, 1); // lt_add: fix for mac due to z-order issue
   }
 }

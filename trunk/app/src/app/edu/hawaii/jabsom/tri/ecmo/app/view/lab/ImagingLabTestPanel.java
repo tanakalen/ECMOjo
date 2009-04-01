@@ -1,7 +1,9 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view.lab;
 
+//import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+//import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -161,7 +163,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
       public ActionColumn() {
         // The panel
         actionPanel = new JPanel();
-        actionPanel.setOpaque(true);
+        actionPanel.setOpaque(true); //prior true
         actionPanel.setLayout(new FormLayout(
             "fill:1px:grow"
           , "16px"
@@ -175,21 +177,29 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
           public void actionPerformed(ActionEvent event) {
             // get the lab test
             ImagingLabTest labTest = (ImagingLabTest)getCellEditorValue();
-            Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
+            final Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" 
+              + labTest.getImageName());
             JLabel imageLabel = new JLabel(new ImageIcon(image));
             imageLabel.setSize(image.getWidth(null), image.getHeight(null));
             
             // open dialog           
             imageDialog = new AbstractDialog(ImagingLabTestPanel.this) {
-              // not used
-            };
-            imageDialog.getContentPane().add(imageLabel);
+                // not used
+              };
+            // lt add: create pane, add image to fix blank dialog
+            JPanel contentPane = new JPanel();
+            contentPane.add(imageLabel);
+            
+            imageDialog.setContentPane(contentPane);
+            imageDialog.setComponentZOrder(contentPane, 1); // lt add: Mac fix for z-order
             imageDialog.setUndecorated(true);
             imageDialog.setSize(700, 500);
+            imageDialog.pack();
             imageDialog.setLocationRelativeTo(JOptionPane.getFrameForComponent(viewButton));
             imageDialog.addMouseListener(new MouseAdapter() {
               public void mousePressed(MouseEvent event) {
                 imageDialog.setVisible(false);
+                imageDialog.dispose();
               }
             });
             imageDialog.setVisible(true);
