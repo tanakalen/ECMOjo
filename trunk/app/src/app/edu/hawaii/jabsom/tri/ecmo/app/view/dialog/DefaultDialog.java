@@ -38,6 +38,8 @@ public abstract class DefaultDialog extends AbstractDialog {
     JPanel contentPane = new JPanel() {
       @Override
       protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
         // set antialiased text
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -51,7 +53,7 @@ public abstract class DefaultDialog extends AbstractDialog {
         g.drawString(getTitle(), 35, 27);
       }
     };
+    contentPane.setOpaque(true);
     setContentPane(contentPane);
-    setComponentZOrder(contentPane, 1); // lt_add: fix for mac due to z-order issue
   }
 }
