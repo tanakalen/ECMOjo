@@ -115,12 +115,20 @@ public class Patient  extends Component {
   /** True if patient is bleeding. */
   private boolean bleeding;
   
+  /** Patient's temperature in centigrade [32.0, 42.0]. */
+  private double temperature;
   /** The heart rate [0, 300]. */
   private double heartRate;
+  /** The respiratory rate [0, 100]. */
+  private double respiratoryRate;
   /** The O2 saturation in percent / 100 [0.00, 1.00]. */
   private double o2Saturation;
   /** The systolic blood pressure in mm Hg [0, 200]. */
   private double systolicBloodPressure;
+  /** The central venous pressure in cm water [0, 50]. */
+  private double centralVenousPressure;
+  /** The urine output in mL/kg/h [0, 10]. */
+  private double urineOutput;
   /** The Hgb value [0.0, 50.0]. */
   private double hgb;
   /** The pH [0.00, 14.00]. */
@@ -198,6 +206,23 @@ public class Patient  extends Component {
     return 0.7 * getSystolicBloodPressure();
   }
   
+  /**
+   * Returns the temperature.
+   * 
+   * @return  The temperature.
+   */
+  public double getTemperature() {
+    return temperature;
+  }
+  
+  /**
+   * Sets the temperature.
+   * 
+   * @param temperature  The temperature to set.
+   */
+  public void setTemperature(double temperature) {
+    this.temperature = temperature;
+  }
   
   /**
    * Returns the heart rate.
@@ -217,6 +242,24 @@ public class Patient  extends Component {
     this.heartRate = heartRate;
   }
   
+  /**
+   * Returns the respiratory rate.
+   * 
+   * @return respiratoryRate  The respiratory rate to get.
+   */
+  public double getRespiratoryRate() {
+    return respiratoryRate;
+  }
+
+  /**
+   * Sets the respiratory rate.
+   * 
+   * @param respiratoryRate  The respiratory rate to set.
+   */
+  public void setRespiratoryRate(double respiratoryRate) {
+    this.respiratoryRate = respiratoryRate;
+  }
+
   /**
    * Returns the O2 saturation.
    * 
@@ -251,6 +294,42 @@ public class Patient  extends Component {
    */
   public void setSystolicBloodPressure(double systolicBloodPressure) {
     this.systolicBloodPressure = systolicBloodPressure;
+  }
+
+  /**
+   * Returns the central venous pressure.
+   * 
+   * @return centralVenousPressure  The central venous pressure to get.
+   */
+  public double getCentralVenousPressure() {
+    return centralVenousPressure;
+  }
+
+  /**
+   * Sets the central venous pressure.
+   * 
+   * @param centralVenousPressure  The central venous pressure to set.
+   */
+  public void setCentralVenousPressure(double centralVenousPressure) {
+    this.centralVenousPressure = centralVenousPressure;
+  }
+
+  /**
+   * Returns the urine output.
+   * 
+   * @return urineOutput  The urine output to get.
+   */
+  public double getUrineOutput() {
+    return urineOutput;
+  }
+
+  /**
+   * Sets the urine output.
+   * 
+   * @param urineOutput  The urine output to set.
+   */
+  public void setUrineOutput(double urineOutput) { //should we give absolute and convert?
+    this.urineOutput = urineOutput;
   }
 
   /**

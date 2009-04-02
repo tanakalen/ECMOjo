@@ -79,16 +79,24 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel {
     g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
     
     // draw text
-    String text = String.valueOf((int)component.getHeartRate());
+ // TODO: Fix labels on conf/image/interface/game/Mtr-Physiologic.png
+    String text = String.valueOf((int)component.getTemperature()) + "\u00B0C";
     g.drawString(text, 88, 34);
-    text = String.valueOf((int)(component.getO2Saturation() * 100)) + "%";
+    text = String.valueOf((int)component.getHeartRate());
     g.drawString(text, 88, 60);
 
-    text = String.valueOf((int)component.getSystolicBloodPressure());
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 14f));
+    text = String.valueOf((int)component.getSystolicBloodPressure()) + "/"
+      + String.valueOf((int)component.getDiastolicBloodPressure()) + " ("
+      + String.valueOf((int)component.getMeanBloodPressure()) + ")";
+    g.drawString(text, 40, 84);
+
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
+    text = String.valueOf((int)component.getRespiratoryRate());
     g.drawString(text, 212, 34);
-    text = String.valueOf((int)component.getDiastolicBloodPressure());
+    text = String.valueOf((int)(component.getO2Saturation() * 100)) + "%";
     g.drawString(text, 212, 60);
-    text = String.valueOf((int)component.getMeanBloodPressure());
+    text = String.valueOf((int)(component.getCentralVenousPressure()));
     g.drawString(text, 212, 84);
   }
   

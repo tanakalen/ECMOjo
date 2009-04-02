@@ -9,14 +9,20 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
  */
 public class PhysiologicMonitorComponent extends Component {
   
+  /** Patient's temperature in centigrade [32.0, 42.0]. */
+  private double temperature;
   /** The heart rate [0, 300]. */
   private double heartRate;
+  /** The respiratory rate [0, 100]. */
+  private double respiratoryRate;
   /** The O2 saturation in percent / 10 [0.00, 1.00]. */
   private double o2Saturation;
   /** The systolic blood pressure in mm Hg [0, 200]. */
   private double systolicBloodPressure;
   /** The diastolic blood pressure in mm Hg [0, 100]. */
   private double diastolicBloodPressure;
+  /** The central venous pressure in cm water [0, 50]. */
+  private double centralVenousPressure;
   
   
   /**
@@ -46,6 +52,25 @@ public class PhysiologicMonitorComponent extends Component {
   }
   
   /**
+   * Returns the temperature.
+   * 
+   * @return  The temperature.
+   */
+  public double getTemperature() {
+    return temperature;
+  }
+  
+  /**
+   * Sets the temperature.
+   * 
+   * @param temperature  The temperature to set.
+   */
+  public void setTemperature(double temperature) {
+    this.temperature = temperature;
+    notifyUpdate();
+  }
+  
+  /**
    * Returns the heart rate.
    * 
    * @return  The heart rate.
@@ -64,6 +89,25 @@ public class PhysiologicMonitorComponent extends Component {
     notifyUpdate();
   }
   
+  /**
+   * Returns the respiratory rate.
+   * 
+   * @return respiratoryRate  The respiratory rate to get.
+   */
+  public double getRespiratoryRate() {
+    return respiratoryRate;
+  }
+
+  /**
+   * Sets the respiratory rate.
+   * 
+   * @param respiratoryRate  The respiratory rate to set.
+   */
+  public void setRespiratoryRate(double respiratoryRate) {
+    this.respiratoryRate = respiratoryRate;
+    notifyUpdate();
+  }
+
   /**
    * Returns the O2 saturation.
    * 
@@ -102,6 +146,25 @@ public class PhysiologicMonitorComponent extends Component {
     notifyUpdate();
   }
   
+  /**
+   * Returns the central venous pressure.
+   * 
+   * @return centralVenousPressure  The central venous pressure to get.
+   */
+  public double getCentralVenousPressure() {
+    return centralVenousPressure;
+  }
+
+  /**
+   * Sets the central venous pressure.
+   * 
+   * @param centralVenousPressure  The central venous pressure to set.
+   */
+  public void setCentralVenousPressure(double centralVenousPressure) {
+    this.centralVenousPressure = centralVenousPressure;
+    notifyUpdate();
+  }
+
   /**
    * Returns the name of the component.
    * 

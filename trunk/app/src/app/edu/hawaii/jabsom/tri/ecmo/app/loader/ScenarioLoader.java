@@ -145,6 +145,9 @@ public final class ScenarioLoader {
         patient.setHeartFunction(HeartFunction.parse(parameters.get("patient-heart-function")));
         patient.setBleeding(Boolean.parseBoolean(parameters.get("patient-bleeding")));
         // TODO: load other patient values
+        // patient.setTemperature(Double.parseDouble(parameters.get("patient-temperature")));
+        // patient.setCentralVenousPressure(Double.parseDouble(parameters.get("patient-central-venous-pressure")));
+        // patient.setUrineOutput(Double.parseDouble(parameters.get("patient-urine-output")));        
         
         // the equipment
         Equipment equipment = scenario.getEquipment();

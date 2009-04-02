@@ -2,6 +2,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.model;
 
 import java.io.Serializable;
 
+import edu.hawaii.jabsom.tri.ecmo.app.control.Mediator;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.Tracker;
@@ -29,6 +30,8 @@ public class Game implements Serializable {
   private Patient patient;
   /** The equipment. */
   private Equipment equipment;
+  /** The class of links. */
+  private Mediator mediator;
   
 
   /**
@@ -44,6 +47,7 @@ public class Game implements Serializable {
     tracker = new Tracker();
     patient = (Patient)ObjectCloner.deepCopy(scenario.getPatient());
     equipment = (Equipment)ObjectCloner.deepCopy(scenario.getEquipment());
+    mediator = new Mediator();
   }
   
   /**
@@ -109,6 +113,15 @@ public class Game implements Serializable {
     this.tracker = tracker;
   }
 
+  /**
+   * Returns the mediator.
+   *
+   * @return  The mediator of equations.
+   */
+  public Mediator getMediator() {
+    return mediator;
+  }
+  
   /**
    * Returns the equipment.
    *
