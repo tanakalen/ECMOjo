@@ -15,9 +15,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
+//import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent.ConventionalSubtype;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
 
 /**
@@ -42,7 +43,7 @@ public final class Updater {
    * @param increment  The time increment in milliseconds.
    * @return  True, if goal is reached.
    */
-  public static boolean execute(Game game, long increment) {
+  public static boolean execute(Game game, long increment) { // increment called in Manager.java (20ms)
     Goal goal = game.getGoal();
     if (!goal.isReached(game)) {
       // increment time
@@ -74,10 +75,13 @@ public final class Updater {
            .getComponent(AlarmIndicatorComponent.class);
 
       // update equipment (physiologic monitor)
+      physiologicMonitor.setTemperature(patient.getTemperature());
       physiologicMonitor.setHeartRate(patient.getHeartRate());
+      physiologicMonitor.setRespiratoryRate(patient.getRespiratoryRate());
       physiologicMonitor.setO2Saturation(patient.getO2Saturation());
       physiologicMonitor.setDiastolicBloodPressure(patient.getDiastolicBloodPressure());
       physiologicMonitor.setSystolicBloodPressure(patient.getSystolicBloodPressure());
+      physiologicMonitor.setCentralVenousPressure(patient.getCentralVenousPressure());
       
       // update equipment (tubing)
       double cdiPo2 = cdiMonitor.getPO2();
@@ -137,6 +141,21 @@ public final class Updater {
       if ((pump.getFlow() < (0.02f * patient.getWeight())) || (!pump.isOn())) {
         pump.setAlarm(true);
       }
+      
+      // update equipment (ventilator)
+      if (ventilator.isEmergencyFuction()) {
+        if (ventilator.getName().equals("High Freqency Ventilator")) {
+          patient.setRespiratoryRate(0);
+        }
+        if (ventilator.getName().equals("Conventional Ventilator")) {
+          patient.setRespiratoryRate(((ConventionalSubtype) ventilator.getSubtype()).getRate());
+        }
+      }
+      else {
+        if (ventilator.getName().equals("Conventional Ventilator")) {
+          patient.setRespiratoryRate(10); // non rescue rate?
+        }
+      }
 
       // update equipment (alarm)
       boolean alarm = false;
@@ -161,65 +180,20 @@ public final class Updater {
       double ccPerKg = pump.getFlow() * 1000 / patient.getWeight();
       Mode mode = tube.getMode();
       HeartFunction heartFunction = patient.getHeartFunction();
-      LungFunction lungFunction = patient.getLungFunction();
-      double patientPH;
-      double patientPCO2;
-      if (mode == Mode.VA) {
-        // VA ECMO
-        if (heartFunction == HeartFunction.GOOD) {
-          // GOOD heart
-          if (lungFunction == LungFunction.GOOD) {
-            // GOOD lung
-// TODO patientPH = f(ccPerKg);
-// TODO patientPCO2 = f(ccPerKg);
-          }
-          else {
-            // BAD lung
-// TODO patientPH = f(ccPerKg);
-// TODO patientPCO2 = f(ccPerKg);
-          }
-        }
-        else {
-          // BAD heart
-          if (lungFunction == LungFunction.GOOD) {
-            // GOOD lung
-// TODO patientPH = f(ccPerKg);
-// TODO patientPCO2 = f(ccPerKg);
-          }
-          else {
-            // BAD lung
-// TODO patientPH = f(ccPerKg);
-// TODO patientPCO2 = f(ccPerKg);
-          }
-        }
+      //LungFunction lungFunction = patient.getLungFunction();
+      double patientPH = game.getMediator().flowToPH(mode, ccPerKg, patient);
+      patient.setPH(patientPH);
+      double patientPCO2 = game.getMediator().flowToPCO2(mode, ccPerKg, patient);
+      patient.setPCO2(patientPCO2);
+      
+      if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
+        // TODO BAD heart steady decline to death
+        Error.out("Using VV ECMO with poor heart function is not a good idea!");
+        patientPH = patient.getPH();
+        patient.setPH(patientPH - 0.001); //Heading down 0.001unit per 20ms
+        patientPCO2 = patient.getPCO2();
+        patient.setPCO2(patientPCO2 + 0.1); //Heading up 0.1 per 20ms
       }
-      else if (mode == Mode.VV) {
-        // VV ECMO
-        if (heartFunction == HeartFunction.GOOD) {
-          // GOOD heart
-          if (lungFunction == LungFunction.GOOD) {
-            // GOOD lung
-// TODO patientPH = f(ccPerKg);
-// TODO patientPCO2 = f(ccPerKg);
-          }
-          else {
-            // BAD lung
-// TODO patientPH = f(ccPerKg);
-// TODO patientPCO2 = f(ccPerKg);
-          }
-        }
-        else {
-          // BAD heart
-          Error.out("Using VV ECMO with poor heart function is not a good idea!");
-          patientPH = 7;
-          patientPCO2 = 50;
-        }
-      }
-      else {
-        Error.out("Tubing Mode not Defined: " + mode);
-      }
-// TODO: uncomment      patient.setPH(patientPH);
-// TODO: uncomment      patient.setPCO2(patientPCO2);
       
       double po2 = oxigenator.getFiO2() * oxigenator.getTotalSweep() * pump.getFlow() * 100;
       double patientSaturation = 0;
@@ -229,6 +203,8 @@ public final class Updater {
       }
       patient.setO2Saturation(patientSaturation);     
       patient.setPO2((oxigenator.getFiO2() * (760 - 47)) - (patient.getPCO2() / 0.8));
+      
+      // TODO Patient bicarb and base excess calc? from Mark's table
 
       // and return if goal is reached
       return goal.isReached(game);
