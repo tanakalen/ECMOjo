@@ -168,12 +168,12 @@ public class PumpComponentPanel extends ComponentPanel implements Runnable {
     
     // set text properties
     g.setColor(textColor);
-    g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 14f));
     
     // draw text
     if (component.isOn()) {
       String text = flowFormatter.format(component.getFlow());
-      g.drawString(text, 245, 40);
+      g.drawString(text, 246, 40);
     }
     else if (component.isAlarm()) {
       // draw blinking red light
