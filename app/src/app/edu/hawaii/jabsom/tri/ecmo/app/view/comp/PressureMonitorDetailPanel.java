@@ -435,25 +435,25 @@ public class PressureMonitorDetailPanel extends DetailPanel implements Runnable 
     
     // draw text for max and min
     g.setColor(textColor);
-    g.setFont(g.getFont().deriveFont(Font.BOLD, 20f));
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
     String text = String.valueOf((int)component.getVenousPressureMax());
-    g.drawString(text, 128, 60);    
+    g.drawString(text, 130, 60);    
     text = String.valueOf((int)component.getVenousPressureMin());
-    g.drawString(text, 128, 87);
+    g.drawString(text, 130, 87);
 
     text = String.valueOf((int)component.getPreMembranePressureMax());
-    g.drawString(text, 128, 137);
+    g.drawString(text, 130, 137);
     text = String.valueOf((int)component.getPreMembranePressureMin());
-    g.drawString(text, 128, 169);
+    g.drawString(text, 130, 169);
     
     text = String.valueOf((int)component.getPostMembranePressureMax());
-    g.drawString(text, 128, 215);
+    g.drawString(text, 130, 215);
     text = String.valueOf((int)component.getPostMembranePressureMin());
-    g.drawString(text, 128, 247);
+    g.drawString(text, 130, 247);
     
     // draw text for pressure
     g.setColor(textColor);
-    g.setFont(g.getFont().deriveFont(Font.BOLD, 28f));
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 26f));
     text = String.valueOf((int)component.getVenousPressure());
     g.drawString(text, 80, 75);
     text = String.valueOf((int)component.getPreMembranePressure());

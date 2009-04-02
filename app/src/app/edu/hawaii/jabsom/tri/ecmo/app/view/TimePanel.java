@@ -105,7 +105,7 @@ public class TimePanel extends JPanel implements Runnable {
 
     // set text properties
     g.setColor(textColor);
-    g.setFont(g.getFont().deriveFont(Font.BOLD, 24f));
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 22f));
     
     // draw text
     int time = (int)(game.getElapsedTime() / 1000);

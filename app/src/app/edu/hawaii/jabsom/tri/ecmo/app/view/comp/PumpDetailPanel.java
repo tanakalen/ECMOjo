@@ -195,14 +195,14 @@ public class PumpDetailPanel extends DetailPanel implements Runnable {
     
     // set text properties
     g.setColor(textColor);
-    g.setFont(g.getFont().deriveFont(Font.BOLD, 40f));
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 36f));
     
     // draw text
     if (component.isOn()) {
       // draw base
       double value = adjusting ? adjustedValue : component.getFlow();
       String text = flowFormatter.format(value);
-      g.drawString(text, 100, 120);
+      g.drawString(text, 95, 120);
     } 
     else if (component.isAlarm()){
       // draw blinking red light

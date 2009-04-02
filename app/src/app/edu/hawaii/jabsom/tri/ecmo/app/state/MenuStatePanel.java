@@ -77,11 +77,11 @@ public class MenuStatePanel extends JPanel {
     setLayout(null);
     
     // add text label
-    TextLabel textLabel = new TextLabel("Welcome to ECMO");
+    TextLabel textLabel = new TextLabel("Welcome to ECMOjo");
     textLabel.setHorizontalAlignment(JLabel.CENTER);
     textLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 36f)); 
     textLabel.setLocation(100, 16);
-    textLabel.setSize(600, 40);
+    textLabel.setSize(600, 45);
     add(textLabel);
     
     // button group
