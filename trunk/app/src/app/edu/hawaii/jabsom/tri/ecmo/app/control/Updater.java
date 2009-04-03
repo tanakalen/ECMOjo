@@ -141,6 +141,9 @@ public final class Updater {
       if ((pump.getFlow() < (0.02f * patient.getWeight())) || (!pump.isOn())) {
         pump.setAlarm(true);
       }
+      else {
+        pump.setAlarm(false);
+      }
       
       // update equipment (ventilator)
       if (ventilator.isEmergencyFuction()) {
@@ -158,23 +161,16 @@ public final class Updater {
       }
 
       // update equipment (alarm)
-      boolean alarm = false;
-      if (pressureMonitor.isAlarm()) {
-        alarm = true;
+      if (pressureMonitor.isAlarm()
+          || bubbleDetector.isAlarm()
+          || pump.isAlarm() 
+          || oxigenator.isAlarm()
+          || heater.isAlarm()) {
+        alarmIndicator.setAlarm(true);
       }
-      if (bubbleDetector.isAlarm()) {
-        alarm = true;
+      else {
+        alarmIndicator.setAlarm(false);
       }
-      if (pump.isAlarm()) {
-        alarm = true;
-      }
-      if (oxigenator.isAlarm()) {
-        alarm = true;
-      }
-      if (heater.isAlarm()) {
-        alarm = true;
-      }
-      alarmIndicator.setAlarm(alarm);
       
       // update patient
       double ccPerKg = pump.getFlow() * 1000 / patient.getWeight();

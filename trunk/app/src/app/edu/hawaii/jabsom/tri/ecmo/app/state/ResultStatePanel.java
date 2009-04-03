@@ -17,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
-import king.lib.access.MusicPlayer;
 
 /**
  * The result state panel. 
@@ -92,14 +91,6 @@ public class ResultStatePanel extends JPanel {
     okButton.setSize(75, 30);
     okButton.setLocation(670, 530);
     add(okButton);
-    
-    // play sound
-    if (success) {
-//      MusicPlayer.create("conf/sound/GameOver.mp3").play();
-    }
-    else {
-      MusicPlayer.create("conf/sound/GameOver.mp3").play();
-    }
   }
   
   /**
