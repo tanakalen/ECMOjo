@@ -1,9 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view.lab;
 
-//import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-//import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +10,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,10 +31,13 @@ import king.lib.access.ImageLoader;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.LinkButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.RolloverTable;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList.LabTestListener;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.LabDetailPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.AbstractDialog;
@@ -73,6 +75,32 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
     titleLabel.setSize(150, 20);
     add(titleLabel);
     
+    // add lab request buttons
+    JButton requestButton;
+    requestButton = new JButton("XRay");
+    requestButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        LabRequestAction action = new LabRequestAction();
+        action.setLabTest(XRayLabTest.class);
+        notifyActionListeners(action);
+      }    
+    });
+    requestButton.setLocation(93, 34);
+    requestButton.setSize(70, 20);
+    add(requestButton);
+
+    requestButton = new JButton("Ultra");
+    requestButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        LabRequestAction action = new LabRequestAction();
+        action.setLabTest(UltrasoundLabTest.class);
+        notifyActionListeners(action);
+      }    
+    });
+    requestButton.setLocation(173, 34);
+    requestButton.setSize(70, 20);
+    add(requestButton);
+
     // add scrollable area with list of imaging tests
     tableModel = new DefaultTableModel() {
       public int getColumnCount() {

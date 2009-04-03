@@ -32,7 +32,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
 
 /**
  * The scenario creator. 
@@ -178,17 +177,6 @@ public final class ScenarioCreator {
 
     LabComponent labComponent4 = new LabComponent();
     labComponent4.setLabTest(ImagingLabTest.class);
-    XRayLabTest xRayLabTest;
-    xRayLabTest = new XRayLabTest();
-    xRayLabTest.setDescription("Chest, X-Ray");
-    xRayLabTest.setImageName("CXR-normal.jpg");
-    xRayLabTest.setTime(-3600 * 48);
-    labComponent4.addResult(xRayLabTest);
-    xRayLabTest = new XRayLabTest();
-    xRayLabTest.setDescription("Chest, X-Ray");
-    xRayLabTest.setImageName("CXR-normal.jpg");
-    xRayLabTest.setTime(-3600 * 24);
-    labComponent4.addResult(xRayLabTest);
     equipment.add(labComponent4);
 
     // and return the scenario...

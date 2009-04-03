@@ -3,7 +3,10 @@ package edu.hawaii.jabsom.tri.ecmo.app.view.lab;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,6 +19,7 @@ import javax.swing.table.TableCellRenderer;
 
 import org.jdesktop.swingx.JXTable;
 
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList.LabTestListener;
@@ -53,6 +57,19 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
     add(titleLabel);
+
+    // add lab request button
+    JButton requestButton = new JButton("Lab");
+    requestButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        LabRequestAction action = new LabRequestAction();
+        action.setLabTest(HematologyLabTest.class);
+        notifyActionListeners(action);
+      }    
+    });
+    requestButton.setLocation(173, 34);
+    requestButton.setSize(70, 20);
+    add(requestButton);
 
     // add table with values
     tableModel = new DefaultTableModel() {

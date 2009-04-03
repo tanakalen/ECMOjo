@@ -6,7 +6,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,6 +24,7 @@ import org.jdesktop.swingx.JXTable;
 
 import king.lib.access.ImageLoader;
 
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent.ACT;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList.LabTestListener;
@@ -65,18 +69,27 @@ public class ACTDetailPanel extends DetailPanel implements LabTestListener {
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
     add(titleLabel);
-    
+
+    // add ACT request button
+    JButton requestButton = new JButton("Lab");
+    requestButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        ACTRequestAction action = new ACTRequestAction();
+        notifyActionListeners(action);
+      }    
+    });
+    requestButton.setLocation(173, 34);
+    requestButton.setSize(70, 20);
+    add(requestButton);
+
+    // add table
     tableModel = new DefaultTableModel() {
       public int getColumnCount() {
         // ACT has 2 values!
         return 2;
       }
       public int getRowCount() {
-        int size = component.getACTs().size();
-        if (size < 5) {
-          size = 5;
-        }
-        return size;
+        return component.getACTs().size();
       }
       public String getColumnName(int col) {
         if (col == 0) {
