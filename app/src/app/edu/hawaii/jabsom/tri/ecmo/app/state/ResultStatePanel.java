@@ -16,8 +16,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import king.lib.access.AudioLoader;
 import king.lib.access.ImageLoader;
+import king.lib.access.MusicPlayer;
 
 /**
  * The result state panel. 
@@ -95,10 +95,10 @@ public class ResultStatePanel extends JPanel {
     
     // play sound
     if (success) {
-      // TODO: Alex - add pass sound!
+//      MusicPlayer.create("conf/sound/GameOver.mp3").play();
     }
     else {
-      AudioLoader.getInstance().play("conf/sound/GameOver.mp3");
+      MusicPlayer.create("conf/sound/GameOver.mp3").play();
     }
   }
   

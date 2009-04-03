@@ -15,7 +15,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
  * @since April 1, 209
  * 
  */
-public class Mediator {
+public final class Mediator {
   
   /**
    * Unused constructor.
