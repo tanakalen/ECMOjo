@@ -3,114 +3,233 @@ package king.lib.access;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+import com.sun.media.sound.AiffFileReader;
+import com.sun.media.sound.AuFileReader;
+import com.sun.media.sound.WaveFileReader;
+import king.lib.out.Error;
+
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * Plays a sound. Internally used by AudioLoader.
+ * Plays a sound. Internally used by AudioLoader. Audio player is for short sound and looping sound.
+ * <ul>
+ *   <li>jl1.0.jar</li>
+ *   <li>mp3spi1.9.2.jar</li>
+ *   <li>tritonus_share.jar</li>
+ * </ul>
+ * The following audio file formats are supported:
+ * <ul>
+ *   <li>wav
+ *   <li>aiff
+ *   <li>au
+ *   <li>mp3
+ * </ul>
  *
  * @author    king 
  * @since     March 23, 2004
  */
-class AudioPlayer implements Runnable {
+public final class AudioPlayer {
 
-  /** The thread which plays the file. */
-  private Thread thread;
-  
-  /** The audio loader which is interested in Exceptions. */
-  private AudioLoader audioLoader;
-  /** The format of the audio file to play. */
-  private AudioFormat audioFormat;
   /** The samples to play. */
   private AudioInputStream audioStream;
+  /** The clip to play. */
+  private Clip clip;
   
-  /** Temp array for data to play. */
-  private byte[] playData = new byte[4096];
-  
-  /** Returns true if playing, false otherwise (false = available). */
+  /** True for looping. Defaults to false. */
+  private boolean looping = false;
+  /** The sampling speed. Defaults to 1.0 = normal. */
+  private float speed = 1.0f;
+  /** The playing flag. */
   private boolean playing = false;
-
-  
+    
   /**
-   * Plays a song. Starts the playing and leaves.
+   * Constructor for player.
    * 
-   * @param audioLoader   The audio loader which is interested in the status. I.e. if
-   *                      exceptions occured.
-   * @param audioFormat   The format of the audio file to play.
    * @param audioStream   Where the audio data resides.
    */
-  void play(AudioLoader audioLoader, AudioFormat audioFormat, AudioInputStream audioStream) {
-    this.audioLoader = audioLoader;
-    this.audioFormat = audioFormat;
+  private AudioPlayer(AudioInputStream audioStream) {
     this.audioStream = audioStream;
-    
-    // Thread which plays the file.
-    this.thread = new Thread(this);
-    this.thread.start();
-    this.playing = true;
+  }
+  
+  /**
+   * Returns a new audio player for the given path.
+   * 
+   * @param path  The path.
+   * @return  The audio player.
+   */
+  public static AudioPlayer create(String path) {
+    return AudioPlayer.create(path, ResourceHookup.getInstance());
+  }
+  
+  /**
+   * Returns a new audio player for the given path and hookup.
+   * 
+   * @param path  The path.
+   * @param hookup  The hookup.
+   * @return  The audio player.
+   */
+  public static AudioPlayer create(String path, Hookup hookup) {
+    try {
+      // open stream to sound file
+      InputStream inputStream = hookup.getInputStream(path);
+      
+      // *** HACK START
+      // *** Only audioStream = AudioSystem.getAudioInputStream(inputStream); 
+      // *** does not work, WAV files are not loaded correctly because of mp3spi1.9.2.jar
+      AudioInputStream audioStream;
+      if (path.endsWith(".mp3")) {
+        audioStream = AudioSystem.getAudioInputStream(inputStream);
+      }
+      else if (path.endsWith(".wav")) {
+        WaveFileReader reader = new WaveFileReader();
+        audioStream = reader.getAudioInputStream(inputStream);
+      }
+      else if ((path.endsWith(".aif")) || (path.endsWith(".aiff"))) {
+        AiffFileReader reader = new AiffFileReader();
+        audioStream = reader.getAudioInputStream(inputStream);
+      }
+      else if (path.endsWith(".au")) {
+        AuFileReader reader = new AuFileReader();
+        audioStream = reader.getAudioInputStream(inputStream);
+      }
+      else {
+        // the default!
+        audioStream = AudioSystem.getAudioInputStream(inputStream);
+      }
+      // *** HACK END
+
+      // get audio format
+      AudioFormat audioFormat = audioStream.getFormat();
+
+      // convert, so sound can be played
+      if (path.endsWith(".mp3")) {
+        if (audioFormat.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
+          AudioFormat newFormat = new AudioFormat(
+            AudioFormat.Encoding.PCM_SIGNED, 
+            audioFormat.getSampleRate(),
+            16,
+            audioFormat.getChannels(),
+            audioFormat.getChannels() * 2,
+            audioFormat.getSampleRate(),
+            false);
+          AudioInputStream newStream = AudioSystem.getAudioInputStream(newFormat, audioStream);
+          audioFormat = newFormat;
+          audioStream = newStream;
+        }      
+      }
+      // Create new player
+      return new AudioPlayer(audioStream);
+    }
+    catch (UnsupportedAudioFileException e) {
+      Error.out(e);
+      return null;
+    }
+    catch (IOException e) {
+      Error.out(e);
+      return null;
+    }
   }
 
   /**
-   * True, if song is playing.
-   * 
-   * @return  True if song is playing.
+   * Returns the speed.
+   *
+   * @return  The speed.
    */
-  boolean isPlaying() {
-    return this.playing;
+  public float getSpeed() {
+    return speed;
+  }
+
+  /**
+   * Sets the speed.
+   *
+   * @param speed  The speed.
+   */
+  public void setSpeed(float speed) {
+    this.speed = speed;
   }
   
+  /**
+   * Returns true for looping.
+   *
+   * @return  True for looping.
+   */
+  public boolean isLooping() {
+    return looping;
+  }
+
+  /**
+   * Set true for looping.
+   *
+   * @param looping  True for looping.
+   */
+  public void setLooping(boolean looping) {
+    this.looping = looping;
+  }
+
+  /**
+   * Plays a song.
+   */
+  public void play() {
+    // Play the file
+    if (audioStream == null) {
+      return;
+    }    
+    try {
+      if (clip == null) {
+        clip = AudioSystem.getClip();
+        clip.open(audioStream);
+      }
+      if (!playing) {
+        if (looping) {
+          clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } 
+        else {
+          clip.start();
+        }
+        playing = true;
+      }
+    }
+    catch (LineUnavailableException e) {
+      Error.out(e);
+    }
+    catch (IOException e) {
+      Error.out(e);
+    }
+  }
+
+  /**
+   * Pauses a song.
+   */
+  public void pause() {
+    // Pause
+    if (clip != null) {
+      if (clip.isRunning()) {
+        clip.stop();
+        playing = false;
+      }
+    }
+  }
+
   /**
    * Stops playing a song.
    */
-  void stop() {
-    this.thread = null;
+  public void stop() {
+    // Stop
+    if (clip != null) {
+      if (clip.isRunning()) {
+        clip.stop();
+        playing = false;
+        clip.setFramePosition(0);
+      }
+      clip.drain();
+      clip.close();
+    }
+    clip = null;
   }
   
-  /**
-   * Main thread to play an audio file.
-   */
-  public void run() {
-    try {
-      // open line to play to
-      DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-      SourceDataLine line = (SourceDataLine)AudioSystem.getLine(info);
-      line.open(audioFormat);
-      
-      // write data to line and wait until finished
-      line.start();
-
-      // write data piece for piece
-      Thread currentThread = Thread.currentThread();
-      int bytesRead = 0;
-      while ((this.thread == currentThread) && (bytesRead != -1)) {
-        bytesRead = audioStream.read(playData, 0, playData.length);
-        if (bytesRead != -1) {
-          line.write(playData, 0, bytesRead);
-        }
-      }
-      // end sound stream
-      line.drain();
-      line.close();
-    }
-    catch (LineUnavailableException e) {
-      this.audioLoader.notifyAudioException(new AudioException("Error playing audio: " + e));
-    }
-    catch (IOException e) {
-      this.audioLoader.notifyAudioException(new AudioException("Error reading audio: " + e));
-    }
-    
-    // close player
-    try {
-      this.audioStream.close();
-    }
-    catch (IOException e) {
-      this.audioLoader.notifyAudioException(new AudioException("Error closing audio: " + e));
-    }
-    this.audioStream = null;
-    this.audioFormat = null;
-    this.thread = null;
-    this.playing = false;
-  }  
 }
