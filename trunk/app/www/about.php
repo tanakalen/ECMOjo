@@ -30,7 +30,11 @@
   <strong>Developer</strong>: <br>
   &nbsp;&nbsp;&nbsp;<script type="text/javascript">
          document.write("<n uers=\"<?php echo str_rot13('mailto:kinwang@hawaii.edu'); ?>\">".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
-       </script>Kin Lik Wang (Alex)</a><br><br>
+       </script>Kin Lik Wang (Alex)</a><br>
+ 	&nbsp;&nbsp;&nbsp;<script type="text/javascript">
+         document.write("<n uers=\"<?php echo str_rot13('mailto:len.tanaka@kapiolani.org'); ?>\">".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
+       </script>Len Tanaka, MD</a><br><br>
+
   <strong>Artist</strong>: <br>
   &nbsp;&nbsp;&nbsp;<script type="text/javascript">
          document.write("<n uers=\"<?php echo str_rot13('mailto:lee@imua.com'); ?>\">".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
@@ -57,9 +61,6 @@
  	&nbsp;&nbsp;&nbsp;<script type="text/javascript">
          document.write("<n uers=\"<?php echo str_rot13('mailto:donald.mccurnin@ushouthwestern.edu'); ?>\">".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
        </script>Donald McCurnin, MD</a><br>
- 	&nbsp;&nbsp;&nbsp;<script type="text/javascript">
-         document.write("<n uers=\"<?php echo str_rot13('mailto:len.tanaka@kapiolani.org'); ?>\">".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
-       </script>Len Tanaka, MD</a><br>
 </p>
 <br>
 <div class="titlebar"><div><div><h2>Contact Information</h2></div></div></div>
