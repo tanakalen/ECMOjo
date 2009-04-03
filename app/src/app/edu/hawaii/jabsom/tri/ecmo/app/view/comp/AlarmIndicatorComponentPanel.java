@@ -5,6 +5,7 @@ import java.awt.Image;
 
 import javax.swing.ButtonGroup;
 
+import king.lib.access.AudioPlayer;
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
 
@@ -34,6 +35,10 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
   /** The updater thread. */
   private Thread thread;
   
+  /** The alarm audio. */
+  private AudioPlayer alarmFx;
+  
+  
   /**
    * Constructor for panel.
    * 
@@ -50,6 +55,9 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
     // set layout
     setLayout(null);
     
+    // the alarm audio player
+    alarmFx = AudioPlayer.create("conf/sound/alarm.mp3");
+    alarmFx.setLooping(true);
   }
 
   /**
@@ -79,6 +87,9 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
   public void removeNotify() {
     // stop thread
     this.thread = null;
+    
+    // remove the audio player
+    alarmFx.stop();
     
     super.removeNotify();
   }
@@ -118,10 +129,16 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
       else {
         g.drawImage(blackAlertImage, 0, 0, this);        
       }
+      
+      // play alarm
+      alarmFx.play();
     }
     else {
       // draw green light
       g.drawImage(greenAlertImage, 0, 0, this);      
+      
+      // stop the alarm
+      alarmFx.pause();
     }
   }
   
