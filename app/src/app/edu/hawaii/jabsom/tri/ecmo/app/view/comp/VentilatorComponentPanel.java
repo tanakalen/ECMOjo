@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JToggleButton;
 
@@ -31,6 +32,11 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent.HighFrequen
  */
 public class VentilatorComponentPanel extends ComponentPanel implements Runnable {
 
+  /** The rollover image. */
+  private Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-VentilatorRol.png");
+  /** The emergency none image. */
+  private Image noneImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-VentilatorNone.png");
+  
   /** The ventilator formatter. */
   private final DecimalFormat ventilatorFormatter = new DecimalFormat("0.0");
   
@@ -56,6 +62,9 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
   /** The component. */
   private VentilatorComponent component;
 
+  /** The selection button. */
+  private AbstractButton selectionButton;
+  
   /** The updater thread. */
   private Thread thread;
   
@@ -100,6 +109,18 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
     emergencyButton.setLocation(145, 60);
     emergencyButton.setSize(128, 32);
     add(emergencyButton); 
+    
+    // add toggle button
+    selectionButton = new ImageToggleButton(null, rolloverImage, noneImage, noneImage);
+    selectionButton.setToolTipText(component.getName());
+    selectionButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        notifyActivationListeners();
+      }
+    });
+    selectionButton.setLocation(0, 0);
+    selectionButton.setSize(288, 96);
+    add(selectionButton);
   }
 
   /**

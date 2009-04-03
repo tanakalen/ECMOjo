@@ -18,6 +18,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PressureMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component.UpdateListener;
 
 /**
@@ -94,6 +95,9 @@ public abstract class DetailPanel extends JPanel implements UpdateListener {
     else if (component instanceof LabComponent) {
       return LabDetailPanel.createInstance((LabComponent)component);
     }
+    else if (component instanceof VentilatorComponent) {
+      return new VentilatorDetailPanel((VentilatorComponent)component);
+    }    
     else {
       // not found
       return null;
