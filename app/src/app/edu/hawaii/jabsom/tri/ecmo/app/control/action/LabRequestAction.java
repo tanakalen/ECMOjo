@@ -53,7 +53,7 @@ public class LabRequestAction extends Action {
       BloodGasLabTest labTest = new BloodGasLabTest();
       
       // fill in details
-      // ...
+      // TODO
       
       result = labTest;
     }
@@ -61,7 +61,7 @@ public class LabRequestAction extends Action {
       ChemistryLabTest labTest = new ChemistryLabTest();
       
       // fill in details
-      // ...
+      // TODO
       
       result = labTest;
     }
@@ -69,7 +69,7 @@ public class LabRequestAction extends Action {
       HematologyLabTest labTest = new HematologyLabTest();
       
       // fill in details
-      // ...
+      // TODO
       
       result = labTest;
     }
@@ -77,7 +77,8 @@ public class LabRequestAction extends Action {
       UltrasoundLabTest labTest = new UltrasoundLabTest();
       
       // FIX!!!!!!!!!! -> need real lab tests... (from scenario)!?
-      
+      // TODO
+
       labTest.setDescription("Abdomen, Ultrasound");
       labTest.setImageName("CXR-normal.jpg");
       labTest.setTime(game.getElapsedTime() / 1000);
@@ -87,6 +88,7 @@ public class LabRequestAction extends Action {
       XRayLabTest labTest = new XRayLabTest();
       
       // FIX!!!!!!!!!! -> need real lab tests... (from scenario)!?
+      // TODO
 
       labTest.setDescription("Chest, X-Ray");
       labTest.setImageName("CXR-normal.jpg");
