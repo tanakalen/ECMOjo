@@ -181,9 +181,9 @@ public final class Updater {
       Mode mode = tube.getMode();
       HeartFunction heartFunction = patient.getHeartFunction();
       //LungFunction lungFunction = patient.getLungFunction();
-      double patientPH = game.getMediator().flowToPH(mode, ccPerKg, patient);
+      double patientPH = Mediator.flowToPH(mode, ccPerKg, patient);
       patient.setPH(patientPH);
-      double patientPCO2 = game.getMediator().flowToPCO2(mode, ccPerKg, patient);
+      double patientPCO2 = Mediator.flowToPCO2(mode, ccPerKg, patient);
       patient.setPCO2(patientPCO2);
       
       if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {

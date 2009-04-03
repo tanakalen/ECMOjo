@@ -16,11 +16,12 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
  * 
  */
 public class Mediator {
+  
   /**
    * Unused constructor.
    */
-  public Mediator() {
-    // No construction???
+  private Mediator() {
+    // cannot be used
   }
 
   /**
@@ -35,7 +36,7 @@ public class Mediator {
    *          Current patient instantiation
    * @return pH by linear interpolation of Mark's chart
    */
-  public double flowToPH(Mode ecmo, double flow, Patient patient) {
+  public static double flowToPH(Mode ecmo, double flow, Patient patient) {
     if (flow < 0) {
       Error.out("Flow cannot be less than 0");
       System.exit(0);
@@ -206,7 +207,7 @@ public class Mediator {
    *          Current patient instantiation
    * @return pCO2 by linear interpolation of Mark's chart
    */
-  public double flowToPCO2(Mode ecmo, double flow, Patient patient) {
+  public static double flowToPCO2(Mode ecmo, double flow, Patient patient) {
     if (flow < 0) {
       Error.out("Flow cannot be less than 0");
       System.exit(0);
@@ -364,5 +365,4 @@ public class Mediator {
       }
     }
   }
-
 }
