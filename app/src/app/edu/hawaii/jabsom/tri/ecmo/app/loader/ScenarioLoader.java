@@ -14,6 +14,11 @@ import java.util.Map;
 
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
+import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.CannulaFunction;
+import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.EttFunction;
+import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.PowerFunction;
+import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.SuctionEttFunction;
+import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.TubeFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
@@ -135,7 +140,39 @@ public final class ScenarioLoader {
         baseline.setBleeding(Boolean.parseBoolean(parameters.get("baseline-bleeding")));
         baseline.setMinHeartRate(Double.parseDouble(parameters.get("baseline-min-heart-rate")));
         baseline.setMaxHeartRate(Double.parseDouble(parameters.get("baseline-max-heart-rate")));
-        // TODO: load other baseline values!
+        baseline.setMinO2Saturation(Double.parseDouble(parameters.get("baseline-min-O2-saturation")));
+        baseline.setMaxO2Saturation(Double.parseDouble(parameters.get("baseline-max-O2-saturation")));
+        baseline.setMinHgb(Double.parseDouble(parameters.get("baseline-min-HGB")));
+        baseline.setMaxHgb(Double.parseDouble(parameters.get("baseline-max-HGB")));
+        baseline.setMinPh(Double.parseDouble(parameters.get("baseline-min-pH")));
+        baseline.setMaxPh(Double.parseDouble(parameters.get("baseline-max-pH")));
+        baseline.setMinPco2(Double.parseDouble(parameters.get("baseline-min-pCO2")));
+        baseline.setMaxPcO2(Double.parseDouble(parameters.get("baseline-max-pCO2")));
+        baseline.setMinAct(Double.parseDouble(parameters.get("baseline-min-ACT")));
+        baseline.setMaxAct(Double.parseDouble(parameters.get("baseline-max-ACT")));
+        baseline.setMinTemperature(Double.parseDouble(parameters.get("baseline-min-temperature")));
+        baseline.setMaxTemperature(Double.parseDouble(parameters.get("baseline-max-temperature")));
+        baseline.setArterialA(TubeFunction.parse(parameters.get("baseline-arterial-A")));
+        baseline.setArterialB(TubeFunction.parse(parameters.get("baseline-arterial-B")));
+        baseline.setVenousA(TubeFunction.parse(parameters.get("baseline-venous-A")));
+        baseline.setVenousB(TubeFunction.parse(parameters.get("baseline-venous-B")));
+        baseline.setBridge(TubeFunction.parse(parameters.get("baseline-bridge")));
+        baseline.setCannula(CannulaFunction.parse(parameters.get("baseline-cannula")));
+        baseline.setEtt(EttFunction.parse(parameters.get("baseline-ETT")));
+        baseline.setSuctionEtt(SuctionEttFunction.parse(parameters.get("baseline-suction-ETT")));
+        baseline.setMinPreMembranePressure(Double.parseDouble(parameters.get("baseline-min-pre-membrane-pressure")));
+        baseline.setMaxPreMembranePressure(Double.parseDouble(parameters.get("baseline-max-pre-membrane-pressure")));
+        baseline.setMinPostMembranePressure(Double.parseDouble(parameters.get("baseline-min-post-membrance-pressure")));
+        baseline.setMaxPostMembranePressure(Double.parseDouble(parameters.get("baseline-max-post-membrance-pressure")));
+        baseline.setMinVenousPressure(Double.parseDouble(parameters.get("baseline-min-venous-pressure")));
+        baseline.setMaxVenousPressure(Double.parseDouble(parameters.get("baseline-max-venous-pressure")));
+        baseline.setArterialBubbles(Boolean.parseBoolean(parameters.get("baseline-arterial-bubbles")));
+        baseline.setVenousBubbles(Boolean.parseBoolean(parameters.get("baseline-venous-bubbles")));
+        baseline.setMinFiO2(Double.parseDouble(parameters.get("baseline-min-fiO2")));
+        baseline.setMaxFiO2(Double.parseDouble(parameters.get("baseline-max-fiO2")));
+        baseline.setBroken(Boolean.parseBoolean(parameters.get("baseline-broken")));
+        baseline.setPower(PowerFunction.parse(parameters.get("baseline-power")));
+        baseline.setAlarming(Boolean.parseBoolean(parameters.get("baseline-alarming")));
         
         // the patient
         Patient patient = scenario.getPatient();
@@ -145,9 +182,6 @@ public final class ScenarioLoader {
         patient.setHeartFunction(HeartFunction.parse(parameters.get("patient-heart-function")));
         patient.setBleeding(Boolean.parseBoolean(parameters.get("patient-bleeding")));
         // TODO: load other patient values
-        // patient.setTemperature(Double.parseDouble(parameters.get("patient-temperature")));
-        // patient.setCentralVenousPressure(Double.parseDouble(parameters.get("patient-central-venous-pressure")));
-        // patient.setUrineOutput(Double.parseDouble(parameters.get("patient-urine-output")));        
         
         // the equipment
         Equipment equipment = scenario.getEquipment();

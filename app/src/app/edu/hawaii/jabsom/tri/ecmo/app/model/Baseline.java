@@ -94,7 +94,7 @@ public class Baseline {
   private TubeFunction venousA;
   /** Baseline value for venous B. */
   private TubeFunction venousB;  
-  /** Baseline value for venous B. */
+  /** Baseline value for bridge. */
   private TubeFunction bridge;   
 
   /** The cannula function enumeration. */
@@ -261,16 +261,6 @@ public class Baseline {
   /** Baseline value for venous bubbles. */
   private boolean venousBubbles;
   
-  /** Baseline value for min O2 flow. */
-  private double minO2Flow;
-  /** Baseline value for max O2 flow. */
-  private double maxO2Flow;
-  
-  /** Baseline value for min CO2 flow. */
-  private double minCo2Flow;
-  /** Baseline value for max CO2 flow. */
-  private double maxCo2Flow;
-  
   /** Baseline value for min fiO2. */
   private double minFiO2;
   /** Baseline value for max fiO2. */
@@ -327,11 +317,8 @@ public class Baseline {
   /** Baseline value for power. */
   private PowerFunction power; 
   
-  /** Baseline value for emergency function. */
-  private boolean emergencyFunction;
-  
-  /** Baseline value for bubble detector. */
-  private boolean bubbleDetector;
+  /** Baseline value for bubble detector alarming. */
+  private boolean alarming;
   
   /**
    * Returns true if the baseline is reached.
@@ -344,6 +331,25 @@ public class Baseline {
     return (bleeding == patient.isBleeding())
         && (patient.getHeartRate() >= minHeartRate) 
         && (patient.getHeartRate() <= maxHeartRate);   // TODO: add other conditions
+  }
+  
+  /**
+   * Returns the alarming.
+   *
+   * @return The alarming.
+   */
+  public boolean isAlarming() {
+    return alarming;
+  }
+
+
+  /**
+   * Sets the alarming.
+   *
+   * @param alarming The alarming to set.
+   */
+  public void setAlarming(boolean alarming) {
+    this.alarming = alarming;
   }
 
   /**
@@ -489,25 +495,7 @@ public class Baseline {
   public void setBroken(boolean broken) {
     this.broken = broken;
   }
-
-  /**
-   * Gets the bubbleDetector.
-   *
-   * @return The bubbleDetector.
-   */
-  public boolean isBubbleDetector() {
-    return bubbleDetector;
-  }
-
-  /**
-   * Sets the bubbleDetector.
-   *
-   * @param bubbleDetector The bubbleDetector to set.
-   */
-  public void setBubbleDetector(boolean bubbleDetector) {
-    this.bubbleDetector = bubbleDetector;
-  }
-
+  
   /**
    * Gets the cannula.
    *
@@ -524,24 +512,6 @@ public class Baseline {
    */
   public void setCannula(CannulaFunction cannula) {
     this.cannula = cannula;
-  }
-
-  /**
-   * Gets the emergencyFunction.
-   *
-   * @return The emergencyFunction.
-   */
-  public boolean isEmergencyFunction() {
-    return emergencyFunction;
-  }
-
-  /**
-   * Sets the emergencyFunction.
-   *
-   * @param emergencyFunction The emergencyFunction to set.
-   */
-  public void setEmergencyFunction(boolean emergencyFunction) {
-    this.emergencyFunction = emergencyFunction;
   }
 
   /**
@@ -581,24 +551,6 @@ public class Baseline {
   }
 
   /**
-   * Gets the maxCo2Flow.
-   *
-   * @return The maxCo2Flow.
-   */
-  public double getMaxCo2Flow() {
-    return maxCo2Flow;
-  }
-
-  /**
-   * Sets the maxCo2Flow.
-   *
-   * @param maxCo2Flow The maxCo2Flow to set.
-   */
-  public void setMaxCo2Flow(double maxCo2Flow) {
-    this.maxCo2Flow = maxCo2Flow;
-  }
-
-  /**
    * Gets the maxFiO2.
    *
    * @return The maxFiO2.
@@ -632,24 +584,6 @@ public class Baseline {
    */
   public void setMaxHgb(double maxHgb) {
     this.maxHgb = maxHgb;
-  }
-
-  /**
-   * Gets the maxO2Flow.
-   *
-   * @return The maxO2Flow.
-   */
-  public double getMaxO2Flow() {
-    return maxO2Flow;
-  }
-
-  /**
-   * Sets the maxO2Flow.
-   *
-   * @param maxO2Flow The maxO2Flow to set.
-   */
-  public void setMaxO2Flow(double maxO2Flow) {
-    this.maxO2Flow = maxO2Flow;
   }
 
   /**
@@ -797,24 +731,6 @@ public class Baseline {
   }
 
   /**
-   * Gets the minCo2Flow.
-   *
-   * @return The minCo2Flow.
-   */
-  public double getMinCo2Flow() {
-    return minCo2Flow;
-  }
-
-  /**
-   * Sets the minCo2Flow.
-   *
-   * @param minCo2Flow The minCo2Flow to set.
-   */
-  public void setMinCo2Flow(double minCo2Flow) {
-    this.minCo2Flow = minCo2Flow;
-  }
-
-  /**
    * Gets the minFiO2.
    *
    * @return The minFiO2.
@@ -848,24 +764,6 @@ public class Baseline {
    */
   public void setMinHgb(double minHgb) {
     this.minHgb = minHgb;
-  }
-
-  /**
-   * Gets the minO2Flow.
-   *
-   * @return The minO2Flow.
-   */
-  public double getMinO2Flow() {
-    return minO2Flow;
-  }
-
-  /**
-   * Sets the minO2Flow.
-   *
-   * @param minO2Flow The minO2Flow to set.
-   */
-  public void setMinO2Flow(double minO2Flow) {
-    this.minO2Flow = minO2Flow;
   }
 
   /**
@@ -1083,4 +981,5 @@ public class Baseline {
   public void setVenousBubbles(boolean venousBubbles) {
     this.venousBubbles = venousBubbles;
   }
+  
 }
