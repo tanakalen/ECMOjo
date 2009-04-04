@@ -76,6 +76,9 @@ public class InterventionDetailPanel extends DetailPanel {
     else if (interventionLocation == InterventionLocation.BEFORE_OXIGENATOR) {
       labelImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Lbl-C.png");
     }
+    else if (interventionLocation == InterventionLocation.AFTER_OXIGENATOR) {
+      labelImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Lbl-D.png");
+    }
     else {
       Error.out("Intervention location not defined: " + interventionLocation);
     }

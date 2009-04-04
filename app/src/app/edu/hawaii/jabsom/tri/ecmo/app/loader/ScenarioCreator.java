@@ -163,6 +163,10 @@ public final class ScenarioCreator {
     interventionComponent3.setInterventionLocation(InterventionLocation.PATIENT);
     equipment.add(interventionComponent3);
 
+    InterventionComponent interventionComponent4 = new InterventionComponent();
+    interventionComponent4.setInterventionLocation(InterventionLocation.AFTER_OXIGENATOR);
+    equipment.add(interventionComponent4);
+    
     LabComponent labComponent1 = new LabComponent();
     labComponent1.setLabTest(BloodGasLabTest.class);
     equipment.add(labComponent1);
