@@ -17,6 +17,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.comp.TubeComponentPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.DetailPanel.DetailActionListener;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.ComponentPanel.ComponentActionListener;
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -126,7 +127,8 @@ public class ManagerPanel extends JPanel {
     // add info label
     infoLabel = new JTextArea();
     infoLabel.setOpaque(false);
-    infoLabel.setFont(infoLabel.getFont().deriveFont(14f));
+    infoLabel.setFont(infoLabel.getFont().deriveFont(Font.BOLD, 16f));
+    infoLabel.setEditable(false);
     infoLabel.setWrapStyleWord(true);
     infoLabel.setLineWrap(true);
     infoLabel.setSize(140, 45);
