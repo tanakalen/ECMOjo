@@ -55,6 +55,9 @@ public class InterventionComponentPanel extends ComponentPanel {
     else if (interventionLocation == InterventionLocation.BEFORE_OXIGENATOR) {
       setLocation(628, 428);
     }
+    else if (interventionLocation == InterventionLocation.AFTER_OXIGENATOR) {
+      setLocation(515, 348);
+    }
     else {
       throw new RuntimeException("Intervention location not defined: " + interventionLocation);
     }
