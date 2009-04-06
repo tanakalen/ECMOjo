@@ -102,6 +102,8 @@ public class ImageToggleButton extends JToggleButton {
    * @param g  Graphics context.
    */
   public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+   
     int width = getSize().width;
     int height = getSize().height;
     int imageWidth = this.pressedImage.getWidth(this);

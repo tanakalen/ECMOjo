@@ -71,6 +71,24 @@ public class PatientPanel extends ComponentPanel {
   }
 
   /**
+   * Returns the patient.
+   * 
+   * @return  The patient.
+   */
+  public Patient getPatient() {
+    return (Patient)getComponent();
+  }
+  
+  /**
+   * Sets the patient.
+   * 
+   * @param patient  The patient.
+   */
+  public void setPatient(Patient patient) {
+    setComponent(patient);
+  }
+  
+  /**
    * Called when the component got updated.
    */
   public void handleUpdate() {
@@ -94,21 +112,20 @@ public class PatientPanel extends ComponentPanel {
     // draw base
     g2.drawImage(patientImage, 0, 0, this);
 
-    // do blending
-    // float alpha = (float)(1.0 - component.getSvO2()) * 2;
-    float alpha = 0.0f;
-    if (alpha > 1.0f) {
+    // do blue overlay
+    Patient patient = getPatient();
+    float alpha = (float)(0.85 - patient.getO2Saturation()) * 2;
+    if (alpha < 0.0f) {
+      alpha = 0.0f;
+    }
+    else if (alpha > 1.0f) {
       alpha = 1.0f;
     }
-    Composite oldComp = g2.getComposite();
-    Composite alphaComp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
-    g2.setComposite(alphaComp);
-
+    Composite oldComposite = g2.getComposite();
+    Composite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+    g2.setComposite(alphaComposite);
     g2.drawImage(patientBlueImage, 0, 0, this);
-
-    // Restore the old composite.
-    g2.setComposite(oldComp);
-    
+    g2.setComposite(oldComposite);   
   }
   
   /**
