@@ -15,8 +15,10 @@ public class OxigenatorComponent extends Component {
   /** The oxigenator type. */
   private OxiType oxiType;
   
-  /** The total sweep [0.0, 10.0]. */
-  private double totalSweep;
+  /** The total sweep integer. total sweep = integer + decimal / 10 [0.0, 10.0]. */
+  private int totalSweepInteger;
+  /** The total sweep decimal. total sweep = integer + decimal / 10 [0.0, 10.0]. */
+  private int totalSweepDecimal;
   /** The oxygen conzentration in percent / 100 [0.00, 1.00]. */
   private double fiO2;
 
@@ -51,7 +53,7 @@ public class OxigenatorComponent extends Component {
    * @return  The total sweep.
    */
   public double getTotalSweep() {
-    return totalSweep;
+    return (double) totalSweepInteger + (double) totalSweepDecimal / 10.0;
   }
 
   /**
@@ -60,7 +62,8 @@ public class OxigenatorComponent extends Component {
    * @param totalSweep  The total sweep.
    */
   public void setTotalSweep(double totalSweep) {
-    this.totalSweep = totalSweep;
+    this.totalSweepInteger = (int) totalSweep;
+    this.totalSweepDecimal = (int) (totalSweep - (int) totalSweep) * 10;
   }
 
   /**
@@ -123,6 +126,43 @@ public class OxigenatorComponent extends Component {
     return false;
   }
   
+  
+  /**
+   * Returns the totalSweepInteger.
+   *
+   * @return The totalSweepInteger.
+   */
+  public int getTotalSweepInteger() {
+    return totalSweepInteger;
+  }
+
+  /**
+   * Sets the totalSweepInteger.
+   *
+   * @param totalSweepInteger The totalSweepInteger to set.
+   */
+  public void setTotalSweepInteger(int totalSweepInteger) {
+    this.totalSweepInteger = totalSweepInteger;
+  }
+
+  /**
+   * Returns the totalSweepDecimal.
+   *
+   * @return The totalSweepDecimal.
+   */
+  public int getTotalSweepDecimal() {
+    return totalSweepDecimal;
+  }
+
+  /**
+   * Sets the totalSweepDecimal.
+   *
+   * @param totalSweepDecimal The totalSweepDecimal to set.
+   */
+  public void setTotalSweepDecimal(int totalSweepDecimal) {
+    this.totalSweepDecimal = totalSweepDecimal;
+  }
+
   /**
    * Returns the name of the component.
    * 

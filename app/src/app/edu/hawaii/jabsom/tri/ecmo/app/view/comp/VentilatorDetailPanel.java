@@ -26,7 +26,7 @@ public class VentilatorDetailPanel extends DetailPanel {
     setOpaque(false);
     
     StandardDialog.showDialog(this, DialogType.ERROR, DialogOption.OK
-        , "Ventilator Settings", "You are advised not to change the Ventilator Settings");
+        , "Ventilator Settings", "You are advised not to change the Ventilator Settings.");
   }
 
   /**
