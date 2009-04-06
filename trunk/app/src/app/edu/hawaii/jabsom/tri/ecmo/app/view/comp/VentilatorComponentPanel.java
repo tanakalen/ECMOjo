@@ -35,7 +35,7 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
   /** The rollover image. */
   private Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-VentilatorRol.png");
   /** The emergency none image. */
-  private Image noneImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-VentilatorNone.png");
+  private Image selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-VentilatorSel.png");
   
   /** The ventilator formatter. */
   private final DecimalFormat ventilatorFormatter = new DecimalFormat("0.0");
@@ -111,7 +111,7 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
     add(emergencyButton); 
     
     // add toggle button
-    selectionButton = new ImageToggleButton(null, rolloverImage, noneImage, noneImage);
+    selectionButton = new ImageToggleButton(null, rolloverImage, selectedImage, selectedImage);
     selectionButton.setToolTipText(component.getName());
     selectionButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
@@ -235,6 +235,6 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
    * @param group  The group.
    */
   public void assign(ButtonGroup group) {
-    // not needed for this component
+    group.add(selectionButton);
   }
 }

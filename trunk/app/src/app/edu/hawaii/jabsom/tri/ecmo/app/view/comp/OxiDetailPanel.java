@@ -100,11 +100,11 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
     incTotalSweepIntegerButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         OxigenatorAction action = new OxigenatorAction();
-        if ((component.getTotalSweep() + 1.0) > 10.0) {
-          action.setTotalSweep(10.0);
+        if ((component.getTotalSweepInteger() + 1) > 10) {
+          action.setTotalSweepInteger(10);
         }
         else {
-          action.setTotalSweep(component.getTotalSweep() + 1.0);
+          action.setTotalSweepInteger(component.getTotalSweepInteger() + 1);
         }
         action.setFiO2(component.getFiO2());
         notifyActionListeners(action);
@@ -119,11 +119,11 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
     decTotalSweepIntegerButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         OxigenatorAction action = new OxigenatorAction();
-        if ((component.getTotalSweep() - 1.0) < 0.0) {
-          action.setTotalSweep(0.0);
+        if ((component.getTotalSweepInteger() - 1) < 0) {
+          action.setTotalSweepInteger(0);
         }
         else {
-          action.setTotalSweep(component.getTotalSweep() - 1.0);
+          action.setTotalSweepInteger(component.getTotalSweepInteger() - 1);
         }
         action.setFiO2(component.getFiO2());
         notifyActionListeners(action);
@@ -138,11 +138,11 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
     incTotalSweepDecimalButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         OxigenatorAction action = new OxigenatorAction();
-        if ((component.getTotalSweep() + 0.1) > 10.0) {
-          action.setTotalSweep(10.0);
+        if ((component.getTotalSweepDecimal() + 1) > 9) {
+          action.setTotalSweepDecimal(9);
         }
         else {
-          action.setTotalSweep(component.getTotalSweep() + 0.1);
+          action.setTotalSweepDecimal(component.getTotalSweepDecimal() + 1);
         }
         action.setFiO2(component.getFiO2());
         notifyActionListeners(action);
@@ -157,11 +157,11 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
     decTotalSweepDecimalButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         OxigenatorAction action = new OxigenatorAction();
-        if ((component.getTotalSweep() - 0.1) < 0.0) {
-          action.setTotalSweep(0.0);
+        if ((component.getTotalSweepDecimal() - 1) < 0) {
+          action.setTotalSweepDecimal(0);
         }
         else {
-          action.setTotalSweep(component.getTotalSweep() - 0.1);
+          action.setTotalSweepDecimal(component.getTotalSweepDecimal() - 1);
         }
         action.setFiO2(component.getFiO2());
         notifyActionListeners(action);
@@ -186,7 +186,8 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
         }
         else {
           OxigenatorAction action = new OxigenatorAction();
-          action.setTotalSweep(component.getTotalSweep());
+          action.setTotalSweepInteger(component.getTotalSweepInteger());
+          action.setTotalSweepDecimal(component.getTotalSweepDecimal());          
           action.setFiO2(value);
           notifyActionListeners(action);
         }
