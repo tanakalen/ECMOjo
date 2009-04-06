@@ -12,9 +12,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
  * @since    September 5, 2008
  */
 public class VentilatorDetailPanel extends DetailPanel {
-
-  /** The component. */
-  private VentilatorComponent component;
   
   /**
    * Constructor for panel.
@@ -23,7 +20,6 @@ public class VentilatorDetailPanel extends DetailPanel {
    */
   protected VentilatorDetailPanel(final VentilatorComponent component) {
     super(component);
-    this.component = component;
     
     // set layout and look
     setLayout(null);

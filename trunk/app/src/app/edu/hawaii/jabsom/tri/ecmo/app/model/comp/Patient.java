@@ -276,6 +276,7 @@ public class Patient  extends Component {
    */
   public void setO2Saturation(double saturation) {
     o2Saturation = saturation;
+    notifyUpdate();
   }
   
   /**
