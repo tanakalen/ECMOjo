@@ -52,6 +52,7 @@ patient-weight = 5
 patient-lung-function = bad
 patient-heart-function = good
 patient-bleeding = true
+patient-temperature = 37
 
 # Heater
 heater-temperature = 37
