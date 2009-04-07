@@ -4,6 +4,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
@@ -54,6 +55,15 @@ public class LabRequestAction extends Action {
       
       // fill in details
       // TODO
+      // Do we want more than just patient blood gas?
+      //   e.g. pump gas: pre and post membrane
+      
+      Patient patient = game.getPatient();
+      labTest.setPH(patient.getPH());
+      labTest.setPCO2(patient.getPCO2());
+      labTest.setPO2(patient.getPO2());
+      labTest.setHCO3(patient.getHCO3());
+      labTest.setBE(patient.getBE());
       
       result = labTest;
     }
