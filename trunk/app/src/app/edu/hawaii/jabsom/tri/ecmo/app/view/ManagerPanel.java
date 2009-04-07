@@ -88,7 +88,7 @@ public class ManagerPanel extends JPanel {
         infoLabel.setText(component.getComponent().toString());
         
         // send view action
-        manager.execute(new ViewAction(component.getComponent().getClass()));
+        manager.execute(new ViewAction(component.getComponent()));
         
         // update
         revalidate();

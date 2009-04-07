@@ -14,8 +14,19 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.PumpAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.TubeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.VentilatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ViewAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction.Check;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.TubeAction.Location;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.InterventionComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.AlbuminIntervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.BloodIntervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.DopamineIntervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.FFPIntervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.HeparinBolusIntervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.Intervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.InterventionLocation;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.PlateletsIntervention;
 
 /**
  * It's the tutorial with no "real" goal. 
@@ -111,8 +122,7 @@ public class TutorialGoal extends Goal {
    *   Action:Pump:off                      pump turned off
    *   Action:Pump:flow:[>|<][flow]         pump flow changed: e.g.  Action:Pump:flow:>1.304  or  Action:Pump:flow:<1.4
    *   Action:Oxi                           oxigenator action performed
-   *   Action:Oxi:O2:[>|<][flow]            O2 flow changed.
-   *   Action:Oxi:CO2:[>|<][flow]           CO2 flow changed.
+   *   Action:Oxi:totalSweep:[>|<][flow]    total sweep flow changed.
    *   Action:Oxi:fiO2:[>|<][flow]          fiO2 flow changed.
    *   Action:Intervention                  intervention performed
    *   Action:Intervention:[Name]           intervention executed where [Name] is "Albumin", "Blood", "Dopamine", ...
@@ -148,8 +158,8 @@ public class TutorialGoal extends Goal {
             // Action:View:[Component]  viewing, where [Component] is "PumpComponent", "ACTComponent", "Patient"... 
             if (action instanceof ViewAction) {
               String triggerComponent = items[2];
-              Class<? extends Component> component = ((ViewAction)action).getComponent();
-              String actualComponent = component.getName();
+              Component component = ((ViewAction)action).getComponent();
+              String actualComponent = component.getClass().getName();
               actualComponent = actualComponent.substring(actualComponent.lastIndexOf(".") + 1);
               if (actualComponent.equals(triggerComponent)) {
                 progress++;
@@ -159,11 +169,50 @@ public class TutorialGoal extends Goal {
           }
           else {
             if (items[2].equals("LabTest")) {
-              // Action:View:LabTest:[LabText]  viewing, where [LabTest] is "BloodGasLabTest", "ChemistryLabTest", ...
-
+              if (items.length <= 4) {
+                // Action:View:LabTest:[LabTest]  viewing, where [LabTest] is "BloodGasLabTest", "ChemistryLabTest", ...
+                if (action instanceof ViewAction) {
+                  String triggerComponent = items[3];
+                  Component component = ((ViewAction)action).getComponent();
+                  String actualComponent = component.getClass().getName();
+                  actualComponent = actualComponent.substring(actualComponent.lastIndexOf(".") + 1);
+                  if (actualComponent.equals(triggerComponent)) {
+                    progress++;
+                    notifyUpdate();
+                  }
+                }
+              }
             }
             else if (items[2].equals("Intervention")) {          
-              // Action:View:Intervention:[Location]  viewing, where [Location] is "BEFORE_PUMP", "PATIENT", ...
+              if (items.length <= 4) {
+                // Action:View:Intervention:[Location]  viewing, where [Location] is "BEFORE_PUMP", "PATIENT", ...
+                if (action instanceof ViewAction) {
+                  Component component = ((ViewAction)action).getComponent();
+                  String actualComponent = component.getClass().getName();
+                  actualComponent = actualComponent.substring(actualComponent.lastIndexOf(".") + 1);
+                  if (actualComponent.equals("InterventionComponent")) {                    
+                    InterventionLocation triggerLocation = null;
+                    if (items[3].equals("BEFORE_PUMP")) {
+                      triggerLocation = InterventionLocation.BEFORE_PUMP;
+                    }
+                    else if (items[3].equals("BEFORE_OXIGENATOR")) {
+                      triggerLocation = InterventionLocation.BEFORE_OXIGENATOR;
+                    }
+                    else if (items[3].equals("AFTER_OXIGENATOR")) {
+                      triggerLocation = InterventionLocation.AFTER_OXIGENATOR; 
+                    }
+                    else if (items[3].equals("PATIENT")) {
+                      triggerLocation = InterventionLocation.PATIENT;
+                    } 
+                    InterventionComponent actualIntervention = (InterventionComponent) component;
+                    InterventionLocation actualLocation = actualIntervention.getInterventionLocation();
+                    if (actualLocation == triggerLocation) {                    
+                      progress++;
+                      notifyUpdate();
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -175,22 +224,31 @@ public class TutorialGoal extends Goal {
               progress++;
               notifyUpdate();
             }
-            else {
+            else {           
               if (items[2].equals("on")) {
                 // Action:Pump:on  pump turned on
-
-              
+                boolean on = ((PumpAction) action).isOn();
+                if (on == true) {
+                  progress++;
+                  notifyUpdate();
+                }
               }
               else if (items[2].equals("off")) {
                 // Action:Pump:off  pump turned off
-
-              
+                boolean on = ((PumpAction) action).isOn();
+                if (on == false) {
+                  progress++;
+                  notifyUpdate();
+                }
               }
               else if (items[2].equals("flow")) { 
                 // Action:Pump:flow:[>|<][flow]  pump flow changed: 
                 // e.g.  Action:Pump:flow:>1.304  or  Action:Pump:flow:<1.4
-              }
-              
+                String operator = items[3].substring(0, 1);
+                double triggerFlow = Double.parseDouble(items[3].substring(1));
+                double actualFlow = ((PumpAction) action).getFlow();
+                checkFlow(operator, actualFlow, triggerFlow);
+              }              
             }
           }
         }
@@ -203,14 +261,19 @@ public class TutorialGoal extends Goal {
               notifyUpdate();
             }
             else {
-              if (items[2].equals("O2")) {
-                // Action:Oxi:O2:[>|<][flow]  O2 flow changed.
-              }
-              else if (items[2].equals("CO2")) {
-                // Action:Oxi:CO2:[>|<][flow]  CO2 flow changed.
+              if (items[2].equals("totalSweep")) {
+                // Action:Oxi:totalSweep:[>|<][flow]  total sweep flow changed.
+                String operator = items[3].substring(0, 1);
+                double triggerFlow = Double.parseDouble(items[3].substring(1));
+                double actualFlow = ((OxigenatorAction) action).getTotalSweep();
+                checkFlow(operator, actualFlow, triggerFlow);
               }
               else if (items[2].equals("fiO2")) {
                 // Action:Oxi:fiO2:[>|<][flow]  fiO2 flow changed.
+                String operator = items[3].substring(0, 1);
+                double triggerFlow = Double.parseDouble(items[3].substring(1));
+                double actualFlow = ((OxigenatorAction) action).getFiO2();
+                checkFlow(operator, actualFlow, triggerFlow);
               }
             }
           }
@@ -225,6 +288,43 @@ public class TutorialGoal extends Goal {
             }
             else {          
               // Action:Intervention:[Name]  intervention executed where [Name] is "Albumin", "Blood", "Dopamine", ...
+              Intervention actualIntervention = ((InterventionAction) action).getIntervention();
+              if (items[2].equals("Blood")) {
+                if (actualIntervention instanceof BloodIntervention) {
+                  progress++;
+                  notifyUpdate();
+                }
+              }
+              else if (items[2].equals("Dopamine")) {
+                if (actualIntervention instanceof DopamineIntervention) {
+                  progress++;
+                  notifyUpdate();
+                }
+              }
+              else if (items[2].equals("HeparinBolus")) {
+                if (actualIntervention instanceof HeparinBolusIntervention) {
+                  progress++;
+                  notifyUpdate();
+                }
+              }
+              else if (items[2].equals("FFP")) {
+                if (actualIntervention instanceof FFPIntervention) {
+                  progress++;
+                  notifyUpdate();
+                }
+              }
+              else if (items[2].equals("Albumin")) {
+                if (actualIntervention instanceof AlbuminIntervention) {
+                  progress++;
+                  notifyUpdate();
+                }
+              }
+              else if (items[2].equals("Platelets")) {
+                if (actualIntervention instanceof PlateletsIntervention) {
+                  progress++;
+                  notifyUpdate();
+                }
+              }
             }
           }
         }
@@ -238,6 +338,40 @@ public class TutorialGoal extends Goal {
             }
             else {
               // Action:Tube:[+|-][Location]  tubing change where [Location] is "ARTERIAL_A", "ARTERIAL_B", ...
+              String operator = items[2].substring(0, 1);
+              String triggerLocationString = items[2].substring(1);
+              Location actualLocation = ((TubeAction) action).getLocation();
+              boolean actualOpen = ((TubeAction) action).isOpen();
+              
+              Location triggerLocation = null;
+              boolean triggerOpen = false;
+              if (operator.equals("+")) {
+                triggerOpen = true;
+              }
+              else if (operator.equals("-")) {
+                triggerOpen = false;
+              }
+              
+              if (triggerLocationString.equals("ARTERIAL_A")) {
+                triggerLocation = Location.ARTERIAL_A;
+              }
+              else if (triggerLocationString.equals("ARTERIAL_B")) {
+                triggerLocation = Location.ARTERIAL_B;
+              }
+              else if (triggerLocationString.equals("BRIDGE")) {
+                triggerLocation = Location.BRIDGE;
+              }
+              else if (triggerLocationString.equals("VENUS_A")) {
+                triggerLocation = Location.VENUS_A;
+              }
+              else if (triggerLocationString.equals("VENUS_B")) {
+                triggerLocation = Location.VENUS_B;
+              }
+              
+              if (actualLocation == triggerLocation && actualOpen == triggerOpen) {                    
+                progress++;
+                notifyUpdate();
+              }
             }
           }
 
@@ -252,12 +386,15 @@ public class TutorialGoal extends Goal {
             }
             else {
               // Action:Heater:[>|<][temp]  heater changed: e.g. Action:Heater:>38.9
+              String operator = items[2].substring(0, 1);
+              double triggerTemperature = Double.parseDouble(items[2].substring(1));
+              double actualTemperature = ((HeaterAction) action).getTemperature();
+              checkFlow(operator, actualTemperature, triggerTemperature);
             }
           }
         }
         else if (items[1].equals("Patient")) {
           // Changing patient parameters
-
           if (action instanceof PatientAction) {
             if (items.length <= 2) {
               // Action:Patient  patient action performed.
@@ -266,6 +403,30 @@ public class TutorialGoal extends Goal {
             }
             else {
               // Action:Patient:[Check]  patient check performed where [Check] is "CANULA_SITE", "BLEEDING", ...
+              Check actualCheck = ((PatientAction) action).getCheck();
+              Check triggerCheck = null;
+              if (items[2].equals("CANULA_SITE")) {
+                triggerCheck = Check.CANULA_SITE;
+              }
+              else if (items[2].equals("BLEEDING")) {
+                triggerCheck = Check.BLEEDING;
+              }
+              else if (items[2].equals("BROKEN_ETT")) {
+                triggerCheck = Check.BROKEN_ETT;
+              }
+              else if (items[2].equals("SUCTION_ETT")) {
+                triggerCheck = Check.SUCTION_ETT;
+              }
+              else if (items[2].equals("DIAPER")) {
+                triggerCheck = Check.DIAPER;
+              }
+              else if (items[2].equals("STIMULATE")) {
+                triggerCheck = Check.STIMULATE;
+              }
+              if (actualCheck == triggerCheck) {                    
+                progress++;
+                notifyUpdate();
+              }
             }
           }
         }
@@ -279,7 +440,29 @@ public class TutorialGoal extends Goal {
             }
             else {
               // Action:Pressure:[Pref]:[>|<][x]  pressure monitor changed 
-              // where [Pref] is "premin", "premax", "postmin", ...            
+              // where [Pref] is "premin", "premax", "postmin", ...
+              double actualTemperature = 0;
+              if (items[2].equals("premin")) {
+                actualTemperature = ((PressureMonitorAction) action).getPreMembranePressureMin();
+              }
+              else if (items[2].equals("premax")) {
+                actualTemperature = ((PressureMonitorAction) action).getPreMembranePressureMax();
+              }
+              else if (items[2].equals("postmin")) {
+                actualTemperature = ((PressureMonitorAction) action).getPostMembranePressureMin();
+              }
+              else if (items[2].equals("postmax")) {
+                actualTemperature = ((PressureMonitorAction) action).getPostMembranePressureMax();
+              }
+              else if (items[2].equals("venousmin")) {
+                actualTemperature = ((PressureMonitorAction) action).getVenousPressureMin();
+              }
+              else if (items[2].equals("venousmax")) {
+                actualTemperature = ((PressureMonitorAction) action).getVenousPressureMax();
+              }
+              String operator = items[3].substring(0, 1);
+              double triggerTemperature = Double.parseDouble(items[3].substring(1));
+              checkFlow(operator, actualTemperature, triggerTemperature);
             }
           }
         }
@@ -292,8 +475,24 @@ public class TutorialGoal extends Goal {
               notifyUpdate();
             }
             else {
-              // Action:Ventilator:Emergency:on  emergency ventilator action: on
-              // Action:Ventilator:Emergency:off  emergency ventilator action: off
+              if (items[2].equals("Emergency")) {
+                if (items[3].equals("on")) {
+                  // Action:Ventilator:Emergency:on  emergency ventilator action: on
+                  boolean on = ((VentilatorAction) action).isEmergencyFunction();
+                  if (on == true) {
+                    progress++;
+                    notifyUpdate();
+                  }
+                }
+                else if (items[3].equals("off")) {
+                  // Action:Ventilator:Emergency:off  emergency ventilator action: off
+                  boolean on = ((VentilatorAction) action).isEmergencyFunction();
+                  if (on == false) {
+                    progress++;
+                    notifyUpdate();
+                  }
+                }
+              }
             }
           }
 
@@ -308,6 +507,29 @@ public class TutorialGoal extends Goal {
             }
             else {
               // Action:Bubble:[+|-][Location]  bubble action where [Location] is "arterial" or "venous".
+              String operator = items[2].substring(0, 1);
+              String triggerLocationString = items[2].substring(1);
+
+              boolean triggerOpen = false;
+              if (operator.equals("+")) {
+                triggerOpen = true; 
+              }
+              else if (operator.endsWith("-")) {
+                triggerOpen = false;
+              }
+              
+              boolean actualOpen = false;
+              if (triggerLocationString.equals("arterial")) {
+                actualOpen = ((BubbleAction) action).isArterialBubbles();
+              }
+              else if (triggerLocationString.equals("venous")) {
+                actualOpen = ((BubbleAction) action).isVenusBubbles();
+              }
+              
+              if (actualOpen == triggerOpen) {
+                progress++;
+                notifyUpdate();
+              }
             }
           }
         }
@@ -315,6 +537,28 @@ public class TutorialGoal extends Goal {
     }
   }
   
+  /**
+   * Check actual flow is greater or less than the trigger flow. 
+   * 
+   * @param operator  The operator (greater or less).
+   * @param actualFlow  The actual flow.
+   * @param triggerFlow  The trigger flow.
+   */
+  private void checkFlow(String operator, double actualFlow, double triggerFlow) {
+    if (operator.equals(">")) {
+      if (actualFlow > triggerFlow) {
+        progress++;
+        notifyUpdate();
+      }
+    }
+    else if (operator.equals("<")) {
+      if (actualFlow < triggerFlow) {
+        progress++;
+        notifyUpdate();
+      }                  
+    }
+  }
+    
   /**
    * Returns the current active tutorial item.
    * 

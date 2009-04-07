@@ -13,7 +13,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 public class ViewAction extends Action {
 
   /** The component that was viewed. */
-  private Class<? extends Component> component;
+  private Component component;
   
   
   /**
@@ -28,7 +28,7 @@ public class ViewAction extends Action {
    *
    * @param component  The component viewed.
    */
-  public ViewAction(Class<? extends Component> component) {
+  public ViewAction(Component component) {
     this.component = component;
   }
   
@@ -37,7 +37,7 @@ public class ViewAction extends Action {
    *
    * @return  The component.
    */
-  public Class<? extends Component> getComponent() {
+  public Component getComponent() {
     return component;
   }
 
@@ -46,7 +46,7 @@ public class ViewAction extends Action {
    *
    * @param component  The component to set.
    */
-  public void setComponent(Class<? extends Component> component) {
+  public void setComponent(Component component) {
     this.component = component;
   }
 
