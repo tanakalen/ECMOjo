@@ -4,7 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.BubbleAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.HeaterAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.InterventionAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.OxigenatorAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.PressureMonitorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PumpAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.TubeAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.VentilatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ViewAction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
@@ -12,7 +20,8 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 /**
  * It's the tutorial with no "real" goal. 
  *
- * @author   king
+ * @author   Christoph Aschwanden
+ * @author   Kin Lik Wang
  * @since    Jan 12, 2009
  */
 public class TutorialGoal extends Goal {
@@ -134,9 +143,9 @@ public class TutorialGoal extends Goal {
       String[] items = trigger.split(":");
       if (items[0].equals("Action")) {
         if (items[1].equals("View")) {
-          // Viewing a component
+          // Viewing a component          
           if (items.length <= 3) {
-            // [Component] 
+            // Action:View:[Component]  viewing, where [Component] is "PumpComponent", "ACTComponent", "Patient"... 
             if (action instanceof ViewAction) {
               String triggerComponent = items[2];
               Class<? extends Component> component = ((ViewAction)action).getComponent();
@@ -150,11 +159,11 @@ public class TutorialGoal extends Goal {
           }
           else {
             if (items[2].equals("LabTest")) {
-              // LabTest  
+              // Action:View:LabTest:[LabText]  viewing, where [LabTest] is "BloodGasLabTest", "ChemistryLabTest", ...
 
             }
             else if (items[2].equals("Intervention")) {          
-              // Intervention
+              // Action:View:Intervention:[Location]  viewing, where [Location] is "BEFORE_PUMP", "PATIENT", ...
             }
           }
         }
@@ -162,22 +171,143 @@ public class TutorialGoal extends Goal {
           // Changing pump parameters
           if (action instanceof PumpAction) {
             if (items.length <= 2) {
+              // Action:Pump  action on pump performed
               progress++;
               notifyUpdate();
             }
             else {
               if (items[2].equals("on")) {
-                // "on"
+                // Action:Pump:on  pump turned on
+
               
               }
               else if (items[2].equals("off")) {
-                // "off"
+                // Action:Pump:off  pump turned off
+
               
               }
               else if (items[2].equals("flow")) { 
-                // "flow" 
+                // Action:Pump:flow:[>|<][flow]  pump flow changed: 
+                // e.g.  Action:Pump:flow:>1.304  or  Action:Pump:flow:<1.4
               }
               
+            }
+          }
+        }
+        else if (items[1].equals("Oxi")) {
+          // Changing oxigenator parameters
+          if (action instanceof OxigenatorAction) {
+            if (items.length <= 2) {
+              // Action:Oxi  oxigenator action performed
+              progress++;
+              notifyUpdate();
+            }
+            else {
+              if (items[2].equals("O2")) {
+                // Action:Oxi:O2:[>|<][flow]  O2 flow changed.
+              }
+              else if (items[2].equals("CO2")) {
+                // Action:Oxi:CO2:[>|<][flow]  CO2 flow changed.
+              }
+              else if (items[2].equals("fiO2")) {
+                // Action:Oxi:fiO2:[>|<][flow]  fiO2 flow changed.
+              }
+            }
+          }
+        }
+        else if (items[1].equals("Intervention")) {
+          // Changing intervention parameters
+          if (action instanceof InterventionAction) {
+            if (items.length <= 2) {
+              // Action:Intervention  intervention performed
+              progress++;
+              notifyUpdate();
+            }
+            else {          
+              // Action:Intervention:[Name]  intervention executed where [Name] is "Albumin", "Blood", "Dopamine", ...
+            }
+          }
+        }
+        else if (items[1].equals("Tube")) {
+          // Changing tube parameters
+          if (action instanceof TubeAction) {
+            if (items.length <= 2) {
+              // Action:Tube  action on tubs performed
+              progress++;
+              notifyUpdate();
+            }
+            else {
+              // Action:Tube:[+|-][Location]  tubing change where [Location] is "ARTERIAL_A", "ARTERIAL_B", ...
+            }
+          }
+
+        }
+        else if (items[1].equals("Heater")) {
+          // Changing heater parameters
+          if (action instanceof HeaterAction) {
+            if (items.length <= 2) {
+              // Action:Heater  action on heater performed
+              progress++;
+              notifyUpdate();
+            }
+            else {
+              // Action:Heater:[>|<][temp]  heater changed: e.g. Action:Heater:>38.9
+            }
+          }
+        }
+        else if (items[1].equals("Patient")) {
+          // Changing patient parameters
+
+          if (action instanceof PatientAction) {
+            if (items.length <= 2) {
+              // Action:Patient  patient action performed.
+              progress++;
+              notifyUpdate();
+            }
+            else {
+              // Action:Patient:[Check]  patient check performed where [Check] is "CANULA_SITE", "BLEEDING", ...
+            }
+          }
+        }
+        else if (items[1].equals("Pressure")) {
+          // Changing pressure parameters
+          if (action instanceof PressureMonitorAction) {
+            if (items.length <= 2) {
+              // Action:Pressure  action on pressure monitor performed.
+              progress++;
+              notifyUpdate();
+            }
+            else {
+              // Action:Pressure:[Pref]:[>|<][x]  pressure monitor changed 
+              // where [Pref] is "premin", "premax", "postmin", ...            
+            }
+          }
+        }
+        else if (items[1].equals("Ventilator")) {
+          // Changing ventilator parameters
+          if (action instanceof VentilatorAction) {
+            if (items.length <= 2) {
+              // Action:Ventilator  ventilator performed
+              progress++;
+              notifyUpdate();
+            }
+            else {
+              // Action:Ventilator:Emergency:on  emergency ventilator action: on
+              // Action:Ventilator:Emergency:off  emergency ventilator action: off
+            }
+          }
+
+        }
+        else if (items[1].equals("Bubble")) {
+          // Changing bubble parameters
+          if (action instanceof BubbleAction) {
+            if (items.length <= 2) {
+              // Action:Bubble  bubble action performed
+              progress++;
+              notifyUpdate();
+            }
+            else {
+              // Action:Bubble:[+|-][Location]  bubble action where [Location] is "arterial" or "venous".
             }
           }
         }
