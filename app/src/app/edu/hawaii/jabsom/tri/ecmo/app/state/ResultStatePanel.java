@@ -61,19 +61,20 @@ public class ResultStatePanel extends JPanel {
     // add info area
     JTextArea infoArea = new JTextArea(ResultReporter.getReport(game));
     infoArea.setOpaque(false);
-    infoArea.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
+    infoArea.setEditable(false);
+    infoArea.setFont(titleLabel.getFont().deriveFont(Font.PLAIN, 14f));
     infoArea.setLocation(30, 160);
     infoArea.setSize(720, 360);
     add(infoArea);
     
     // output overall result
     boolean success = game.getGoal().isWon(game);
-    Image result = success ? ImageLoader.getInstance().getImage("conf/image/interface/result/Patient-BabyHappy.png") 
-                           : ImageLoader.getInstance().getImage("conf/image/interface/result/Patient-BabySad.png");
+    Image result = success ? ImageLoader.getInstance().getImage("conf/image/interface/result/Success.png") 
+                           : ImageLoader.getInstance().getImage("conf/image/interface/result/Failure.png");
     JLabel resultLabel = new JLabel();
     resultLabel.setVerticalAlignment(JLabel.CENTER);
-    resultLabel.setLocation(144, 80);
-    resultLabel.setSize(512, 512);
+    resultLabel.setLocation(600, 100);
+    resultLabel.setSize(200, 400);
     resultLabel.setIcon(new ImageIcon(result));
     add(resultLabel);
     
@@ -89,7 +90,7 @@ public class ResultStatePanel extends JPanel {
       }
     });
     okButton.setSize(75, 30);
-    okButton.setLocation(670, 530);
+    okButton.setLocation(665, 530);
     add(okButton);
   }
   
