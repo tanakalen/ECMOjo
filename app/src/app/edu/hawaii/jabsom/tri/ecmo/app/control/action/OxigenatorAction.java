@@ -37,16 +37,15 @@ public class OxigenatorAction extends Action {
     this.fiO2 = fiO2;
   }
 
-  
   /**
    * Returns the totalSweepInteger.
    *
    * @return The totalSweepInteger.
    */
-  public int getTotalSweepInteger() {
-    return totalSweepInteger;
+  public double getTotalSweep() {
+    return (double) totalSweepInteger + (double) totalSweepDecimal / 10;
   }
-
+  
   /**
    * Sets the total sweep.
    *
@@ -55,6 +54,15 @@ public class OxigenatorAction extends Action {
   public void setTotalSweep(double totalSweep) {
     this.totalSweepInteger = (int) totalSweep;
     this.totalSweepDecimal = (int) (totalSweep - (int) totalSweep) * 10;
+  }
+
+  /**
+   * Returns the totalSweepInteger.
+   *
+   * @return The totalSweepInteger.
+   */
+  public int getTotalSweepInteger() {
+    return totalSweepInteger;
   }
   
   /**
