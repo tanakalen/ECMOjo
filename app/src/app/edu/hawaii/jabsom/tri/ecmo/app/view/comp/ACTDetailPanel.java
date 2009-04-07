@@ -38,14 +38,14 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList.LabTestListener;
 public class ACTDetailPanel extends DetailPanel implements LabTestListener {
 
   /** The detail image. */
-  private Image detailImage 
-    = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Lab.png");
+  private Image detailImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Lab.png");
   
   /** The table model. */
   private DefaultTableModel tableModel;
   
   /** The table. */
   private JXTable table;
+  
   
   /**
    * Constructor for panel.
