@@ -69,8 +69,8 @@ public class ResultStatePanel extends JPanel {
     
     // output overall result
     boolean success = game.getGoal().isWon(game);
-    Image result = success ? ImageLoader.getInstance().getImage("conf/image/interface/result/Success.png") 
-                           : ImageLoader.getInstance().getImage("conf/image/interface/result/Failure.png");
+    Image result = success ? ImageLoader.getInstance().getImage("conf/image/interface/result/success.png") 
+                           : ImageLoader.getInstance().getImage("conf/image/interface/result/failure.png");
     JLabel resultLabel = new JLabel();
     resultLabel.setVerticalAlignment(JLabel.CENTER);
     resultLabel.setLocation(600, 100);
