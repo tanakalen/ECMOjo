@@ -75,7 +75,7 @@ public final class Updater {
            .getComponent(AlarmIndicatorComponent.class);
 
       // update equipment (physiologic monitor)
-      physiologicMonitor.setTemperature(patient.getTemperature());
+      physiologicMonitor.setTemperature(Math.rint(patient.getTemperature()));
       physiologicMonitor.setHeartRate(patient.getHeartRate());
       physiologicMonitor.setRespiratoryRate(patient.getRespiratoryRate());
       physiologicMonitor.setO2Saturation(patient.getO2Saturation());
@@ -173,6 +173,16 @@ public final class Updater {
       }
       
       // update patient
+      // update patient temperature
+      double patientTemperature = patient.getTemperature();
+      if (patientTemperature < heater.getTemperature()) {
+        patient.setTemperature(patientTemperature + 0.01);
+      }
+      else if (patientTemperature > heater.getTemperature()) {
+        patient.setTemperature(patientTemperature - 0.01);
+      }
+      
+      // update patient pH, pCO2, HCO3, base excess
       double ccPerKg = pump.getFlow() * 1000 / patient.getWeight();
       Mode mode = tube.getMode();
       HeartFunction heartFunction = patient.getHeartFunction();
