@@ -36,15 +36,6 @@ public class OxigenatorAction extends Action {
   public void setFiO2(double fiO2) {
     this.fiO2 = fiO2;
   }
-
-  /**
-   * Returns the totalSweepInteger.
-   *
-   * @return The totalSweepInteger.
-   */
-  public double getTotalSweep() {
-    return (double) totalSweepInteger + (double) totalSweepDecimal / 10;
-  }
   
   /**
    * Sets the total sweep.

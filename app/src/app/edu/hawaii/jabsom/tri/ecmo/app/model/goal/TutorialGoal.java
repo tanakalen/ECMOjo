@@ -261,11 +261,11 @@ public class TutorialGoal extends Goal {
               notifyUpdate();
             }
             else {
-              if (items[2].equals("totalSweep")) {
-                // Action:Oxi:totalSweep:[>|<][flow]  total sweep flow changed.
+              if (items[2].equals("totalSweepInteger")) {
+                // Action:Oxi:totalSweepInteger:[>|<][flow]  total sweep flow changed.
                 String operator = items[3].substring(0, 1);
-                double triggerFlow = Double.parseDouble(items[3].substring(1));
-                double actualFlow = ((OxigenatorAction) action).getTotalSweep();
+                double triggerFlow = (double) Integer.parseInt(items[3].substring(1));
+                double actualFlow = (double) ((OxigenatorAction) action).getTotalSweepInteger();
                 checkFlow(operator, actualFlow, triggerFlow);
               }
               else if (items[2].equals("fiO2")) {
@@ -346,10 +346,10 @@ public class TutorialGoal extends Goal {
               Location triggerLocation = null;
               boolean triggerOpen = false;
               if (operator.equals("+")) {
-                triggerOpen = true;
+                triggerOpen = false;
               }
               else if (operator.equals("-")) {
-                triggerOpen = false;
+                triggerOpen = true;
               }
               
               if (triggerLocationString.equals("ARTERIAL_A")) {
@@ -510,23 +510,23 @@ public class TutorialGoal extends Goal {
               String operator = items[2].substring(0, 1);
               String triggerLocationString = items[2].substring(1);
 
-              boolean triggerOpen = false;
+              boolean triggerHasBubble = false;
               if (operator.equals("+")) {
-                triggerOpen = true; 
+                triggerHasBubble = true; 
               }
               else if (operator.endsWith("-")) {
-                triggerOpen = false;
+                triggerHasBubble = false;
               }
               
-              boolean actualOpen = false;
+              boolean actualHasBubble = false;
               if (triggerLocationString.equals("arterial")) {
-                actualOpen = ((BubbleAction) action).isArterialBubbles();
+                actualHasBubble = ((BubbleAction) action).isArterialBubbles();
               }
               else if (triggerLocationString.equals("venous")) {
-                actualOpen = ((BubbleAction) action).isVenusBubbles();
+                actualHasBubble = ((BubbleAction) action).isVenusBubbles();
               }
               
-              if (actualOpen == triggerOpen) {
+              if (actualHasBubble == triggerHasBubble) {
                 progress++;
                 notifyUpdate();
               }

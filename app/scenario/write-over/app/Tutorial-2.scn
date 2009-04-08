@@ -1,0 +1,99 @@
+1
+
+# Scenario Information
+name = Tutorial 2
+desc = Run the tutorial for an introduction of ECMOjo. 
+
+# Goal Information
+goal = Tutorial
+tutorial-item1-text = Welcome to the ECMOjo tutorial. Let us explain how to modify the basic ECMO components to you.
+tutorial-item1-trigger = N/A
+tutorial-item2-text = Task 1: Click on the pump.
+tutorial-item2-trigger = Action:View:PumpComponent
+tutorial-item3-text = Task 2: Increase the flow larger than 1.0.
+tutorial-item3-trigger = Action:Pump:flow:>1.0
+tutorial-item4-text = Task 3: Click on Oxigentaor.
+tutorial-item4-trigger = Action:View:OxigenatorComponent
+tutorial-item5-text = Task 4: Increase the total sweep flow larger than 2.0
+tutorial-item5-trigger = Action:Oxi:totalSweepInteger:>1
+tutorial-item6-text = Task 5: Click on the Intervention A.
+tutorial-item6-trigger = Action:View:Intervention:PATIENT
+tutorial-item7-text = Task 6: Inject the Blood Cells Intervention.
+tutorial-item7-trigger = Action:Intervention:Blood
+tutorial-item8-text = Task 7: Add a clamp on the venus tube B.
+tutorial-item8-trigger = Action:Tube:+VENUS_B
+tutorial-item9-text = Task 8: Remove a clamp on the venus tube B.
+tutorial-item9-trigger = Action:Tube:-VENUS_B
+tutorial-item10-text = Task 9: Click on the Heater.
+tutorial-item10-trigger = Action:View:HeaterComponent
+tutorial-item11-text = Task 10: Increase the temperature larger than 37.
+tutorial-item11-trigger = Action:Heater:>37.0
+tutorial-item12-text = Task 11: Click on the Patient.
+tutorial-item12-trigger = Action:View:Patient
+tutorial-item13-text = Task 12: Check Canula site on the Patient.
+tutorial-item13-trigger = Action:Patient:CANULA_SITE
+tutorial-item14-text = Task 13: Click on the Pressure Monitor.
+tutorial-item14-trigger = Action:View:PressureMonitorComponent
+tutorial-item15-text = Task 14: Increase venous pressure maximum value larger than 20.
+tutorial-item15-trigger = Action:Pressure:venousmax:>20
+tutorial-item16-text = Task 15: Decrease venous pressure minimum value less than -50.
+tutorial-item16-trigger = Action:Pressure:venousmin:<-50
+tutorial-item17-text = Task 16: Click on the Bubble Detector.
+tutorial-item17-trigger = Action:View:BubbleDetectorComponent
+tutorial-item18-text = Task 17: Click reset on the Bubble Detector.
+tutorial-item18-trigger = Action:Bubble
+tutorial-item19-text = Task 18: Turn on the Emergency Vent button.
+tutorial-item19-trigger = Action:Ventilator:Emergency:on 
+tutorial-item20-text = Task 19: Turn off the Emergency Vent button.
+tutorial-item20-trigger = Action:Ventilator:Emergency:off
+tutorial-item21-text = Congratulations, you successfully completed the tutorial!
+tutorial-item21-trigger = N/A
+
+# Baseline Values
+baseline-bleeding = false;
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 180
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-ETT = good
+baseline-suction-ETT = good
+baseline-min-pre-membrane-pressure = 0
+baseline-max-pre-membrane-pressure = 200
+baseline-min-post-membrance-pressure = 0
+baseline-max-post-membrance-pressure = 200
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-alarming = false
+
+# Patient Information
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
+patient-heart-function = good
+patient-bleeding = false
+patient-temperature = 34
+
+# Heater
+heater-temperature = 37
