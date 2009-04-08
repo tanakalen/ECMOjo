@@ -3,10 +3,10 @@ package edu.hawaii.jabsom.tri.ecmo.app.view.lab;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,9 +17,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import king.lib.access.ImageLoader;
+
 import org.jdesktop.swingx.JXTable;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList.LabTestListener;
@@ -58,8 +61,13 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
     titleLabel.setSize(150, 20);
     add(titleLabel);
     
+    Image requestButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Lab.png");
+    Image requestButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-LabRol.png");
+    Image requestButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-LabSel.png");
+    
     // add lab request button
-    JButton requestButton = new JButton("Lab");
+    ImageButton requestButton 
+      = new ImageButton(requestButtonImage, requestButtonRolloverImage, requestButtonSelectedImage);
     requestButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
@@ -68,7 +76,7 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
       }    
     });
     requestButton.setLocation(173, 34);
-    requestButton.setSize(70, 20);
+    requestButton.setSize(54, 22);
     add(requestButton);
 
     // add table with values
