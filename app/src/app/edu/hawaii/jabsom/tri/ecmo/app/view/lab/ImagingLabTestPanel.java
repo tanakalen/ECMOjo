@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,6 +31,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.LinkButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.RolloverTable;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
@@ -75,31 +75,41 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
     titleLabel.setSize(150, 20);
     add(titleLabel);
     
-    // add lab request buttons
-    JButton requestButton;
-    requestButton = new JButton("XRay");
-    requestButton.addActionListener(new ActionListener() {
+    Image xrayButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRay.png");
+    Image xrayButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRayRol.png");
+    Image xrayButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRaySel.png");
+    
+    // add lab request button
+    ImageButton xrayButton 
+      = new ImageButton(xrayButtonImage, xrayButtonRolloverImage, xrayButtonSelectedImage);
+    xrayButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
         action.setLabTest(XRayLabTest.class);
         notifyActionListeners(action);
       }    
     });
-    requestButton.setLocation(93, 34);
-    requestButton.setSize(70, 20);
-    add(requestButton);
+    xrayButton.setLocation(103, 34);
+    xrayButton.setSize(54, 22);
+    add(xrayButton);
 
-    requestButton = new JButton("Ultra");
-    requestButton.addActionListener(new ActionListener() {
+    Image ultraButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Ultra.png");
+    Image ultraButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-UltraRol.png");
+    Image ultraButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-UltraSel.png");
+    
+    // add lab request button
+    ImageButton ultraButton 
+      = new ImageButton(ultraButtonImage, ultraButtonRolloverImage, ultraButtonSelectedImage);
+    ultraButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
         action.setLabTest(UltrasoundLabTest.class);
         notifyActionListeners(action);
       }    
     });
-    requestButton.setLocation(173, 34);
-    requestButton.setSize(70, 20);
-    add(requestButton);
+    ultraButton.setLocation(173, 34);
+    ultraButton.setSize(54, 22);
+    add(ultraButton);
 
     // add scrollable area with list of imaging tests
     tableModel = new DefaultTableModel() {
