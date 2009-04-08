@@ -13,9 +13,9 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
 public class OxigenatorAction extends Action {
 
   /** The total sweep integer. total sweep = integer + decimal / 10 [0.0, 10.0]. */
-  private int totalSweepInteger = -1;
+  private int totalSweepInteger;
   /** The total sweep decimal. total sweep = integer + decimal / 10 [0.0, 10.0]. */
-  private int totalSweepDecimal = -1;
+  private int totalSweepDecimal;
   /** The oxygen concentration in percent / 100 [0.00, 1.00]. */
   private double fiO2;
 
@@ -35,6 +35,15 @@ public class OxigenatorAction extends Action {
    */
   public void setFiO2(double fiO2) {
     this.fiO2 = fiO2;
+  }
+  
+  /**
+   * Returns the total sweep.
+   *
+   * @return The total sweep.
+   */
+  public double getTotalSweep() {
+    return (double) totalSweepInteger + (double) totalSweepDecimal / 10.0;
   }
   
   /**

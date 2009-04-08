@@ -261,11 +261,11 @@ public class TutorialGoal extends Goal {
               notifyUpdate();
             }
             else {
-              if (items[2].equals("totalSweepInteger")) {
-                // Action:Oxi:totalSweepInteger:[>|<][flow]  total sweep flow changed.
+              if (items[2].equals("totalSweep")) {
+                // Action:Oxi:totalSweep:[>|<][flow]  total sweep flow changed.
                 String operator = items[3].substring(0, 1);
-                double triggerFlow = (double) Integer.parseInt(items[3].substring(1));
-                double actualFlow = (double) ((OxigenatorAction) action).getTotalSweepInteger();
+                double triggerFlow = Double.parseDouble(items[3].substring(1));
+                double actualFlow = ((OxigenatorAction) action).getTotalSweep();
                 checkFlow(operator, actualFlow, triggerFlow);
               }
               else if (items[2].equals("fiO2")) {

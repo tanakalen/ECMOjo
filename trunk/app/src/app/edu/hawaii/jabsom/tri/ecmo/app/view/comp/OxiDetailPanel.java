@@ -106,6 +106,7 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
         else {
           action.setTotalSweepInteger(component.getTotalSweepInteger() + 1);
         }
+        action.setTotalSweepDecimal(component.getTotalSweepDecimal());
         action.setFiO2(component.getFiO2());
         notifyActionListeners(action);
       }
@@ -125,6 +126,7 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
         else {
           action.setTotalSweepInteger(component.getTotalSweepInteger() - 1);
         }
+        action.setTotalSweepDecimal(component.getTotalSweepDecimal());
         action.setFiO2(component.getFiO2());
         notifyActionListeners(action);
       }
@@ -144,6 +146,7 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
         else {
           action.setTotalSweepDecimal(component.getTotalSweepDecimal() + 1);
         }
+        action.setTotalSweepInteger(component.getTotalSweepInteger());
         action.setFiO2(component.getFiO2());
         notifyActionListeners(action);
       }
@@ -163,6 +166,7 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
         else {
           action.setTotalSweepDecimal(component.getTotalSweepDecimal() - 1);
         }
+        action.setTotalSweepInteger(component.getTotalSweepInteger());
         action.setFiO2(component.getFiO2());
         notifyActionListeners(action);
       }
