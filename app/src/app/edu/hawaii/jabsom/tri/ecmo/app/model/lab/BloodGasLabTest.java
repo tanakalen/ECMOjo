@@ -1,6 +1,5 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
 
-
 /**
  * The blood gas lab test. 
  *
@@ -9,6 +8,55 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
  */
 public class BloodGasLabTest extends LabTest {
   
+  /** The Blood Gas Type enumeration. */
+  public enum BloodGasType { 
+    /** Baby blood gas. */
+    BABY("Baby"), 
+    /** Pump blood gas pre-oxygenator. */
+    PRE("Pre"),
+    /** Pump blood gas post-oxygenator. */
+    POST("Post");
+    
+    /** The name. */
+    private String name;
+    
+    /**
+     * The constructor.
+     *
+     * @param name  The name.
+     */
+    private BloodGasType(String name) {
+      this.name = name;
+    }
+    
+    /**
+     * Returns the name.
+     * 
+     * @return  The name.
+     */
+    public String getName() {
+      return name;
+    }
+    
+    /**
+     * Returns the blood gas type that matches the name.
+     * 
+     * @param name  The name.
+     * @return  The matching lung function or null for none.
+     */
+    public static BloodGasType parse(String name) {
+      for (int i = 0; i < values().length; i++) {
+        BloodGasType value = values()[i];
+        if (name.equalsIgnoreCase(values()[i].getName())) {
+          return value;
+        }
+      }
+      return null;
+    }
+  };
+  
+  /** The blood gas type [baby, pre, post]. */
+  private BloodGasType bloodGasType;
   /** The pH [0.00, 14.00]. */
   private double pH;
   /** The pCO2 [0, 200]. */
@@ -20,6 +68,24 @@ public class BloodGasLabTest extends LabTest {
   /** The BE [-50, 50]. */
   private double bE;
 
+  
+  /**
+   * Returns the blood gas type.
+   * 
+   * @return  The blood gas type.
+   */
+  public BloodGasType getBloodGasType() {
+    return bloodGasType;
+  }
+
+  /**
+   * Sets the blood gas type.
+   * 
+   * @param bloodGasType  The bloodGasType to set.
+   */
+  public void setBloodGasType(BloodGasType bloodGasType) {
+    this.bloodGasType = bloodGasType;
+  }
   
   /**
    * Returns the BE value.
