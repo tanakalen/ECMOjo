@@ -91,7 +91,11 @@ public final class Updater {
         tubeSaO2 = 1 / ((23400 / ((cdiPo2 * cdiPo2 * cdiPo2) + (150 * cdiPo2))) + 1);
       }
       tube.setSaO2(tubeSaO2);
+      tube.setPostPH(patient.getPH());  // TODO: Reconfirm if this is trully patient
+      tube.setPostPCO2(10);  // TODO: Reconfirm relation, usually lower due to sweep
       tube.setSvO2(tube.getSaO2() * 0.75);
+      tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
+      tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
       tube.setPreMembranePressure((pump.getFlow() * 400) + (oxigenator.getClotting() * 50));
       tube.setPostMembranePressure(tube.getPreMembranePressure() - 40);
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn()) && (!tube.isVenusAOpen())) {
@@ -121,17 +125,17 @@ public final class Updater {
       // update equipment (bubble detector)
       bubbleDetector.setAlarm(tube.isArterialBubbles());
 
-      // update equipment (CDI monitor)
+      // update equipment (CDI monitor) note CDI is in line post-oxygenator
       cdiMonitor.setSaO2(tube.getSaO2());
       cdiMonitor.setSvO2(tube.getSvO2());
       cdiMonitor.setTemperature(heater.getTemperature());
       cdiMonitor.setHct(patient.getHct());
       cdiMonitor.setHgb(patient.getHgb());
-      cdiMonitor.setHCO3(patient.getHCO3());
-      cdiMonitor.setBE(patient.getBE());
-      cdiMonitor.setPH(patient.getPH());
+      cdiMonitor.setHCO3(tube.getPostHCO3());
+      cdiMonitor.setBE(tube.getPostBE(patient.getHgb()));
+      cdiMonitor.setPH(tube.getPostPH());
       cdiMonitor.setPO2((oxigenator.getFiO2() * 600) + (oxigenator.getTotalSweep() * 10));
-      cdiMonitor.setPCO2(patient.getPCO2());
+      cdiMonitor.setPCO2(tube.getPostPCO2());
 
       // update equipment (pump)
       if (bubbleDetector.isAlarm() || pressureMonitor.isAlarm()) {
