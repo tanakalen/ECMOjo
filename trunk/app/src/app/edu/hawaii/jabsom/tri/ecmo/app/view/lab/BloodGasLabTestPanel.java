@@ -90,8 +90,8 @@ public class BloodGasLabTestPanel extends LabDetailPanel implements LabTestListe
         return size + 1;
       }
       public int getRowCount() {
-        // blood gas has 5 values!
-        return 5;
+        // blood gas has 5 values and 1 type (location)
+        return 6;
       }
       public String getColumnName(int col) {
         if (col == 0) {
@@ -111,14 +111,16 @@ public class BloodGasLabTestPanel extends LabDetailPanel implements LabTestListe
         if (col == 0) {
           switch (row) {
             case 0:
-              return "pH";
+              return "Type";
             case 1:
-              return "PCO2";
+              return "pH";
             case 2:
-              return "PO2";
+              return "PCO2";
             case 3:
-              return "HCO3";
+              return "PO2";
             case 4:
+              return "HCO3";
+            case 5:
               return "BE";
             default:
               // error condition
@@ -130,14 +132,16 @@ public class BloodGasLabTestPanel extends LabDetailPanel implements LabTestListe
           if (col <= size) {
             switch (row) {
               case 0:
-                return ((BloodGasLabTest)component.getResults().get(size - col)).getPH();
+                return ((BloodGasLabTest)component.getResults().get(size - col)).getBloodGasType().getName();
               case 1:
-                return ((BloodGasLabTest)component.getResults().get(size - col)).getPCO2();
+                return ((BloodGasLabTest)component.getResults().get(size - col)).getPH();
               case 2:
-                return ((BloodGasLabTest)component.getResults().get(size - col)).getPO2();
+                return ((BloodGasLabTest)component.getResults().get(size - col)).getPCO2();
               case 3:
-                return ((BloodGasLabTest)component.getResults().get(size - col)).getHCO3();
+                return ((BloodGasLabTest)component.getResults().get(size - col)).getPO2();
               case 4:
+                return ((BloodGasLabTest)component.getResults().get(size - col)).getHCO3();
+              case 5:
                 return ((BloodGasLabTest)component.getResults().get(size - col)).getBE();
               default:
                 // error condition
@@ -155,6 +159,8 @@ public class BloodGasLabTestPanel extends LabDetailPanel implements LabTestListe
               case 3:
                 return "N/A";
               case 4:
+                return "N/A";
+              case 5:
                 return "N/A";
               default:
                 // error condition

@@ -5,12 +5,14 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest.BloodGasType;
 
 /**
  * The lab request action. 
@@ -49,23 +51,41 @@ public class LabRequestAction extends Action {
    */
   public void execute(Game game) {
     // create a new lab result
-    LabTest result;
+    LabTest result = null;
+    LabTest bgBaby = null, bgPre = null, bgPost = null;
     if (labTest.equals(BloodGasLabTest.class)) {
-      BloodGasLabTest labTest = new BloodGasLabTest();
+      BloodGasLabTest baby = new BloodGasLabTest();
+      BloodGasLabTest pre = new BloodGasLabTest();
+      BloodGasLabTest post = new BloodGasLabTest();
       
-      // fill in details
-      // TODO
-      // Do we want more than just patient blood gas?
-      //   e.g. pump gas: pre and post membrane
-      
+      //baby gas
       Patient patient = game.getPatient();
-      labTest.setPH(patient.getPH());
-      labTest.setPCO2(patient.getPCO2());
-      labTest.setPO2(patient.getPO2());
-      labTest.setHCO3(patient.getHCO3());
-      labTest.setBE(patient.getBE());
+      baby.setBloodGasType(BloodGasType.BABY);
+      baby.setPH(patient.getPH());
+      baby.setPCO2(patient.getPCO2());
+      baby.setPO2(patient.getPO2());
+      baby.setHCO3(patient.getHCO3());
+      baby.setBE(patient.getBE());
+      bgBaby = baby;
       
-      result = labTest;
+      //pre-oxygenator gas
+      TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
+      pre.setBloodGasType(BloodGasType.PRE);
+      pre.setPH(tube.getPrePH());
+      pre.setPCO2(tube.getPrePCO2());
+      pre.setPO2((tube.getSvO2() * (760 - 47)) - (tube.getPrePCO2() / 0.8)); //is this correct?
+      pre.setHCO3(tube.getPreHCO3());
+      pre.setBE(tube.getPreBE(patient.getHgb()));
+      bgPre = pre;
+      
+      //post-oxygenator gas
+      post.setBloodGasType(BloodGasType.POST);
+      post.setPH(tube.getPostPH());
+      post.setPCO2(tube.getPostPCO2());
+      post.setPO2((tube.getSaO2() * (760 - 47)) - (tube.getPostPCO2() / 0.8)); //is this correct?
+      post.setHCO3(tube.getPostHCO3());
+      post.setBE(tube.getPostBE(patient.getHgb()));
+      bgPost = post;
     }
     else if (labTest.equals(ChemistryLabTest.class)) {
       ChemistryLabTest labTest = new ChemistryLabTest();
@@ -115,7 +135,14 @@ public class LabRequestAction extends Action {
       if (component instanceof LabComponent) {
         LabComponent labComponent = (LabComponent)component;
         if (labComponent.getLabTest().isAssignableFrom(labTest)) {
-          labComponent.addResult(result);
+          if (labTest.equals(BloodGasLabTest.class)) { // TODO: Ugly please refactor
+            labComponent.addResult(bgBaby);
+            labComponent.addResult(bgPre);
+            labComponent.addResult(bgPost);
+          }
+          else {
+            labComponent.addResult(result);
+          }
         }
       }
     }
