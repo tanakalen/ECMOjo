@@ -47,9 +47,17 @@ public class TubeComponent extends Component {
   
   /** The arterial O2 saturation (red) in percent / 100 [0.00, 1.00]. */
   private double saO2;
+  /** Post-oxygenator pH [0, 14]. */
+  private double postPH;
+  /** Post-oxygenator pCO2 [0, 200]. */
+  private double postPCO2;
+
   /** The venous O2 saturation (blue) in percent / 100 [0.00, 1.00]. */
   private double svO2;
-
+  /** Pre-oxygenator pH [0, 14]. */
+  private double prePH;
+  /** Pre-oxygenator pCO2 [0, 200]. */
+  private double prePCO2;
   
   
   /**
@@ -332,6 +340,63 @@ public class TubeComponent extends Component {
   }
   
   /**
+   * Returns the venous pH (pre-oxygenator pH).
+   * 
+   * @return The pre-oxygenator pH.
+   */
+  public double getPrePH() {
+    return prePH;
+  }
+
+  /**
+   * Sets the venous pH (pre-oxygenator pH).
+   * 
+   * @param prePH The pre-oxygenator pH.
+   */
+  public void setPrePH(double prePH) {
+    this.prePH = prePH;
+    notifyUpdate();
+  }
+
+  /**
+   * Returns the venous pCO2 (pre-oxygenator pCO2).
+   * 
+   * @return prePCO2 The pre-oxygenator pCO2.
+   */
+  public double getPrePCO2() {
+    return prePCO2;
+  }
+
+  /**
+   * Sets the venous pCO2 (pre-oxygenator pCO2).
+   * 
+   * @param prePCO2 The pre-oxygenator pCO2.
+   */
+  public void setPrePCO2(double prePCO2) {
+    this.prePCO2 = prePCO2;
+    notifyUpdate();
+  }
+
+  /**
+   * Returns the venous (pre-oxygenator) BE value.
+   * 
+   * @param hgb Hemoglobin parameter.
+   * @return The BE.
+   */
+  public double getPreBE(double hgb) {
+    return (getPreHCO3() - 24.4 + (2.3 * hgb) * (getPrePH() - 7.4)) * (1 - 0.023 * hgb);
+  }
+  
+  /**
+   * Returns the venous (pre-oxygenator) HCO3 value.
+   * 
+   * @return The HCO3.
+   */
+  public double getPreHCO3() {
+    return 0.03 * getPrePCO2() * Math.pow(10, getPrePH() - 6.1);
+  }
+
+  /**
    * Returns the arterial O2 saturation value.
    * 
    * @return  The O2 value.
@@ -350,6 +415,63 @@ public class TubeComponent extends Component {
     notifyUpdate();
   }
   
+  /**
+   * Returns the arterial pH (post-oxygenator pH).
+   * 
+   * @return The post-oxygenator pH.
+   */
+  public double getPostPH() {
+    return postPH;
+  }
+
+  /**
+   * Sets the arterial pH (post-oxygenator pH).
+   * 
+   * @param postPH The post-oxygenator pH to set.
+   */
+  public void setPostPH(double postPH) {
+    this.postPH = postPH;
+    notifyUpdate();
+  }
+
+  /**
+   * Returns the arterial pCO2 (post-oxygenator pCO2).
+   * 
+   * @return The post-oxygenator pCO2.
+   */
+  public double getPostPCO2() {
+    return postPCO2;
+  }
+
+  /**
+   * Sets the arterial pCO2 (post-oxygenator pCO2).
+   * 
+   * @param postPCO2 The post-oxygenator pCO2 to set.
+   */
+  public void setPostPCO2(double postPCO2) {
+    this.postPCO2 = postPCO2;
+    notifyUpdate();
+  }
+
+  /**
+   * Returns the arterial (post-oxygenator) BE value.
+   * 
+   * @param hgb Hemoglobin parameter.
+   * @return The BE.
+   */
+  public double getPostBE(double hgb) {
+    return (getPostHCO3() - 24.4 + (2.3 * hgb) * (getPostPH() - 7.4)) * (1 - 0.023 * hgb);
+  }
+  
+  /**
+   * Returns the arterial (post-oxygenator) HCO3 value.
+   * 
+   * @return The HCO3.
+   */
+  public double getPostHCO3() {
+    return 0.03 * getPostPCO2() * Math.pow(10, getPostPH() - 6.1);
+  }
+
   /**
    * Returns the name of the component.
    * 
