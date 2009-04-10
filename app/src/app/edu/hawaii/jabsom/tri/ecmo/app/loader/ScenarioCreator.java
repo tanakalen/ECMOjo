@@ -102,7 +102,7 @@ public final class ScenarioCreator {
     
     OxigenatorComponent oxiComponent = new OxigenatorComponent();
     oxiComponent.setOxiType(OxiType.SCI_MED);
-    oxiComponent.setTotalSweep(1.0);
+    oxiComponent.setTotalSweep(2.0);
     oxiComponent.setFiO2(0.5);
     oxiComponent.setClotting(0.0);
     oxiComponent.setBroken(false);
@@ -111,7 +111,7 @@ public final class ScenarioCreator {
     PumpComponent pumpComponent = new PumpComponent();
     pumpComponent.setPumpType(PumpType.CENTRIFUGAL);
     pumpComponent.setOn(true);
-    pumpComponent.setFlow(1.0);
+    pumpComponent.setFlow(0.6);
     equipment.add(pumpComponent);
 
     VentilatorComponent ventilatorComponent = new VentilatorComponent();
