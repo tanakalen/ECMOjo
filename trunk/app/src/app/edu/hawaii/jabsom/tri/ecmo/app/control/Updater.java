@@ -83,12 +83,12 @@ public final class Updater {
       physiologicMonitor.setCentralVenousPressure(patient.getCentralVenousPressure());
       
       // update equipment (tubing)
-      double cdiPo2 = cdiMonitor.getPO2();
-      double tubeSaO2 = 0;
-      if (cdiPo2 != 0) {
-        // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
-        tubeSaO2 = 1 / ((23400 / ((cdiPo2 * cdiPo2 * cdiPo2) + (150 * cdiPo2))) + 1);
-      }
+      double paO2 = (99.663 * oxigenator.getFiO2()) - 6.17;  // see PaO2-FiO2.spv (SPSS)
+      if (paO2 == 0) {
+        paO2 = 0.001;
+      }  
+      double tubeSaO2 = 0;   // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
+      tubeSaO2 = 1 / ((23400 / ((paO2 * paO2 * paO2) + (150 * paO2))) + 1);
       tube.setSaO2(tubeSaO2);
       tube.setPostPH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPostPCO2(10);  // TODO: Reconfirm relation, usually lower due to sweep
