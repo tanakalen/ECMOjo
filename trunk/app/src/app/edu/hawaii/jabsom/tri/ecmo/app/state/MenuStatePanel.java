@@ -9,6 +9,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
@@ -144,6 +145,10 @@ public class MenuStatePanel extends JPanel {
         }
         else {
           tube.setMode(Mode.VA);
+          // ECMO Mode VA reduces patient HR 10%
+          Patient patient = scenario.getPatient();
+          double hr = patient.getHeartRate();
+          patient.setHeartRate(hr * 0.9);
         }
         
         // update oxigenator
