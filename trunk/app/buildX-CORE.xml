@@ -1,3 +1,4 @@
+<?eclipse.ant.import ?>
 <project name="Core Build file - Define init in subfile and include.">	
   <target name="pre-init">          
     <!-- Global Release time -->
@@ -262,10 +263,10 @@
       <map from="${build.app.dir.absolute}\" to=""/>
     </pathconvert>
   	<condition property="jreloc" value="&quot;%JAVA_HOME%\jre\bin\java&quot;">
-  		<os family="windows"/>
+  		<equals arg1="${os.target.name}" arg2="windows"/>
   	</condition>
   	<condition property="jreloc" value="java">
-  	  	<os family="unix"/>
+  	  <equals arg1="${os.target.name}" arg2="unix"/>
   	</condition>
     <!-- Create executable file (windows, unix or mac) use: -Dsun.java2d.noddraw=true -->
     <echo file="${structure.dir}/${executable.file.name}.bat"
@@ -643,4 +644,3 @@ Content-Type: x-java-archive
       <stop url="${webapp.manager.url}" username="${webapp.username}" password="${webapp.password}" path="/${webapp.name}"/>
   </target>
 </project>
-
