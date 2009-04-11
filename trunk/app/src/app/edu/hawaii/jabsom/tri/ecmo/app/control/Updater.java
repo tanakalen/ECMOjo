@@ -83,7 +83,7 @@ public final class Updater {
       physiologicMonitor.setCentralVenousPressure(patient.getCentralVenousPressure());
       
       // update equipment (tubing)
-      double paO2 = (99.663 * oxigenator.getFiO2()) - 6.17;  // see PaO2-FiO2.spv (SPSS)
+      double paO2 = ((99.663 * oxigenator.getFiO2()) - 6.17) * 7.5;  // see PaO2-FiO2.spv (SPSS)
       if (paO2 == 0) {
         paO2 = 0.001;
       }  
