@@ -28,6 +28,9 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
  */
 public final class Updater {
   
+  /** Holds prior flow rate information. */
+  private static double oldFlow;
+  
   /**
    * Private constructor to prevent instantiation.
    */
@@ -95,8 +98,13 @@ public final class Updater {
       tube.setSvO2(tube.getSaO2() * 0.75);
       tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
-      tube.setPreMembranePressure((pump.getFlow() * 400) + (oxigenator.getClotting() * 50));
-      tube.setPostMembranePressure(tube.getPreMembranePressure() - 40);
+      if (oldFlow == 0) { // tube pressures have never been set TODO: move to ScenarioCreator.java???
+        tube.setPreMembranePressure((pump.getFlow() * 400) + (oxigenator.getClotting() * 50));
+        tube.setPostMembranePressure(tube.getPreMembranePressure() - 40);
+      }
+      else { // TODO: reconfirm if this is valid
+        tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxigenator.getClotting() * 50));
+      }
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn()) && (!tube.isVenusAOpen())) {
         tube.setVenousPressure(-100);
       }
@@ -115,11 +123,6 @@ public final class Updater {
       else if (pump.isOn()) {
         tube.setVenusBubbles(false);
       }
-      
-      // update equipment (pressure monitor)
-      pressureMonitor.setPreMembranePressure(tube.getPreMembranePressure());
-      pressureMonitor.setPostMembranePressure(tube.getPostMembranePressure());
-      pressureMonitor.setVenousPressure(tube.getVenousPressure());
       
       // update equipment (bubble detector)
       bubbleDetector.setAlarm(tube.isArterialBubbles());
@@ -147,6 +150,37 @@ public final class Updater {
       else {
         pump.setAlarm(false);
       }
+      // change in pump flow changes tubing pressures
+      double difference = pump.getFlow() - oldFlow;
+      if ((difference != 0) && (oldFlow != 0)) {
+        double pre = tube.getPreMembranePressure();
+        double post = tube.getPostMembranePressure();
+        if (oxigenator.getOxiType().equals(OxigenatorComponent.OxiType.QUADROX_D)) {
+          if (difference > 0) {
+            tube.setPreMembranePressure((((difference * 1000) * 0.0001) + 1) * pre);
+            tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);
+          }
+          else {
+            tube.setPreMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * pre);
+            tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
+          }
+        }
+        else if (oxigenator.getOxiType().equals(OxigenatorComponent.OxiType.SCI_MED)) {
+          if (difference > 0) {
+            tube.setPreMembranePressure((((difference * 1000) * 0.00055) + 1) * pre);
+            tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);            
+          }
+          else {
+            tube.setPreMembranePressure((1 - (Math.abs(difference * 1000) * 0.00055)) * pre);
+            tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);            
+          }
+        }
+      }
+      
+      // update equipment (pressure monitor)
+      pressureMonitor.setPreMembranePressure(tube.getPreMembranePressure());
+      pressureMonitor.setPostMembranePressure(tube.getPostMembranePressure());
+      pressureMonitor.setVenousPressure(tube.getVenousPressure());
       
       // update equipment (ventilator)
       if (ventilator.isEmergencyFuction()) {
@@ -214,6 +248,9 @@ public final class Updater {
       patient.setPO2((oxigenator.getFiO2() * (760 - 47)) - (patient.getPCO2() / 0.8));
       
       // TODO Patient bicarb and base excess calc? from Mark's table
+      
+      // Set last updated flow to check pump flow, membrane pressure interaction
+      oldFlow = pump.getFlow();
 
       // and return if goal is reached
       return goal.isReached(game);
