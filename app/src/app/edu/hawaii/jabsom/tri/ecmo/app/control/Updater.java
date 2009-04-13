@@ -94,16 +94,20 @@ public final class Updater {
       tubeSaO2 = 1 / ((23400 / ((paO2 * paO2 * paO2) + (150 * paO2))) + 1);
       tube.setSaO2(tubeSaO2);
       tube.setPostPH(patient.getPH());  // TODO: Reconfirm if this is trully patient
-      tube.setPostPCO2(10);  // TODO: Reconfirm relation, usually lower due to sweep
       tube.setSvO2(tube.getSaO2() * 0.75);
       tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
       if (oldFlow == 0) { // tube pressures have never been set TODO: move to ScenarioCreator.java???
         tube.setPreMembranePressure((pump.getFlow() * 400) + (oxigenator.getClotting() * 50));
         tube.setPostMembranePressure(tube.getPreMembranePressure() - 40);
+        tube.setPostPCO2(35); // TODO: Update with sane initial settings
       }
-      else { // TODO: reconfirm if this is valid
+      else {
+        // TODO: reconfirm if this is valid
         tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxigenator.getClotting() * 50));
+        // change in pump flow changes post-membrane CO2
+        double currentTubePCO2 = tube.getPostPCO2();
+        tube.setPostPCO2(currentTubePCO2 * pump.getFlow() / oldFlow);
       }
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn()) && (!tube.isVenusAOpen())) {
         tube.setVenousPressure(-100);
