@@ -365,4 +365,14 @@ public final class Mediator {
       }
     }
   }
+  
+  /**
+   * calcOxygenSaturation calculates oxygen saturation from PaO2
+   * 
+   * @param PaO2
+   *          partial pressure of oxygen in mmHg
+   */
+  public static double calcOxygenSaturation(double PaO2) {
+    return(1 / ((23400 / ((PaO2 * PaO2 * PaO2) + (150 * PaO2))) + 1));
+  }
 }
