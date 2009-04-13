@@ -103,7 +103,7 @@ public final class ScenarioCreator {
     
     OxigenatorComponent oxiComponent = new OxigenatorComponent();
     oxiComponent.setOxiType(OxiType.SCI_MED);
-    oxiComponent.setTotalSweep(2.0);
+    oxiComponent.setTotalSweep(0.3);
     oxiComponent.setFiO2(0.5);
     oxiComponent.setClotting(0.0);
     oxiComponent.setBroken(false);

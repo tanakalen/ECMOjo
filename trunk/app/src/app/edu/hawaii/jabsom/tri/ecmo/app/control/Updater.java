@@ -94,7 +94,7 @@ public final class Updater {
       tubeSaO2 = 1 / ((23400 / ((paO2 * paO2 * paO2) + (150 * paO2))) + 1);
       tube.setSaO2(tubeSaO2);
       tube.setPostPH(patient.getPH());  // TODO: Reconfirm if this is trully patient
-      tube.setSvO2(tube.getSaO2() * 0.75);
+      tube.setSvO2(tube.getSaO2() * 0.75); // TODO: Need SvO2 curves
       tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
       if (oldFlow == 0) { // tube pressures have never been set TODO: move to ScenarioCreator.java???
@@ -140,7 +140,7 @@ public final class Updater {
       cdiMonitor.setHCO3(tube.getPostHCO3());
       cdiMonitor.setBE(tube.getPostBE(patient.getHgb()));
       cdiMonitor.setPH(tube.getPostPH());
-      cdiMonitor.setPO2((oxigenator.getFiO2() * 600) + (oxigenator.getTotalSweep() * 10));
+      cdiMonitor.setPO2(paO2); // paO2 set in tubing update
       cdiMonitor.setPCO2(tube.getPostPCO2());
 
       // update equipment (pump)
@@ -242,14 +242,24 @@ public final class Updater {
         patient.setPCO2(patientPCO2 + 0.1); //Heading up 0.1 per 20ms
       }
       
-      double po2 = oxigenator.getFiO2() * oxigenator.getTotalSweep() * pump.getFlow() * 100;
+      // TODO: pump flow to patient PaO2
+      //currently a hedge
+      double po2 = oxigenator.getFiO2() * 2 * pump.getFlow() * 100;
       double patientSaturation = 0;
       if (po2 != 0) {
         // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
         patientSaturation = 1 / ((23400 / ((po2 * po2 * po2) + (150 * po2))) + 1);
       }
-      patient.setO2Saturation(patientSaturation);     
-      patient.setPO2((oxigenator.getFiO2() * (760 - 47)) - (patient.getPCO2() / 0.8));
+      patient.setO2Saturation(patientSaturation);
+      patient.setPO2(po2); // TODO: set from graph FiO2 with varying shunts?
+      // Following is wrong, calculates the alveolar partial pressure of oxygen not arterial
+      //patient.setPO2((oxigenator.getFiO2() * (760 - 47)) - (patient.getPCO2() / 0.8));
+      
+      //for debugging
+//      if (pump.getFlow() != oldFlow) {
+//        System.out.println("po2 through pump: " + po2 + ", po2 through patient: " + patient.getPO2());
+//        System.out.println("pump fio2: " + oxigenator.getFiO2() + ", pco2: " + patient.getPCO2());
+//      }
       
       // TODO Patient bicarb and base excess calc? from Mark's table
       
