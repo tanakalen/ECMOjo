@@ -9,7 +9,6 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,6 +24,7 @@ import org.jdesktop.swingx.JXTable;
 import king.lib.access.ImageLoader;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent.ACT;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList.LabTestListener;
@@ -70,8 +70,13 @@ public class ACTDetailPanel extends DetailPanel implements LabTestListener {
     titleLabel.setSize(150, 20);
     add(titleLabel);
 
-    // add ACT request button
-    JButton requestButton = new JButton("Lab");
+    Image requestButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Lab.png");
+    Image requestButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-LabRol.png");
+    Image requestButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-LabSel.png");
+    
+    // add lab request button
+    ImageButton requestButton 
+      = new ImageButton(requestButtonImage, requestButtonRolloverImage, requestButtonSelectedImage);
     requestButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         ACTRequestAction action = new ACTRequestAction();
