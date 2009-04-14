@@ -85,12 +85,14 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel {
     text = String.valueOf((int)component.getHeartRate());
     g.drawString(text, 88, 60);
 
-    g.setFont(g.getFont().deriveFont(Font.BOLD, 14f));
-    text = String.valueOf((int)component.getSystolicBloodPressure()) + "/"
-      + String.valueOf((int)component.getDiastolicBloodPressure()) + " ("
-      + String.valueOf((int)component.getMeanBloodPressure()) + ")";
-    g.drawString(text, 40, 84);
-
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 12f));
+    text = String.valueOf((int)component.getSystolicBloodPressure()) + " / "
+         + String.valueOf((int)component.getDiastolicBloodPressure());
+    g.drawString(text, 88, 77);
+    g.setFont(g.getFont().deriveFont(Font.PLAIN, 11f));
+    text = "Mean: " + String.valueOf((int)component.getMeanBloodPressure());
+    g.drawString(text, 88, 86);
+   
     g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
     text = String.valueOf((int)component.getRespiratoryRate());
     g.drawString(text, 212, 34);
