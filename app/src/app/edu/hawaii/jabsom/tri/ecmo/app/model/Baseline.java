@@ -1,6 +1,11 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model;
 
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.BubbleDetectorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 
 /**
  * The baseline values. 
@@ -327,10 +332,63 @@ public class Baseline {
    * @return  True, if baseline is reached.
    */
   public boolean isReached(Game game) {
-    Patient patient = game.getPatient();
+    Patient patient = game.getPatient(); 
+    HeaterComponent heater = (HeaterComponent)game.getEquipment().getComponent(HeaterComponent.class);
+    TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
+    OxigenatorComponent oxigenator = (OxigenatorComponent)game.getEquipment().getComponent(OxigenatorComponent.class);
+    PumpComponent pump = (PumpComponent)game.getEquipment().getComponent(PumpComponent.class);
+    BubbleDetectorComponent bubbleDetector 
+      = (BubbleDetectorComponent)game.getEquipment().getComponent(BubbleDetectorComponent.class);
+    
+    // patient
     return (bleeding == patient.isBleeding())
         && (patient.getHeartRate() >= minHeartRate) 
-        && (patient.getHeartRate() <= maxHeartRate);   // TODO: add other conditions
+        && (patient.getHeartRate() <= maxHeartRate)
+        /*
+        && (patient.getO2Saturation() >= minO2Saturation)
+        && (patient.getO2Saturation() <= maxO2Saturation)
+        && (patient.getHgb() >= minHgb)
+        && (patient.getHgb() <= maxHgb)
+        && (patient.getPH() >= minPh)
+        && (patient.getPH() <= maxPh)
+        && (patient.getPCO2() >= minPco2)
+        && (patient.getPCO2() <= maxPcO2)
+        && (patient.getAct() >= minAct)
+        && (patient.getAct() <= maxAct)
+        */  
+        // heater
+        && (heater.getTemperature() >= minTemperature)
+        && (heater.getTemperature() <= maxTemperature)
+        // tube
+        && ((arterialA == TubeFunction.OPEN) == tube.isArterialAOpen())
+        && ((arterialB == TubeFunction.OPEN) == tube.isArterialBOpen())
+        && ((venousA == TubeFunction.OPEN) == tube.isVenusAOpen())
+        && ((venousB == TubeFunction.OPEN) == tube.isVenusBOpen())
+        && ((bridge == TubeFunction.OPEN) == tube.isBridgeOpen())
+        // - cannula
+        // - ETT
+        // - suction ETT
+        /*
+        && (tube.getPreMembranePressure() >= minPreMembranePressure)
+        && (tube.getPreMembranePressure() <= maxPreMembranePressure)
+        && (tube.getPostMembranePressure() >= minPostMembranePressure)
+        && (tube.getPreMembranePressure() <= maxPostMembranePressure)
+        && (tube.getVenousPressure() >= minVenousPressure)
+        && (tube.getVenousPressure() <= maxVenousPressure)
+        */
+        && (arterialBubbles == tube.isArterialBubbles())
+        && (venousBubbles == tube.isVenusBubbles())
+        /*
+        // oxigenator
+        // - total sweep
+        && (oxigenator.getFiO2() >= minFiO2)
+        && (oxigenator.getFiO2() <= maxFiO2)
+        */
+        && (broken == oxigenator.isBroken())
+        // pump
+        && ((power == PowerFunction.ON) == pump.isOn())
+        // bubbleDetector 
+        &&((alarming == bubbleDetector.isAlarm()));
   }
   
   /**
