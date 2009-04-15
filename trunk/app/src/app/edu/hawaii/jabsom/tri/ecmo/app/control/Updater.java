@@ -75,6 +75,9 @@ public final class Updater {
            .getComponent(PressureMonitorComponent.class);
       AlarmIndicatorComponent alarmIndicator = (AlarmIndicatorComponent)equipment
            .getComponent(AlarmIndicatorComponent.class);
+      
+      // load some local variables for Updater
+      double ccPerKg = pump.getFlow() * 1000 / patient.getWeight();
 
       // update equipment (physiologic monitor)
       physiologicMonitor.setTemperature(Math.rint(patient.getTemperature()));
@@ -112,9 +115,9 @@ public final class Updater {
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn()) && (!tube.isVenusAOpen())) {
         tube.setVenousPressure(-100);
       }
-      else {
-        tube.setVenousPressure(0);
-      }
+//      else {
+//        tube.setVenousPressure(0);
+//      }
       if (!tube.isArterialAOpen()) {
         tube.setArterialBubbles(true);
       }
@@ -179,6 +182,17 @@ public final class Updater {
             tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);            
           }
         }
+        
+        // change in pump flow changes tube venous pressure
+        double curVenousPressure = tube.getVenousPressure();
+        if (difference > 0) {
+          tube.setVenousPressure(curVenousPressure 
+              - Math.rint(difference * 1000 * (1 / (patient.getWeight() * 10))));
+        }
+        else {
+          tube.setVenousPressure(curVenousPressure 
+              + Math.rint(Math.abs(difference) * 1000 * (1 / (patient.getWeight() * 10))));          
+        }
       }
       
       // update equipment (pressure monitor)
@@ -224,7 +238,6 @@ public final class Updater {
       }
       
       // update patient pH, pCO2, HCO3, base excess
-      double ccPerKg = pump.getFlow() * 1000 / patient.getWeight();
       Mode mode = tube.getMode();
       HeartFunction heartFunction = patient.getHeartFunction();
       //LungFunction lungFunction = patient.getLungFunction();
@@ -240,6 +253,17 @@ public final class Updater {
         patient.setPH(patientPH - 0.001); //Heading down 0.001unit per 20ms
         patientPCO2 = patient.getPCO2();
         patient.setPCO2(patientPCO2 + 0.1); //Heading up 0.1 per 20ms
+      }
+      
+      // SBP increase 10% if flow increase by 20mL/kg/min in VA AND bad heart
+      if ((mode == Mode.VA) && (heartFunction == HeartFunction.BAD)) {
+        double bpadjust = (10 / (20 * patient.getWeight())) / 100; // % change SBP for 1mL/min flow change
+        if (difference > 0) {
+          patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
+        }
+        else {
+          patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
+        }
       }
       
       // TODO: pump flow to patient PaO2
