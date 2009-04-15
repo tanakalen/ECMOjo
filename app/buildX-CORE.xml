@@ -137,6 +137,7 @@
     <!-- Run the tests, which are all classes whose name starts with 'Test'. -->
 		<junit printsummary="yes" haltonfailure="no" dir="${build.test.dir}">
 		  <classpath>
+		    <pathelement location="${lib.project.dir}/junit.jar"/>
 		    <pathelement location="${build.libconf.dir}/${name}-conf.jar"/>
 		    <pathelement location="${build.dest.dir}"/>
 		    <pathelement path="${lib.project.dir}"/>
