@@ -6,19 +6,19 @@ desc = Run the tutorial for an introduction of ECMOjo.
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Welcome to the ECMOjo tutorial. Let us explain how to modify the basic ECMO components to you.
+tutorial-item1-text = Welcome to Tutorial 3. Let us demonstrate a more advanced example.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = Task 1: Add a clamp on the arterial tube A to create bubbles.
+tutorial-item2-text = Task 1: Add a clamp on the arterial tube (closest point to the pump).
 tutorial-item2-trigger = Action:Tube:+ARTERIAL_A
-tutorial-item3-text = Task 2: Remove a clamp on the arterial tube A.
+tutorial-item3-text = Task 2: Remove the clamp.
 tutorial-item3-trigger = Action:Tube:-ARTERIAL_A
-tutorial-item4-text = Task 3: Click reset on the Bubble Detector.
+tutorial-item4-text = Task 3: Click reset on the bubble detector.
 tutorial-item4-trigger = Action:Bubble
 tutorial-item5-text = Task 4: Click on the pump.
 tutorial-item5-trigger = Action:View:PumpComponent
 tutorial-item6-text = Task 5: Turn on the pump.
 tutorial-item6-trigger = Action:Pump:on
-tutorial-item7-text = Congratulations, you successfully completed the tutorial!
+tutorial-item7-text = Congratulations, you successfully completed Tutorial 3!
 tutorial-item7-trigger = N/A
 
 # Baseline Values
