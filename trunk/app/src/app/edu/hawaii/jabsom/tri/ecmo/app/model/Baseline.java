@@ -365,10 +365,10 @@ public class Baseline {
         && ((venousA == TubeFunction.OPEN) == tube.isVenusAOpen())
         && ((venousB == TubeFunction.OPEN) == tube.isVenusBOpen())
         && ((bridge == TubeFunction.OPEN) == tube.isBridgeOpen())
-        // - cannula
-        // - ETT
-        // - suction ETT
         /*
+        && ((cannula == CannulaFunction.BAD) == tube.isBrokenCannula())
+        && ((ett == EttFunction.BAD) == tube.isBrokenETT())
+        && ((suctionEtt == SuctionEttFunction.BAD) == tube.isSuctionETT())
         && (tube.getPreMembranePressure() >= minPreMembranePressure)
         && (tube.getPreMembranePressure() <= maxPreMembranePressure)
         && (tube.getPostMembranePressure() >= minPostMembranePressure)
