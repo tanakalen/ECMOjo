@@ -257,7 +257,7 @@ public final class Updater {
       
       // SBP increase 10% if flow increase by 20mL/kg/min in VA AND bad heart
       if ((mode == Mode.VA) && (heartFunction == HeartFunction.BAD)) {
-        double bpadjust = (10 / (20 * patient.getWeight())) / 100; // % change SBP for 1mL/min flow change
+        double bpadjust = 10 / (20 * patient.getWeight()); // % change SBP for 1mL/min flow change
         if (difference > 0) {
           patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
         }
