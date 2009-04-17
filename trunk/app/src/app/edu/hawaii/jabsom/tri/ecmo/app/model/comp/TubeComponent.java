@@ -464,6 +464,15 @@ public class TubeComponent extends Component {
   }
   
   /**
+   * Returns the arterial (post-oxygenator) BE value -- non-hgb version.
+   * 
+   * @return The BE.
+   */
+  public double getPostBE() {
+    return 0.02786 * getPostPCO2() * Math.pow(10, getPostPH() - 6.1) + 13.77 * getPostPH() - 124.58;
+  }
+  
+  /**
    * Returns the arterial (post-oxygenator) HCO3 value.
    * 
    * @return The HCO3.

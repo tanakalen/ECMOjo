@@ -155,7 +155,8 @@ public final class Updater {
       cdiMonitor.setHct(patient.getHct());
       cdiMonitor.setHgb(patient.getHgb());
       cdiMonitor.setHCO3(tube.getPostHCO3());
-      cdiMonitor.setBE(tube.getPostBE(patient.getHgb()));
+      //cdiMonitor.setBE(tube.getPostBE(patient.getHgb()));
+      cdiMonitor.setBE(tube.getPostBE()); // TODO: Reconfirm which version to set BE?
       cdiMonitor.setPH(tube.getPostPH());
       cdiMonitor.setPO2(paO2); // paO2 set in tubing update
       cdiMonitor.setPCO2(tube.getPostPCO2());
