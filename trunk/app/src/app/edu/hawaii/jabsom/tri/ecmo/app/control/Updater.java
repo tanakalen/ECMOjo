@@ -15,6 +15,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent.ConventionalSubtype;
@@ -30,6 +31,8 @@ public final class Updater {
   
   /** Holds prior flow rate information. */
   private static double oldFlow;
+  /** Holds prior sweep rate information. */
+  private static double oldSweep;
   
   /**
    * Private constructor to prevent instantiation.
@@ -94,7 +97,7 @@ public final class Updater {
         paO2 = 0.001;
       }  
       double tubeSaO2 = 0;   // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
-      tubeSaO2 = 1 / ((23400 / ((paO2 * paO2 * paO2) + (150 * paO2))) + 1);
+      tubeSaO2 = Mediator.calcOxygenSaturation(paO2);
       tube.setSaO2(tubeSaO2);
       tube.setPostPH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setSvO2(tube.getSaO2() * 0.75); // TODO: Need SvO2 curves
@@ -103,7 +106,7 @@ public final class Updater {
       if (oldFlow == 0) { // tube pressures have never been set TODO: move to ScenarioCreator.java???
         tube.setPreMembranePressure((pump.getFlow() * 400) + (oxigenator.getClotting() * 50));
         tube.setPostMembranePressure(tube.getPreMembranePressure() - 40);
-        tube.setPostPCO2(35); // TODO: Update with sane initial settings
+        tube.setPostPCO2(35);
       }
       else {
         // TODO: reconfirm if this is valid
@@ -111,6 +114,14 @@ public final class Updater {
         // change in pump flow changes post-membrane CO2
         double currentTubePCO2 = tube.getPostPCO2();
         tube.setPostPCO2(currentTubePCO2 * pump.getFlow() / oldFlow);
+        // change in sweep changes pCO2: increase drops pCO2, decrease raises pCO2
+        // TODO: reconfirm following behavior as rate of change is tiny!
+        tube.setPostPCO2(currentTubePCO2 - ((oxigenator.getTotalSweep() - oldSweep) * 0.15));
+        //for debug:
+//        if (oxigenator.getTotalSweep() - oldSweep != 0) {
+//          System.out.println("old: " + oldSweep + ", new: " + oxigenator.getTotalSweep());
+//          System.out.println(tube.getPostPCO2());
+//        }
       }
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn()) && (!tube.isVenusAOpen())) {
         tube.setVenousPressure(-100);
@@ -240,19 +251,38 @@ public final class Updater {
       // update patient pH, pCO2, HCO3, base excess
       Mode mode = tube.getMode();
       HeartFunction heartFunction = patient.getHeartFunction();
-      //LungFunction lungFunction = patient.getLungFunction();
-      double patientPH = Mediator.flowToPH(mode, ccPerKg, patient);
-      patient.setPH(patientPH);
-      double patientPCO2 = Mediator.flowToPCO2(mode, ccPerKg, patient);
-      patient.setPCO2(patientPCO2);
-      
-      if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
-        // TODO BAD heart steady decline to death
-        Error.out("Using VV ECMO with poor heart function is not a good idea!");
-        patientPH = patient.getPH();
-        patient.setPH(patientPH - 0.001); //Heading down 0.001unit per 20ms
-        patientPCO2 = patient.getPCO2();
-        patient.setPCO2(patientPCO2 + 0.1); //Heading up 0.1 per 20ms
+      LungFunction lungFunction = patient.getLungFunction();
+      try {
+        double patientPH = Mediator.flowToPH(mode, ccPerKg, patient);
+        patient.setPH(patientPH);
+        double patientPCO2 = Mediator.flowToPCO2(mode, ccPerKg, patient);
+        patient.setPCO2(patientPCO2);
+      }
+      catch (Exception e) {
+        if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
+          // TODO BAD heart steady decline to death
+          Error.out("Using VV ECMO with poor heart function is not a good idea!");
+          double patientPH = patient.getPH();
+          patient.setPH(patientPH - 0.001); //Heading down 0.001unit per 20ms
+          double patientPCO2 = patient.getPCO2();
+          patient.setPCO2(patientPCO2 + 0.1); //Heading up 0.1 per 20ms
+        }
+        else if (e.getMessage().equals("Reached data limit")) {
+          if (lungFunction == LungFunction.GOOD) {
+            patient.setPCO2(cdiMonitor.getPCO2() * 1.11);
+          }
+          else {
+            if (heartFunction == HeartFunction.GOOD) {
+              patient.setPCO2(cdiMonitor.getPCO2() * 1.25);
+            }
+            else {
+              patient.setPCO2(cdiMonitor.getPCO2() * 1.35);
+            }
+          }
+        }
+        else {
+          Error.out(e);
+        }
       }
       
       // SBP increase 10% if flow increase by 20mL/kg/min in VA AND bad heart
@@ -272,7 +302,7 @@ public final class Updater {
       double patientSaturation = 0;
       if (po2 != 0) {
         // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
-        patientSaturation = 1 / ((23400 / ((po2 * po2 * po2) + (150 * po2))) + 1);
+        patientSaturation = Mediator.calcOxygenSaturation(po2);
       }
       patient.setO2Saturation(patientSaturation);
       patient.setPO2(po2); // TODO: set from graph FiO2 with varying shunts?
@@ -287,8 +317,10 @@ public final class Updater {
       
       // TODO Patient bicarb and base excess calc? from Mark's table
       
-      // Set last updated flow to check pump flow, membrane pressure interaction
+      // Set last updated flow to check pump flow, for membrane pressure interaction
       oldFlow = pump.getFlow();
+      // Set last updated sweep rate, for CDI update interaction
+      oldSweep = oxigenator.getTotalSweep();
 
       // and return if goal is reached
       return goal.isReached(game);
