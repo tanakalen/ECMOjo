@@ -255,15 +255,42 @@ public final class Updater {
       try {
         double patientPH = Mediator.flowToPH(mode, ccPerKg, patient);
         patient.setPH(patientPH);
+      }
+      catch (Exception e) {
+        double patientPH = patient.getPH();
+        if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
+          // TODO BAD heart steady decline to death
+          Error.out("Using VV ECMO with poor heart function is not a good idea!");
+          patient.setPH(patientPH - 0.001); //Heading down 0.001unit per 20ms
+        }
+        else if (e.getMessage().equals("Reached data limit")) {
+          double patientPCO2 = patient.getPCO2();
+          double newPH = 7;
+          if (lungFunction == LungFunction.GOOD) {
+            newPH = patientPH - (((cdiMonitor.getPCO2() * 1.11) - patientPCO2) * 0.008);
+          }
+          else {
+            if (heartFunction == HeartFunction.GOOD) {
+              newPH = patientPH - (((cdiMonitor.getPCO2() * 1.25) - patientPCO2) * 0.008);
+            }
+            else {
+              newPH = patientPH - (((cdiMonitor.getPCO2() * 1.35) - patientPCO2) * 0.008);
+            }
+          }
+          patient.setPH(newPH);
+        }
+        else {
+          Error.out(e.getMessage());
+        }
+      }
+      
+      try {
         double patientPCO2 = Mediator.flowToPCO2(mode, ccPerKg, patient);
         patient.setPCO2(patientPCO2);
       }
       catch (Exception e) {
         if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
           // TODO BAD heart steady decline to death
-          Error.out("Using VV ECMO with poor heart function is not a good idea!");
-          double patientPH = patient.getPH();
-          patient.setPH(patientPH - 0.001); //Heading down 0.001unit per 20ms
           double patientPCO2 = patient.getPCO2();
           patient.setPCO2(patientPCO2 + 0.1); //Heading up 0.1 per 20ms
         }
@@ -281,7 +308,7 @@ public final class Updater {
           }
         }
         else {
-          Error.out(e);
+          Error.out(e.getMessage());
         }
       }
       
