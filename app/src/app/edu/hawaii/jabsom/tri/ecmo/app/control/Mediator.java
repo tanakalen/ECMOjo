@@ -206,15 +206,15 @@ public final class Mediator {
    * @param patient
    *          Current patient instantiation
    * @return pCO2 by linear interpolation of Mark's chart
+   * @throws Exception for flow < 0, heartFunction bad, and data limit
    */
-  public static double flowToPCO2(Mode ecmo, double flow, Patient patient) {
+  public static double flowToPCO2(Mode ecmo, double flow, Patient patient) throws Exception {
     if (flow < 0) {
-      Error.out("Flow cannot be less than 0");
-      System.exit(0);
+      throw new Exception("Flow cannot be less than 0");
     }
     if (ecmo == Mode.VV) {
       if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
-        return 120;
+        throw new Exception("VV ECMO and bad heart function not ideal");
       }
       else { // Heart function is good
         if (patient.getLungFunction() == Patient.LungFunction.BAD) {
@@ -237,7 +237,7 @@ public final class Mediator {
             return Math.rint(((53 - 46) / 25) * flow + 4);
           }
           else {
-            return 120; // no data beyond 175cc/kg/min flow
+            throw new Exception("Reached data limit");
           }
         }
         else { // Lungs are working why are we on ECMO?
@@ -260,7 +260,7 @@ public final class Mediator {
             return Math.rint(((53 - 46) / 25) * flow + 4);
           }
           else {
-            return 120; // no data beyond 175cc/kg/min flow
+            throw new Exception("Reached data limit");
           }
         }
       }
@@ -287,7 +287,7 @@ public final class Mediator {
             return Math.rint(((44 - 42) / 25) * flow + 32);
           }
           else {
-            return 120; // no data beyond 150cc/kg/min flow
+            throw new Exception("Reached data limit");
           }
         }
         else { // Lungs are working but heart not so good
@@ -310,7 +310,7 @@ public final class Mediator {
             return Math.rint(((50 - 46) / 25) * flow + 26);
           }
           else {
-            return 120; // no data beyond 150cc/kg/min flow
+            throw new Exception("Reached data limit");
           }
         }
 
@@ -336,7 +336,7 @@ public final class Mediator {
             return Math.rint(((54 - 50) / 25) * flow + 30);
           }
           else {
-            return 120; // no data beyond 150cc/kg/min flow
+            throw new Exception("Reached data limit");
           }
         }
         else { // Lungs & Heart are working why are we on ECMO?
@@ -359,7 +359,7 @@ public final class Mediator {
             return Math.rint(((48 - 44) / 25) * flow + 24);
           }
           else {
-            return 120; // no data beyond 175cc/kg/min flow
+            throw new Exception("Reached data limit");
           }
         }
       }
@@ -374,6 +374,6 @@ public final class Mediator {
    * @return saturation in form 0.00 (multiply by 100 to get %)
    */
   public static double calcOxygenSaturation(double paO2) {
-    return(1 / ((23400 / ((paO2 * paO2 * paO2) + (150 * paO2))) + 1));
+    return(1 / ((23400 / (Math.pow(paO2, 3) + (150 * paO2))) + 1));
   }
 }
