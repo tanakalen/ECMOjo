@@ -99,7 +99,6 @@ public final class Updater {
       double tubeSaO2 = 0;   // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
       tubeSaO2 = Mediator.calcOxygenSaturation(paO2);
       tube.setSaO2(tubeSaO2);
-      tube.setPostPH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setSvO2(tube.getSaO2() * 0.75); // TODO: Need SvO2 curves
       tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
@@ -107,6 +106,7 @@ public final class Updater {
         tube.setPreMembranePressure((pump.getFlow() * 400) + (oxigenator.getClotting() * 50));
         tube.setPostMembranePressure(tube.getPreMembranePressure() - 40);
         tube.setPostPCO2(35);
+        tube.setPostPH(7.4);
       }
       else {
         // TODO: reconfirm if this is valid
@@ -115,13 +115,16 @@ public final class Updater {
         double currentTubePCO2 = tube.getPostPCO2();
         tube.setPostPCO2(currentTubePCO2 * pump.getFlow() / oldFlow);
         // change in sweep changes pCO2: increase drops pCO2, decrease raises pCO2
-        // TODO: reconfirm following behavior as rate of change is tiny!
+        // TODO: reconfirm following behavior as rate of change is tiny! and reconfirm interaction
         tube.setPostPCO2(currentTubePCO2 - ((oxigenator.getTotalSweep() - oldSweep) * 0.15));
         //for debug:
 //        if (oxigenator.getTotalSweep() - oldSweep != 0) {
 //          System.out.println("old: " + oldSweep + ", new: " + oxigenator.getTotalSweep());
 //          System.out.println(tube.getPostPCO2());
 //        }
+        double currentTubePH = tube.getPostPH();
+        // TODO: reconfirm interaction as PCO2 increases PH falls
+        tube.setPostPH(currentTubePH - ((tube.getPostPCO2() - currentTubePCO2) * 0.008));
       }
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn()) && (!tube.isVenusAOpen())) {
         tube.setVenousPressure(-100);
