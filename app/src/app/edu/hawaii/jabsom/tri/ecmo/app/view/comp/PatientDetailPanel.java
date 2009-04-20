@@ -120,11 +120,11 @@ public class PatientDetailPanel extends DetailPanel {
     add(checkforBleedingButton);
     
     Image checkETTNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckETT.png");
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckUrineOutput.png");
     Image checkETTRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckETTRol.png");
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckUrineOutputRol.png");
     Image checkETTSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckETTSel.png");
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckUrineOutputSel.png");
     ImageButton checkETTButton
       = new ImageButton(checkETTNormalImage, checkETTRolloverImage, checkETTSelectedImage);
     checkETTButton.addActionListener(new ActionListener() {
@@ -217,11 +217,11 @@ public class PatientDetailPanel extends DetailPanel {
     add(checkDiaperButton);
     
     Image stimulateBabyNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-StimulateBaby.png");
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckActivityLevel.png");
     Image stimulateBabyRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-StimulateBabyRol.png");
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckActivityLevelRol.png");
     Image stimulateBabySelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-StimulateBabySel.png");
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckActivityLevelSel.png");
     ImageButton stimulateBabyButton 
       = new ImageButton(stimulateBabyNormalImage, stimulateBabyRolloverImage, stimulateBabySelectedImage);    
     stimulateBabyButton.addActionListener(new ActionListener() {
