@@ -135,9 +135,12 @@ public class InterventionDetailPanel extends DetailPanel {
     heparinButton.setSize(192, 32);
     add(heparinButton); 
  
-    Image dopamineNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Dopamine.png");
-    Image dopamineRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-DopamineRol.png");
-    Image dopamineSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-DopamineSel.png");
+    Image dopamineNormalImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Cathecholamine.png");
+    Image dopamineRolloverImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CathecholamineRol.png");
+    Image dopamineSelectedImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CathecholamineSel.png");
     ImageButton dopamineButton = new ImageButton(dopamineNormalImage, dopamineRolloverImage, dopamineSelectedImage);
     dopamineButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
