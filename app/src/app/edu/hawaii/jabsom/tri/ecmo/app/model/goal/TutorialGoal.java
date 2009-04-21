@@ -361,11 +361,11 @@ public class TutorialGoal extends Goal {
               else if (triggerLocationString.equals("BRIDGE")) {
                 triggerLocation = Location.BRIDGE;
               }
-              else if (triggerLocationString.equals("VENUS_A")) {
-                triggerLocation = Location.VENUS_A;
+              else if (triggerLocationString.equals("VENOUS_A")) {
+                triggerLocation = Location.VENOUS_A;
               }
-              else if (triggerLocationString.equals("VENUS_B")) {
-                triggerLocation = Location.VENUS_B;
+              else if (triggerLocationString.equals("VENOUS_B")) {
+                triggerLocation = Location.VENOUS_B;
               }
               
               if (actualLocation == triggerLocation && actualOpen == triggerOpen) {                    
