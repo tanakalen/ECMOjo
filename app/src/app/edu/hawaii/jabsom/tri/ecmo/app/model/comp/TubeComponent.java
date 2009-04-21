@@ -19,12 +19,12 @@ public class TubeComponent extends Component {
   private boolean bridgeOpen;
   /** True if arterial position A open. */
   private boolean arterialAOpen;
-  /** True if arterial position B open. */
+  /** True if arterial position B open. B is the patient side/left */
   private boolean arterialBOpen;
   /** True if venous position A open. */
-  private boolean venusAOpen;
-  /** True if venous position B open. */
-  private boolean venusBOpen;
+  private boolean venousAOpen;
+  /** True if venous position B open. B is the patient side/left */
+  private boolean venousBOpen;
   
   /** True if cannula site is broken. */
   private boolean brokenCannula;
@@ -43,7 +43,7 @@ public class TubeComponent extends Component {
   /** True for arterial bubbles. */
   private boolean arterialBubbles;
   /** True for venous bubbles. */
-  private boolean venusBubbles;
+  private boolean venousBubbles;
   
   /** The arterial O2 saturation (red) in percent / 100 [0.00, 1.00]. */
   private double saO2;
@@ -88,7 +88,7 @@ public class TubeComponent extends Component {
   }
   
   /**
-   * Set true if arterial A is open.
+   * Set true if arterial A is open. Pump side/right.
    *
    * @param arterialAOpen  True for open.
    */
@@ -107,7 +107,7 @@ public class TubeComponent extends Component {
   }
   
   /**
-   * Sets true if arterial B is open.
+   * Sets true if arterial B is open. Patient side/left.
    *
    * @param arterialBOpen  True for open.
    */
@@ -136,40 +136,40 @@ public class TubeComponent extends Component {
   }
   
   /**
-   * Returns true if venus A is open.
+   * Returns true if venous A is open.
    *
    * @return  True if open.
    */
-  public boolean isVenusAOpen() {
-    return venusAOpen;
+  public boolean isVenousAOpen() {
+    return venousAOpen;
   }
   
   /**
-   * Set true if venus A is open.
+   * Set true if venous A is open. Pump side/right.
    *
-   * @param venusAOpen  True for open.
+   * @param venousAOpen  True for open.
    */
-  public void setVenusAOpen(boolean venusAOpen) {
-    this.venusAOpen = venusAOpen;
+  public void setVenousAOpen(boolean venousAOpen) {
+    this.venousAOpen = venousAOpen;
     notifyUpdate();
   }
   
   /**
-   * Returns true if venus B is open.
+   * Returns true if venous B is open.
    *
    * @return  True if open.
    */
-  public boolean isVenusBOpen() {
-    return venusBOpen;
+  public boolean isVenousBOpen() {
+    return venousBOpen;
   }
   
   /**
-   * Set true if venus B is open.
+   * Set true if venous B is open. Patient side/left.
    *
-   * @param venusBOpen  True for open.
+   * @param venousBOpen  True for open.
    */
-  public void setVenusBOpen(boolean venusBOpen) {
-    this.venusBOpen = venusBOpen;
+  public void setVenousBOpen(boolean venousBOpen) {
+    this.venousBOpen = venousBOpen;
     notifyUpdate();
   }
   
@@ -303,21 +303,21 @@ public class TubeComponent extends Component {
   }
 
   /**
-   * Returns true for venus bubbles.
+   * Returns true for venous bubbles.
    *
    * @return  True for bubbles.
    */
-  public boolean isVenusBubbles() {
-    return venusBubbles;
+  public boolean isVenousBubbles() {
+    return venousBubbles;
   }
 
   /**
-   * Set if venus bubbles.
+   * Set if venous bubbles.
    *
-   * @param venusBubbles  True for bubbles.
+   * @param venousBubbles  True for bubbles.
    */
-  public void setVenusBubbles(boolean venusBubbles) {
-    this.venusBubbles = venusBubbles;
+  public void setVenousBubbles(boolean venousBubbles) {
+    this.venousBubbles = venousBubbles;
   }
 
   /**

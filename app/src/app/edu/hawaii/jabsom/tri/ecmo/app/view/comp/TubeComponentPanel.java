@@ -176,7 +176,7 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     selectionClampButton3.setSelected(!component.isBridgeOpen());
     add(selectionClampButton3); 
  
-    // Venus B
+    // Venous B
     selectionClampButton4 = new ImageToggleButton(null, rolloverNonToggleClampUpImage
                                                       , rolloverToggleClampUpImage
                                                       , selectedClampUpImage);
@@ -190,10 +190,10 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     });
     selectionClampButton4.setLocation(202, 183);
     selectionClampButton4.setSize(32, 52);
-    selectionClampButton4.setSelected(!component.isVenusBOpen());
+    selectionClampButton4.setSelected(!component.isVenousBOpen());
     add(selectionClampButton4); 
  
-    // Venus A
+    // Venous A
     selectionClampButton5 = new ImageToggleButton(null, rolloverNonToggleClampUpImage
                                                       , rolloverToggleClampUpImage
                                                       , selectedClampUpImage);
@@ -207,7 +207,7 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     });
     selectionClampButton5.setLocation(283, 183);
     selectionClampButton5.setSize(32, 52);
-    selectionClampButton5.setSelected(!component.isVenusAOpen());
+    selectionClampButton5.setSelected(!component.isVenousAOpen());
     add(selectionClampButton5); 
     
   }
@@ -308,7 +308,7 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
         g.drawImage(bubbleDot3Image, 350, 95, this);
       }
     }
-    if (component.isVenusBubbles()) {
+    if (component.isVenousBubbles()) {
       if ((((System.nanoTime()) / 200000000) % 3) == 0) {
         g.drawImage(bubbleRect1Image, 301, 189, this);     
       } 

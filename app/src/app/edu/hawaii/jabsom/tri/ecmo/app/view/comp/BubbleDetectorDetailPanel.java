@@ -76,7 +76,7 @@ public class BubbleDetectorDetailPanel extends DetailPanel implements Runnable {
       public void actionPerformed(ActionEvent event) {
         BubbleAction action = new BubbleAction();
         action.setArterialBubbles(false);
-        action.setVenusBubbles(false);
+        action.setVenousBubbles(false);
         notifyActionListeners(action);
       }
     });

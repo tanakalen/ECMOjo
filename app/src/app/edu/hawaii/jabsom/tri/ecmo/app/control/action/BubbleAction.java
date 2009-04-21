@@ -15,8 +15,8 @@ public class BubbleAction extends Action {
 
   /** True for arterial bubbles. */
   private boolean arterialBubbles;
-  /** True for venus bubbles. */
-  private boolean venusBubbles;
+  /** True for venous bubbles. */
+  private boolean venousBubbles;
 
   
   /**
@@ -38,21 +38,21 @@ public class BubbleAction extends Action {
   }
 
   /**
-   * Returns true for venus bubbles.
+   * Returns true for venous bubbles.
    *
    * @return  True for bubbles.
    */
-  public boolean isVenusBubbles() {
-    return venusBubbles;
+  public boolean isVenousBubbles() {
+    return venousBubbles;
   }
 
   /**
-   * Set if venus bubbles.
+   * Set if venous bubbles.
    *
-   * @param venusBubbles  True for bubbles.
+   * @param venousBubbles  True for bubbles.
    */
-  public void setVenusBubbles(boolean venusBubbles) {
-    this.venusBubbles = venusBubbles;
+  public void setVenousBubbles(boolean venousBubbles) {
+    this.venousBubbles = venousBubbles;
   }
 
   /**
@@ -64,6 +64,6 @@ public class BubbleAction extends Action {
     // create bubbles in tubing
     TubeComponent component = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
     component.setArterialBubbles(arterialBubbles);
-    component.setVenusBubbles(venusBubbles);
+    component.setVenousBubbles(venousBubbles);
   }
 }
