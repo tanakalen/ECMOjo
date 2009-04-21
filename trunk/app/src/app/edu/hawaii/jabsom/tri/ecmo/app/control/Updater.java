@@ -102,9 +102,15 @@ public final class Updater {
       tube.setSvO2(tube.getSaO2() * 0.75); // TODO: Need SvO2 curves
       tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
-      if (oldFlow == 0) { // tube pressures have never been set TODO: move to ScenarioCreator.java???
+      if (oldFlow == 0) { // tube pressures have never been set TODO: move to ScenarioCreator or MenuStatePanel
         tube.setPreMembranePressure((pump.getFlow() * 400) + (oxigenator.getClotting() * 50));
-        tube.setPostMembranePressure(tube.getPreMembranePressure() - 40);
+        //tube.setPostMembranePressure(tube.getPreMembranePressure() - 40);
+        if (oxigenator.getOxiType() == OxigenatorComponent.OxiType.QUADROX_D) { // PMP
+          tube.setPostMembranePressure(tube.getPreMembranePressure());
+        }
+        else { // Silicon
+          tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
+        }
         tube.setPostPCO2(35);
         tube.setPostPH(7.4);
       }
