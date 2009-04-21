@@ -478,7 +478,7 @@ public class Patient  extends Component {
    * @return  The lactate.
    */
   public double getLactate() {
-    return lactate;
+    return (-24.99 * pH) + 186.95;
   }
 
   /**
