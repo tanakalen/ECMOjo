@@ -30,7 +30,6 @@ public class PressureMonitorComponent extends Component {
   /** The venous pressure maximum in torr [-50, 100]. */
   private double venousPressureMax;
   
-  
   /**
    * Returns the post-membrane pressure.
    *

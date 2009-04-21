@@ -21,9 +21,9 @@ public class TubeComponent extends Component {
   private boolean arterialAOpen;
   /** True if arterial position B open. */
   private boolean arterialBOpen;
-  /** True if venus position A open. */
+  /** True if venous position A open. */
   private boolean venusAOpen;
-  /** True if venus position B open. */
+  /** True if venous position B open. */
   private boolean venusBOpen;
   
   /** True if cannula site is broken. */
@@ -42,7 +42,7 @@ public class TubeComponent extends Component {
 
   /** True for arterial bubbles. */
   private boolean arterialBubbles;
-  /** True for venus bubbles. */
+  /** True for venous bubbles. */
   private boolean venusBubbles;
   
   /** The arterial O2 saturation (red) in percent / 100 [0.00, 1.00]. */
