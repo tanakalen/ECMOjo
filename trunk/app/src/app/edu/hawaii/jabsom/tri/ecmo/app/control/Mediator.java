@@ -375,4 +375,23 @@ public final class Mediator {
   public static double calcOxygenSaturation(double paO2) {
     return(1 / ((23400 / (Math.pow(paO2, 3) + (150 * paO2))) + 1));
   }
+  
+  /**
+   * Check if venous pressure within range of normal for patient.
+   * 
+   * @param patient
+   *          Patient with age and weight, etc.
+   * @param venousPressure
+   *          The current venous pressure of the system.
+   * @return Boolean value if value in range
+   */
+  public static boolean isVenousPressureNormal(Patient patient,
+                                               double venousPressure) {
+    if ((venousPressure >= 0) && (venousPressure <= 20)) {
+      return true;      
+    }
+    else {
+      return false;
+    }
+  }
 }

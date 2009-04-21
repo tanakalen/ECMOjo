@@ -33,6 +33,8 @@ public final class Updater {
   private static double oldFlow;
   /** Holds prior sweep rate information. */
   private static double oldSweep;
+  /** Holds prior venous pressure information. */
+  private static double oldVenousPressure;
   
   /**
    * Private constructor to prevent instantiation.
@@ -117,6 +119,18 @@ public final class Updater {
       else {
         // TODO: reconfirm if this is valid
         tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxigenator.getClotting() * 50));
+        // change in venous pressure changes pump flow
+        double diffVenousPressure = tube.getVenousPressure() - oldVenousPressure;
+        if (diffVenousPressure != 0) {
+          if (Mediator.isVenousPressureNormal(patient, tube.getVenousPressure())) {
+            // Change in venous pressure by 5 increase/decease by 10%
+            pump.setFlow(pump.getFlow() * (1 + (diffVenousPressure * 0.02)));
+          }
+          else {
+            // Change in venous pressure by 2 increase/decrease by 10%
+            pump.setFlow(pump.getFlow() * (1 + (diffVenousPressure * 0.05)));            
+          }
+        }
         // change in pump flow changes post-membrane CO2
         double currentTubePCO2 = tube.getPostPCO2();
         tube.setPostPCO2(currentTubePCO2 * pump.getFlow() / oldFlow);
@@ -168,10 +182,6 @@ public final class Updater {
       cdiMonitor.setPCO2(tube.getPostPCO2());
 
       // update equipment (pump)
-      if (bubbleDetector.isAlarm() || pressureMonitor.isAlarm()) {
-        // turn off the pump
-        pump.setOn(false);
-      }
       if ((pump.getFlow() < (0.02f * patient.getWeight())) || (!pump.isOn())) {
         pump.setAlarm(true);
       }
@@ -223,7 +233,7 @@ public final class Updater {
       
       // update equipment (ventilator)
       if (ventilator.isEmergencyFuction()) {
-        if (ventilator.getName().equals("High Freqency Ventilator")) {
+        if (ventilator.getName().equals("High Frequency Ventilator")) {
           patient.setRespiratoryRate(0);
         }
         if (ventilator.getName().equals("Conventional Ventilator")) {
@@ -243,6 +253,20 @@ public final class Updater {
           || oxigenator.isAlarm()
           || heater.isAlarm()) {
         alarmIndicator.setAlarm(true);
+        if (bubbleDetector.isAlarm()) {
+          // turn off the pump
+          pump.setOn(false);
+        }
+        if (pressureMonitor.isAlarm()) {
+          if (pump.getPumpType() == PumpComponent.PumpType.ROLLER) {
+            // Pump flow stops
+            pump.setOn(false);
+          }
+          else {
+            // Pump flow slows to very low rate
+            pump.setFlow(0.02f * patient.getWeight()); // from pump update above
+          }
+        }
       }
       else {
         alarmIndicator.setAlarm(false);
@@ -358,6 +382,8 @@ public final class Updater {
       oldFlow = pump.getFlow();
       // Set last updated sweep rate, for CDI update interaction
       oldSweep = oxigenator.getTotalSweep();
+      // Set last updated venous pressure, for pump interaction
+      oldVenousPressure = tube.getVenousPressure();
 
       // and return if goal is reached
       return goal.isReached(game);
