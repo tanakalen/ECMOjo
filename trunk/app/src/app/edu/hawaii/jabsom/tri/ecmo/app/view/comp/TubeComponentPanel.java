@@ -183,7 +183,7 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     selectionClampButton4.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         TubeAction action = new TubeAction();
-        action.setLocation(Location.VENUS_B);
+        action.setLocation(Location.VENOUS_B);
         action.setOpen(!selectionClampButton4.isSelected());
         notifyActionListeners(action);
       }
@@ -200,7 +200,7 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     selectionClampButton5.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         TubeAction action = new TubeAction();
-        action.setLocation(Location.VENUS_A);
+        action.setLocation(Location.VENOUS_A);
         action.setOpen(!selectionClampButton5.isSelected());
         notifyActionListeners(action);
       }
