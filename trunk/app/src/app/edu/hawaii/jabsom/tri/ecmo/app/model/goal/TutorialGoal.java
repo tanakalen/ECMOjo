@@ -523,7 +523,7 @@ public class TutorialGoal extends Goal {
                 actualHasBubble = ((BubbleAction) action).isArterialBubbles();
               }
               else if (triggerLocationString.equals("venous")) {
-                actualHasBubble = ((BubbleAction) action).isVenusBubbles();
+                actualHasBubble = ((BubbleAction) action).isVenousBubbles();
               }
               
               if (actualHasBubble == triggerHasBubble) {

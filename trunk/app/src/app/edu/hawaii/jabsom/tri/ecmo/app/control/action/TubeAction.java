@@ -13,7 +13,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
  */
 public class TubeAction extends Action {
 
-  /** The location. */
+  /** The location. B=patient-side/left. A=pump-side/right. */
   public enum Location { ARTERIAL_A, ARTERIAL_B, VENUS_A, VENUS_B, BRIDGE };
   
   /** True for open. */
@@ -73,10 +73,10 @@ public class TubeAction extends Action {
       component.setArterialBOpen(open);
     }
     else if (location == Location.VENUS_A) {
-      component.setVenusAOpen(open);
+      component.setVenousAOpen(open);
     }
     else if (location == Location.VENUS_B) {
-      component.setVenusBOpen(open);
+      component.setVenousBOpen(open);
     }
     else if (location == Location.BRIDGE) {
       component.setBridgeOpen(open);

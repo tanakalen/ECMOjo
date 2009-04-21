@@ -146,12 +146,15 @@ public final class Updater {
         // TODO: reconfirm interaction as PCO2 increases PH falls
         tube.setPostPH(currentTubePH - ((tube.getPostPCO2() - currentTubePCO2) * 0.008));
       }
-      if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn()) && (!tube.isVenusAOpen())) {
+      if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn()) && (!tube.isVenousAOpen())) {
         tube.setVenousPressure(-100);
       }
 //      else {
 //        tube.setVenousPressure(0);
 //      }
+      // interaction of clamping
+      
+      // TODO: reconfirm bubbles
       if (!tube.isArterialAOpen()) {
         tube.setArterialBubbles(true);
       }
@@ -159,10 +162,10 @@ public final class Updater {
         tube.setArterialBubbles(true);
       }
       if ((tube.getVenousPressure() < -75) && (pump.isOn())) {
-        tube.setVenusBubbles(true);
+        tube.setVenousBubbles(true);
       }
       else if (pump.isOn()) {
-        tube.setVenusBubbles(false);
+        tube.setVenousBubbles(false);
       }
       
       // update equipment (bubble detector)

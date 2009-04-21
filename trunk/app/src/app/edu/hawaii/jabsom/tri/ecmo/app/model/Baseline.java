@@ -362,8 +362,8 @@ public class Baseline {
         // tube
         && ((arterialA == TubeFunction.OPEN) == tube.isArterialAOpen())
         && ((arterialB == TubeFunction.OPEN) == tube.isArterialBOpen())
-        && ((venousA == TubeFunction.OPEN) == tube.isVenusAOpen())
-        && ((venousB == TubeFunction.OPEN) == tube.isVenusBOpen())
+        && ((venousA == TubeFunction.OPEN) == tube.isVenousAOpen())
+        && ((venousB == TubeFunction.OPEN) == tube.isVenousBOpen())
         && ((bridge == TubeFunction.OPEN) == tube.isBridgeOpen())
         /*
         && ((cannula == CannulaFunction.BAD) == tube.isBrokenCannula())
@@ -377,7 +377,7 @@ public class Baseline {
         && (tube.getVenousPressure() <= maxVenousPressure)
         */
         && (arterialBubbles == tube.isArterialBubbles())
-        && (venousBubbles == tube.isVenusBubbles())
+        && (venousBubbles == tube.isVenousBubbles())
         /*
         // oxigenator
         // - total sweep
