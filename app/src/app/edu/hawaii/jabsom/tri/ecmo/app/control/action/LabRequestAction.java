@@ -52,56 +52,43 @@ public class LabRequestAction extends Action {
   public void execute(Game game) {
     // create a new lab result
     LabTest result = null;
-//    LabTest bgBaby = null, bgPre = null, bgPost = null;
     if (labTest.equals(BloodGasLabTest.class)) {
-      BloodGasLabTest baby = new BloodGasLabTest();
-//      BloodGasLabTest pre = new BloodGasLabTest();
-//      BloodGasLabTest post = new BloodGasLabTest();
+      BloodGasLabTest labTest = new BloodGasLabTest();
       
       //baby gas
       Patient patient = game.getPatient();
-      baby.setBloodGasType(BloodGasType.BABY);
-      baby.setPH(patient.getPH());
-      baby.setPCO2(patient.getPCO2());
-      baby.setPO2(patient.getPO2());
-      baby.setHCO3(patient.getHCO3());
-      baby.setBE(patient.getBE());
-      result = baby;
-//      bgBaby = baby;
-      
-//      //pre-oxygenator gas
-//      TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
-//      pre.setBloodGasType(BloodGasType.PRE);
-//      pre.setPH(tube.getPrePH());
-//      pre.setPCO2(tube.getPrePCO2());
-//      pre.setPO2((tube.getSvO2() * (760 - 47)) - (tube.getPrePCO2() / 0.8)); //is this correct?
-//      pre.setHCO3(tube.getPreHCO3());
-//      pre.setBE(tube.getPreBE(patient.getHgb()));
-//      bgPre = pre;
-//      
-//      //post-oxygenator gas
-//      post.setBloodGasType(BloodGasType.POST);
-//      post.setPH(tube.getPostPH());
-//      post.setPCO2(tube.getPostPCO2());
-//      post.setPO2((tube.getSaO2() * (760 - 47)) - (tube.getPostPCO2() / 0.8)); //is this correct?
-//      post.setHCO3(tube.getPostHCO3());
-//      post.setBE(tube.getPostBE(patient.getHgb()));
-//      bgPost = post;
+      labTest.setBloodGasType(BloodGasType.BABY);
+      labTest.setPH(patient.getPH());
+      labTest.setPCO2(patient.getPCO2());
+      labTest.setPO2(patient.getPO2());
+      labTest.setHCO3(patient.getHCO3());
+      labTest.setBE(patient.getBE());
+      result = labTest;
     }
     else if (labTest.equals(ChemistryLabTest.class)) {
       ChemistryLabTest labTest = new ChemistryLabTest();
       
       // fill in details
-      
-      
+      Patient patient = game.getPatient();
+      labTest.setGluc(0);
+      labTest.setIonCa(0);
+      labTest.setK(0);
+      labTest.setLactate(patient.getLactate());
+      labTest.setNa(0);
       result = labTest;
     }
     else if (labTest.equals(HematologyLabTest.class)) {
       HematologyLabTest labTest = new HematologyLabTest();
       
       // fill in details
-      // TODO
-      
+      Patient patient = game.getPatient();
+      labTest.setFibrinogen(0);
+      labTest.setHct(patient.getHct());
+      labTest.setHgb(patient.getHgb());
+      labTest.setPlatelets(0);
+      labTest.setPt(0);
+      labTest.setPtt(0);
+      labTest.setWbc(0);
       result = labTest;
     }
     else if (labTest.equals(UltrasoundLabTest.class)) {
@@ -112,6 +99,7 @@ public class LabRequestAction extends Action {
 
       labTest.setDescription("Abdomen, Ultrasound");
       labTest.setImageName("CXR-normal.jpg");
+      
       labTest.setTime(game.getElapsedTime() / 1000);
       result = labTest;
     }
@@ -123,6 +111,7 @@ public class LabRequestAction extends Action {
 
       labTest.setDescription("Chest, X-Ray");
       labTest.setImageName("CXR-normal.jpg");
+      
       labTest.setTime(game.getElapsedTime() / 1000);
       result = labTest;
     }
@@ -136,15 +125,7 @@ public class LabRequestAction extends Action {
       if (component instanceof LabComponent) {
         LabComponent labComponent = (LabComponent)component;
         if (labComponent.getLabTest().isAssignableFrom(labTest)) {
-          if (labTest.equals(BloodGasLabTest.class)) { // TODO: Ugly please refactor
-            labComponent.addResult(result);
-//            labComponent.addResult(bgBaby);
-//            labComponent.addResult(bgPre);
-//            labComponent.addResult(bgPost);
-          }
-          else {
-            labComponent.addResult(result);
-          }
+          labComponent.addResult(result);
         }
       }
     }
