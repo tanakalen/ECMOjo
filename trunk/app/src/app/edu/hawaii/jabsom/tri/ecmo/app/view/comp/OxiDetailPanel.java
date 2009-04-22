@@ -59,11 +59,6 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
   /** The font color. */
   private final Color textColor = new Color(0.2f, 0.2f, 0.2f);
   
-  /** True, if the value is adjusting. */
-  private boolean adjusting = false;
-  /** The adjusted flow. */
-  private double adjustedValue;
-
   /** The component. */
   private OxigenatorComponent component;
   
@@ -182,19 +177,13 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
     KnobButton knobButton = new KnobButton(knobImage, dialImage, rolloverImage, 1, 18);
     knobButton.addRotationListener(new RotationListener() {
       public void handleRotation(double angle, boolean valueAdjusting) {
-        adjusting = valueAdjusting;
         double value = (angle - (Math.PI / 4)) / (Math.PI * 6 / 4);
-        if (adjusting) {
-          adjustedValue = value;
-          repaint();
-        }
-        else {
-          OxigenatorAction action = new OxigenatorAction();
-          action.setTotalSweepInteger(component.getTotalSweepInteger());
-          action.setTotalSweepDecimal(component.getTotalSweepDecimal());          
-          action.setFiO2(value);
-          notifyActionListeners(action);
-        }
+        OxigenatorAction action = new OxigenatorAction();
+        action.setTotalSweepInteger(component.getTotalSweepInteger());
+        action.setTotalSweepDecimal(component.getTotalSweepDecimal());          
+        action.setFiO2(value);
+        repaint();
+        notifyActionListeners(action);
       }    
     });
     knobButton.setAngle((component.getFiO2() * (Math.PI * 6 / 4)) + (Math.PI / 4));
@@ -303,7 +292,7 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
     g.setFont(g.getFont().deriveFont(Font.BOLD, 40f));
     
     // draw text
-    double value = adjusting ? adjustedValue : component.getFiO2();
+    double value = component.getFiO2();
     String text = Math.round(value * 100) + "%";
     g.drawString(text, 54, 130);
   }

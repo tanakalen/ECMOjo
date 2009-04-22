@@ -47,10 +47,6 @@ public class PumpDetailPanel extends DetailPanel implements Runnable {
   
   /** The flow formatter. */
   private final DecimalFormat flowFormatter = new DecimalFormat("0.000");
-  /** True, if the value is adjusting. */
-  private boolean adjusting = false;
-  /** The adjusted flow. */
-  private double adjustedValue;
   
   /** The power button. */
   private JToggleButton powerButton;
@@ -83,18 +79,12 @@ public class PumpDetailPanel extends DetailPanel implements Runnable {
     KnobButton knobButton = new KnobButton(knobImage, dialImage, rolloverImage, 1, 18);
     knobButton.addRotationListener(new RotationListener() {
       public void handleRotation(double angle, boolean valueAdjusting) {
-        adjusting = valueAdjusting;
         double value = angle * flowFactor;
-        if (adjusting) {
-          adjustedValue = value;
-          repaint();
-        }
-        else {
-          PumpAction action = new PumpAction();
-          action.setOn(component.isOn());
-          action.setFlow(value);
-          notifyActionListeners(action);
-        }
+        PumpAction action = new PumpAction();
+        action.setOn(component.isOn());
+        action.setFlow(value);
+        repaint();
+        notifyActionListeners(action);
       }    
     });
     knobButton.setAngle(component.getFlow() / flowFactor);
@@ -200,7 +190,7 @@ public class PumpDetailPanel extends DetailPanel implements Runnable {
     // draw text
     if (component.isOn()) {
       // draw base
-      double value = adjusting ? adjustedValue : component.getFlow();
+      double value = component.getFlow();
       String text = flowFormatter.format(value);
       g.drawString(text, 95, 120);
     } 
