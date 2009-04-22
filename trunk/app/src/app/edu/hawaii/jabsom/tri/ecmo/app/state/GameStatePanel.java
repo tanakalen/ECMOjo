@@ -1,16 +1,20 @@
 package edu.hawaii.jabsom.tri.ecmo.app.state;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Manager.ManagerListener;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
+import edu.hawaii.jabsom.tri.ecmo.app.model.goal.SimulationGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ManagerPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.TutorialPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * The game state panel. 
@@ -32,7 +36,7 @@ public class GameStatePanel extends JPanel implements ManagerListener {
    * 
    * @param state  The state for this panel.
    */
-  public GameStatePanel(GameState state) {
+  public GameStatePanel(final GameState state) {
     this.state = state;
     
     // set look
@@ -44,6 +48,21 @@ public class GameStatePanel extends JPanel implements ManagerListener {
     // add game view panel
     ManagerPanel mainPanel = new ManagerPanel(state.getManager());
     add(mainPanel, BorderLayout.CENTER);
+    
+    // add exit button as needed
+    Goal goal = state.getManager().getGame().getGoal();
+    if (goal instanceof SimulationGoal) {
+      JButton exitButton = new JButton("Exit");
+      exitButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent arg0) {
+          // and exit
+          state.menuState();
+        }      
+      });
+      exitButton.setLocation(308, 18);
+      exitButton.setSize(100, 45);
+      mainPanel.add(exitButton);
+    }
   }
   
   /**

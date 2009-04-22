@@ -25,6 +25,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
+import edu.hawaii.jabsom.tri.ecmo.app.model.goal.SimulationGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal.Item;
 
@@ -128,6 +129,11 @@ public final class ScenarioLoader {
             }
             goal.setItems(items);
             scenario.setGoal(goal);
+          }
+          else if (goalName.equals("Simulation")) {
+            // create goal
+            SimulationGoal goal = new SimulationGoal();
+            scenario.setGoal(goal);            
           }
           else {
             // not implemented

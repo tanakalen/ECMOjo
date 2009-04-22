@@ -1,0 +1,57 @@
+1
+
+# Scenario Information
+name = Simulation
+desc = The never ending simulation...
+
+# Goal Information
+goal = Simulation
+
+# Baseline Values
+baseline-bleeding = false;
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 180
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-ETT = good
+baseline-suction-ETT = good
+baseline-min-pre-membrane-pressure = 0
+baseline-max-pre-membrane-pressure = 200
+baseline-min-post-membrance-pressure = 0
+baseline-max-post-membrance-pressure = 200
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-alarming = false
+
+# Patient Information
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
+patient-heart-function = good
+patient-bleeding = false
+patient-temperature = 37
+
+# Heater
+heater-temperature = 37
