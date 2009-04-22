@@ -356,15 +356,19 @@ public final class Updater {
         }
       }
       
-      // heart rate
+      // temperature effect
       if (patient.getTemperature() != history.getPatientTemperature()) {
         if (patient.getTemperature() > history.getPatientTemperature()) {
           patient.setHeartRate(patient.getHeartRate() + 0.1 * patient.getHeartRate()
                             * (patient.getTemperature() - history.getPatientTemperature()));
+          patient.setAct(patient.getAct() + 0.1 * patient.getAct()
+                      * (patient.getTemperature() - history.getPatientTemperature()));
         }
         else {
           patient.setHeartRate(patient.getHeartRate() - 0.1 * patient.getHeartRate()
                             * (history.getPatientTemperature() - patient.getTemperature()));
+          patient.setAct(patient.getAct() - 0.1 * patient.getAct()
+                      * (history.getPatientTemperature() - patient.getTemperature()));
         }
       }
       
