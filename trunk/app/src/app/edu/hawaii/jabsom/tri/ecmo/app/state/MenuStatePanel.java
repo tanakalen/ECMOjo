@@ -178,6 +178,19 @@ public class MenuStatePanel extends JPanel {
           ventilator.setSubtype(new VentilatorComponent.HighFrequencySubtype());
         }
         
+        // init tube values depending on selection
+        tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
+        if (oxi.getOxiType() == OxigenatorComponent.OxiType.QUADROX_D) { 
+          // PMP
+          tube.setPostMembranePressure(tube.getPreMembranePressure());
+        }
+        else { 
+          // Silicon
+          tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
+        }
+        tube.setPostPCO2(35);
+        tube.setPostPH(7.4);
+
         // proceed to game state
         state.gameState(scenario);
       }

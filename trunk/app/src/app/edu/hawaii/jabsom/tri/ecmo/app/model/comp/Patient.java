@@ -133,8 +133,6 @@ public class Patient  extends Component {
   private double hgb;
   /** The pH [0.00, 14.00]. */
   private double pH;
-  /** The lactate value [0.5, 1.9]. */
-  private double lactate;
   /** The pCO2 [0, 200]. */
   private double pCO2;
   /** The pO2 [0, 550]. */
@@ -479,15 +477,6 @@ public class Patient  extends Component {
    */
   public double getLactate() {
     return (-24.99 * pH) + 186.95;
-  }
-
-  /**
-   * Sets the lactate.
-   *
-   * @param lactate  The lactate.
-   */
-  public void setLactate(double lactate) {
-    this.lactate = lactate;
   }
 
   /**
