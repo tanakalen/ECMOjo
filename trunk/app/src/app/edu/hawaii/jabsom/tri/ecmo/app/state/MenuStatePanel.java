@@ -4,6 +4,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
@@ -128,8 +129,8 @@ public class MenuStatePanel extends JPanel {
     Image startNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Start.png");
     Image startRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-StartRol.png");
     Image startSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-StartSel.png");
-    ImageToggleButton startButton 
-      = new ImageToggleButton(startNormalImage, startRolloverImage, startSelectedImage);
+    ImageButton startButton 
+      = new ImageButton(startNormalImage, startRolloverImage, startSelectedImage);
     startButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         // build scenario
