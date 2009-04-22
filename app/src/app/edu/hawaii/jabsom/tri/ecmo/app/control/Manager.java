@@ -113,11 +113,15 @@ public class Manager implements Runnable {
   public void run() {
     long increment = 20;
     long nextLoop = (System.nanoTime() / 1000000) + increment;
+    History history = new History();
     
     Thread currentThread = Thread.currentThread();
     while (this.thread == currentThread) {
       // execute if in play mode
       if (play) {        
+        // store previous values
+        Updater.store(game, history);
+        
         // execute actions (that the user inputted)
         synchronized(actions) {
           for (Action action: actions) {
@@ -129,8 +133,8 @@ public class Manager implements Runnable {
           actions.clear();
         }
 
-        // update the game (equipment and baby)
-        if (Updater.execute(game, increment)) {
+        // update the game (equipment and patient)
+        if (Updater.execute(game, history, increment)) {
           play = false;
           notifyGoalReached();
         }

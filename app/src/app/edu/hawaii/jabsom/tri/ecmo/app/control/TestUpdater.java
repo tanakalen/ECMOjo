@@ -73,7 +73,9 @@ public class TestUpdater {
       Scenario scenario = ScenarioLoader.load(hookup, "scenario/Tutorial-1.scn");
       game = new Game(scenario);
       game.setElapsedTime(0);
-      Updater.execute(game, 20); // sets oldFlow to 0.6
+      History history = new History();
+      Updater.store(game, history);
+      Updater.execute(game, history, 20); // sets oldFlow to 0.6
     }
     catch (IOException e) {
       Error.out(e);
@@ -101,19 +103,22 @@ public class TestUpdater {
     Equipment equipment = game.getEquipment();
     TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
     tube.setMode(Mode.VA);
+    History history = new History();
     
     // Increase flow increases SBP
     PumpComponent pump = (PumpComponent)equipment.getComponent(PumpComponent.class);
     pump.setFlow(0.7); // increased by 20 mL/kg/min
     double expected = 58.0 * 1.1; // increase SBP by 10%
-    Updater.execute(game, 20);
+    Updater.store(game, history);
+    Updater.execute(game, history, 20);
     patient = game.getPatient();
     assertEquals(expected, patient.getSystolicBloodPressure());
     
     pump = (PumpComponent)equipment.getComponent(PumpComponent.class);
     pump.setFlow(0.6); // decrease by 20 mL/kg/min
     expected = expected * 0.9; // increase SBP by 10%
-    Updater.execute(game, 20);
+    Updater.store(game, history);
+    Updater.execute(game, history, 20);
     patient = game.getPatient();
     assertEquals(expected, patient.getSystolicBloodPressure());    
   }
