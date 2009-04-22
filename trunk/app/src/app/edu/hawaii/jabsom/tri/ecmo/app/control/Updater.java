@@ -28,14 +28,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
  * @since    August 13, 2008
  */
 public final class Updater {
-  
-  /** Holds prior flow rate information. */
-  private static double oldFlow;
-  /** Holds prior sweep rate information. */
-  private static double oldSweep;
-  /** Holds prior venous pressure information. */
-  private static double oldVenousPressure;
-  
+    
   /**
    * Private constructor to prevent instantiation.
    */
@@ -44,13 +37,38 @@ public final class Updater {
   }
   
   /**
-   * Updates the inputted game.
+   * Stores game values in the history.
    * 
    * @param game  The game.
+   * @param history  The history.
+   */
+  public static void store(Game game, History history) {
+    // equipment variables
+    Equipment equipment = game.getEquipment();
+    PumpComponent pump = (PumpComponent)equipment
+        .getComponent(PumpComponent.class);
+    TubeComponent tube = (TubeComponent)equipment
+        .getComponent(TubeComponent.class);
+    OxigenatorComponent oxigenator = (OxigenatorComponent)equipment
+        .getComponent(OxigenatorComponent.class);
+
+    // Set last updated flow to check pump flow, for membrane pressure interaction
+    history.setFlow(pump.getFlow());
+    // Set last updated sweep rate, for CDI update interaction
+    history.setSweep(oxigenator.getTotalSweep());
+    // Set last updated venous pressure, for pump interaction
+    history.setVenousPressure(tube.getVenousPressure());
+  }
+  
+  /**
+   * Updates the inputed game. Called from Manager.java about every 20ms.
+   * 
+   * @param game  The game.
+   * @param history  The historical values.
    * @param increment  The time increment in milliseconds.
    * @return  True, if goal is reached.
    */
-  public static boolean execute(Game game, long increment) { // increment called in Manager.java (20ms)
+  public static boolean execute(Game game, History history, long increment) { 
     Goal goal = game.getGoal();
     if (!goal.isReached(game)) {
       // increment time
@@ -107,7 +125,7 @@ public final class Updater {
       // TODO: reconfirm if this is valid
       tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxigenator.getClotting() * 50));
       // change in venous pressure changes pump flow
-      double diffVenousPressure = tube.getVenousPressure() - oldVenousPressure;
+      double diffVenousPressure = tube.getVenousPressure() - history.getVenousPressure();
       if (diffVenousPressure != 0) {
         if (Mediator.isVenousPressureNormal(patient, tube.getVenousPressure())) {
           // Change in venous pressure by 5 increase/decease by 10%
@@ -120,10 +138,10 @@ public final class Updater {
       }
       // change in pump flow changes post-membrane CO2
       double currentTubePCO2 = tube.getPostPCO2();
-      tube.setPostPCO2(currentTubePCO2 * pump.getFlow() / oldFlow);
+      tube.setPostPCO2(currentTubePCO2 * pump.getFlow() / history.getFlow());
       // change in sweep changes pCO2: increase drops pCO2, decrease raises pCO2
       // TODO: reconfirm following behavior as rate of change is tiny! and reconfirm interaction
-      tube.setPostPCO2(currentTubePCO2 - ((oxigenator.getTotalSweep() - oldSweep) * 0.15));
+      tube.setPostPCO2(currentTubePCO2 - ((oxigenator.getTotalSweep() - history.getSweep()) * 0.15));
       //for debug:
 //        if (oxigenator.getTotalSweep() - oldSweep != 0) {
 //          System.out.println("old: " + oldSweep + ", new: " + oxigenator.getTotalSweep());
@@ -179,8 +197,8 @@ public final class Updater {
         pump.setAlarm(false);
       }
       // change in pump flow changes tubing pressures
-      double difference = pump.getFlow() - oldFlow;
-      if ((difference != 0) && (oldFlow != 0)) {
+      double difference = pump.getFlow() - history.getFlow();
+      if ((difference != 0) && (history.getFlow() != 0)) {
         double pre = tube.getPreMembranePressure();
         double post = tube.getPostMembranePressure();
         if (oxigenator.getOxiType().equals(OxigenatorComponent.OxiType.QUADROX_D)) {
@@ -265,10 +283,10 @@ public final class Updater {
       // update patient
       double patientTemperature = patient.getTemperature();
       if (patientTemperature < heater.getTemperature()) {
-        patient.setTemperature(patientTemperature + 0.01);
+        patient.setTemperature(patientTemperature + 0.001);
       }
       else if (patientTemperature > heater.getTemperature()) {
-        patient.setTemperature(patientTemperature - 0.01);
+        patient.setTemperature(patientTemperature - 0.001);
       }
       
       // update patient pH, pCO2, HCO3, base excess
@@ -367,13 +385,6 @@ public final class Updater {
       
       // TODO Patient bicarb and base excess calc? from Mark's table
       
-      // Set last updated flow to check pump flow, for membrane pressure interaction
-      oldFlow = pump.getFlow();
-      // Set last updated sweep rate, for CDI update interaction
-      oldSweep = oxigenator.getTotalSweep();
-      // Set last updated venous pressure, for pump interaction
-      oldVenousPressure = tube.getVenousPressure();
-
       // and return if goal is reached
       return goal.isReached(game);
     }
