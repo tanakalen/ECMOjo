@@ -92,7 +92,7 @@ public class LabRequestAction extends Action {
       ChemistryLabTest labTest = new ChemistryLabTest();
       
       // fill in details
-      // TODO
+      
       
       result = labTest;
     }
