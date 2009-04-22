@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.SwingUtilities;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
@@ -22,6 +23,9 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.TubeAction.Location;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
 
 /**
  * The tube component panel. 
@@ -148,15 +152,13 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
                                                       , selectedClampDownImage);
     selectionClampButton2.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        TubeAction action = new TubeAction();
-        action.setLocation(Location.ARTERIAL_A);
-        action.setOpen(!selectionClampButton2.isSelected());
-        notifyActionListeners(action);
+        StandardDialog.showDialog(SwingUtilities.getRootPane(selectionClampButton2), DialogType.WARNING, DialogOption.OK
+            , "Clamp Settings", "You are advised not to add the clamp on Arterial A.");
+        selectionClampButton2.setSelected(false);
       }
     });
     selectionClampButton2.setLocation(262, 72);
     selectionClampButton2.setSize(32, 52);
-    selectionClampButton2.setSelected(!component.isArterialAOpen());
     add(selectionClampButton2); 
 
     // Bridge
@@ -199,15 +201,13 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
                                                       , selectedClampUpImage);
     selectionClampButton5.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        TubeAction action = new TubeAction();
-        action.setLocation(Location.VENOUS_A);
-        action.setOpen(!selectionClampButton5.isSelected());
-        notifyActionListeners(action);
+        StandardDialog.showDialog(SwingUtilities.getRootPane(selectionClampButton5), DialogType.WARNING, DialogOption.OK
+            , "Clamp Settings", "You are advised not to add the clamp on Venous A.");
+        selectionClampButton5.setSelected(false);
       }
     });
     selectionClampButton5.setLocation(283, 183);
     selectionClampButton5.setSize(32, 52);
-    selectionClampButton5.setSelected(!component.isVenousAOpen());
     add(selectionClampButton5); 
     
   }
