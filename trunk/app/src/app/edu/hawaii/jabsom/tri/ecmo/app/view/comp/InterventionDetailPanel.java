@@ -15,7 +15,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.InterventionComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.BloodIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.HeparinBolusIntervention;
-import edu.hawaii.jabsom.tri.ecmo.app.model.engage.DopamineIntervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.CatecholamineIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.FFPIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.AlbuminIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.Intervention;
@@ -135,21 +135,22 @@ public class InterventionDetailPanel extends DetailPanel {
     heparinButton.setSize(192, 32);
     add(heparinButton); 
  
-    Image dopamineNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Cathecholamine.png");
-    Image dopamineRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CathecholamineRol.png");
-    Image dopamineSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CathecholamineSel.png");
-    ImageButton dopamineButton = new ImageButton(dopamineNormalImage, dopamineRolloverImage, dopamineSelectedImage);
-    dopamineButton.addActionListener(new ActionListener() {
+    Image catecholamineNormalImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Catecholamine.png");
+    Image catecholamineRolloverImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CatecholamineRol.png");
+    Image catecholamineSelectedImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CatecholamineSel.png");
+    ImageButton catecholamineButton 
+      = new ImageButton(catecholamineNormalImage, catecholamineRolloverImage, catecholamineSelectedImage);
+    catecholamineButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        intervene(new DopamineIntervention());
+        intervene(new CatecholamineIntervention());
       }
     });
-    dopamineButton.setLocation(31, 165);
-    dopamineButton.setSize(192, 32);
-    add(dopamineButton); 
+    catecholamineButton.setLocation(31, 165);
+    catecholamineButton.setSize(192, 32);
+    add(catecholamineButton); 
  
     Image albuminNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Albumin.png");
     Image albuminRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-AlbuminRol.png");
@@ -189,7 +190,7 @@ public class InterventionDetailPanel extends DetailPanel {
       if (((intervention instanceof BloodIntervention) && (location == InterventionLocation.BEFORE_OXIGENATOR))
         || ((intervention instanceof FFPIntervention) && (location == InterventionLocation.BEFORE_OXIGENATOR))
         || ((intervention instanceof HeparinBolusIntervention) && (location != InterventionLocation.BEFORE_OXIGENATOR))
-        || ((intervention instanceof DopamineIntervention) && (location == InterventionLocation.BEFORE_OXIGENATOR))
+        || ((intervention instanceof CatecholamineIntervention) && (location == InterventionLocation.BEFORE_OXIGENATOR))
         || ((intervention instanceof AlbuminIntervention) && (location == InterventionLocation.BEFORE_OXIGENATOR))) {
         StandardDialog.showDialog(this, DialogType.WARNING, DialogOption.OK
             , "Intervention Location Warning"

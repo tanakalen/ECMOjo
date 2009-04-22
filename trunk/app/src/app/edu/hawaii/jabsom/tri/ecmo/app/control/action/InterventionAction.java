@@ -7,7 +7,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.BloodIntervention;
-import edu.hawaii.jabsom.tri.ecmo.app.model.engage.DopamineIntervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.CatecholamineIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.HeparinBolusIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.FFPIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.AlbuminIntervention;
@@ -109,7 +109,7 @@ public class InterventionAction extends Action {
 
       
     }
-    else if (intervention instanceof DopamineIntervention) {
+    else if (intervention instanceof CatecholamineIntervention) {
       // affect blood pressure and heart rate
       
       

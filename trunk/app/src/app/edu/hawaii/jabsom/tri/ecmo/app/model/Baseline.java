@@ -151,7 +151,7 @@ public class Baseline {
   private CannulaFunction cannula;
   
   /** The ETT function enumeration. */
-  public enum EttFunction { 
+  public enum UrineOutputFunction { 
     /** Good function. */
     GOOD("Good"), 
     /** Bad function. */
@@ -165,7 +165,7 @@ public class Baseline {
      *
      * @param name  The name.
      */
-    private EttFunction(String name) {
+    private UrineOutputFunction(String name) {
       this.name = name;
     }
     
@@ -184,9 +184,9 @@ public class Baseline {
      * @param name  The name.
      * @return  The matching lung function or null for none.
      */
-    public static EttFunction parse(String name) {
+    public static UrineOutputFunction parse(String name) {
       for (int i = 0; i < values().length; i++) {
-        EttFunction value = values()[i];
+        UrineOutputFunction value = values()[i];
         if (name.equalsIgnoreCase(values()[i].getName())) {
           return value;
         }
@@ -195,8 +195,8 @@ public class Baseline {
     }
   };  
   
-  /** Baseline value for ett. */
-  private EttFunction ett;  
+  /** Baseline value for urine output. */
+  private UrineOutputFunction urineOutput;  
   
   /** The suction ETT function enumeration. */
   public enum SuctionEttFunction { 
@@ -573,21 +573,21 @@ public class Baseline {
   }
 
   /**
-   * Gets the ett.
+   * Gets the urine output.
    *
-   * @return The ett.
+   * @return The urine output.
    */
-  public EttFunction getEtt() {
-    return ett;
+  public UrineOutputFunction getUrineOutput() {
+    return urineOutput;
   }
 
   /**
-   * Sets the ett.
+   * Sets the urine output.
    *
-   * @param ett The ett to set.
+   * @param urineOutput The urine output to set.
    */
-  public void setEtt(EttFunction ett) {
-    this.ett = ett;
+  public void setUrineOutput(UrineOutputFunction urineOutput) {
+    this.urineOutput = urineOutput;
   }
 
   /**

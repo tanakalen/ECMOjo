@@ -119,21 +119,21 @@ public class PatientDetailPanel extends DetailPanel {
     checkforBleedingButton.setSize(192, 32);
     add(checkforBleedingButton);
     
-    Image checkETTNormalImage 
+    Image checkUrineOutputNormalImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckUrineOutput.png");
-    Image checkETTRolloverImage 
+    Image checkUrineOutputRolloverImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckUrineOutputRol.png");
-    Image checkETTSelectedImage 
+    Image checkUrineOutputSelectedImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckUrineOutputSel.png");
-    ImageButton checkETTButton
-      = new ImageButton(checkETTNormalImage, checkETTRolloverImage, checkETTSelectedImage);
-    checkETTButton.addActionListener(new ActionListener() {
+    ImageButton checkUrineOutputButton
+      = new ImageButton(checkUrineOutputNormalImage, checkUrineOutputRolloverImage, checkUrineOutputSelectedImage);
+    checkUrineOutputButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         boolean problem = tubeComponent.isBrokenETT();
         
         // send the action
         PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.BROKEN_ETT);
+        action.setCheck(PatientAction.Check.URINE_OUTPUT);
         notifyActionListeners(action);
             
         // output dialog
@@ -141,7 +141,7 @@ public class PatientDetailPanel extends DetailPanel {
           // fixed
           StandardDialog.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
-              , "Good catch! The ETT was broken and has been fixed.");
+              , "Good catch! The urine output has been fixed.");
         }
         else {
           // no problem = nothing done
@@ -151,9 +151,9 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkETTButton.setLocation(31, 101);
-    checkETTButton.setSize(192, 32);
-    add(checkETTButton);
+    checkUrineOutputButton.setLocation(31, 101);
+    checkUrineOutputButton.setSize(192, 32);
+    add(checkUrineOutputButton);
     
     Image suctionETTNormalImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETT.png");
@@ -216,19 +216,19 @@ public class PatientDetailPanel extends DetailPanel {
     checkDiaperButton.setSize(192, 32);
     add(checkDiaperButton);
     
-    Image stimulateBabyNormalImage 
+    Image checkActivityLevelNormalImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckActivityLevel.png");
-    Image stimulateBabyRolloverImage 
+    Image checkActivityLevelRolloverImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckActivityLevelRol.png");
-    Image stimulateBabySelectedImage 
+    Image checkActivityLevelSelectedImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckActivityLevelSel.png");
-    ImageButton stimulateBabyButton 
-      = new ImageButton(stimulateBabyNormalImage, stimulateBabyRolloverImage, stimulateBabySelectedImage);    
-    stimulateBabyButton.addActionListener(new ActionListener() {
+    ImageButton checkActivityLevelButton = new ImageButton(checkActivityLevelNormalImage
+        , checkActivityLevelRolloverImage, checkActivityLevelSelectedImage);    
+    checkActivityLevelButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         // send the action
         PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.STIMULATE);
+        action.setCheck(PatientAction.Check.ACTIVITY_LEVEL);
         notifyActionListeners(action);
             
         // output dialog
@@ -237,9 +237,9 @@ public class PatientDetailPanel extends DetailPanel {
             , "The patient has been stimulated.");
       }
     });
-    stimulateBabyButton.setLocation(31, 197);
-    stimulateBabyButton.setSize(192, 32);
-    add(stimulateBabyButton);
+    checkActivityLevelButton.setLocation(31, 197);
+    checkActivityLevelButton.setSize(192, 32);
+    add(checkActivityLevelButton);
   }
   
   /**
