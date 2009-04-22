@@ -15,7 +15,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 public class PatientAction extends Action {
 
   /** The checks. */
-  public enum Check { CANULA_SITE, BLEEDING, BROKEN_ETT, SUCTION_ETT, DIAPER, STIMULATE };
+  public enum Check { CANULA_SITE, BLEEDING, URINE_OUTPUT, SUCTION_ETT, DIAPER, ACTIVITY_LEVEL };
   
   /** The check done. */
   private Check check;
@@ -55,7 +55,7 @@ public class PatientAction extends Action {
       Patient patient = game.getPatient();
       patient.setBleeding(false);
     }
-    else if (check == Check.BROKEN_ETT) {
+    else if (check == Check.URINE_OUTPUT) {
       TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
       tube.setBrokenETT(false);
     }
@@ -66,7 +66,7 @@ public class PatientAction extends Action {
     else if (check == Check.DIAPER) {
       // no action taken...
     }
-    else if (check == Check.STIMULATE) {
+    else if (check == Check.ACTIVITY_LEVEL) {
       // no action taken...
     }
     else {

@@ -7,7 +7,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.engage;
  * @author   king
  * @since    August 29, 2008
  */
-public class DopamineIntervention extends Intervention {
+public class CatecholamineIntervention extends Intervention {
     
   /**
    * Returns the name of the intervention.
@@ -15,6 +15,6 @@ public class DopamineIntervention extends Intervention {
    * @return  The name.
    */
   public String getName() {
-    return "Dopamine";
+    return "Catecholamine";
   }
 }

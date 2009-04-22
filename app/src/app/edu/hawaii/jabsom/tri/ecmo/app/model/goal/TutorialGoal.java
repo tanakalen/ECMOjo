@@ -21,7 +21,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.InterventionComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.AlbuminIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.BloodIntervention;
-import edu.hawaii.jabsom.tri.ecmo.app.model.engage.DopamineIntervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.CatecholamineIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.FFPIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.HeparinBolusIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.Intervention;
@@ -295,8 +295,8 @@ public class TutorialGoal extends Goal {
                   notifyUpdate();
                 }
               }
-              else if (items[2].equals("Dopamine")) {
-                if (actualIntervention instanceof DopamineIntervention) {
+              else if (items[2].equals("Catecholamine")) {
+                if (actualIntervention instanceof CatecholamineIntervention) {
                   progress++;
                   notifyUpdate();
                 }
@@ -411,8 +411,8 @@ public class TutorialGoal extends Goal {
               else if (items[2].equals("BLEEDING")) {
                 triggerCheck = Check.BLEEDING;
               }
-              else if (items[2].equals("BROKEN_ETT")) {
-                triggerCheck = Check.BROKEN_ETT;
+              else if (items[2].equals("URINE_OUTPUT")) {
+                triggerCheck = Check.URINE_OUTPUT;
               }
               else if (items[2].equals("SUCTION_ETT")) {
                 triggerCheck = Check.SUCTION_ETT;
@@ -420,8 +420,8 @@ public class TutorialGoal extends Goal {
               else if (items[2].equals("DIAPER")) {
                 triggerCheck = Check.DIAPER;
               }
-              else if (items[2].equals("STIMULATE")) {
-                triggerCheck = Check.STIMULATE;
+              else if (items[2].equals("ACTIVITY_LEVEL")) {
+                triggerCheck = Check.ACTIVITY_LEVEL;
               }
               if (actualCheck == triggerCheck) {                    
                 progress++;
