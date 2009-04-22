@@ -280,7 +280,10 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
 
     // do blending
     float alpha = (float)(1.0 - component.getSvO2()) * 2;
-    if (alpha > 1.0f) {
+    if (alpha < 0.0f) {
+      alpha = 0.0f;
+    }
+    else if (alpha > 1.0f) {
       alpha = 1.0f;
     }
     Composite oldComp = g2.getComposite();

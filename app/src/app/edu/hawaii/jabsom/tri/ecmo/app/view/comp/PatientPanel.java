@@ -118,7 +118,7 @@ public class PatientPanel extends ComponentPanel {
     if (alpha < 0.0f) {
       alpha = 0.0f;
     }
-    if (alpha > 1.0f) {
+    else if (alpha > 1.0f) {
       alpha = 1.0f;
     }
     
