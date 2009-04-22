@@ -8,6 +8,8 @@ package edu.hawaii.jabsom.tri.ecmo.app.control;
  */
 public class History {
   
+  /** Holds prior patient temperature information. */
+  private double patientTemperature;
   /** Holds prior flow rate information. */
   private double flow;
   /** Holds prior sweep rate information. */
@@ -16,6 +18,24 @@ public class History {
   private double venousPressure;
   
   
+  /**
+   * Returns the patient temperature.
+   *
+   * @return  The patient temperature.
+   */
+  public double getPatientTemperature() {
+    return patientTemperature;
+  }
+
+  /**
+   * Sets the patient temperature.
+   *
+   * @param patientTemperature  The patient temperature.
+   */
+  public void setPatientTemperature(double patientTemperature) {
+    this.patientTemperature = patientTemperature;
+  }
+
   /**
    * Returns the flow.
    *
