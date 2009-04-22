@@ -1,10 +1,10 @@
 package edu.hawaii.jabsom.tri.ecmo.app.state;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Manager.ManagerListener;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.SimulationGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
@@ -13,8 +13,11 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.TutorialPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import king.lib.access.ImageLoader;
 
 /**
  * The game state panel. 
@@ -52,7 +55,12 @@ public class GameStatePanel extends JPanel implements ManagerListener {
     // add exit button as needed
     Goal goal = state.getManager().getGame().getGoal();
     if (goal instanceof SimulationGoal) {
-      JButton exitButton = new JButton("Exit");
+      // add exit button
+      Image exitNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Exit.png");
+      Image exitRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ExitRol.png");
+      Image exitSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ExitSel.png");
+      ImageButton exitButton 
+        = new ImageButton(exitNormalImage, exitRolloverImage, exitSelectedImage);
       exitButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent arg0) {
           // and exit
@@ -60,7 +68,7 @@ public class GameStatePanel extends JPanel implements ManagerListener {
         }      
       });
       exitButton.setLocation(308, 18);
-      exitButton.setSize(100, 45);
+      exitButton.setSize(120, 48);
       mainPanel.add(exitButton);
     }
   }
