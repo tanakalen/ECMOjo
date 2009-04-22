@@ -44,6 +44,7 @@ public final class Updater {
    */
   public static void store(Game game, History history) {
     // equipment variables
+    Patient patient = game.getPatient();
     Equipment equipment = game.getEquipment();
     PumpComponent pump = (PumpComponent)equipment
         .getComponent(PumpComponent.class);
@@ -52,6 +53,8 @@ public final class Updater {
     OxigenatorComponent oxigenator = (OxigenatorComponent)equipment
         .getComponent(OxigenatorComponent.class);
 
+    // store the heart rate
+    history.setPatientTemperature(patient.getTemperature());
     // Set last updated flow to check pump flow, for membrane pressure interaction
     history.setFlow(pump.getFlow());
     // Set last updated sweep rate, for CDI update interaction
@@ -283,10 +286,10 @@ public final class Updater {
       // update patient
       double patientTemperature = patient.getTemperature();
       if (patientTemperature < heater.getTemperature()) {
-        patient.setTemperature(patientTemperature + 0.001);
+        patient.setTemperature(patientTemperature + 0.01);
       }
       else if (patientTemperature > heater.getTemperature()) {
-        patient.setTemperature(patientTemperature - 0.001);
+        patient.setTemperature(patientTemperature - 0.01);
       }
       
       // update patient pH, pCO2, HCO3, base excess
@@ -350,6 +353,18 @@ public final class Updater {
         }
         else {
           Error.out(e.getMessage());
+        }
+      }
+      
+      // heart rate
+      if (patient.getTemperature() != history.getPatientTemperature()) {
+        if (patient.getTemperature() > history.getPatientTemperature()) {
+          patient.setHeartRate(patient.getHeartRate() + 0.1 * patient.getHeartRate()
+                            * (patient.getTemperature() - history.getPatientTemperature()));
+        }
+        else {
+          patient.setHeartRate(patient.getHeartRate() - 0.1 * patient.getHeartRate()
+                            * (history.getPatientTemperature() - patient.getTemperature()));
         }
       }
       
