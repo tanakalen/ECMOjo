@@ -104,48 +104,35 @@ public final class Updater {
       tube.setSvO2(tube.getSaO2() * 0.75); // TODO: Need SvO2 curves
       tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
-      if (oldFlow == 0) { // tube pressures have never been set TODO: move to ScenarioCreator or MenuStatePanel
-        tube.setPreMembranePressure((pump.getFlow() * 400) + (oxigenator.getClotting() * 50));
-        //tube.setPostMembranePressure(tube.getPreMembranePressure() - 40);
-        if (oxigenator.getOxiType() == OxigenatorComponent.OxiType.QUADROX_D) { // PMP
-          tube.setPostMembranePressure(tube.getPreMembranePressure());
+      // TODO: reconfirm if this is valid
+      tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxigenator.getClotting() * 50));
+      // change in venous pressure changes pump flow
+      double diffVenousPressure = tube.getVenousPressure() - oldVenousPressure;
+      if (diffVenousPressure != 0) {
+        if (Mediator.isVenousPressureNormal(patient, tube.getVenousPressure())) {
+          // Change in venous pressure by 5 increase/decease by 10%
+          pump.setFlow(pump.getFlow() * (1 + (diffVenousPressure * 0.02)));
         }
-        else { // Silicon
-          tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
+        else {
+          // Change in venous pressure by 2 increase/decrease by 10%
+          pump.setFlow(pump.getFlow() * (1 + (diffVenousPressure * 0.05)));            
         }
-        tube.setPostPCO2(35);
-        tube.setPostPH(7.4);
       }
-      else {
-        // TODO: reconfirm if this is valid
-        tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxigenator.getClotting() * 50));
-        // change in venous pressure changes pump flow
-        double diffVenousPressure = tube.getVenousPressure() - oldVenousPressure;
-        if (diffVenousPressure != 0) {
-          if (Mediator.isVenousPressureNormal(patient, tube.getVenousPressure())) {
-            // Change in venous pressure by 5 increase/decease by 10%
-            pump.setFlow(pump.getFlow() * (1 + (diffVenousPressure * 0.02)));
-          }
-          else {
-            // Change in venous pressure by 2 increase/decrease by 10%
-            pump.setFlow(pump.getFlow() * (1 + (diffVenousPressure * 0.05)));            
-          }
-        }
-        // change in pump flow changes post-membrane CO2
-        double currentTubePCO2 = tube.getPostPCO2();
-        tube.setPostPCO2(currentTubePCO2 * pump.getFlow() / oldFlow);
-        // change in sweep changes pCO2: increase drops pCO2, decrease raises pCO2
-        // TODO: reconfirm following behavior as rate of change is tiny! and reconfirm interaction
-        tube.setPostPCO2(currentTubePCO2 - ((oxigenator.getTotalSweep() - oldSweep) * 0.15));
-        //for debug:
+      // change in pump flow changes post-membrane CO2
+      double currentTubePCO2 = tube.getPostPCO2();
+      tube.setPostPCO2(currentTubePCO2 * pump.getFlow() / oldFlow);
+      // change in sweep changes pCO2: increase drops pCO2, decrease raises pCO2
+      // TODO: reconfirm following behavior as rate of change is tiny! and reconfirm interaction
+      tube.setPostPCO2(currentTubePCO2 - ((oxigenator.getTotalSweep() - oldSweep) * 0.15));
+      //for debug:
 //        if (oxigenator.getTotalSweep() - oldSweep != 0) {
 //          System.out.println("old: " + oldSweep + ", new: " + oxigenator.getTotalSweep());
 //          System.out.println(tube.getPostPCO2());
 //        }
-        double currentTubePH = tube.getPostPH();
-        // TODO: reconfirm interaction as PCO2 increases PH falls
-        tube.setPostPH(currentTubePH - ((tube.getPostPCO2() - currentTubePCO2) * 0.008));
-      }
+      double currentTubePH = tube.getPostPH();
+      // TODO: reconfirm interaction as PCO2 increases PH falls
+      tube.setPostPH(currentTubePH - ((tube.getPostPCO2() - currentTubePCO2) * 0.008));
+      
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn()) && (!tube.isVenousAOpen())) {
         tube.setVenousPressure(-100);
       }
@@ -276,7 +263,6 @@ public final class Updater {
       }
       
       // update patient
-      // update patient temperature
       double patientTemperature = patient.getTemperature();
       if (patientTemperature < heater.getTemperature()) {
         patient.setTemperature(patientTemperature + 0.01);
