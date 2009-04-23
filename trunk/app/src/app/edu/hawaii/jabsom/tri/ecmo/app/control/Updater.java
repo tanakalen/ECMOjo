@@ -328,33 +328,51 @@ public final class Updater {
         }
       }
       
-      try {
-        double patientPCO2 = Mediator.flowToPCO2(mode, ccPerKg, patient);
-        patient.setPCO2(patientPCO2);
+      // simplified version: interaction sweep to patient PCO2
+      // problems: does not take into account ventilation through the ventilator 
+      //   with good lungs, or CO2 removal with slower flow. Also issues with,
+      //   venous recirculation in VV mode where the pump CDI would not be 
+      //   reflective of the patient's values.
+      if (lungFunction == LungFunction.GOOD) {
+        patient.setPCO2(cdiMonitor.getPCO2() * 1.11);
       }
-      catch (Exception e) {
-        if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
-          // TODO BAD heart steady decline to death
-          double patientPCO2 = patient.getPCO2();
-          patient.setPCO2(patientPCO2 + 0.1); //Heading up 0.1 per 20ms
-        }
-        else if (e.getMessage().equals("Reached data limit")) {
-          if (lungFunction == LungFunction.GOOD) {
-            patient.setPCO2(cdiMonitor.getPCO2() * 1.11);
-          }
-          else {
-            if (heartFunction == HeartFunction.GOOD) {
-              patient.setPCO2(cdiMonitor.getPCO2() * 1.25);
-            }
-            else {
-              patient.setPCO2(cdiMonitor.getPCO2() * 1.35);
-            }
-          }
+      else {
+        if (heartFunction == HeartFunction.GOOD) {
+          patient.setPCO2(cdiMonitor.getPCO2() * 1.25);
         }
         else {
-          Error.out(e.getMessage());
+          patient.setPCO2(cdiMonitor.getPCO2() * 1.35);
         }
       }
+      
+      // old version: flow to patient pCO2, no interaction with sweep
+//      try {
+//        double patientPCO2 = Mediator.flowToPCO2(mode, ccPerKg, patient);
+//        patient.setPCO2(patientPCO2);
+//      }
+//      catch (Exception e) {
+//        if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
+//          // TODO BAD heart steady decline to death
+//          double patientPCO2 = patient.getPCO2();
+//          patient.setPCO2(patientPCO2 + 0.1); //Heading up 0.1 per 20ms
+//        }
+//        else if (e.getMessage().equals("Reached data limit")) {
+//          if (lungFunction == LungFunction.GOOD) {
+//            patient.setPCO2(cdiMonitor.getPCO2() * 1.11);
+//          }
+//          else {
+//            if (heartFunction == HeartFunction.GOOD) {
+//              patient.setPCO2(cdiMonitor.getPCO2() * 1.25);
+//            }
+//            else {
+//              patient.setPCO2(cdiMonitor.getPCO2() * 1.35);
+//            }
+//          }
+//        }
+//        else {
+//          Error.out(e.getMessage());
+//        }
+//      }
       
       // temperature effect
       if (patient.getTemperature() != history.getPatientTemperature()) {
