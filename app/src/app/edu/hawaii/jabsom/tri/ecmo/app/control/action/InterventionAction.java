@@ -6,6 +6,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.BloodIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.CatecholamineIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.HeparinBolusIntervention;
@@ -101,8 +102,13 @@ public class InterventionAction extends Action {
     }
     else if (intervention instanceof FFPIntervention) {
       // affect blood pressure
-      
-      
+      patient.setAct(patient.getAct() * 1.02);      // +2% increase ACT
+      if (patient.getHeartFunction() == HeartFunction.GOOD) { 
+        patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 4.0f);   // 4 mmHg increase
+      }
+      else if (patient.getHeartFunction() == HeartFunction.BAD) {
+        patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 4.5f);   // 4.5 mmHg increase
+      }
     }
     else if (intervention instanceof AlbuminIntervention) {
       // affect ACT
