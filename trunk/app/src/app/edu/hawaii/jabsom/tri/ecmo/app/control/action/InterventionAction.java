@@ -101,7 +101,7 @@ public class InterventionAction extends Action {
       }
     }
     else if (intervention instanceof FFPIntervention) {
-      // affect blood pressure
+      // affect blood pressure and ACT
       patient.setAct(patient.getAct() * 1.02);      // +2% increase ACT
       if (patient.getHeartFunction() == HeartFunction.GOOD) { 
         patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 4.0f);   // 4 mmHg increase
@@ -111,14 +111,18 @@ public class InterventionAction extends Action {
       }
     }
     else if (intervention instanceof AlbuminIntervention) {
-      // affect ACT
-
-      
+      // affect blood pressure
+      if (patient.getHeartFunction() == HeartFunction.GOOD) { 
+        patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 4.0f);   // 4 mmHg increase
+      }
+      else if (patient.getHeartFunction() == HeartFunction.BAD) {
+        patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 4.5f);   // 4.5 mmHg increase
+      }
     }
     else if (intervention instanceof CatecholamineIntervention) {
       // affect blood pressure and heart rate
-      
-      
+      patient.setHeartRate(patient.getHeartRate() * 1.1);                              // increase heart rate by 10%
+      patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * 1.09);     // increase SBP by 9%
     }
     else if (intervention instanceof HeparinBolusIntervention) {
       // affect ACT
