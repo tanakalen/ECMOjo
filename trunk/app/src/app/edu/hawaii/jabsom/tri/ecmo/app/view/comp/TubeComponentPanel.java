@@ -153,7 +153,7 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     selectionClampButton2.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         StandardDialog.showDialog(SwingUtilities.getRootPane(selectionClampButton2), DialogType.WARNING, DialogOption.OK
-            , "Clamp Placement", "Dr. Ogino suggests: don't add a clamp there!");
+            , "Clamp Placement", "Dr. Ogino says: don't add a clamp there!");
         selectionClampButton2.setSelected(false);
       }
     });
@@ -202,7 +202,7 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     selectionClampButton5.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         StandardDialog.showDialog(SwingUtilities.getRootPane(selectionClampButton5), DialogType.WARNING, DialogOption.OK
-            , "Clamp Placement", "Dr. Ogino suggests: don't add a clamp there!");
+            , "Clamp Placement", "Dr. Ogino says: don't add a clamp there!");
         selectionClampButton5.setSelected(false);
       }
     });
