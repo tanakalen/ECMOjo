@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -81,6 +82,7 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
 
     // add table with values
     tableModel = new DefaultTableModel() {
+      private DecimalFormat labFormatter = new DecimalFormat("###.##");
       public int getColumnCount() {
         int size = component.getResults().size();
         if (size < 10) {
@@ -133,19 +135,19 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
           if (col <= size) {
             switch (row) {
               case 0:
-                return ((HematologyLabTest)component.getResults().get(size - col)).getFibrinogen();
+                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getFibrinogen());
               case 1:
-                return ((HematologyLabTest)component.getResults().get(size - col)).getHct();
+                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHct());
               case 2:
-                return ((HematologyLabTest)component.getResults().get(size - col)).getHgb();
+                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHgb());
               case 3:
-                return ((HematologyLabTest)component.getResults().get(size - col)).getPlatelets();
+                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getPlatelets());
               case 4:
-                return ((HematologyLabTest)component.getResults().get(size - col)).getPt();
+                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getPt());
               case 5:
-                return ((HematologyLabTest)component.getResults().get(size - col)).getPtt();
+                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getPtt());
               case 6:
-                return ((HematologyLabTest)component.getResults().get(size - col)).getWbc();                
+                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getWbc());
               default:
                 // error condition
                 return null;

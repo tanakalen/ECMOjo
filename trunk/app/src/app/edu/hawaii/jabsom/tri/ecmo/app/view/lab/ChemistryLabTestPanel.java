@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -81,6 +82,7 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
 
     // add table with values
     tableModel = new DefaultTableModel() {
+      private DecimalFormat labFormatter = new DecimalFormat("###.##");
       public int getColumnCount() {
         int size = component.getResults().size();
         if (size < 10) {
@@ -129,15 +131,15 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
           if (col <= size) {
             switch (row) {
               case 0:
-                return ((ChemistryLabTest)component.getResults().get(size - col)).getGluc();
+                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getGluc());
               case 1:
-                return ((ChemistryLabTest)component.getResults().get(size - col)).getIonCa();
+                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getIonCa());
               case 2:
-                return ((ChemistryLabTest)component.getResults().get(size - col)).getK();
+                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getK());
               case 3:
-                return ((ChemistryLabTest)component.getResults().get(size - col)).getLactate();
+                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getLactate());
               case 4:
-                return ((ChemistryLabTest)component.getResults().get(size - col)).getNa();
+                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getNa());
               default:
                 // error condition
                 return null;
