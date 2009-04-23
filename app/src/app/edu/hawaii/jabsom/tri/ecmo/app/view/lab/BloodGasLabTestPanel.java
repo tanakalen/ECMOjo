@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -82,6 +83,7 @@ public class BloodGasLabTestPanel extends LabDetailPanel implements LabTestListe
     
     // add table with values
     tableModel = new DefaultTableModel() {
+      private DecimalFormat labFormatter = new DecimalFormat("###.##");
       public int getColumnCount() {
         int size = component.getResults().size();
         if (size < 10) {
@@ -134,15 +136,15 @@ public class BloodGasLabTestPanel extends LabDetailPanel implements LabTestListe
               case 0:
                 return ((BloodGasLabTest)component.getResults().get(size - col)).getBloodGasType().getName();
               case 1:
-                return ((BloodGasLabTest)component.getResults().get(size - col)).getPH();
+                return labFormatter.format(((BloodGasLabTest)component.getResults().get(size - col)).getPH());
               case 2:
-                return ((BloodGasLabTest)component.getResults().get(size - col)).getPCO2();
+                return labFormatter.format(((BloodGasLabTest)component.getResults().get(size - col)).getPCO2());
               case 3:
-                return ((BloodGasLabTest)component.getResults().get(size - col)).getPO2();
+                return labFormatter.format(((BloodGasLabTest)component.getResults().get(size - col)).getPO2());
               case 4:
-                return ((BloodGasLabTest)component.getResults().get(size - col)).getHCO3();
+                return labFormatter.format(((BloodGasLabTest)component.getResults().get(size - col)).getHCO3());
               case 5:
-                return ((BloodGasLabTest)component.getResults().get(size - col)).getBE();
+                return labFormatter.format(((BloodGasLabTest)component.getResults().get(size - col)).getBE());
               default:
                 // error condition
                 return null;
