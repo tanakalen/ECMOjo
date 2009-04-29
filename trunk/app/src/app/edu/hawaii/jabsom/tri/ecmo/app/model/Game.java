@@ -2,6 +2,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.model;
 
 import java.io.Serializable;
 
+import edu.hawaii.jabsom.tri.ecmo.app.control.ActionList;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.Tracker;
@@ -22,13 +23,15 @@ public class Game implements Serializable {
   /** The elapsed time (in milliseconds). */
   private long elapsedTime;
   
-  /** The tracker. */
-  private Tracker tracker;
-  
   /** The patient (e.g. the baby). */
   private Patient patient;
   /** The equipment. */
   private Equipment equipment;
+  
+  /** The tracker. */
+  private Tracker tracker;
+  /** The actions executed. */
+  private ActionList actions;
   
 
   /**
@@ -41,9 +44,12 @@ public class Game implements Serializable {
 
     // setup parameters
     elapsedTime = 0;
-    tracker = new Tracker();
     patient = (Patient)ObjectCloner.deepCopy(scenario.getPatient());
     equipment = (Equipment)ObjectCloner.deepCopy(scenario.getEquipment());
+    
+    // for statistics
+    tracker = new Tracker();
+    actions = new ActionList();
   }
   
   /**
@@ -92,24 +98,6 @@ public class Game implements Serializable {
   }
   
   /**
-   * Returns the tracker.
-   *
-   * @return  The tracker.
-   */
-  public Tracker getTracker() {
-    return tracker;
-  }
-
-  /**
-   * Sets the tracker.
-   *
-   * @param tracker  The tracker to set.
-   */
-  public void setTracker(Tracker tracker) {
-    this.tracker = tracker;
-  }
-
-  /**
    * Returns the equipment.
    *
    * @return  The equipment.
@@ -143,5 +131,41 @@ public class Game implements Serializable {
    */
   public void setPatient(Patient patient) {
     this.patient = patient;
+  }
+  
+  /**
+   * Returns the tracker.
+   *
+   * @return  The tracker.
+   */
+  public Tracker getTracker() {
+    return tracker;
+  }
+
+  /**
+   * Sets the tracker.
+   *
+   * @param tracker  The tracker to set.
+   */
+  public void setTracker(Tracker tracker) {
+    this.tracker = tracker;
+  }
+
+  /**
+   * Returns the actions that have been executed.
+   *
+   * @return  The actions.
+   */
+  public ActionList getActions() {
+    return actions;
+  }
+
+  /**
+   * Sets the actions that have been executed.
+   *
+   * @param actions  The actions.
+   */
+  public void setActions(ActionList actions) {
+    this.actions = actions;
   }
 }

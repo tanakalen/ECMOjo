@@ -127,6 +127,9 @@ public class Manager implements Runnable {
           for (Action action: actions) {
             action.execute(game); 
             
+            // store action
+            game.getActions().add(action);
+            
             // pass on to goal
             game.getGoal().handle(action);
           }
