@@ -16,8 +16,108 @@ public class History {
   private double sweep;
   /** Holds prior venous pressure information. */
   private double venousPressure;
+  /** Holds prior True if the bridge is open. */
+  private boolean bridgeOpen;
+  /** Holds prior True if arterial position A open. */
+  private boolean arterialAOpen;
+  /** Holds prior True if arterial position B open. B is the patient side/left */
+  private boolean arterialBOpen;
+  /** Holds prior True if venous position A open. */
+  private boolean venousAOpen;
+  /** Holds prior True if venous position B open. B is the patient side/left */
+  private boolean venousBOpen;
   
   
+  /**
+   * Returns the bridgeOpen.
+   *
+   * @return The bridgeOpen.
+   */
+  public boolean isBridgeOpen() {
+    return bridgeOpen;
+  }
+
+  /**
+   * Sets the bridgeOpen.
+   *
+   * @param bridgeOpen The bridgeOpen to set.
+   */
+  public void setBridgeOpen(boolean bridgeOpen) {
+    this.bridgeOpen = bridgeOpen;
+  }
+
+  /**
+   * Returns the arterialAOpen.
+   *
+   * @return The arterialAOpen.
+   */
+  public boolean isArterialAOpen() {
+    return arterialAOpen;
+  }
+
+  /**
+   * Sets the arterialAOpen.
+   *
+   * @param arterialAOpen The arterialAOpen to set.
+   */
+  public void setArterialAOpen(boolean arterialAOpen) {
+    this.arterialAOpen = arterialAOpen;
+  }
+
+  /**
+   * Returns the arterialBOpen.
+   *
+   * @return The arterialBOpen.
+   */
+  public boolean isArterialBOpen() {
+    return arterialBOpen;
+  }
+
+  /**
+   * Sets the arterialBOpen.
+   *
+   * @param arterialBOpen The arterialBOpen to set.
+   */
+  public void setArterialBOpen(boolean arterialBOpen) {
+    this.arterialBOpen = arterialBOpen;
+  }
+
+  /**
+   * Returns the venousAOpen.
+   *
+   * @return The venousAOpen.
+   */
+  public boolean isVenousAOpen() {
+    return venousAOpen;
+  }
+
+  /**
+   * Sets the venousAOpen.
+   *
+   * @param venousAOpen The venousAOpen to set.
+   */
+  public void setVenousAOpen(boolean venousAOpen) {
+    this.venousAOpen = venousAOpen;
+  }
+
+  /**
+   * Returns the venousBOpen.
+   *
+   * @return The venousBOpen.
+   */
+  public boolean isVenousBOpen() {
+    return venousBOpen;
+  }
+
+  /**
+   * Sets the venousBOpen.
+   *
+   * @param venousBOpen The venousBOpen to set.
+   */
+  public void setVenousBOpen(boolean venousBOpen) {
+    this.venousBOpen = venousBOpen;
+  }
+
   /**
    * Returns the patient temperature.
    *
