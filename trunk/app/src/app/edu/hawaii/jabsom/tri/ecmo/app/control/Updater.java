@@ -170,8 +170,7 @@ public final class Updater {
       
       if (tube.isArterialAOpen() != history.isArterialAOpen() || tube.isArterialBOpen() != history.isArterialBOpen() 
        || tube.isBridgeOpen() != history.isBridgeOpen()
-       || tube.isVenousAOpen() != history.isVenousBOpen() || tube.isVenousBOpen() != history.isVenousBOpen()) { 
-
+       || tube.isVenousAOpen() != history.isVenousAOpen() || tube.isVenousBOpen() != history.isVenousBOpen()) { 
         // do interaction of clamping
       
         // Arterial: Open, Venous: Open, Bridge: Open
@@ -297,12 +296,6 @@ public final class Updater {
             pump.setOn(false);
           }
         }
-        // Set last clamp information
-        history.setArterialAOpen(tube.isArterialAOpen());
-        history.setArterialBOpen(tube.isArterialBOpen());
-        history.setBridgeOpen(tube.isBridgeOpen());
-        history.setVenousAOpen(tube.isVenousAOpen());
-        history.setVenousBOpen(tube.isVenousBOpen());
       }
       
       if ((tube.getVenousPressure() < -75) && (pump.isOn())) {
@@ -524,7 +517,6 @@ public final class Updater {
           patient.setAct(patient.getAct() - 0.1 * patient.getAct()
                       * (history.getPatientTemperature() - patient.getTemperature()));
         }
-        history.setPatientTemperature(patient.getTemperature());
       }
       
       // SBP increase 10% if flow increase by 20mL/kg/min in VA AND bad heart
