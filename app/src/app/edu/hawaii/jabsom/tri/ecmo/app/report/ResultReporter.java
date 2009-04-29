@@ -29,17 +29,15 @@ public abstract class ResultReporter {
     StringBuilder builder = new StringBuilder();
     String linebreak = "\n";
     
-    // add name
+    // add overview
     builder.append("Scenario: ").append(game.getName()).append(linebreak);
-    
-    // add result
     builder.append("Result: ").append(game.getGoal().isWon(game) ? "Success" : "Failure").append(linebreak);
+    builder.append(linebreak);
     
-    // add time
+    // add detail
     builder.append("Elapsed Time: ").append(game.getElapsedTime() / 1000).append("s").append(linebreak);
-    
-    // add patient status
     builder.append("Patient: ").append(game.getPatient().isAlive() ? "Alive" : "Dead").append(linebreak);
+    builder.append("Actions Executed: ").append(game.getActions().size()).append(linebreak);
     
     // and return the report ...
     return builder.toString();
