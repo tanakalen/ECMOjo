@@ -32,6 +32,15 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
   /** The oxigenator broken image. */
   private Image brokenImage;
 
+  /** The dripping blood image. */
+  private Image drippingBloodImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-Blood.png");
+  /** The dripping blood position. */
+  private int drippingBloodPosition = 100;
+  /** The start time in nano second. */
+  private long lastUpdate;
+  /** The elapsed time. */
+  private long elapsedTime = 0;
+  
   /** The rollover image. */
   private Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-OxiRol.png");
   /** The selected image. */
@@ -75,7 +84,7 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
     
     // set size and location
     setLocation(530, 303);
-    setSize(270, 190);
+    setSize(270, 297);
     
     // set layout
     setLayout(null);
@@ -182,6 +191,19 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
       }
       else {
         g.drawImage(brokenImage, 5, 33, this);
+      }
+      // draws the dripping blood
+      g.drawImage(drippingBloodImage, 75, drippingBloodPosition, this);
+      long currentUpdate = System.nanoTime();
+      long delta = currentUpdate - lastUpdate;
+      lastUpdate = currentUpdate;
+      elapsedTime += delta;
+      if (elapsedTime >= 20000000) {
+        drippingBloodPosition += 1;
+        elapsedTime = 0; 
+        if (drippingBloodPosition > 297) {
+          drippingBloodPosition = 100;
+        }
       }
     }
     
