@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -34,12 +35,15 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
 
   /** The dripping blood image. */
   private Image drippingBloodImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-Blood.png");
-  /** The dripping blood position. */
-  private int drippingBloodPosition = 100;
-  /** The start time in nano second. */
+  /** The dripping blood time. */
+  private long[] elapsedTime = new long[3];
+  /** The dripping blood start flag. */
+  private boolean[] startFlag = new boolean[3];
+  /** The dripping blood random flag. */
+  private boolean[] randomFlag = new boolean[3];
+  
+  /** The last update in nano second. */
   private long lastUpdate;
-  /** The elapsed time. */
-  private long elapsedTime = 0;
   
   /** The rollover image. */
   private Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-OxiRol.png");
@@ -97,6 +101,16 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
     else {
       oxiImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-SciMedOxigenator.png");
       brokenImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-SciMedOxigenatorBroken.png");
+    }
+    
+    // set the last update
+    lastUpdate = 0;
+    
+    // set elapsed time
+    for (int i = 0; i < 3; i++) {
+      elapsedTime[i] = 0;
+      startFlag[i] = false;
+      randomFlag[i] = false;
     }
     
     // add toggle button
@@ -185,26 +199,56 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
     }
     
     if (component.isBroken()) {
+      int[] positions = new int[3];
+      
       // draws the broken image
       if (component.getOxiType() == OxiType.QUADROX_D) {
         g.drawImage(brokenImage, 13, 0, this);
       }
       else {
         g.drawImage(brokenImage, 5, 33, this);
-      }
-      // draws the dripping blood
-      g.drawImage(drippingBloodImage, 75, drippingBloodPosition, this);
-      long currentUpdate = System.nanoTime();
-      long delta = currentUpdate - lastUpdate;
-      lastUpdate = currentUpdate;
-      elapsedTime += delta;
-      if (elapsedTime >= 20000000) {
-        drippingBloodPosition += 1;
-        elapsedTime = 0; 
-        if (drippingBloodPosition > 297) {
-          drippingBloodPosition = 100;
+        // draws the dripping blood
+        for (int i = 0; i < 3; i++) {
+          if (elapsedTime[i] > 0) {
+            positions[i] = (int) (0.00000001 * elapsedTime[i] * 0.00000001 * elapsedTime[i]);
+            g.drawImage(drippingBloodImage, 45, 154 + positions[i], this);
+            if (positions[i] > 145) {
+              elapsedTime[i] = 0;
+              startFlag[i] = false;
+            }
+          }
         }
       }
+
+      long currentUpdate = System.nanoTime();
+      long delta = currentUpdate - lastUpdate;
+      if (lastUpdate > 0) {
+        for (int i = 0; i < 3; i++) {
+          if (startFlag[i]) {
+            elapsedTime[i] += delta;
+          }
+          else {
+            // random start the flag
+            if ((((System.nanoTime()) / 200000000) % 2) == 0) {
+              // run one time
+              if (randomFlag[i]) {
+                Random random = new Random();
+                if (random.nextDouble() > 0.5) {
+                  startFlag[i] = true;
+                }
+              }
+              randomFlag[i] = false;
+            } 
+            else {
+              randomFlag[i] = true;  
+            }
+          }
+        }
+      }
+      lastUpdate = currentUpdate;
+    }
+    else {
+      lastUpdate = 0;
     }
     
     // 0-10 bar
