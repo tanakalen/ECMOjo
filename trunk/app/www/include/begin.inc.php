@@ -56,6 +56,7 @@
       <li><a href="index.php">Home</a>
       <li><a href="demo.php">Demo</a>
       <li><a href="screenshot.php">Screenshots</a>
+      <li><a href="video.php">Videos</a>
       <li><a href="component.php">Components</a>
       <li><a href="download.php">Download</a>
       <li><a href="faq.php">FAQ</a>            
