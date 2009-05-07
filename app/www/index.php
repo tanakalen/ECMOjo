@@ -55,6 +55,7 @@
 <div class="titlebar"><div><div><h2>News & Updates</h2></div></div></div>
 <div class="othertopic">
   <ul>
+    <li><strong>May 6, 2009</strong><br>Added ECMOjo Tutorial 1 video.</li>
     <li><strong>January 14, 2009</strong><br>The ECMOjo website opens its doors to the public!</li>
     <li><strong>October 6, 2008</strong><br>Registered ECMOjo to Source Forge.</li>
   </ul>
