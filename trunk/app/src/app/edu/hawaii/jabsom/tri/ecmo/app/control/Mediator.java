@@ -364,6 +364,82 @@ public final class Mediator {
       }
     }
   }
+
+  /**
+   * flowToSvO2 provides linkage information of Pump flow to patient SvO2. Dependent
+   * on mode of pump, kind of lung, kind of heart, and flow.
+   * 
+   * @param ecmo
+   *          Mode of ecmo {VA, VV}
+   * @param flow
+   *          Rate of blood flow in mL/kg/min
+   * @param patient
+   *          Current patient instantiation
+   * @throws Exception for flow < 0, heartFunction bad, and data limit
+   * @return SvO2 by linear interpolation of Mark's chart
+   */
+  public static double flowToSvO2(Mode ecmo, double flow, Patient patient) throws Exception {
+    if (flow < 0) {
+      throw new Exception("Flow cannot be less than 0");
+    }
+    if (ecmo == Mode.VV) {
+      if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
+        // SvO2_VV_LGHP and SvO2_VV_LPHP
+        throw new Exception("VV ECMO and bad heart function not ideal");
+      }
+      else { // Heart function is good
+        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
+          // SvO2_VV_LPHG lung is bad
+          return -0.483 * flow * flow * flow + 0.610 * flow * flow + 0.080 * flow + 0.534;
+        }
+        else { // Lungs are working why are we on ECMO?
+          // SvO2_VV_LGHG lung is good
+          if (flow <= 0.1) {
+            return 0.73;
+          }
+          else if (flow > 0.1 && flow <= 0.4) {
+            return 0.76;
+          }
+          else if (flow > 0.4 && flow <= 0.75) {
+            return 0.108 * flow + 0.719;
+          }
+          else {
+            return 0.80;
+          }
+        }
+      }
+    }
+    else { // must be VA
+      if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
+        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
+          // SvO2_VA_LPHP
+          return 0.378 * flow * flow * flow - 0.932 * flow * flow + 0.943 * flow + 0.383;
+        }
+        else { // Lungs are working but heart not so good
+          // SvO2_VA_LGHP
+          return 0.388 * flow * flow * flow - 0.840 * flow * flow + 0.739 * flow + 0.483;
+        }
+      }
+      else { // Heart function is good
+        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
+          // SvO2_VA_LPHG
+          return 0.241 * flow + 0.530;
+        }
+        else { // Lungs & Heart are working why are we on ECMO?
+          // SvO2_VA_LGHG
+          if (flow <= 0.1) {
+            return 0.73;
+          }
+          else if (flow > 0.1 && flow <= 0.7) {
+            return 0.76;
+          }
+          else {
+            return 0.77;
+          }
+        }
+      }
+    }
+  }
   
   /**
    * calcOxygenSaturation calculates oxygen saturation from PaO2.
