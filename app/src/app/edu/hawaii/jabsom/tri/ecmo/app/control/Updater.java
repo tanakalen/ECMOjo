@@ -110,6 +110,9 @@ public final class Updater {
            .getComponent(AlarmIndicatorComponent.class);
       
       // load some local variables for Updater
+      Mode mode = tube.getMode();
+      HeartFunction heartFunction = patient.getHeartFunction();
+      LungFunction lungFunction = patient.getLungFunction();
       double ccPerKg = pump.getFlow() * 1000 / patient.getWeight();
 
       // update equipment (physiologic monitor)
@@ -129,7 +132,16 @@ public final class Updater {
       double tubeSaO2 = 0;   // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
       tubeSaO2 = Mediator.calcOxygenSaturation(paO2);
       tube.setSaO2(tubeSaO2);
-      tube.setSvO2(tube.getSaO2() * 0.75); // TODO: Need SvO2 curves
+      
+      try{ 
+        double tubeSvO2 = Mediator.flowToSvO2(mode, ccPerKg, patient);
+        tube.setSvO2(tubeSvO2); 
+      }
+      catch (Exception e) {
+        // something wrong
+        tube.setSvO2(0.0);
+        Error.out(e.getMessage());
+      }
       tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
       // TODO: reconfirm if this is valid
@@ -187,7 +199,7 @@ public final class Updater {
       bubbleDetector.setAlarm(tube.isArterialBubbles());
 
       // update equipment (CDI monitor) note CDI is in line post-oxygenator
-      cdiMonitor.setSaO2(tube.getSaO2());
+      cdiMonitor.setSaO2(tube.getSaO2());      
       cdiMonitor.setSvO2(tube.getSvO2());
       cdiMonitor.setTemperature(heater.getTemperature());
       cdiMonitor.setHct(patient.getHct());
@@ -300,9 +312,6 @@ public final class Updater {
       }
       
       // update patient pH, pCO2, HCO3, base excess
-      Mode mode = tube.getMode();
-      HeartFunction heartFunction = patient.getHeartFunction();
-      LungFunction lungFunction = patient.getLungFunction();
       try {
         double patientPH = Mediator.flowToPH(mode, ccPerKg, patient);
         patient.setPH(patientPH);
