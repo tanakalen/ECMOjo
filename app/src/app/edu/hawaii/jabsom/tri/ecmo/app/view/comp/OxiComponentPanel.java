@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -232,8 +231,7 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
             if ((((System.nanoTime()) / 200000000) % 2) == 0) {
               // run one time
               if (randomFlag[i]) {
-                Random random = new Random();
-                if (random.nextDouble() > 0.5) {
+                if (Math.random() > 0.5) {
                   startFlag[i] = true;
                 }
               }
