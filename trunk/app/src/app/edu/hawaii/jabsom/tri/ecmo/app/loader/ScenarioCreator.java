@@ -67,7 +67,7 @@ public final class ScenarioCreator {
     
     // set the patient
     Patient patient = new Patient();
-    patient.setAlive(true);
+    patient.setLife(1.0);
     patient.setAge(1);
     patient.setWeight(5);
     patient.setLungFunction(LungFunction.BAD);

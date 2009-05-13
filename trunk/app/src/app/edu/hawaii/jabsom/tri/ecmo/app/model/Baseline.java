@@ -341,7 +341,8 @@ public class Baseline {
       = (BubbleDetectorComponent)game.getEquipment().getComponent(BubbleDetectorComponent.class);
     
     // patient
-    return (bleeding == patient.isBleeding())
+    return (patient.isAlive())
+        && (bleeding == patient.isBleeding())
         && (patient.getHeartRate() >= minHeartRate) 
         && (patient.getHeartRate() <= maxHeartRate)
         /*

@@ -82,7 +82,7 @@ public class BaselineGoal extends Goal {
    */
   @Override
   public boolean isWon(Game game) {
-    return (game.getPatient().isAlive()) && (!isTimeout(game)) && (isBaseline(game));
+    return isBaseline(game);
   }
 
   /**
