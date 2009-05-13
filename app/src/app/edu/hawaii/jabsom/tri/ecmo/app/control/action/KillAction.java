@@ -20,6 +20,6 @@ public class KillAction extends Action {
   public void execute(Game game) {
     // kill the patient...
     Patient patient = game.getPatient();
-    patient.setAlive(false);
+    patient.setLife(0.0);
   }
 }

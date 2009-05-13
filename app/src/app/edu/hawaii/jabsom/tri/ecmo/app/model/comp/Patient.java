@@ -99,8 +99,8 @@ public class Patient  extends Component {
   };  
   
   
-  /** True for alive. */
-  private boolean alive;
+  /** 0.0 for dead, 1.0 for fully alive. */
+  private double life;
   
   /** The weight in kilograms. */
   private double weight;
@@ -147,16 +147,25 @@ public class Patient  extends Component {
    * @return  True for alive.
    */
   public boolean isAlive() {
-    return alive;
+    return life > 0.0;
+  }
+  
+  /**
+   * Returns the life.
+   *
+   * @return  The life where 0.0=dead and 1.0=fully alive.
+   */
+  public double getLife() {
+    return life;
   }
 
   /**
-   * Set to true for alive.
+   * Sets the life.
    *
-   * @param alive  True for alive.
+   * @param life  The life where 0.0=dead and 1.0=fully alive.
    */
-  public void setAlive(boolean alive) {
-    this.alive = alive;
+  public void setLife(double life) {
+    this.life = life;
   }
 
   /**

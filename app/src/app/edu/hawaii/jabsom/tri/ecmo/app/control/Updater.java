@@ -438,6 +438,16 @@ public final class Updater {
       
       // TODO Patient bicarb and base excess calc? from Mark's table
       
+      // update the patients life
+      if (oxigenator.isBroken()) {
+        double life = patient.getLife();
+        life -= increment / 5000.0;   // 5 seconds to die...
+        if (life < 0.0) {
+          life = 0.0;
+        }
+        patient.setLife(life);
+      }
+      
       // and return if goal is reached
       return goal.isReached(game);
     }
