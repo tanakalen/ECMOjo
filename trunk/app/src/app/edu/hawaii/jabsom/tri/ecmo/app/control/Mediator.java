@@ -366,6 +366,26 @@ public final class Mediator {
   }
 
   /**
+   * flowToSPO2 provides linkage information of Pump flow to patient oxygen saturation. 
+   * Dependent on mode of pump, kind of lung, kind of heart, and flow.
+   * 
+   * @param ecmo
+   *          Mode of ecmo {VA, VV}
+   * @param flow
+   *          Rate of blood flow in mL/kg/min
+   * @param patient
+   *          Current patient instantiation
+   * @throws Exception for flow < 0, heartFunction bad, and data limit
+   * @return PaO2 after calculation from saturation
+   */
+  public static double flowToSPO2(Mode ecmo, double flow, Patient patient) throws Exception {
+    if (flow < 0) {
+      throw new Exception("Flow cannot be less than 0");
+    }
+    return 0;
+  }
+    
+  /**
    * flowToSvO2 provides linkage information of Pump flow to patient SvO2. Dependent
    * on mode of pump, kind of lung, kind of heart, and flow.
    * 
@@ -450,6 +470,19 @@ public final class Mediator {
    */
   public static double calcOxygenSaturation(double paO2) {
     return(1 / ((23400 / (Math.pow(paO2, 3) + (150 * paO2))) + 1));
+  }
+  
+  /**
+   * calcPaO2 calculates partial pressure of oxygen from saturation.
+   * 
+   * @param spO2
+   *          saturation of oxygen as percentage (0.00)
+   * @return paO2 as mmHg
+   */
+  public static double calcPaO2(double spO2) {
+    // From CubeEquation-Sat-PaO2.xls
+    return((366.214 * Math.pow(spO2, 3)) - (455.117 * Math.pow(spO2, 2)) + 
+        (188.15 * spO2) - 2.609);
   }
   
   /**
