@@ -481,8 +481,8 @@ public final class Mediator {
    */
   public static double calcPaO2(double spO2) {
     // From CubeEquation-Sat-PaO2.xls
-    return((366.214 * Math.pow(spO2, 3)) - (455.117 * Math.pow(spO2, 2)) + 
-        (188.15 * spO2) - 2.609);
+    return((366.214 * Math.pow(spO2, 3)) - (455.117 * Math.pow(spO2, 2)) 
+      + (188.15 * spO2) - 2.609);
   }
   
   /**
