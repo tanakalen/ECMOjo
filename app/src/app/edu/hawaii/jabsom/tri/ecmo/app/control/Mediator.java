@@ -367,7 +367,9 @@ public final class Mediator {
 
   /**
    * flowToSPO2 provides linkage information of Pump flow to patient oxygen saturation. 
-   * Dependent on mode of pump, kind of lung, kind of heart, and flow.
+   * Dependent on mode of pump, kind of lung, kind of heart, and flow. Created fit
+   * equations in Excel on flow versus saturation with trendlines and best fit by
+   * R-squared criterion. (PatientPaO2Values.xls)
    * 
    * @param ecmo
    *          Mode of ecmo {VA, VV}
@@ -376,13 +378,90 @@ public final class Mediator {
    * @param patient
    *          Current patient instantiation
    * @throws Exception for flow < 0, heartFunction bad, and data limit
-   * @return PaO2 after calculation from saturation
+   * @return Saturation
    */
   public static double flowToSPO2(Mode ecmo, double flow, Patient patient) throws Exception {
+    double value = 0;
     if (flow < 0) {
       throw new Exception("Flow cannot be less than 0");
     }
-    return 0;
+    if (ecmo == Mode.VV) {
+      if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
+        throw new Exception("VV ECMO and bad heart function not ideal");
+      }
+      else {
+        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
+          // fit R-squared 0.9999 polynomial degree 2
+          value = (0.0007 * Math.pow(flow, 2) + 0.1138 * flow + 34.399) / 100;
+          if (isValidSaturation(value)) {
+            return value;
+          }
+          else {
+            return 1.0;
+          }
+        }
+        else { // lung function good
+          // fit R-squared 0.9926 polynomial degree 3
+          value = (0.000007 * Math.pow(flow, 3) - 0.0014 * Math.pow(flow, 2) 
+              + 0.1349 * flow + 71.21) / 100;
+          if (isValidSaturation(value)) {
+            return value;
+          }
+          else {
+            return 1.0;
+          }
+        }
+      }
+    }
+    else { // Mode is VA
+      if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
+        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
+          // fit R-squared 1 polynomial degree 3
+          value = (0.00001*Math.pow(flow, 3) - 0.0007*Math.pow(flow, 2) 
+              + 0.0073*flow + 23.213) / 100;
+          if (isValidSaturation(value)) {
+            return value;
+          }
+          else {
+            return 1.0;
+          }
+        }
+        else { // Patient lung function is good
+          // fit R-squared 1 polynomial degree 3
+          value = (0.000007*Math.pow(flow, 3) + 0.0005*Math.pow(flow, 2) 
+              - 0.0099*flow + 23.316) / 100;
+          if (isValidSaturation(value)) {
+            return value;
+          }
+          else {
+            return 1.0;
+          }
+        }        
+      }
+      else { // Patient heart function is good
+        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
+          // fit R-squared 0.9999 polynomial degree 2
+          value = (0.0007*Math.pow(flow, 2) + 0.1563*flow + 37.59) / 100;
+          if (isValidSaturation(value)) {
+            return value;
+          }
+          else {
+            return 1.0;
+          }
+        }
+        else { // Patient lung function is good
+          // fit R-squared 0.9995 polynomial degree 3
+          value = (0.000001*Math.pow(flow, 3) + 0.0003*Math.pow(flow, 2) 
+              + 0.0609*flow + 82.817) / 100;
+          if (isValidSaturation(value)) {
+            return value;
+          }
+          else {
+            return 1.0;
+          }
+        }
+      }
+    }
   }
     
   /**
@@ -476,13 +555,17 @@ public final class Mediator {
    * calcPaO2 calculates partial pressure of oxygen from saturation.
    * 
    * @param spO2
-   *          saturation of oxygen as percentage (0.00)
+   *          saturation of oxygen as form (0.00)
    * @return paO2 as mmHg
    */
   public static double calcPaO2(double spO2) {
-    // From CubeEquation-Sat-PaO2.xls
-    return((366.214 * Math.pow(spO2, 3)) - (455.117 * Math.pow(spO2, 2)) 
-      + (188.15 * spO2) - 2.609);
+    if (spO2 == 1.0) { // To strictly follow Patient PaO2 excel sheet
+      return 500;
+    }
+    else {  // From CubeEquation-Sat-PaO2.xls
+      return((366.214 * Math.pow(spO2, 3)) - (455.117 * Math.pow(spO2, 2)) 
+          + (188.15 * spO2) - 2.609);
+    }
   }
   
   /**
@@ -498,6 +581,22 @@ public final class Mediator {
                                                double venousPressure) {
     if ((venousPressure >= 0) && (venousPressure <= 20)) {
       return true;      
+    }
+    else {
+      return false;
+    }
+  }
+  
+  /**
+   * Check if saturation is a valid number in [0, 1.0].
+   * 
+   * @param saturation
+   *          The saturation of patient in form 0.0.
+   * @return Boolean value if in range
+   */
+  private static boolean isValidSaturation(double saturation) {
+    if ((saturation >= 0) && (saturation <= 1.0)) {
+      return true;
     }
     else {
       return false;
