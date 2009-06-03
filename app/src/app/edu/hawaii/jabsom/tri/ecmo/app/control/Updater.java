@@ -29,7 +29,12 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
  * @since    August 13, 2008
  */
 public final class Updater {
-    
+
+  /**
+   * Private boolean whether we are on pump or not.
+   */
+  private static boolean onPump = true; // Are we on pump? for clamping interaction
+
   /**
    * Private constructor to prevent instantiation.
    */
@@ -262,6 +267,7 @@ public final class Updater {
       pressureMonitor.setVenousPressure(tube.getVenousPressure());
       
       // update equipment (ventilator)
+      // TODO: What happens when on emergency ventilator and on ECMO?
       if (ventilator.isEmergencyFuction()) {
         if (ventilator.getName().equals("High Frequency Ventilator")) {
           patient.setRespiratoryRate(0);
@@ -302,138 +308,161 @@ public final class Updater {
         alarmIndicator.setAlarm(false);
       }
       
-      // update patient
-      double patientTemperature = patient.getTemperature();
-      if (patientTemperature < heater.getTemperature()) {
-        patient.setTemperature(patientTemperature + 0.01);
-      }
-      else if (patientTemperature > heater.getTemperature()) {
-        patient.setTemperature(patientTemperature - 0.01);
-      }
-      
-      // update patient pH, pCO2, HCO3, base excess
-      try {
-        double patientPH = Mediator.flowToPH(mode, ccPerKg, patient);
-        patient.setPH(patientPH);
-      }
-      catch (Exception e) {
-        double patientPH = patient.getPH();
-        if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
-          // TODO BAD heart steady decline to death
-          Error.out("Using VV ECMO with poor heart function is not a good idea!");
-          patient.setPH(patientPH - 0.001); //Heading down 0.001unit per 20ms
+      // update patient if on pump
+      if (onPump) {
+        double patientTemperature = patient.getTemperature();
+        if (patientTemperature < heater.getTemperature()) {
+          patient.setTemperature(patientTemperature + 0.01);
         }
-        else if (e.getMessage().equals("Reached data limit")) {
-          double patientPCO2 = patient.getPCO2();
-          double newPH = 7;
-          if (lungFunction == LungFunction.GOOD) {
-            newPH = patientPH - (((cdiMonitor.getPCO2() * 1.11) - patientPCO2) * 0.008);
+        else if (patientTemperature > heater.getTemperature()) {
+          patient.setTemperature(patientTemperature - 0.01);
+        }
+
+        // update patient pH, pCO2, HCO3, base excess
+        try {
+          double patientPH = Mediator.flowToPH(mode, ccPerKg, patient);
+          patient.setPH(patientPH);
+        }
+        catch (Exception e) {
+          double patientPH = patient.getPH();
+          if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
+            // TODO BAD heart steady decline to death
+            Error.out("Using VV ECMO with poor heart function is not a good idea!");
+            patient.setPH(patientPH - 0.001); //Heading down 0.001unit per 20ms
           }
-          else {
-            if (heartFunction == HeartFunction.GOOD) {
-              newPH = patientPH - (((cdiMonitor.getPCO2() * 1.25) - patientPCO2) * 0.008);
+          else if (e.getMessage().equals("Reached data limit")) {
+            double patientPCO2 = patient.getPCO2();
+            double newPH = 7;
+            if (lungFunction == LungFunction.GOOD) {
+              newPH = patientPH - (((cdiMonitor.getPCO2() * 1.11) - patientPCO2) * 0.008);
             }
             else {
-              newPH = patientPH - (((cdiMonitor.getPCO2() * 1.35) - patientPCO2) * 0.008);
+              if (heartFunction == HeartFunction.GOOD) {
+                newPH = patientPH - (((cdiMonitor.getPCO2() * 1.25) - patientPCO2) * 0.008);
+              }
+              else {
+                newPH = patientPH - (((cdiMonitor.getPCO2() * 1.35) - patientPCO2) * 0.008);
+              }
             }
+            patient.setPH(newPH);
           }
-          patient.setPH(newPH);
+          else {
+            Error.out(e.getMessage());
+          }
+        }
+
+        // simplified version: interaction sweep to patient PCO2
+        // problems: does not take into account ventilation through the ventilator 
+        //   with good lungs, or CO2 removal with slower flow. Also issues with,
+        //   venous recirculation in VV mode where the pump CDI would not be 
+        //   reflective of the patient's values.
+        if (lungFunction == LungFunction.GOOD) {
+          patient.setPCO2(cdiMonitor.getPCO2() * 1.11);
         }
         else {
+          if (heartFunction == HeartFunction.GOOD) {
+            patient.setPCO2(cdiMonitor.getPCO2() * 1.25);
+          }
+          else {
+            patient.setPCO2(cdiMonitor.getPCO2() * 1.35);
+          }
+        }
+
+        // temperature effect
+        if (patient.getTemperature() != history.getPatientTemperature()) {
+          if (patient.getTemperature() > history.getPatientTemperature()) {
+            patient.setHeartRate(patient.getHeartRate() + 0.1 * patient.getHeartRate()
+                * (patient.getTemperature() - history.getPatientTemperature()));
+            patient.setAct(patient.getAct() + 0.1 * patient.getAct()
+                * (patient.getTemperature() - history.getPatientTemperature()));
+          }
+          else {
+            patient.setHeartRate(patient.getHeartRate() - 0.1 * patient.getHeartRate()
+                * (history.getPatientTemperature() - patient.getTemperature()));
+            patient.setAct(patient.getAct() - 0.1 * patient.getAct()
+                * (history.getPatientTemperature() - patient.getTemperature()));
+          }
+        }
+
+        // SBP increase 10% if flow increase by 20mL/kg/min in VA AND bad heart
+        if ((mode == Mode.VA) && (heartFunction == HeartFunction.BAD)) {
+          double bpadjust = 10 / (20 * patient.getWeight()); // % change SBP for 1mL/min flow change
+          if (difference > 0) {
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
+          }
+          else {
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
+          }
+        }
+
+        // pump flow to patient PaO2
+        try {
+          double patientSaturation = Mediator.flowToSPO2(mode, ccPerKg, patient);
+          // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
+          double po2 = Mediator.calcPaO2(patientSaturation);
+          patient.setO2Saturation(patientSaturation);
+          patient.setPO2(po2); // TODO: set from graph FiO2 with varying shunts?
+        }
+        catch (Exception e) {
           Error.out(e.getMessage());
         }
       }
-      
-      // simplified version: interaction sweep to patient PCO2
-      // problems: does not take into account ventilation through the ventilator 
-      //   with good lungs, or CO2 removal with slower flow. Also issues with,
-      //   venous recirculation in VV mode where the pump CDI would not be 
-      //   reflective of the patient's values.
-      if (lungFunction == LungFunction.GOOD) {
-        patient.setPCO2(cdiMonitor.getPCO2() * 1.11);
-      }
-      else {
-        if (heartFunction == HeartFunction.GOOD) {
-          patient.setPCO2(cdiMonitor.getPCO2() * 1.25);
+      else { // patient is not on the pump
+        if (ventilator.isEmergencyFuction()) {
+          if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
+              && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
+            // stays alive
+          }
+          else {
+            // dies slower
+            patient.setPH(patient.getPH() - 0.0001);
+            patient.setPCO2(patient.getPCO2() + 0.01);
+            patient.setHeartRate(patient.getHeartRate() - 0.1);
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
+            patient.setO2Saturation(patient.getO2Saturation() - 0.0001);
+            patient.setPO2(patient.getPO2() - 0.01);
+            double life = patient.getLife();
+            life -= increment / 60000.0;   // 1 minute to die...
+            if (life < 0.0) {
+              life = 0.0;
+            }
+            patient.setLife(life);
+          }          
         }
         else {
-          patient.setPCO2(cdiMonitor.getPCO2() * 1.35);
+          if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
+              && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
+            // dies slower
+            patient.setPH(patient.getPH() - 0.0001);
+            patient.setPCO2(patient.getPCO2() + 0.01);
+            patient.setHeartRate(patient.getHeartRate() - 0.01);
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
+            patient.setO2Saturation(patient.getO2Saturation() - 0.0001);
+            patient.setPO2(patient.getPO2() - 0.01);
+            double life = patient.getLife();
+            life -= increment / 60000.0;   // 1 minute to die...
+            if (life < 0.0) {
+              life = 0.0;
+            }
+            patient.setLife(life);
+          }
+          else {
+            // dies faster
+            patient.setPH(patient.getPH() - 0.001);
+            patient.setPCO2(patient.getPCO2() + 0.1);
+            patient.setHeartRate(patient.getHeartRate() - 0.1);
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.1);
+            patient.setO2Saturation(patient.getO2Saturation() - 0.001);
+            patient.setPO2(patient.getPO2() - 0.1);
+            double life = patient.getLife();
+            life -= increment / 30000.0;   // 30 seconds to die...
+            if (life < 0.0) {
+              life = 0.0;
+            }
+            patient.setLife(life);
+          }
         }
       }
-      
-      // old version: flow to patient pCO2, no interaction with sweep
-//      try {
-//        double patientPCO2 = Mediator.flowToPCO2(mode, ccPerKg, patient);
-//        patient.setPCO2(patientPCO2);
-//      }
-//      catch (Exception e) {
-//        if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
-//          // TODO BAD heart steady decline to death
-//          double patientPCO2 = patient.getPCO2();
-//          patient.setPCO2(patientPCO2 + 0.1); //Heading up 0.1 per 20ms
-//        }
-//        else if (e.getMessage().equals("Reached data limit")) {
-//          if (lungFunction == LungFunction.GOOD) {
-//            patient.setPCO2(cdiMonitor.getPCO2() * 1.11);
-//          }
-//          else {
-//            if (heartFunction == HeartFunction.GOOD) {
-//              patient.setPCO2(cdiMonitor.getPCO2() * 1.25);
-//            }
-//            else {
-//              patient.setPCO2(cdiMonitor.getPCO2() * 1.35);
-//            }
-//          }
-//        }
-//        else {
-//          Error.out(e.getMessage());
-//        }
-//      }
-      
-      // temperature effect
-      if (patient.getTemperature() != history.getPatientTemperature()) {
-        if (patient.getTemperature() > history.getPatientTemperature()) {
-          patient.setHeartRate(patient.getHeartRate() + 0.1 * patient.getHeartRate()
-                            * (patient.getTemperature() - history.getPatientTemperature()));
-          patient.setAct(patient.getAct() + 0.1 * patient.getAct()
-                      * (patient.getTemperature() - history.getPatientTemperature()));
-        }
-        else {
-          patient.setHeartRate(patient.getHeartRate() - 0.1 * patient.getHeartRate()
-                            * (history.getPatientTemperature() - patient.getTemperature()));
-          patient.setAct(patient.getAct() - 0.1 * patient.getAct()
-                      * (history.getPatientTemperature() - patient.getTemperature()));
-        }
-      }
-      
-      // SBP increase 10% if flow increase by 20mL/kg/min in VA AND bad heart
-      if ((mode == Mode.VA) && (heartFunction == HeartFunction.BAD)) {
-        double bpadjust = 10 / (20 * patient.getWeight()); // % change SBP for 1mL/min flow change
-        if (difference > 0) {
-          patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
-        }
-        else {
-          patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
-        }
-      }
-      
-      // pump flow to patient PaO2
-      try {
-        double patientSaturation = Mediator.flowToSPO2(mode, ccPerKg, patient);
-        // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
-        double po2 = Mediator.calcPaO2(patientSaturation);
-        patient.setO2Saturation(patientSaturation);
-        patient.setPO2(po2); // TODO: set from graph FiO2 with varying shunts?
-      }
-      catch (Exception e) {
-        Error.out(e.getMessage());
-      }
-      
-      //for debugging
-//      if (pump.getFlow() != oldFlow) {
-//        System.out.println("po2 through pump: " + po2 + ", po2 through patient: " + patient.getPO2());
-//        System.out.println("pump fio2: " + oxigenator.getFiO2() + ", pco2: " + patient.getPCO2());
-//      }
       
       // TODO Patient bicarb and base excess calc? from Mark's table
       
@@ -508,10 +537,13 @@ public final class Updater {
     // Arterial: Closed, Venous: Closed, Bridge: Open
     else if (!history.isArterialBOpen() && !history.isVenousBOpen() && history.isBridgeOpen()) {
       // Standard operation termed recirculation: no change
+      // TODO: if patient is sick and not on emergency vent would steady decline to death
+      onPump = false;
     }
     // Arterial: Open, Venous: Open, Bridge: Closed
     else if (history.isArterialBOpen() && history.isVenousBOpen() && !history.isBridgeOpen()) {
       // Standard operation: no change
+      onPump = true;
     }
     // Arterial: Closed, Venous: Open, Bridge: Closed
     else if (!history.isArterialBOpen() && history.isVenousBOpen() && !history.isBridgeOpen()) {
@@ -653,10 +685,12 @@ public final class Updater {
     else if (!tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen()) {
       // Standard operation termed recirculation: no change
       // TODO: if patient is sick, vital signs should decrease
+      onPump = false;
     }
     // Arterial: Open, Venous: Open, Bridge: Closed
     else if (tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen()) {
       // Standard operation: no change
+      onPump = true;
     }
     // Arterial: Closed, Venous: Open, Bridge: Closed
     else if (!tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen()) {
