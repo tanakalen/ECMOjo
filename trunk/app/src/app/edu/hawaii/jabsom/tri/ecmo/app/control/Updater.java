@@ -188,7 +188,7 @@ public final class Updater {
         tubeDo(tube, pump, pressureMonitor, oxigenator, physiologicMonitor, patient);
       }
       
-      if ((tube.getVenousPressure() < -75) && (pump.isOn())) {
+      if ((tube.getVenousPressure() < -75) && (pump.isOn())) { // Consider abstract 75 out
         tube.setVenousBubbles(true);
       }
       else if (pump.isOn()) {
@@ -417,18 +417,17 @@ public final class Updater {
         }
       }
       
-      // TODO: pump flow to patient PaO2
-      //currently a hedge
-      double po2 = oxigenator.getFiO2() * 2 * pump.getFlow() * 100;
-      double patientSaturation = 0;
-      if (po2 != 0) {
+      // pump flow to patient PaO2
+      try {
+        double patientSaturation = Mediator.flowToSPO2(mode, ccPerKg, patient);
         // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
-        patientSaturation = Mediator.calcOxygenSaturation(po2);
+        double po2 = Mediator.calcPaO2(patientSaturation);
+        patient.setO2Saturation(patientSaturation);
+        patient.setPO2(po2); // TODO: set from graph FiO2 with varying shunts?
       }
-      patient.setO2Saturation(patientSaturation);
-      patient.setPO2(po2); // TODO: set from graph FiO2 with varying shunts?
-      // Following is wrong, calculates the alveolar partial pressure of oxygen not arterial
-      //patient.setPO2((oxigenator.getFiO2() * (760 - 47)) - (patient.getPCO2() / 0.8));
+      catch (Exception e) {
+        Error.out(e.getMessage());
+      }
       
       //for debugging
 //      if (pump.getFlow() != oldFlow) {
@@ -653,6 +652,7 @@ public final class Updater {
     // Arterial: Closed, Venous: Closed, Bridge: Open
     else if (!tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen()) {
       // Standard operation termed recirculation: no change
+      // TODO: if patient is sick, vital signs should decrease
     }
     // Arterial: Open, Venous: Open, Bridge: Closed
     else if (tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen()) {
