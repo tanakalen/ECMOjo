@@ -186,11 +186,11 @@ public class LabRequestAction extends Action {
       
       // Create image name depending on the patient
       Patient patient = game.getPatient();
-      String name = "ultra-";
+      String name = "echo-";
       name = name + ((patient.getHeartFunction() == HeartFunction.GOOD) ? "good-" : "bad-");
       name = name + ((patient.getLungFunction() == LungFunction.GOOD) ? "good-" : "bad-");
       labTest.setDescription("Ultrasound");
-      labTest.setImageName("xray-CXR-normal.png");
+      labTest.setImageName("echo-noIVH-va-newborn-good-good-good.png");
       
       labTest.setTime(game.getElapsedTime() / 1000);
       result = labTest;
