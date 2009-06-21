@@ -19,7 +19,7 @@ public class OxigenatorComponent extends Component {
   private int totalSweepInteger;
   /** The total sweep decimal. total sweep = integer + decimal / 10 [0.0, 10.0]. */
   private int totalSweepDecimal;
-  /** The oxygen conzentration in percent / 100 [0.00, 1.00]. */
+  /** The oxygen concentration in percent / 100 [0.21, 1.00]. */
   private double fiO2;
 
   /** Clotting (i.e. number of platelets at wrong place). */
@@ -67,7 +67,7 @@ public class OxigenatorComponent extends Component {
   }
 
   /**
-   * Returns the oxygen conzentration in percent.
+   * Returns the oxygen concentration in percent.
    * 
    * @return  The fiO2 value.
    */
@@ -76,12 +76,17 @@ public class OxigenatorComponent extends Component {
   }
 
   /**
-   * Sets the oxygen conzentration in percent.
+   * Sets the oxygen concentration in percent.
    * 
    * @param fiO2  The fiO2 value to set.
    */
   public void setFiO2(double fiO2) {
-    this.fiO2 = fiO2;
+    if (fiO2 >= 0.21) {
+      this.fiO2 = fiO2;      
+    }
+    else {
+      this.fiO2 = 0.21;
+    }
     notifyUpdate();
   }
   
