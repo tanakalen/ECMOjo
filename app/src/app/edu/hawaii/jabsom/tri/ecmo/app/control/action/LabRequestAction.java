@@ -133,51 +133,51 @@ public class LabRequestAction extends Action {
       
       if (weight < 5) {
         // Fibrinogen 125-300 range
-        labTest.setFibrinogen(125 + (Math.random() * 5) + (patient.hashCode() % 70));
+        labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 70));
         // platelets 100-478 * 10(9) range
-        labTest.setPlatelets(100 + (Math.random() * 5) + (patient.hashCode() % 373));
+        labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 373));
         // PT 13-18 range
-        labTest.setPt(13 + (Math.random() * 5));
+        labTest.setPt(patient.getPt() + (Math.random() * 5));
         // PTT 80-100 range
-        labTest.setPtt(80 + (Math.random() * 5) + (patient.hashCode() % 15));
+        labTest.setPtt(patient.getPtt() + (Math.random() * 5) + (patient.hashCode() % 15));
         // WBC 9-30 * 10(9) range
-        labTest.setWbc(9 + (Math.random() * 5) + (patient.hashCode() % 16));
+        labTest.setWbc(patient.getWbc() + (Math.random() * 5) + (patient.hashCode() % 16));
       }
       else if (weight < 10) {
         // Fibrinogen 200-400 range
-        labTest.setFibrinogen(200 + (Math.random() * 5) + (patient.hashCode() % 195));
+        labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 195));
         // platelets 100-400 * 10(9) range
-        labTest.setPlatelets(100 + (Math.random() * 5) + (patient.hashCode() % 295));
+        labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 295));
         // PT 11-15 range
-        labTest.setPt(11 + (Math.random() * 4));
+        labTest.setPt(patient.getPt() + (Math.random() * 4));
         // PTT 80-100 range
-        labTest.setPtt(80 + (Math.random() * 5) + (patient.hashCode() % 15));
+        labTest.setPtt(patient.getPtt() + (Math.random() * 5) + (patient.hashCode() % 15));
         // WBC 5-19.5 * 10(9) range
-        labTest.setWbc(5 + (Math.random() * 4.5) + (patient.hashCode() % 10));
+        labTest.setWbc(patient.getWbc() + (Math.random() * 4.5) + (patient.hashCode() % 10));
       }
       else if (weight < 50) {
         // Fibrinogen 200-400 range
-        labTest.setFibrinogen(200 + (Math.random() * 5) + (patient.hashCode() % 195));
+        labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 195));
         // platelets 100-400 * 10(9) range
-        labTest.setPlatelets(100 + (Math.random() * 5) + (patient.hashCode() % 295));
+        labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 295));
         // PT 11-15 range
-        labTest.setPt(11 + (Math.random() * 4));
+        labTest.setPt(patient.getPt() + (Math.random() * 4));
         // PTT 80-100 range
-        labTest.setPtt(80 + (Math.random() * 5) + (patient.hashCode() % 15));
+        labTest.setPtt(patient.getPtt() + (Math.random() * 5) + (patient.hashCode() % 15));
         // WBC 5-16 * 10(9) range
-        labTest.setWbc(5 + (Math.random() * 5) + (patient.hashCode() % 6));
+        labTest.setWbc(patient.getWbc() + (Math.random() * 5) + (patient.hashCode() % 6));
       }
       else {
         // Fibrinogen 200-400 range
-        labTest.setFibrinogen(200 + (Math.random() * 5) + (patient.hashCode() % 195));
+        labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 195));
         // platelets 100-400 * 10(9) range
-        labTest.setPlatelets(100 + (Math.random() * 5) + (patient.hashCode() % 295));
+        labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 295));
         // PT 11-15 range
-        labTest.setPt(11 + (Math.random() * 4));
+        labTest.setPt(patient.getPt() + (Math.random() * 4));
         // PTT 80-100 range
-        labTest.setPtt(80 + (Math.random() * 5) + (patient.hashCode() % 15));
+        labTest.setPtt(patient.getPtt() + (Math.random() * 5) + (patient.hashCode() % 15));
         // WBC 4.5-11 * 10(9) range
-        labTest.setWbc(4.5 + (Math.random() * 4.5) + (patient.hashCode() % 2));
+        labTest.setWbc(patient.getWbc() + (Math.random() * 4.5) + (patient.hashCode() % 2));
       }
       result = labTest;
     }
