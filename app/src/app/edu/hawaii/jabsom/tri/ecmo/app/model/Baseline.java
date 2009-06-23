@@ -354,9 +354,9 @@ public class Baseline {
         && (patient.getPH() <= maxPh)
         && (patient.getPCO2() >= minPco2)
         && (patient.getPCO2() <= maxPcO2)
+        */  
         && (patient.getAct() >= minAct)
         && (patient.getAct() <= maxAct)
-        */  
         // heater
         && (heater.getTemperature() >= minTemperature)
         && (heater.getTemperature() <= maxTemperature)

@@ -57,10 +57,14 @@ patient-temperature = 37
 # Heater
 heater-temperature = 37
 
+# ACT
+act-value = 220
+
 # Lab Component
 #lab-component-abg
 #lab-component-chem
 lab-component-heme-fibrinogen = 90
 lab-component-heme-platelets = 50
+lab-component-heme-pt = 
 lab-component-heme-ptt = 100
 #lab-component-img

@@ -239,7 +239,12 @@ public class Patient  extends Component {
    * @param temperature  The temperature to set.
    */
   public void setTemperature(double temperature) {
-    this.temperature = temperature;
+    if (Double.isNaN(temperature) || temperature < 32 || temperature > 42) {
+      this.temperature = 37;
+    }
+    else {
+      this.temperature = temperature;
+    }
   }
   
   /**
@@ -503,14 +508,19 @@ public class Patient  extends Component {
    * @return the act
    */
   public double getAct() {
-    return act;
+    return act + (Math.random() * 5);
   }
 
   /**
    * @param act the act to set
    */
   public void setAct(double act) {
-    this.act = act;
+    if (Double.isNaN(this.act)) {
+      this.act = 170;
+    }
+    else {
+      this.act = act;      
+    }
   }
 
   /**
