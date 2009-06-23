@@ -93,7 +93,7 @@ public final class ScenarioCreator {
     tubeComponent.setVenousAOpen(true);
     tubeComponent.setVenousBOpen(true);
     tubeComponent.setBridgeOpen(false);
-    tubeComponent.setBrokenCannula(false);
+    tubeComponent.setBrokenCannula(false, TubeComponent.Status.normal, TubeComponent.problemLocation.none);
     tubeComponent.setBrokenETT(false);
     tubeComponent.setSuctionETT(false);
     tubeComponent.setVenousPressure(0);

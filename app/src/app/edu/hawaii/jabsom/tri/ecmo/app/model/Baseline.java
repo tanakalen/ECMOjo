@@ -354,9 +354,11 @@ public class Baseline {
         && (patient.getPH() <= maxPh)
         && (patient.getPCO2() >= minPco2)
         && (patient.getPCO2() <= maxPcO2)
-        */  
+        */
+        
         && (patient.getAct() >= minAct)
         && (patient.getAct() <= maxAct)
+        
         // heater
         && (heater.getTemperature() >= minTemperature)
         && (heater.getTemperature() <= maxTemperature)
@@ -366,8 +368,9 @@ public class Baseline {
         && ((venousA == TubeFunction.OPEN) == tube.isVenousAOpen())
         && ((venousB == TubeFunction.OPEN) == tube.isVenousBOpen())
         && ((bridge == TubeFunction.OPEN) == tube.isBridgeOpen())
-        /*
+        
         && ((cannula == CannulaFunction.BAD) == tube.isBrokenCannula())
+        /*
         && ((ett == EttFunction.BAD) == tube.isBrokenETT())
         && ((suctionEtt == SuctionEttFunction.BAD) == tube.isSuctionETT())
         && (tube.getPreMembranePressure() >= minPreMembranePressure)

@@ -22,6 +22,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.UrineOutputFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
@@ -197,6 +198,38 @@ public final class ScenarioLoader {
         heater.setTemperature(Double.parseDouble(parameters.get("heater-temperature")));
         
         // TODO: load other equipment values
+        TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
+        boolean broke = Boolean.parseBoolean(parameters.get("tube-cannula-broken"));
+        String prob = parameters.get("tube-cannula-status");
+        TubeComponent.Status problem;
+        if (prob == "Kink") {
+          problem = TubeComponent.Status.kink;
+        }
+        else if (prob == "High") {
+          problem = TubeComponent.Status.high;
+        }
+        else if (prob == "Low") {
+          problem = TubeComponent.Status.low;
+        }
+        else {
+          problem = TubeComponent.Status.normal;
+        }
+        String loc = parameters.get("tube-cannula-problem-location");
+        TubeComponent.problemLocation place;
+        if (loc == "Arterial") {
+          place = TubeComponent.problemLocation.arterial;
+        }
+        else if (loc == "Venous") {
+          place = TubeComponent.problemLocation.venous;
+        }
+        else if (loc == "Cephalad") {
+          place = TubeComponent.problemLocation.cephalad;
+        }
+        else {
+          place = TubeComponent.problemLocation.none;
+        }
+        tube.setBrokenCannula(broke, problem, place);
+        
         patient.setAct(parseNum(parameters.get("act-value")));
         
         patient.setFibrinogen(parseNum(parameters.get("lab-component-heme-fibrinogen")));
@@ -261,7 +294,7 @@ public final class ScenarioLoader {
    * @return double number or NaN if something goes wrong.
    */
   private static double parseNum(String value) {
-    if (value.equals("") || value == null) {
+    if (value.equals("") || value.equals(" ") || value == null) {
       return Double.NaN;
     }
     else {

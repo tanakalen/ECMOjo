@@ -20,7 +20,7 @@ baseline-min-pH = 7.35
 baseline-max-pH = 7.45
 baseline-min-pCO2 = 35
 baseline-max-pCO2 = 45
-baseline-min-ACT = 180
+baseline-min-ACT = 160
 baseline-max-ACT = 200
 baseline-min-temperature = 34
 baseline-max-temperature = 39
@@ -58,7 +58,9 @@ patient-temperature = 37
 heater-temperature = 37
 
 # Tube
-Tube
+tube-cannula-broken = true, false
+tube-cannula-status = blank, Normal, Kink, High, Low
+tube-cannula-problem-location = blank, None, Arterial, Venous, Cephalad
 
 # Oxigenator
 

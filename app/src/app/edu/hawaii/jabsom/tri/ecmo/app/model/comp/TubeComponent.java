@@ -12,6 +12,12 @@ public class TubeComponent extends Component {
   /** Available ECMO modes. */
   public enum Mode { VA, VV };
   
+  /** Current Tubing status. */
+  public enum Status { normal, kink, high, low }
+  
+  /** Problem location. */
+  public enum problemLocation { none, arterial, venous, cephalad }
+  
   /** The ECMO mode. */
   private Mode mode;
   
@@ -28,6 +34,10 @@ public class TubeComponent extends Component {
   
   /** True if cannula site is broken. */
   private boolean brokenCannula;
+  /** The kind of brokeness. */
+  private Status problem;
+  /** The place that is broken. */
+  private problemLocation place;
   /** True for broken ETT. */
   private boolean brokenETT;
   /** True for suction problem ETT. */
@@ -186,9 +196,19 @@ public class TubeComponent extends Component {
    * Sets true for broken cannula.
    *
    * @param brokenCannula  True for broken cannula.
+   * @param problem  Status: kind of problem.
+   * @param place  problemLocation: location of the problem.
    */
-  public void setBrokenCannula(boolean brokenCannula) {
+  public void setBrokenCannula(boolean brokenCannula, Status problem, problemLocation place) {
     this.brokenCannula = brokenCannula;
+    if (brokenCannula == false) {
+      this.problem = problem;
+      this.place = place;
+    }
+    else {
+      this.problem = TubeComponent.Status.normal;
+      this.place = TubeComponent.problemLocation.none;
+    }
   }
 
   /**

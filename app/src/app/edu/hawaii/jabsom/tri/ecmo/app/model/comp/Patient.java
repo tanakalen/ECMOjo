@@ -521,7 +521,7 @@ public class Patient  extends Component {
    * @param act the act to set
    */
   public void setAct(double act) {
-    if (Double.isNaN(this.act)) {
+    if (Double.isNaN(act)) {
       this.act = 170;
     }
     else {
