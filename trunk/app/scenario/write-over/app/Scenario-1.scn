@@ -20,7 +20,7 @@ baseline-min-pH = 7.35
 baseline-max-pH = 7.45
 baseline-min-pCO2 = 35
 baseline-max-pCO2 = 45
-baseline-min-ACT = 180
+baseline-min-ACT = 160
 baseline-max-ACT = 200
 baseline-min-temperature = 34
 baseline-max-temperature = 39
@@ -56,6 +56,11 @@ patient-temperature = 37
 
 # Heater
 heater-temperature = 37
+
+# Tube
+tube-cannula-broken = true
+tube-cannula-status = Kink
+tube-cannula-problem-location = Arterial
 
 # ACT
 act-value = 

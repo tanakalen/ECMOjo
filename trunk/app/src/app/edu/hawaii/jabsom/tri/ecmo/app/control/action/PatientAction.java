@@ -49,7 +49,8 @@ public class PatientAction extends Action {
     Check check = getCheck();
     if (check == Check.CANULA_SITE) {
       TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
-      tube.setBrokenCannula(false);
+      // TODO: Should this display the problem location and kind of problem?
+      tube.setBrokenCannula(false, TubeComponent.Status.normal, TubeComponent.problemLocation.none);
     }
     else if (check == Check.BLEEDING) {
       Patient patient = game.getPatient();
