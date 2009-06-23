@@ -239,8 +239,14 @@ public class Patient  extends Component {
    * @param temperature  The temperature to set.
    */
   public void setTemperature(double temperature) {
-    if (Double.isNaN(temperature) || temperature < 32 || temperature > 42) {
+    if (Double.isNaN(temperature)) {
       this.temperature = 37;
+    }
+    else if (temperature < 32) {
+      this.temperature = 32;
+    }
+    else if (temperature > 42) {
+      this.temperature = 42;
     }
     else {
       this.temperature = temperature;
