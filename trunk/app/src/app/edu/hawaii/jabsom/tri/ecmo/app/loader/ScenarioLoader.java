@@ -197,6 +197,12 @@ public final class ScenarioLoader {
         heater.setTemperature(Double.parseDouble(parameters.get("heater-temperature")));
         
         // TODO: load other equipment values
+        patient.setAct(parseNum(parameters.get("act-value")));
+        
+        patient.setFibrinogen(parseNum(parameters.get("lab-component-heme-fibrinogen")));
+        patient.setPlatelets(parseNum(parameters.get("lab-component-heme-platelets")));
+        patient.setPt(parseNum(parameters.get("lab-component-heme-pt")));
+        patient.setPtt(parseNum(parameters.get("lab-component-heme-ptt")));
         
         // and return the scenario
         return scenario;
@@ -246,5 +252,20 @@ public final class ScenarioLoader {
     // write the scenario name
     writer.write(scenario.getName());
     writer.newLine();
+  }
+  
+  /**
+   * Parses a number.
+   * 
+   * @param value  String to process.
+   * @return double number or NaN if something goes wrong.
+   */
+  private static double parseNum(String value) {
+    if (value.equals("") || value == null) {
+      return Double.NaN;
+    }
+    else {
+      return Double.parseDouble(value);      
+    }
   }
 }

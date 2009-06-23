@@ -369,18 +369,18 @@ public final class Updater {
         }
 
         // temperature effect
-        if (patient.getTemperature() != history.getPatientTemperature()) {
+        if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
           if (patient.getTemperature() > history.getPatientTemperature()) {
-            patient.setHeartRate(patient.getHeartRate() + 0.1 * patient.getHeartRate()
-                * (patient.getTemperature() - history.getPatientTemperature()));
-            patient.setAct(patient.getAct() + 0.1 * patient.getAct()
-                * (patient.getTemperature() - history.getPatientTemperature()));
+            patient.setHeartRate(patient.getHeartRate() + (0.1 * patient.getHeartRate()
+                * Math.rint(patient.getTemperature() - history.getPatientTemperature())));
+            patient.setAct(patient.getAct() + (0.1 * patient.getAct()
+                * Math.rint(patient.getTemperature() - history.getPatientTemperature())));
           }
           else {
-            patient.setHeartRate(patient.getHeartRate() - 0.1 * patient.getHeartRate()
-                * (history.getPatientTemperature() - patient.getTemperature()));
-            patient.setAct(patient.getAct() - 0.1 * patient.getAct()
-                * (history.getPatientTemperature() - patient.getTemperature()));
+            patient.setHeartRate(patient.getHeartRate() - (0.1 * patient.getHeartRate()
+                * Math.rint(history.getPatientTemperature() - patient.getTemperature())));
+            patient.setAct(patient.getAct() - (0.1 * patient.getAct()
+                * Math.rint(history.getPatientTemperature() - patient.getTemperature())));
           }
         }
 

@@ -120,11 +120,11 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
             case 3:
               return "Platelets";
             case 4:
-              return "Pt";
+              return "PT";
             case 5:
-              return "Ptt";
+              return "PTT";
             case 6:
-              return "Wbc";              
+              return "WBC";              
             default:
               // error condition
               return null;
