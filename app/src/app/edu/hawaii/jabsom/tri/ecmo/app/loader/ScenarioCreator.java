@@ -77,8 +77,8 @@ public final class ScenarioCreator {
     patient.setO2Saturation(0.85);
     patient.setSystolicBloodPressure(58);
     patient.setCentralVenousPressure(10);
-    patient.setHgb(15);
-    patient.setPH(7.4); 
+    patient.setHgb(15.0);
+    patient.setPH(7.40); 
     patient.setAct(170);
     scenario.setPatient(patient);
     

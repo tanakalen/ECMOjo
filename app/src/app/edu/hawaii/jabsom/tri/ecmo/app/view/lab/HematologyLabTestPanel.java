@@ -82,7 +82,8 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
 
     // add table with values
     tableModel = new DefaultTableModel() {
-      private DecimalFormat labFormatter = new DecimalFormat("###.##");
+      private DecimalFormat labTenthsFormatter = new DecimalFormat("###.0");
+      private DecimalFormat labFormatter = new DecimalFormat("###");
       public int getColumnCount() {
         int size = component.getResults().size();
         if (size < 10) {
@@ -137,9 +138,9 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
               case 0:
                 return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getFibrinogen());
               case 1:
-                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHct());
+                return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHct());
               case 2:
-                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHgb());
+                return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHgb());
               case 3:
                 return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getPlatelets());
               case 4:
@@ -147,7 +148,7 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
               case 5:
                 return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getPtt());
               case 6:
-                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getWbc());
+                return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getWbc());
               default:
                 // error condition
                 return null;

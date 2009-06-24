@@ -82,7 +82,9 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
 
     // add table with values
     tableModel = new DefaultTableModel() {
-      private DecimalFormat labFormatter = new DecimalFormat("###.##");
+      private DecimalFormat labHundredthsFormatter = new DecimalFormat("###.00");
+      private DecimalFormat labTenthsFormatter = new DecimalFormat("###.0");
+      private DecimalFormat labFormatter = new DecimalFormat("###");
       public int getColumnCount() {
         int size = component.getResults().size();
         if (size < 10) {
@@ -114,7 +116,7 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
             case 0:
               return "Gluc";
             case 1:
-              return "IonCa";
+              return "iCa";
             case 2:
               return "K";
             case 3:
@@ -133,11 +135,13 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
               case 0:
                 return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getGluc());
               case 1:
-                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getIonCa());
+                return labHundredthsFormatter.format(((ChemistryLabTest)component.getResults().get(size 
+                    - col)).getIonCa());
               case 2:
                 return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getK());
               case 3:
-                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getLactate());
+                return labTenthsFormatter.format(((ChemistryLabTest)component.getResults().get(size 
+                    - col)).getLactate());
               case 4:
                 return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getNa());
               default:
