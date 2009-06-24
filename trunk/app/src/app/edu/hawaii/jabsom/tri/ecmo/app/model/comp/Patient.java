@@ -533,36 +533,25 @@ public class Patient  extends Component {
    * @return the platelets
    */
   public double getPlatelets() {
-    if (Double.isNaN(this.platelets)) {
-      return 100;
-    }
-    else {
-      return platelets;
-    }
+    return platelets;
   }
 
   /**
    * @param platelets the platelets to set
    */
   public void setPlatelets(double platelets) {
-    this.platelets = platelets;
+    if (Double.isNaN(platelets)) {
+      this.platelets = 100;
+    }
+    else {
+      this.platelets = platelets;      
+    }
   }
 
   /**
    * @return the wbc
    */
   public double getWbc() {
-    if (Double.isNaN(this.wbc)) {
-      if (weight < 5) {
-        return 9;
-      }
-      else if (weight >= 50) {
-        return 4.5;
-      }
-      else {
-        return 5;
-      }
-    }
     return wbc;
   }
 
@@ -570,74 +559,87 @@ public class Patient  extends Component {
    * @param wbc the wbc to set
    */
   public void setWbc(double wbc) {
-    this.wbc = wbc;
+    if (Double.isNaN(wbc)) {
+      if (weight < 5) {
+        this.wbc = 9;
+      }
+      else if (weight >= 50) {
+        this.wbc = 4.5;
+      }
+      else {
+        this.wbc = 5;
+      }
+    }
+    else {
+      this.wbc = wbc;      
+    }
   }
 
   /**
    * @return the pt
    */
   public double getPt() {
-    if (Double.isNaN(this.pt)) {
-      if (weight < 5) {
-        return 13;
-      }
-      else {
-        return 11;
-      }
-    }
-    else {
-      return pt;
-    }
+    return pt;
   }
 
   /**
    * @param pt the pt to set
    */
   public void setPt(double pt) {
-    this.pt = pt;
+    if (Double.isNaN(pt)) {
+      if (weight < 5) {
+        this.pt = 13;
+      }
+      else {
+        this.pt = 11;
+      }
+    }
+    else {
+      this.pt = pt;      
+    }
   }
 
   /**
    * @return the ptt
    */
   public double getPtt() {
-    if (Double.isNaN(this.ptt)) {
-      return 80;
-    }
-    else {
-      return ptt;
-    }
+    return ptt;
   }
 
   /**
    * @param ptt the ptt to set
    */
   public void setPtt(double ptt) {
-    this.ptt = ptt;
+    if (Double.isNaN(ptt)) {
+      this.ptt = 80;
+    }
+    else {
+      this.ptt = ptt;
+    }
   }
 
   /**
    * @return the fibrinogen
    */
   public double getFibrinogen() {
-    if (Double.isNaN(this.fibrinogen)) {
-      if (weight < 5) {
-        return 125;
-      }
-      else {
-        return 200;
-      }
-    }
-    else {
-      return fibrinogen;
-    }
+    return fibrinogen;
   }
 
   /**
    * @param fibrinogen the fibrinogen to set
    */
   public void setFibrinogen(double fibrinogen) {
-    this.fibrinogen = fibrinogen;
+    if (Double.isNaN(fibrinogen)) {
+      if (weight < 5) {
+        this.fibrinogen = 125;
+      }
+      else {
+        this.fibrinogen = 200;
+      }
+    }
+    else {
+      this.fibrinogen = fibrinogen;
+    }
   }
 
   /**

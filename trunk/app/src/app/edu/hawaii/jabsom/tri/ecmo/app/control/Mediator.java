@@ -471,7 +471,7 @@ public final class Mediator {
    * @param ecmo
    *          Mode of ecmo {VA, VV}
    * @param flow
-   *          Rate of blood flow in mL/kg/min
+   *          Rate of blood flow in L/min
    * @param patient
    *          Current patient instantiation
    * @throws Exception for flow < 0, heartFunction bad, and data limit

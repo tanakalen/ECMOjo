@@ -139,7 +139,7 @@ public final class Updater {
       tube.setSaO2(tubeSaO2);
       
       try{ 
-        double tubeSvO2 = Mediator.flowToSvO2(mode, ccPerKg, patient);
+        double tubeSvO2 = Mediator.flowToSvO2(mode, pump.getFlow(), patient);
         tube.setSvO2(tubeSvO2); 
       }
       catch (Exception e) {
