@@ -83,7 +83,8 @@ public class BloodGasLabTestPanel extends LabDetailPanel implements LabTestListe
     
     // add table with values
     tableModel = new DefaultTableModel() {
-      private DecimalFormat labFormatter = new DecimalFormat("###.##");
+      private DecimalFormat labHundredthsFormatter = new DecimalFormat("###.00");
+      private DecimalFormat labFormatter = new DecimalFormat("###");
       public int getColumnCount() {
         int size = component.getResults().size();
         if (size < 10) {
@@ -136,7 +137,7 @@ public class BloodGasLabTestPanel extends LabDetailPanel implements LabTestListe
               case 0:
                 return ((BloodGasLabTest)component.getResults().get(size - col)).getBloodGasType().getName();
               case 1:
-                return labFormatter.format(((BloodGasLabTest)component.getResults().get(size - col)).getPH());
+                return labHundredthsFormatter.format(((BloodGasLabTest)component.getResults().get(size - col)).getPH());
               case 2:
                 return labFormatter.format(((BloodGasLabTest)component.getResults().get(size - col)).getPCO2());
               case 3:
