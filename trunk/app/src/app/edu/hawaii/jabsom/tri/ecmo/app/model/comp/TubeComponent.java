@@ -212,6 +212,24 @@ public class TubeComponent extends Component {
   }
 
   /**
+   * Returns the problem with the cannula.
+   *
+   * @return  The cannula problem.
+   */
+  public Status getCannulaProblem() {
+    return problem;
+  }
+
+  /**
+   * Returns the cannula problem location.
+   *
+   * @return  The location of the cannula problem.
+   */
+  public problemLocation getCannlaProblemLocation() {
+    return place;
+  }
+
+  /**
    * Returns true for broken ETT.
    *
    * @return  True for broken ETT.

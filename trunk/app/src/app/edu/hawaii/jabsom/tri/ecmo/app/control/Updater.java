@@ -199,6 +199,79 @@ public final class Updater {
       else if (pump.isOn()) {
         tube.setVenousBubbles(false);
       }
+      // check tubing status (normal, kink, high or low) then location
+      if (tube.isBrokenCannula()) {
+        if (tube.getCannulaProblem() == TubeComponent.Status.kink) {
+          if (tube.getCannlaProblemLocation() == TubeComponent.problemLocation.arterial) {
+            // If limits set appropriately,  
+            if (!pressureMonitor.isAlarm()) {
+              // premembrane pressure will equal postmembrane pressure up to 750.
+              tube.setPreMembranePressure(tube.getPostMembranePressure());
+              // If roller then pressures will stay at 750, else it's centrifugal then it would stop and reset to 35. 
+              if (pump.getPumpType() == PumpType.ROLLER) {
+                tube.setPreMembranePressure(tube.getPreMembranePressure() + 0.03);
+                // stay at 750???????
+                if (tube.getPreMembranePressure() > 750) {
+                  tube.setPreMembranePressure(750.0);
+                  tube.setPostMembranePressure(750.0);
+                }
+              }
+              if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+                // reset to 35 or decrease to 35???
+                tube.setPreMembranePressure(35.0);
+              }
+            }
+            else {
+              // If limits not set appropriately then rupture for roller else centrifugal stop then reset to 35. 
+              if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+                // reset to 35 or decrease to 35???
+                tube.setPreMembranePressure(35.0);
+              }
+              // The venous pressure increases. Pump flow to 0. ??????
+              tube.setVenousPressure(pressureMonitor.getVenousPressure() + 0.002);
+              //pump.setFlow(0.0);
+            }
+          }
+          else if (tube.getCannlaProblemLocation() == TubeComponent.problemLocation.venous) {
+            //TODO: venous kink
+            // If roller pump then premembrane = mean BP, else if centrifugal then premembrane decreases. 
+            if (pump.getPumpType() == PumpType.ROLLER) {
+              tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
+            }
+            if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+              tube.setPreMembranePressure(tube.getPreMembranePressure() - 0.03);
+            } 
+            
+            // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases. 
+            if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxiType() == OxiType.SCI_MED) {
+              tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.999);
+              tube.setVenousPressure(tube.getVenousPressure() + 0.002);
+            }
+            
+            // If limits are appropriate then pump flow = 0, else limits not set properly then 
+            if (!pressureMonitor.isAlarm()) {
+              pump.setFlow(0.0);
+            }
+            else {
+              // if cenrifugal pump then pump flow to 0. 
+              if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+                pump.setFlow(0.0);
+              }
+              // Else if roller pump, air in venous line.
+              if (pump.getPumpType() == PumpType.ROLLER) {
+                tube.setVenousBubbles(true);
+              }   
+            }
+          }
+          else { //cephalad,none
+            //TODO: no kink or cephalad
+          }
+        }
+        else { //high,low,normal
+          //TODO: cannula malposition; how to make ECMOjo chatter?
+        }
+      }
+      
       
       // update equipment (bubble detector)
       bubbleDetector.setAlarm(tube.isArterialBubbles());
