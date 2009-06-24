@@ -230,6 +230,9 @@ public final class ScenarioLoader {
         }
         tube.setBrokenCannula(broke, problem, place);
         
+        tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
+        tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-cannula-venous-B")) == TubeFunction.OPEN);
+        
         patient.setAct(parseNum(parameters.get("act-value")));
         
         patient.setFibrinogen(parseNum(parameters.get("lab-component-heme-fibrinogen")));

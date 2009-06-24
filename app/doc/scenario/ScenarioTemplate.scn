@@ -61,6 +61,8 @@ heater-temperature = 37
 tube-cannula-broken = true, false
 tube-cannula-status = blank, Normal, Kink, High, Low
 tube-cannula-problem-location = blank, None, Arterial, Venous, Cephalad
+tube-cannula-arterial-B = open, closed
+tube-cannula-venous-B = open, closed
 
 # Oxigenator
 
@@ -87,10 +89,13 @@ alarm-indicator-alarming = true, false
 
 # Lab Component
 lab-component-abg
+
 lab-component-chem
+
 lab-component-heme
 lab-component-heme-fibrinogen = 
 lab-component-heme-platelets = 
 lab-component-heme-pt = 
 lab-component-heme-ptt = 
+
 lab-component-img

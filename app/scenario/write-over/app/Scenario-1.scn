@@ -61,6 +61,8 @@ heater-temperature = 37
 tube-cannula-broken = true
 tube-cannula-status = Kink
 tube-cannula-problem-location = Arterial
+tube-cannula-arterial-B = open
+tube-cannula-venous-B = open
 
 # ACT
 act-value = 

@@ -1,11 +1,12 @@
 1
 
 # Scenario Information
-name = Simulation
-desc = The never ending simulation...
+name = Scenario 4
+desc = ECMO hour 220 (d9) for 4 kg female with severe sepsis. Improving pulmonary function. Worsening coagulation studies. After an intervention alarms sounding.
 
 # Goal Information
-goal = Simulation
+goal = Baseline
+time = 300
 
 # Baseline Values
 baseline-bleeding = false;
@@ -46,9 +47,9 @@ baseline-power = on
 baseline-alarming = false
 
 # Patient Information
-patient-age = 1
-patient-weight = 5
-patient-lung-function = good
+patient-age = 3
+patient-weight = 4
+patient-lung-function = bad
 patient-heart-function = good
 patient-bleeding = false
 patient-temperature = 37
@@ -60,17 +61,17 @@ heater-temperature = 37
 tube-cannula-broken = false
 tube-cannula-status = 
 tube-cannula-problem-location = 
-tube-cannula-arterial-B = open
+tube-cannula-arterial-B = closed
 tube-cannula-venous-B = open
 
 # ACT
-act-value = 
+act-value = 220
 
 # Lab Component
 #lab-component-abg
 #lab-component-chem
-lab-component-heme-fibrinogen = 
-lab-component-heme-platelets = 
+lab-component-heme-fibrinogen = 90
+lab-component-heme-platelets = 50
 lab-component-heme-pt = 
-lab-component-heme-ptt = 
+lab-component-heme-ptt = 100
 #lab-component-img
