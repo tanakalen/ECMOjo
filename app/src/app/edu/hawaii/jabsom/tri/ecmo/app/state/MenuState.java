@@ -73,6 +73,7 @@ public class MenuState extends State {
           scenarios.add(scenario);
         }
         catch (IOException e) {
+          Error.out("Error loading file: " + fileName);
           Error.out(e);
         }
       }

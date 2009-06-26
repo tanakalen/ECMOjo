@@ -10,6 +10,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
 //import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
@@ -186,10 +187,24 @@ public class LabRequestAction extends Action {
       
       // Create image name depending on the patient
       Patient patient = game.getPatient();
-      String name = "echo-";
+      String name = "us-";
       name = name + ((patient.getHeartFunction() == HeartFunction.GOOD) ? "good-" : "bad-");
       name = name + ((patient.getLungFunction() == LungFunction.GOOD) ? "good-" : "bad-");
       labTest.setDescription("Ultrasound");
+      labTest.setImageName("echo-noIVH-va-newborn-good-good-good.png");
+      
+      labTest.setTime(game.getElapsedTime() / 1000);
+      result = labTest;
+    }
+    else if (labTest.equals(EchoLabTest.class)) {
+      EchoLabTest labTest = new EchoLabTest();
+      
+      // Create image name depending on the patient
+      Patient patient = game.getPatient();
+      String name = "echo-";
+      name = name + ((patient.getHeartFunction() == HeartFunction.GOOD) ? "good-" : "bad-");
+      name = name + ((patient.getLungFunction() == LungFunction.GOOD) ? "good-" : "bad-");
+      labTest.setDescription("Echo");
       labTest.setImageName("echo-noIVH-va-newborn-good-good-good.png");
       
       labTest.setTime(game.getElapsedTime() / 1000);

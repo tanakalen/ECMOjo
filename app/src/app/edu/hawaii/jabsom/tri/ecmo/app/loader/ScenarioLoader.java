@@ -19,8 +19,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.PowerFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.SuctionEttFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.TubeFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.UrineOutputFunction;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
@@ -29,6 +31,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.SimulationGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal.Item;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
 
 import king.lib.out.Error;
 import king.lib.access.Hookup;
@@ -103,7 +109,7 @@ public final class ScenarioLoader {
         // the name
         scenario.setName(parameters.get("name"));
         scenario.setDescription(parameters.get("desc"));
-        
+
         // the goal
         String goalName = parameters.get("goal");
         if (goalName != null) {
@@ -194,10 +200,11 @@ public final class ScenarioLoader {
         // the equipment
         Equipment equipment = scenario.getEquipment();
         
+        // load the heater component
         HeaterComponent heater = (HeaterComponent)equipment.getComponent(HeaterComponent.class);
         heater.setTemperature(Double.parseDouble(parameters.get("heater-temperature")));
         
-        // TODO: load other equipment values
+        // load the tube component
         TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
         boolean broke = Boolean.parseBoolean(parameters.get("tube-cannula-broken"));
         String prob = parameters.get("tube-cannula-status");
@@ -242,6 +249,44 @@ public final class ScenarioLoader {
         patient.setPlatelets(parseNum(parameters.get("lab-component-heme-platelets")));
         patient.setPt(parseNum(parameters.get("lab-component-heme-pt")));
         patient.setPtt(parseNum(parameters.get("lab-component-heme-ptt")));
+   
+        // load the xray, ultrasound and echo images (comma-delimited list)
+        LabComponent imagingComponent = null;
+        for (Component component: equipment) {
+          if (component instanceof LabComponent) {
+            if (((LabComponent)component).getLabTest().isAssignableFrom(ImagingLabTest.class)) {
+              imagingComponent = (LabComponent)component;
+            }
+          }
+        }
+        String[] images;
+        images = parameters.get("lab-img-xray").split(",");
+        for (int i = 0; i < images.length; i++) {
+          String image = images[i];
+          XRayLabTest labTest = new XRayLabTest();
+          labTest.setDescription("Chest, X-Ray");
+          labTest.setImageName(image + ".png");          
+          labTest.setTime(0);
+          imagingComponent.addResult(labTest);
+        }
+        images = parameters.get("lab-img-us").split(",");
+        for (int i = 0; i < images.length; i++) {
+          String image = images[i];
+          UltrasoundLabTest labTest = new UltrasoundLabTest();
+          labTest.setDescription("Chest, US");
+          labTest.setImageName(image + ".png");          
+          labTest.setTime(0);
+          imagingComponent.addResult(labTest);
+        }
+        images = parameters.get("lab-img-echo").split(",");
+        for (int i = 0; i < images.length; i++) {
+          String image = images[i];
+          EchoLabTest labTest = new EchoLabTest();
+          labTest.setDescription("Chest, Echo");
+          labTest.setImageName(image + ".png");          
+          labTest.setTime(0);
+          imagingComponent.addResult(labTest);
+        }
         
         // and return the scenario
         return scenario;
