@@ -211,6 +211,9 @@ public final class ScenarioLoader {
         else if (prob == "Low") {
           problem = TubeComponent.Status.low;
         }
+        else if (prob == "Leak") {
+          problem = TubeComponent.Status.leak;
+        }
         else {
           problem = TubeComponent.Status.normal;
         }

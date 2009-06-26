@@ -59,7 +59,7 @@ heater-temperature = 37
 
 # Tube
 tube-cannula-broken = true, false
-tube-cannula-status = blank, Normal, Kink, High, Low
+tube-cannula-status = blank, Normal, Kink, High, Low, Leak
 tube-cannula-problem-location = blank, None, Arterial, Venous, Cephalad
 tube-cannula-arterial-B = open, closed
 tube-cannula-venous-B = open, closed

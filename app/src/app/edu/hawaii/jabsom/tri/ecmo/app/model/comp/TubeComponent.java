@@ -13,7 +13,7 @@ public class TubeComponent extends Component {
   public enum Mode { VA, VV };
   
   /** Current Tubing status. */
-  public enum Status { normal, kink, high, low }
+  public enum Status { normal, kink, high, low, leak }
   
   /** Problem location. */
   public enum problemLocation { none, arterial, venous, cephalad }
