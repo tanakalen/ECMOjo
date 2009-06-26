@@ -99,4 +99,8 @@ lab-component-heme-fibrinogen =
 lab-component-heme-platelets = 
 lab-component-heme-pt = 
 lab-component-heme-ptt = 
-#lab-component-img
+
+# Imaging Component
+lab-img-xray = 
+lab-img-us = 
+lab-img-echo = 

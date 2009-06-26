@@ -74,4 +74,8 @@ lab-component-heme-fibrinogen = 90
 lab-component-heme-platelets = 50
 lab-component-heme-pt = 
 lab-component-heme-ptt = 100
-#lab-component-img
+
+# Imaging Component
+lab-img-xray = 
+lab-img-us = 
+lab-img-echo = 

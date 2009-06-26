@@ -73,4 +73,8 @@ lab-component-heme-fibrinogen =
 lab-component-heme-platelets = 
 lab-component-heme-pt = 
 lab-component-heme-ptt = 
-#lab-component-img
+
+# Imaging Component
+lab-img-xray = xray-CXR-normal,xray-VV-cannulahigh
+lab-img-us = echo-ivh-va-newborn-good-poor-poor,echo-ivh-va-newborn-good-poor-good
+lab-img-echo = echo-noIVH-vv-newborn-good-good-poor,echo-noIVH-vv-newborn-good-good-good
