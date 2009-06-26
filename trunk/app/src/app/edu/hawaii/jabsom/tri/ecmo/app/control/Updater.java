@@ -267,8 +267,24 @@ public final class Updater {
             //TODO: no kink or cephalad
           }
         }
+        else if (tube.getCannulaProblem() == TubeComponent.Status.leak) {
+          //TODO: for roller pump, raceway tubing leak
+          /*
+           * What happens here is there is small drops of blood usually on the 
+           * part of the tubing in the roller pump. There may be reduced premembrane
+           * pressures. There may be air entering the circuit.
+           * 
+           * The appropriate intervention is to start emergency vent and clamp off artery,
+           * open bridge, clamp off vein, then fix circuit.
+           * 
+           * For this portion we need to determine pump type, if roller, show leak,
+           * adjust pressures, bubble alarm and air in circuit venous (premembrane)
+           * for the Quadrox or air in both venous and artery for Scimed. Probably
+           * need x seconds to complete the interventions before the scenario ends.
+           */
+        }
         else { //high,low,normal
-          //TODO: cannula malposition; how to make ECMOjo chatter?
+          //TODO: cannula malposition; how to make ECMOjo chatter?; normal -> do nothing
         }
       }
       
