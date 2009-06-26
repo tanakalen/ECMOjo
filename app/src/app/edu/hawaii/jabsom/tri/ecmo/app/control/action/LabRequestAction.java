@@ -5,9 +5,9 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
-//import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
@@ -184,42 +184,48 @@ public class LabRequestAction extends Action {
     }
     else if (labTest.equals(UltrasoundLabTest.class)) {
       UltrasoundLabTest labTest = new UltrasoundLabTest();
+      labTest.setDescription("Ultrasound");
       
       // Create image name depending on the patient
       Patient patient = game.getPatient();
+      TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
       String name = "us-";
+      name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
       name = name + ((patient.getHeartFunction() == HeartFunction.GOOD) ? "good-" : "bad-");
       name = name + ((patient.getLungFunction() == LungFunction.GOOD) ? "good-" : "bad-");
-      labTest.setDescription("Ultrasound");
-      labTest.setImageName("echo-noIVH-va-newborn-good-good-good.png");
+      labTest.setImageName(name + ".png");
       
       labTest.setTime(game.getElapsedTime() / 1000);
       result = labTest;
     }
     else if (labTest.equals(EchoLabTest.class)) {
       EchoLabTest labTest = new EchoLabTest();
+      labTest.setDescription("Echo");
       
       // Create image name depending on the patient
       Patient patient = game.getPatient();
+      TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
       String name = "echo-";
+      name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
       name = name + ((patient.getHeartFunction() == HeartFunction.GOOD) ? "good-" : "bad-");
       name = name + ((patient.getLungFunction() == LungFunction.GOOD) ? "good-" : "bad-");
-      labTest.setDescription("Echo");
-      labTest.setImageName("echo-noIVH-va-newborn-good-good-good.png");
+      labTest.setImageName(name + ".png");
       
       labTest.setTime(game.getElapsedTime() / 1000);
       result = labTest;
     }
     else if (labTest.equals(XRayLabTest.class)) {
       XRayLabTest labTest = new XRayLabTest();
+      labTest.setDescription("X-Ray");
       
       // Create image name depending on the patient
       Patient patient = game.getPatient();      
+      TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
       String name = "xray-";
+      name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
       name = name + ((patient.getHeartFunction() == HeartFunction.GOOD) ? "good-" : "bad-");
       name = name + ((patient.getLungFunction() == LungFunction.GOOD) ? "good-" : "bad-");
-      labTest.setDescription("Chest, X-Ray");
-      labTest.setImageName("xray-CXR-normal.png");
+      labTest.setImageName(name + ".png");
       
       labTest.setTime(game.getElapsedTime() / 1000);
       result = labTest;
