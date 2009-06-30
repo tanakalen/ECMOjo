@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Tutorial 3
-desc = Run the tutorial for an introduction of ECMOjo. 
+desc = Run the tutorial for an advanced ECMOjo example. 
 
 # Goal Information
 goal = Tutorial
