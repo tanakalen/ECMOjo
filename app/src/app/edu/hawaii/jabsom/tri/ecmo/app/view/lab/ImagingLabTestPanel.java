@@ -35,6 +35,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.LinkButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.RolloverTable;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
@@ -75,24 +76,24 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
     titleLabel.setSize(150, 20);
     add(titleLabel);
     
-    Image xrayButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRay.png");
-    Image xrayButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRayRol.png");
-    Image xrayButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRaySel.png");
+    Image echoButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Echo.png");
+    Image echoButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-EchoRol.png");
+    Image echoButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-EchoSel.png");
     
     // add lab request button
-    ImageButton xrayButton 
-      = new ImageButton(xrayButtonImage, xrayButtonRolloverImage, xrayButtonSelectedImage);
-    xrayButton.addActionListener(new ActionListener() {
+    ImageButton echoButton 
+      = new ImageButton(echoButtonImage, echoButtonRolloverImage, echoButtonSelectedImage);
+    echoButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
-        action.setLabTest(XRayLabTest.class);
+        action.setLabTest(EchoLabTest.class);
         notifyActionListeners(action);
       }    
     });
-    xrayButton.setLocation(103, 34);
-    xrayButton.setSize(54, 22);
-    add(xrayButton);
-
+    echoButton.setLocation(82, 34);
+    echoButton.setSize(54, 22);
+    add(echoButton);
+    
     Image ultraButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Ultra.png");
     Image ultraButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-UltraRol.png");
     Image ultraButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-UltraSel.png");
@@ -107,10 +108,28 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
         notifyActionListeners(action);
       }    
     });
-    ultraButton.setLocation(173, 34);
+    ultraButton.setLocation(138, 34);
     ultraButton.setSize(54, 22);
     add(ultraButton);
 
+    Image xrayButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRay.png");
+    Image xrayButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRayRol.png");
+    Image xrayButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRaySel.png");
+    
+    // add lab request button
+    ImageButton xrayButton 
+      = new ImageButton(xrayButtonImage, xrayButtonRolloverImage, xrayButtonSelectedImage);
+    xrayButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        LabRequestAction action = new LabRequestAction();
+        action.setLabTest(XRayLabTest.class);
+        notifyActionListeners(action);
+      }    
+    });
+    xrayButton.setLocation(196, 34);
+    xrayButton.setSize(54, 22);
+    add(xrayButton);
+    
     // add scrollable area with list of imaging tests
     tableModel = new DefaultTableModel() {
       public int getColumnCount() {
