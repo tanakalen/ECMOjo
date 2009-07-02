@@ -5,7 +5,6 @@ import king.lib.out.Error;
 import king.lib.access.Access;
 import king.lib.access.LocalHookup;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
-import edu.hawaii.jabsom.tri.ecmo.app.report.EmailResultReporter;
 import edu.hawaii.jabsom.tri.ecmo.app.report.FileResultReporter;
 
 /**
@@ -41,8 +40,8 @@ public class ResultState extends State {
       fileReporter.report(game);
       
       // to email
-      EmailResultReporter emailReporter = new EmailResultReporter("caschwan@hawaii.edu");
-//      emailReporter.report(game);
+      // EmailResultReporter emailReporter = new EmailResultReporter("ecmojo.tri@gmail.com");
+      // emailReporter.report(game);
     }
     catch (IOException e) {
       Error.out(e);

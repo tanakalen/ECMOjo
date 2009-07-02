@@ -1,6 +1,8 @@
 package edu.hawaii.jabsom.tri.ecmo.app.report;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Calendar;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.control.ActionList;
@@ -60,7 +62,10 @@ public abstract class ResultReporter {
     builder.append(linebreak);
    
     // add user info actions executed
-    builder.append("User: ").append(game.getUser()).append(linebreak);
+    builder.append("User: ").append(game.getUser());
+    builder.append(linebreak);
+    builder.append("Date/Time: ").append(DateFormat.getInstance().format(Calendar.getInstance().getTime()));
+    builder.append(linebreak);
     ActionList actions = game.getActions();
     for (Action action: actions) {
       builder.append(action.toString()).append(linebreak);

@@ -3,6 +3,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.report;
 import java.io.IOException;
 
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
+import edu.hawaii.jabsom.tri.ecmo.app.report.Mailer.Protocol;
 
 /**
  * The email result reporter.
@@ -34,7 +35,7 @@ public class EmailResultReporter extends ResultReporter {
     // get the report
     String report = ResultReporter.getResult(game);
       
-    // and send the report
+    // prepare the message
     String senderEmail = "telemed@hawaii.edu";
     String senderName = "ECMOjo";
     String recipientEmail = email;
@@ -43,13 +44,16 @@ public class EmailResultReporter extends ResultReporter {
     String body = report;    
     String host = "mail.hawaii.edu";
     int port = 465;
+    Protocol protocol = Protocol.SSL;
     String user = "telemed";
-    String password = "east88to";
+    String password = "east88to";  
+    
+    // and send the message...
     try {
       Mailer.send(senderEmail, senderName
           , recipientEmail, recipientName
           , subject, body
-          , host, port, user, password);
+          , host, port, protocol, user, password);
     }
     catch (Exception e) {
       throw new IOException("Error sending out report: " + e);
