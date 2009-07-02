@@ -5,6 +5,7 @@ import king.lib.out.Error;
 import king.lib.access.Access;
 import king.lib.access.LocalHookup;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
+import edu.hawaii.jabsom.tri.ecmo.app.report.EmailResultReporter;
 import edu.hawaii.jabsom.tri.ecmo.app.report.FileResultReporter;
 
 /**
@@ -34,9 +35,14 @@ public class ResultState extends State {
   void init() {
     // report | save the score
     try {
+      // to file
       String path = Access.getInstance().getScenarioDir() + "/scores/score-" + System.currentTimeMillis() + ".txt";
-      FileResultReporter reporter = new FileResultReporter(LocalHookup.getInstance(), path);
-      reporter.report(game);
+      FileResultReporter fileReporter = new FileResultReporter(LocalHookup.getInstance(), path);
+      fileReporter.report(game);
+      
+      // to email
+      EmailResultReporter emailReporter = new EmailResultReporter("caschwan@hawaii.edu");
+//      emailReporter.report(game);
     }
     catch (IOException e) {
       Error.out(e);
