@@ -25,6 +25,9 @@ import java.util.Properties;
  */
 public final class Mailer {
 
+  /** The available transport protocols. */
+  public enum Protocol { UNSECURED, TLS, SSL };
+  
   /** The available recipient types. */
   public enum RecipientType { TO, CC, BCC };
   
@@ -47,6 +50,7 @@ public final class Mailer {
    * @param body  The body of the message.
    * @param host  The SMTP host address such as smtp.hostname.com.
    * @param port  The SMTP port such as 25, 465 or 587.
+   * @param protocol  The transport protocol.
    * @param user  The SMTP user name.
    * @param password  The SMTP password.
    * @throws AddressException  If there is an addressing problem.
@@ -56,7 +60,7 @@ public final class Mailer {
   public static void send(String senderEmail, String senderName
                         , String recipientEmail, String recipientName
                         , String subject, String body
-                        , String host, int port, final String user, final String password) 
+                        , String host, int port, Protocol protocol, final String user, final String password) 
                           throws AddressException, MessagingException, UnsupportedEncodingException {
      // put recipeint into array
      String[] recipientEmails = new String[1];
@@ -71,7 +75,7 @@ public final class Mailer {
      send(senderEmail, senderName
         , recipientEmails, recipientNames, recipientTypes
         , subject, body
-        , host, port, user, password);
+        , host, port, protocol, user, password);
   }
   
   /** 
@@ -85,7 +89,8 @@ public final class Mailer {
    * @param subject  The message's subject.
    * @param body  The body of the message.
    * @param host  The SMTP host address such as smtp.hostname.com.
-   * @param port  The SMTP port such as 25, 465 or 587.
+   * @param port  The SMTP port such as 25 (commonly unsecure), 465 (commonly SSL) or 587 (commonly TLS).
+   * @param protocol  The transport protocol.
    * @param user  The SMTP user name.
    * @param password  The SMTP password.
    * @throws AddressException  If there is an addressing problem.
@@ -95,16 +100,26 @@ public final class Mailer {
   public static void send(String senderEmail, String senderName
                         , String[] recipientEmails, String[] recipientNames, RecipientType[] recipientTypes
                         , String subject, String body
-                        , String host, int port, final String user, final String password) 
+                        , String host, int port, Protocol protocol, final String user, final String password) 
                           throws AddressException, MessagingException, UnsupportedEncodingException {
-    // create the session
+    // create the session (use props.put("mail.debug", "true"); to debug)
     Properties props = new Properties();
-//    props.put("mail.transport.protocol", "smtp");
+    props.put("mail.transport.protocol", "smtp");
     props.put("mail.smtp.host", host);
-    props.put("mail.smtp.port", String.valueOf(port)); 
-    props.put("mail.smtp.auth", "true");
-    props.put("mail.smtp.starttls.enable", "true");
-//    props.put("mail.smtp.ssl.enable", "true");
+    props.put("mail.smtp.port", String.valueOf(port));
+    if (protocol == Protocol.UNSECURED) {
+      props.put("mail.smtp.auth", "false");
+    }
+    else if (protocol == Protocol.TLS) {
+      props.put("mail.smtp.auth", "true");
+      props.put("mail.smtp.starttls.enable", "true");
+    }
+    else if (protocol == Protocol.SSL) {
+      props.put("mail.smtp.auth", "true");
+      props.put("mail.smtp.socketFactory.port", String.valueOf(port));
+      props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+      props.put("mail.smtp.socketFactory.fallback", "false");
+    }
     Authenticator authenticator = new Authenticator() {
       public PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(user, password);
@@ -131,11 +146,11 @@ public final class Mailer {
       else {
         recipientType = null;
       }
-      message.addRecipient(recipientType, recipient);
+      message.setRecipient(recipientType, recipient);
     }
     message.setSubject(subject);
     message.setContent(body, "text/plain");
-    
+
     // and send the message...
     Transport.send(message);
   }
