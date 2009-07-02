@@ -41,7 +41,7 @@ public class FileResultReporter extends ResultReporter {
     BufferedWriter out = null;
     try {
       // get the report
-      String report = ResultReporter.getReport(game);
+      String report = ResultReporter.getResult(game);
       
       // and write the report
       out = new BufferedWriter(new OutputStreamWriter(hookup.getOutputStream(path)));

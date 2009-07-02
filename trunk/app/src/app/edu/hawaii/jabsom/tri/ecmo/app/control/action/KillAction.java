@@ -17,9 +17,20 @@ public class KillAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // kill the patient...
     Patient patient = game.getPatient();
     patient.setLife(0.0);
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:Kill";
   }
 }

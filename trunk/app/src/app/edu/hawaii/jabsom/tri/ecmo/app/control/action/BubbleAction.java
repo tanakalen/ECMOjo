@@ -60,10 +60,21 @@ public class BubbleAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // create bubbles in tubing
     TubeComponent component = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
     component.setArterialBubbles(arterialBubbles);
     component.setVenousBubbles(venousBubbles);
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:Bubble:{" + (arterialBubbles ? "A" : "") + (venousBubbles ? "V" :"") + "}";
   }
 }

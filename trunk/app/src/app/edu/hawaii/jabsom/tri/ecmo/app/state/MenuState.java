@@ -87,8 +87,9 @@ public class MenuState extends State {
    * Proceeds to the game state.
    *
    * @param scenario  The scenario selected.
+   * @param user  The user that is executing the game.
    */
-  public void gameState(Scenario scenario) {
-    transition(new GameState(scenario));
+  public void gameState(Scenario scenario, String user) {
+    transition(new GameState(scenario, user));
   }
 }

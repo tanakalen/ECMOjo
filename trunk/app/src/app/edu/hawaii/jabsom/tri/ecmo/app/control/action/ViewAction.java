@@ -55,7 +55,18 @@ public class ViewAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // there is nothing to execute, this is merely an indicator/user action tracker
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:View:" + component;
   }
 }

@@ -44,6 +44,7 @@ public class PatientAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // update patient
     Check check = getCheck();
@@ -73,5 +74,15 @@ public class PatientAction extends Action {
     else {
       Error.out("Check not mapped: " + check);
     }
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:Patient:" + check;    
   }
 }

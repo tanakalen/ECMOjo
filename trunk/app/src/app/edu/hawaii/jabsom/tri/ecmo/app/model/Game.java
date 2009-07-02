@@ -19,6 +19,8 @@ public class Game implements Serializable {
 
   /** The scenario associated. */
   private Scenario scenario;
+  /** The user that is executing the game. */
+  private String user;
   
   /** The elapsed time (in milliseconds). */
   private long elapsedTime;
@@ -38,10 +40,12 @@ public class Game implements Serializable {
    * Constructor for game.
    * 
    * @param scenario  The initial scenario.
+   * @param user  The user that is executing the game.
    */
-  public Game(Scenario scenario) {
+  public Game(Scenario scenario, String user) {
     this.scenario = scenario;
-
+    this.user = user;
+    
     // setup parameters
     elapsedTime = 0;
     patient = (Patient)ObjectCloner.deepCopy(scenario.getPatient());
@@ -50,6 +54,15 @@ public class Game implements Serializable {
     // for statistics
     tracker = new Tracker();
     actions = new ActionList();
+  }
+  
+  /**
+   * Returns the user that is executing the game.
+   * 
+   * @return  The user.
+   */
+  public String getUser() {
+    return user;
   }
   
   /**
