@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
 
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.CircuitChangeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
@@ -190,6 +191,30 @@ public class PatientDetailPanel extends DetailPanel {
     suctionETTButton.setLocation(31, 133);
     suctionETTButton.setSize(192, 32);
     add(suctionETTButton);
+    
+    Image changeCircuitNormalImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETT.png");
+    Image changeCircuitRolloverImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETTRol.png");
+    Image changeCircuitSelectedImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETTSel.png");
+    ImageButton changeCircuitButton 
+      = new ImageButton(changeCircuitNormalImage, changeCircuitRolloverImage, changeCircuitSelectedImage);
+    changeCircuitButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        // send the action
+        CircuitChangeAction action = new CircuitChangeAction();
+        notifyActionListeners(action);
+            
+        // output dialog
+        StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+            , "Circuit Changed"
+            , "The circuit has been changed.");
+      }
+    });
+    changeCircuitButton.setLocation(55, 153);
+    changeCircuitButton.setSize(192, 32);
+    add(changeCircuitButton);
     
     Image checkDiaperNormalImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckDiaper.png");
