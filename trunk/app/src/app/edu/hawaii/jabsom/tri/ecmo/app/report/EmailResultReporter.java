@@ -36,17 +36,17 @@ public class EmailResultReporter extends ResultReporter {
     String report = ResultReporter.getResult(game);
       
     // prepare the message
-    String senderEmail = "telemed@hawaii.edu";
+    String senderEmail = "ecmojo.tri@gmail.com";
     String senderName = "ECMOjo";
     String recipientEmail = email;
     String recipientName = "ECMOjo Recorder";
     String subject = "ECMOjo Report";
     String body = report;    
-    String host = "mail.hawaii.edu";
+    String host = "smtp.gmail.com";
     int port = 465;
     Protocol protocol = Protocol.SSL;
-    String user = "telemed";
-    String password = "east88to";  
+    String user = "ecmojo.tri@gmail.com";
+    String password = "ecmostud";
     
     // and send the message...
     try {
