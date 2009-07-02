@@ -39,9 +39,20 @@ public class HeaterAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // sets the temperature
     HeaterComponent component = (HeaterComponent)game.getEquipment().getComponent(HeaterComponent.class);
     component.setTemperature(temperature);
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:Heater:" + temperature;
   }
 }

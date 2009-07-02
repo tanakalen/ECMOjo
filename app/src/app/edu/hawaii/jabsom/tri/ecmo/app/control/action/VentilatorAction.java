@@ -39,9 +39,20 @@ public class VentilatorAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // create bubbles in tubing
     VentilatorComponent component = (VentilatorComponent)game.getEquipment().getComponent(VentilatorComponent.class);
     component.setEmergencyFuction(emergencyFunction);
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:Ventilator:{" + emergencyFunction + "}";
   }
 }

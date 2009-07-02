@@ -141,6 +141,7 @@ public class PressureMonitorAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // create bubbles in tubing
     PressureMonitorComponent component = (PressureMonitorComponent)game.getEquipment()
@@ -151,5 +152,17 @@ public class PressureMonitorAction extends Action {
     component.setPostMembranePressureMax(postMembranePressureMax);
     component.setVenousPressureMin(venousPressureMin);
     component.setVenousPressureMax(venousPressureMax);
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:PressureMonitor:{" + preMembranePressureMin  + ", " + preMembranePressureMax 
+                                      + postMembranePressureMin + ", " + postMembranePressureMax
+                                      + venousPressureMin       + ", " + venousPressureMax + "}";    
   }
 }

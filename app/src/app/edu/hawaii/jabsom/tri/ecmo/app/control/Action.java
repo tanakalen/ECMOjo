@@ -16,4 +16,11 @@ public abstract class Action {
    * @param game  The game.
    */
   public abstract void execute(Game game);
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  public abstract String toString();
 }

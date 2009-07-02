@@ -18,6 +18,7 @@ public class ACTRequestAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // update ACT
     ACTComponent component = (ACTComponent)game.getEquipment().getComponent(ACTComponent.class);
@@ -25,5 +26,15 @@ public class ACTRequestAction extends Action {
     act.setValue(game.getPatient().getAct());
     act.setTime((int)(game.getElapsedTime() / 1000));
     component.addACT(act);
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:ACTRequest";
   }
 }

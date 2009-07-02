@@ -63,6 +63,7 @@ public class TubeAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // and add the lab request
     TubeComponent component = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
@@ -84,5 +85,15 @@ public class TubeAction extends Action {
     else {
       Error.out("Location not mapped: " + location);
     }
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:Tube:{" + open + ", " + location + "}";
   }
 }

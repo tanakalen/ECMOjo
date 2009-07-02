@@ -60,10 +60,21 @@ public class PumpAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // sets the pump
     PumpComponent component = (PumpComponent)game.getEquipment().getComponent(PumpComponent.class);
     component.setOn(on);
     component.setFlow(flow);
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:Pump:{" + on + ", " + flow + "}";
   }
 }

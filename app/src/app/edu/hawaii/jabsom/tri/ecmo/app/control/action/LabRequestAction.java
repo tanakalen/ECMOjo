@@ -52,6 +52,7 @@ public class LabRequestAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // create a new lab result
     LabTest result = null;
@@ -244,5 +245,15 @@ public class LabRequestAction extends Action {
         }
       }
     }
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:LabRequest:" + labTest;
   }
 }

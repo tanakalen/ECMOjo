@@ -71,7 +71,8 @@ public class TestUpdater {
     LocalHookup hookup = LocalHookup.getInstance();
     try {
       Scenario scenario = ScenarioLoader.load(hookup, "scenario/Tutorial-1.scn");
-      game = new Game(scenario);
+      String user = "(user)";
+      game = new Game(scenario, user);
       game.setElapsedTime(0);
       History history = new History();
       Updater.store(game, history);

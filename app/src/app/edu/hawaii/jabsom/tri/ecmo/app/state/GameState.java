@@ -20,10 +20,11 @@ public class GameState extends State {
    * Constructor for game state.
    * 
    * @param scenario  The scenario selected.
+   * @param user  The user that is executing the game.
    */
-  public GameState(Scenario scenario) {
+  public GameState(Scenario scenario, String user) {
     // create the actual game
-    Game game = new Game(scenario);
+    Game game = new Game(scenario, user);
     
     // create the game manager
     manager = new Manager(game);

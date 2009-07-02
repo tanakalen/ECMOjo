@@ -192,8 +192,19 @@ public class MenuStatePanel extends JPanel {
         tube.setPostPCO2(35);
         tube.setPostPH(7.4);
 
+        // show dialog and ask for the username
+        String user;
+        if (scenarioListPanel.isVisible()) {
+          // let's ask for a username to continue to the scenario
+          user = "TODO:DialogWindow";  // TODO: add a input dialog for username
+        }
+        else {
+          // Tutorial: we don't set a username
+          user = "N/A";
+        }
+        
         // proceed to game state
-        state.gameState(scenario);
+        state.gameState(scenario, user);
       }
     });
     startButton.setSize(120, 48);

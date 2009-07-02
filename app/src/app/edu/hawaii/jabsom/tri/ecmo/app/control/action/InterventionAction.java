@@ -71,6 +71,7 @@ public class InterventionAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     Patient patient = game.getPatient();
     Equipment equipment = game.getEquipment();
@@ -131,5 +132,15 @@ public class InterventionAction extends Action {
     
     // track intervention
     game.getTracker().track(intervention.getClass());
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:Intervention:{" + intervention + ", " + location + "}";
   }
 }

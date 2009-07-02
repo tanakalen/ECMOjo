@@ -97,6 +97,7 @@ public class OxigenatorAction extends Action {
    * 
    * @param game  The game.
    */
+  @Override
   public void execute(Game game) {
     // sets the oxigenator
     OxigenatorComponent component = (OxigenatorComponent)game.getEquipment().getComponent(OxigenatorComponent.class);
@@ -107,5 +108,15 @@ public class OxigenatorAction extends Action {
       component.setTotalSweepDecimal(totalSweepDecimal);      
     }
     component.setFiO2(fiO2);
+  }
+  
+  /**
+   * Returns the string representation.
+   * 
+   * @return  The string representation.
+   */
+  @Override
+  public String toString() {
+    return "Action:Oxigenator:{" + totalSweepInteger + ", " + totalSweepDecimal + ", " + fiO2 + "}";
   }
 }
