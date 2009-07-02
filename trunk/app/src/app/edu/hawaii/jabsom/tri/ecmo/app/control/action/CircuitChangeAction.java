@@ -3,7 +3,6 @@ package edu.hawaii.jabsom.tri.ecmo.app.control.action;
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PressureMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 
@@ -28,11 +27,6 @@ public class CircuitChangeAction extends Action {
     // reset the tubing
     TubeComponent tubeComponent = (TubeComponent)equipment
                                   .getComponent(TubeComponent.class);
-    tubeComponent.setArterialAOpen(true);
-    tubeComponent.setArterialBOpen(true);
-    tubeComponent.setVenousAOpen(true);
-    tubeComponent.setVenousBOpen(true);
-    tubeComponent.setBridgeOpen(false);
     tubeComponent.setVenousPressure(0);
     tubeComponent.setArterialBubbles(false);
     tubeComponent.setVenousBubbles(false);
@@ -42,16 +36,6 @@ public class CircuitChangeAction extends Action {
                                   .getComponent(PumpComponent.class);
     pumpComponent.setOn(true);
     pumpComponent.setFlow(0.6);
-
-    // reset the pressure monitor
-    PressureMonitorComponent pressureMonitorComponent = (PressureMonitorComponent)equipment
-                                                        .getComponent(PressureMonitorComponent.class);
-    pressureMonitorComponent.setPreMembranePressureMin(100);
-    pressureMonitorComponent.setPreMembranePressureMax(500);
-    pressureMonitorComponent.setPostMembranePressureMin(100);
-    pressureMonitorComponent.setPostMembranePressureMax(400);
-    pressureMonitorComponent.setVenousPressureMin(-50);
-    pressureMonitorComponent.setVenousPressureMax(20);
   }
   
   /**
