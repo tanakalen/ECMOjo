@@ -273,7 +273,7 @@ public final class ScenarioLoader {
         for (int i = 0; i < images.length; i++) {
           String image = images[i];
           UltrasoundLabTest labTest = new UltrasoundLabTest();
-          labTest.setDescription("Chest, US");
+          labTest.setDescription("Head, US");
           labTest.setImageName(image + ".png");          
           labTest.setTime(0);
           imagingComponent.addResult(labTest);
@@ -282,7 +282,7 @@ public final class ScenarioLoader {
         for (int i = 0; i < images.length; i++) {
           String image = images[i];
           EchoLabTest labTest = new EchoLabTest();
-          labTest.setDescription("Chest, Echo");
+          labTest.setDescription("Echo");
           labTest.setImageName(image + ".png");          
           labTest.setTime(0);
           imagingComponent.addResult(labTest);
