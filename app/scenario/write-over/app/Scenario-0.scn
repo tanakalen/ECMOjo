@@ -75,6 +75,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xray-CXR-normal,xray-VV-cannulahigh
-lab-img-us = echo-ivh-va-newborn-good-poor-poor,echo-ivh-va-newborn-good-poor-good
-lab-img-echo = echo-noIVH-vv-newborn-good-good-poor,echo-noIVH-vv-newborn-good-good-good
+lab-img-xray = xr-nb-vv+v-whiteout,xr-2m-vv-va+v-cannulahigh
+lab-img-us = us-nb-va-ivh
+lab-img-echo = 
