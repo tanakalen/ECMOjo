@@ -80,7 +80,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkCanulaSiteButton.setLocation(31, 37);
+    checkCanulaSiteButton.setLocation(31, 28);
     checkCanulaSiteButton.setSize(192, 32);
     add(checkCanulaSiteButton);
     
@@ -116,7 +116,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkforBleedingButton.setLocation(31, 69);
+    checkforBleedingButton.setLocation(31, 60);
     checkforBleedingButton.setSize(192, 32);
     add(checkforBleedingButton);
     
@@ -152,7 +152,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkUrineOutputButton.setLocation(31, 101);
+    checkUrineOutputButton.setLocation(31, 92);
     checkUrineOutputButton.setSize(192, 32);
     add(checkUrineOutputButton);
     
@@ -188,16 +188,16 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    suctionETTButton.setLocation(31, 133);
+    suctionETTButton.setLocation(31, 124);
     suctionETTButton.setSize(192, 32);
     add(suctionETTButton);
     
     Image changeCircuitNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETT.png");
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuit.png");
     Image changeCircuitRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETTRol.png");
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuitRol.png");
     Image changeCircuitSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETTSel.png");
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuitSel.png");
     ImageButton changeCircuitButton 
       = new ImageButton(changeCircuitNormalImage, changeCircuitRolloverImage, changeCircuitSelectedImage);
     changeCircuitButton.addActionListener(new ActionListener() {
@@ -212,7 +212,7 @@ public class PatientDetailPanel extends DetailPanel {
             , "The circuit has been changed.");
       }
     });
-    changeCircuitButton.setLocation(55, 153);
+    changeCircuitButton.setLocation(31, 156);
     changeCircuitButton.setSize(192, 32);
     add(changeCircuitButton);
     
@@ -237,7 +237,7 @@ public class PatientDetailPanel extends DetailPanel {
             , "A unpleasant odor has been detected.");
       }
     });
-    checkDiaperButton.setLocation(31, 165);
+    checkDiaperButton.setLocation(31, 188);
     checkDiaperButton.setSize(192, 32);
     add(checkDiaperButton);
     
@@ -262,7 +262,7 @@ public class PatientDetailPanel extends DetailPanel {
             , "The patient has been stimulated.");
       }
     });
-    checkActivityLevelButton.setLocation(31, 197);
+    checkActivityLevelButton.setLocation(31, 220);
     checkActivityLevelButton.setSize(192, 32);
     add(checkActivityLevelButton);
   }
