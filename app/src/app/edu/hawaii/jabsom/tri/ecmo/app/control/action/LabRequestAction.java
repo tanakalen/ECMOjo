@@ -1,5 +1,9 @@
 package edu.hawaii.jabsom.tri.ecmo.app.control.action;
 
+import java.awt.Image;
+
+import king.lib.access.ImageLoader;
+
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
@@ -194,7 +198,10 @@ public class LabRequestAction extends Action {
       name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
       name = name + ("noivh");
       labTest.setImageName(name + ".png");
-      
+      Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
+      if (image == null) {
+        labTest.setImageName("us-none.png");
+      }    
       labTest.setTime(game.getElapsedTime() / 1000);
       result = labTest;
     }
@@ -208,7 +215,10 @@ public class LabRequestAction extends Action {
       String name = "echo-nb-";
       name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
       labTest.setImageName(name + ".png");
-      
+      Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
+      if (image == null) {
+        labTest.setImageName("echo-none.png");
+      } 
       labTest.setTime(game.getElapsedTime() / 1000);
       result = labTest;
     }
@@ -223,7 +233,10 @@ public class LabRequestAction extends Action {
       name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va" : "vv");
       name = name + ("+v-whiteout");
       labTest.setImageName(name + ".png");
-      
+      Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
+      if (image == null) {
+        labTest.setImageName("xr-none.png");
+      } 
       labTest.setTime(game.getElapsedTime() / 1000);
       result = labTest;
     }

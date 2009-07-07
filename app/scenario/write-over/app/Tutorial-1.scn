@@ -101,6 +101,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = 
-lab-img-us = 
-lab-img-echo = 
+lab-img-xray = xr-none
+lab-img-us = us-none
+lab-img-echo = echo-none
