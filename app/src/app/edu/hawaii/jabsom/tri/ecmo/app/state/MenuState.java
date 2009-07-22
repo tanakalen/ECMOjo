@@ -92,4 +92,11 @@ public class MenuState extends State {
   public void gameState(Scenario scenario, String user) {
     transition(new GameState(scenario, user));
   }
+  
+  /**
+   * Proceeds to the game state.
+   */
+  public void helpState() {
+    transition(new HelpState());
+  }
 }

@@ -89,6 +89,24 @@ public class MenuStatePanel extends JPanel {
     textLabel.setSize(600, 45);
     add(textLabel);
     
+    
+    // add help button
+    Image helpNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Help.png");
+    Image helpRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-HelpRol.png");
+    Image helpSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-HelpSel.png");
+    ImageButton helpButton 
+      = new ImageButton(helpNormalImage, helpRolloverImage, helpSelectedImage);
+    helpButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        // and help
+        state.helpState();
+      }      
+    });
+    helpButton.setLocation(680, 18);
+    helpButton.setSize(120, 48);
+    add(helpButton);
+    
+    
     // button group
     ButtonGroup buttonGroup = new ButtonGroup();
     
