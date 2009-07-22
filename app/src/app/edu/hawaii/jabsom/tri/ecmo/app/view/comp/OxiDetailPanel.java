@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
@@ -64,6 +65,9 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
   
   /** The updater thread. */
   private Thread thread;
+  
+  /** The total sweep tenth formatter. */
+  private DecimalFormat totalSweepTenthFormatter = new DecimalFormat("#0.0");
   
   /**
    * Constructor for panel.
@@ -295,6 +299,12 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
     double value = component.getFiO2();
     String text = Math.round(value * 100) + "%";
     g.drawString(text, 54, 130);
+    
+
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
+    value = component.getTotalSweep();
+    text = "Sweep: " + totalSweepTenthFormatter.format(value);
+    g.drawString(text, 54, 150);
   }
   
 }
