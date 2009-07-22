@@ -63,8 +63,11 @@ public class MenuStatePanel extends JPanel {
   /** The conventional ventilator radio button. */
   private ImageToggleButton conventionalRadio;
   /** The high frequency ventilator radio button. */
-  private ImageToggleButton highfrequencyRadio;  
+  private ImageToggleButton highfrequencyRadio;    
+  /** The start button. */
+  private ImageButton startButton;
   
+
   
   /**
    * Constructor for panel. 
@@ -129,8 +132,7 @@ public class MenuStatePanel extends JPanel {
     Image startNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Start.png");
     Image startRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-StartRol.png");
     Image startSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-StartSel.png");
-    ImageButton startButton 
-      = new ImageButton(startNormalImage, startRolloverImage, startSelectedImage);
+    startButton = new ImageButton(startNormalImage, startRolloverImage, startSelectedImage);
     startButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         // build scenario
@@ -209,6 +211,7 @@ public class MenuStatePanel extends JPanel {
     });
     startButton.setSize(120, 48);
     startButton.setLocation(274, 126);
+    startButton.setVisible(false);
     add(startButton);
 
     // add tutorial list panel
@@ -218,7 +221,6 @@ public class MenuStatePanel extends JPanel {
     tutorialListPanel.setSize(385, 460);
     tutorialListPanel.setLocation(37, 110);
     add(tutorialListPanel);
-    tutorialListPanel.setSelectedIndex(0);
 
     // add scenario list panel
     scenarioListPanel = new ScenarioListPanel(state.getScenarios());
@@ -227,7 +229,6 @@ public class MenuStatePanel extends JPanel {
     scenarioListPanel.setSize(385, 460);
     scenarioListPanel.setLocation(37, 110);
     add(scenarioListPanel);
-    scenarioListPanel.setSelectedIndex(0);
     
     // add component selection panel
     JPanel componentSelectionPanel = new JPanel();
@@ -338,7 +339,13 @@ public class MenuStatePanel extends JPanel {
     ScenarioSelectionListener scenarioSelectionListener = new ScenarioSelectionListener() {
       public void handleSelection(Scenario scenario) {
         // set the new scenario
-        scenarioInfoPanel.setScenario(scenario);
+        if (scenario != null) {
+          startButton.setVisible(true);
+        }
+        else {
+          startButton.setVisible(false);
+        }
+        scenarioInfoPanel.setScenario(scenario); 
       }      
     };
     tutorialListPanel.addScenarioSelectionListener(scenarioSelectionListener);
