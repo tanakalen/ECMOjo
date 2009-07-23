@@ -1,6 +1,10 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view;
 
+import java.awt.Graphics;
+
 import javax.swing.JPanel;
+
+import king.lib.out.Error;
 
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal.Item;
@@ -12,14 +16,20 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal.TutorialListener;
  * @author   Christoph Aschwanden
  * @since    Jan 12, 2009
  */
-public class TutorialPanel extends JPanel implements TutorialListener {
+public class TutorialPanel extends JPanel implements TutorialListener, Runnable {
 
   /** The goal. */
   private TutorialGoal goal;
   
   /** The tutorial box. */
   private TutorialBox box;
-    
+  
+  /** The updater thread. */
+  private Thread thread;
+  /** True for blink. */
+  private boolean blink;
+  
+  
   /**
    * Constructor for panel. 
    * 
@@ -47,19 +57,34 @@ public class TutorialPanel extends JPanel implements TutorialListener {
     add(box);
     box.setVisible(false);
     
+    // no blinking for now
+    blink = false;
+    
     // update the box
     updateBox();
   }
   
+  /**
+   * Called when the component got updated.
+   */
+  public void handleUpdate() {
+    repaint();
+  }
+    
   /**
    * Called when panel is added.
    */
   @Override
   public void addNotify() {
     super.addNotify();
-    
+        
     // add listener
     goal.addTutorialListener(this);
+    
+    // start thread
+    this.thread = new Thread(this);
+    this.thread.setPriority(Thread.MIN_PRIORITY);
+    this.thread.start();
   }
   
   /**
@@ -67,6 +92,9 @@ public class TutorialPanel extends JPanel implements TutorialListener {
    */
   @Override
   public void removeNotify() {
+    // stop thread
+    this.thread = null;
+    
     // remove listener
     goal.removeTutorialListener(this);
     
@@ -89,6 +117,10 @@ public class TutorialPanel extends JPanel implements TutorialListener {
       box.setText(item.getText());
       box.setShowNext(item.getTrigger() == null);
       box.setVisible(true);
+      
+      // make it blinking
+      thread = new Thread(this);
+      thread.start();
     }
     else {
       box.setVisible(false);
@@ -96,5 +128,44 @@ public class TutorialPanel extends JPanel implements TutorialListener {
     
     // let's update the display...
     repaint();
+  }
+  
+  /**
+   * The time updater thread.
+   */
+  public void run() {
+    try {
+      // blink 3 times
+      for (int i = 0; i < 3; i++) {
+        blink = true;
+        repaint();
+        Thread.sleep(500);
+  
+        blink = false;
+        repaint();
+        Thread.sleep(500);
+      }
+    }
+    catch (InterruptedException e) {
+      Error.out(e);
+    }
+  }
+  
+  /**
+   * Paints this component.
+   * 
+   * @param g  Where to draw to.
+   */
+  @Override
+  public void paintComponent(Graphics g) {
+    Item item = goal.getItem();
+    if (item != null) {
+      box.setText(blink ? "" : item.getText());
+      box.setShowNext(item.getTrigger() == null);
+      box.setVisible(true);
+    }
+    else {
+      box.setVisible(false);
+    }
   }
 }
