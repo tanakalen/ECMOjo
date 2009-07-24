@@ -1,8 +1,5 @@
 package edu.hawaii.jabsom.tri.ecmo.app.state;
 
-import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
-
-
 /**
  * The result state. 
  *
@@ -11,22 +8,11 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
  */
 public class HelpState extends State {
 
-  /** The game. */
-  private Game game;
-  
-  
-  /**
-   * Constructor for the state.
-   */
-  public HelpState() {
-    this.game = game;
-  }
-  
   /** 
    * Called during state init.
    */
   void init() {
-
+    // not used
   }
   
   /**
@@ -36,15 +22,6 @@ public class HelpState extends State {
     // not used
   }
   
-  /**
-   * Returns the game.
-   *
-   * @return  The game.
-   */
-  public Game getGame() {
-    return game;
-  }
-
   /**
    * Proceeds to the menu state.
    */

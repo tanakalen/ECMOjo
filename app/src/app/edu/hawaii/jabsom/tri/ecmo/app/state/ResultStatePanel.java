@@ -62,6 +62,8 @@ public class ResultStatePanel extends JPanel {
     JTextArea infoArea = new JTextArea(ResultReporter.getOverview(game));
     infoArea.setOpaque(false);
     infoArea.setEditable(false);
+    infoArea.setLineWrap(true);
+    infoArea.setWrapStyleWord(true);
     infoArea.setFont(titleLabel.getFont().deriveFont(Font.PLAIN, 14f));
     infoArea.setLocation(30, 160);
     infoArea.setSize(720, 360);
