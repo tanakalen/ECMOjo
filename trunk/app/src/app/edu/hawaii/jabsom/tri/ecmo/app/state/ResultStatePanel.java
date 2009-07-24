@@ -92,7 +92,7 @@ public class ResultStatePanel extends JPanel {
       }
     });
     okButton.setSize(75, 30);
-    okButton.setLocation(665, 530);
+    okButton.setLocation(30, 530);
     add(okButton);
   }
   
