@@ -53,8 +53,6 @@ public class CDIMonitorComponentPanel extends ComponentPanel {
     
     // set layout
     setLayout(null);
-    
-    
   }
 
   /**
