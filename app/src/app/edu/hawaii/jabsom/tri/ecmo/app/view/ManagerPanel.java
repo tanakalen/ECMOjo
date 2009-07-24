@@ -2,7 +2,6 @@ package edu.hawaii.jabsom.tri.ecmo.app.view;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.control.Manager;
@@ -17,7 +16,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.comp.TubeComponentPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.DetailPanel.DetailActionListener;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.ComponentPanel.ComponentActionListener;
 
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -37,9 +35,6 @@ public class ManagerPanel extends JPanel {
 
   /** The current detail panel. null for none. */
   private DetailPanel detailPanel;
-  
-  /** The info label. */
-  private JTextArea infoLabel;
   
   
   /**
@@ -84,9 +79,6 @@ public class ManagerPanel extends JPanel {
         });
         add(detailPanel);
         
-        // update info label
-        infoLabel.setText(component.getComponent().toString());
-        
         // send view action
         manager.execute(new ViewAction(component.getComponent()));
         
@@ -123,17 +115,6 @@ public class ManagerPanel extends JPanel {
     
     // order components (drawn first)
     order(TubeComponentPanel.class);
-    
-    // add info label
-    infoLabel = new JTextArea();
-    infoLabel.setOpaque(false);
-    infoLabel.setFont(infoLabel.getFont().deriveFont(Font.BOLD, 16f));
-    infoLabel.setEditable(false);
-    infoLabel.setWrapStyleWord(true);
-    infoLabel.setLineWrap(true);
-    infoLabel.setSize(140, 45);
-    infoLabel.setLocation(345, 378);
-    add(infoLabel);
   }
 
   /**

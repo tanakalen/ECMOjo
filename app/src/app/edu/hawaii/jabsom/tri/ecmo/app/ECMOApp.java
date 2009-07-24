@@ -6,6 +6,7 @@ import king.lib.access.ImageLoader;
 
 import java.awt.Color;
 import javax.swing.JApplet;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -88,6 +89,9 @@ public final class ECMOApp extends JApplet {
       e.printStackTrace();
     }
 
+    // tooltip shows faster
+    ToolTipManager.sharedInstance().setInitialDelay(500);
+    
     // load configuration
     Configuration.init();   
 
