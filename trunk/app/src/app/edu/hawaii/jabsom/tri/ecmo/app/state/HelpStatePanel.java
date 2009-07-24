@@ -2,6 +2,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.state;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
@@ -25,6 +26,21 @@ public class HelpStatePanel extends JPanel {
   /** The panel image. */
   private Image background = ImageLoader.getInstance().getImage("conf/image/interface/result/Base.jpg");
     
+  /** The info text. */
+  private final String infoText = "ECMOjo is a simulator and trainer for extracorporeal membrane oxygenation (ECMO). " 
+      + "It consists of a graphical user interface to allow interaction and train ECMO practitioners, and has been " 
+      + "developed by Telehealth Research Institute (TRI), University of Hawaii. ECMOjo contains the word ECMO and " 
+      + "mojo (magic charm). In intensive care medicine, extracorporeal membrane oxygenation (ECMO) is an " 
+      + "extracorporeal technique of providing both cardiac and respiratory support oxygen to patients whose " 
+      + "heart and lungs are so severely diseased or damaged that they can no longer serve their function.\n"
+      + "\n"
+      + "ECMOjo is open source software hosted on SourceForge. The program has been implemented in Java and "
+      + "can be run as either a standalone desktop application or via the Internet. "
+      + "ECMOjo has been developed by Telehealth Research Institute, University of Hawaii.\n"
+      + "\n"
+      + "Please visit the web site for details: http://ecmojo.sourceforge.net\n";
+
+    
   /**
    * Constructor for panel. 
    * 
@@ -44,6 +60,17 @@ public class HelpStatePanel extends JPanel {
     textLabel.setLocation(100, 16);
     textLabel.setSize(600, 50);
     add(textLabel);
+    
+    // add text panel
+    JTextArea infoArea = new JTextArea(infoText);
+    infoArea.setOpaque(false);
+    infoArea.setEditable(false);
+    infoArea.setLineWrap(true);
+    infoArea.setWrapStyleWord(true);
+    infoArea.setFont(textLabel.getFont().deriveFont(Font.PLAIN, 14f));
+    infoArea.setLocation(30, 110);
+    infoArea.setSize(720, 360);
+    add(infoArea);
     
     // add done button
     Image okButtonImage = ImageLoader.getInstance().getImage("conf/gui/Btn-Ok.png");    
