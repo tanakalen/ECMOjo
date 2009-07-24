@@ -52,25 +52,27 @@ public class GameStatePanel extends JPanel implements ManagerListener {
     ManagerPanel mainPanel = new ManagerPanel(state.getManager());
     add(mainPanel, BorderLayout.CENTER);
     
-    // add exit button as needed
-    Goal goal = state.getManager().getGame().getGoal();
-    if (goal instanceof SimulationGoal) {
-      // add exit button
-      Image exitNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Exit.png");
-      Image exitRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ExitRol.png");
-      Image exitSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ExitSel.png");
-      ImageButton exitButton 
-        = new ImageButton(exitNormalImage, exitRolloverImage, exitSelectedImage);
-      exitButton.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent arg0) {
-          // and exit
+    // add exit button
+    Image exitNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Exit.png");
+    Image exitRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ExitRol.png");
+    Image exitSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ExitSel.png");
+    ImageButton exitButton = new ImageButton(exitNormalImage, exitRolloverImage, exitSelectedImage);
+    exitButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        Goal goal = state.getManager().getGame().getGoal();
+        if (goal instanceof SimulationGoal) {
+          // and exit to menu
           state.menuState();
-        }      
-      });
-      exitButton.setLocation(308, 18);
-      exitButton.setSize(120, 48);
-      mainPanel.add(exitButton);
-    }
+        }
+        else {
+          // exit to result state
+          state.resultState();
+        }
+      }      
+    });
+    exitButton.setLocation(308, 18);
+    exitButton.setSize(120, 48);
+    mainPanel.add(exitButton);
   }
   
   /**
