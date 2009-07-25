@@ -6,20 +6,22 @@ desc = Run the tutorial for an advanced ECMOjo example.
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Welcome to Tutorial 3. Let us demonstrate a more advanced example.
+tutorial-item1-text = Welcome to Tutorial 3. Let's run a more advance example of ECMO.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = Task 1: Add a clamp on the arterial tube B (closest point to the patient).
-tutorial-item2-trigger = Action:Tube:+ARTERIAL_B
-tutorial-item3-text = Task 2: Remove the clamp from the arterial tube B (closest point to the patient).
-tutorial-item3-trigger = Action:Tube:-ARTERIAL_B
-tutorial-item4-text = Task 3: Click reset on the bubble detector.
-tutorial-item4-trigger = Action:Bubble
-tutorial-item5-text = Task 4: Click on the pump.
-tutorial-item5-trigger = Action:View:PumpComponent
-tutorial-item6-text = Task 5: Turn on the pump.
-tutorial-item6-trigger = Action:Pump:on
-tutorial-item7-text = Congratulations, you successfully completed Tutorial 3!
-tutorial-item7-trigger = N/A
+tutorial-item2-text = We will generate an alarm by placing a clamp at an illegal position.
+tutorial-item2-trigger = N/A
+tutorial-item3-text = Task 1: Add a clamp on the arterial tube at the closest point to the patient.
+tutorial-item3-trigger = Action:Tube:+ARTERIAL_B
+tutorial-item4-text = Task 2: Remove the clamp from the arterial tube at the closest point to the patient.
+tutorial-item4-trigger = Action:Tube:-ARTERIAL_B
+tutorial-item5-text = Task 3: Click reset on the bubble detector.
+tutorial-item5-trigger = Action:Bubble
+tutorial-item6-text = Task 4: Select the pump controls.
+tutorial-item6-trigger = Action:View:PumpComponent
+tutorial-item7-text = Task 5: Turn on the pump.
+tutorial-item7-trigger = Action:Pump:on
+tutorial-item8-text = Congratulations, you successfully completed Tutorial 3!
+tutorial-item8-trigger = N/A
 
 # Baseline Values
 baseline-bleeding = false;
