@@ -139,11 +139,11 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
       for (int i = 0; i < 3; i++) {
         blink = true;
         repaint();
-        Thread.sleep(500);
+        Thread.sleep(170);
   
         blink = false;
         repaint();
-        Thread.sleep(500);
+        Thread.sleep(350);
       }
     }
     catch (InterruptedException e) {
