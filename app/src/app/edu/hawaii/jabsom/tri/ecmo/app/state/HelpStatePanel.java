@@ -2,11 +2,11 @@ package edu.hawaii.jabsom.tri.ecmo.app.state;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
+import king.lib.out.AdvancedTextPane;
 
 /**
  * The result state panel. 
@@ -38,7 +39,7 @@ public class HelpStatePanel extends JPanel {
       + "can be run as either a standalone desktop application or via the Internet. "
       + "ECMOjo has been developed by Telehealth Research Institute, University of Hawaii.\n"
       + "\n"
-      + "Please visit the web site for details: http://ecmojo.sourceforge.net\n";
+      + "Please visit the web site for details:\n";
 
     
   /**
@@ -62,11 +63,11 @@ public class HelpStatePanel extends JPanel {
     add(textLabel);
     
     // add text panel
-    JTextArea infoArea = new JTextArea(infoText);
+    AdvancedTextPane infoArea = new AdvancedTextPane();
+    infoArea.addText(infoText, Color.BLACK, AdvancedTextPane.NO_DECORATION, 14);
+    infoArea.addLink("http://ecmojo.sourceforge.net/", Color.BLUE, AdvancedTextPane.DECORATION_UNDERLINE, 14);
     infoArea.setOpaque(false);
     infoArea.setEditable(false);
-    infoArea.setLineWrap(true);
-    infoArea.setWrapStyleWord(true);
     infoArea.setFont(textLabel.getFont().deriveFont(Font.PLAIN, 14f));
     infoArea.setLocation(30, 110);
     infoArea.setSize(720, 360);

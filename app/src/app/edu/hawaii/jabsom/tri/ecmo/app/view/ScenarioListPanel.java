@@ -81,8 +81,9 @@ public class ScenarioListPanel extends JPanel {
       public void rollover(int index) {
         if (index >= 0) {
           Scenario scenario = scenarios.get(index);
-          String description = scenario.getDescription();
-          listPanel.setToolTipText("<html><b>" + scenario.getName() + "</b><br>" + description + "</html>");
+          listPanel.setToolTipText("<html><table><tr><td width=\"250\" height=\"200\" valign=\"top\"><b>" 
+              + scenario.getName() + "</b><br>" 
+              + scenario.getDescription() + "</td></tr></table></html>");
         }
         else {
           listPanel.setToolTipText(null);
@@ -93,7 +94,6 @@ public class ScenarioListPanel extends JPanel {
     listPanel.setFont(listPanel.getFont().deriveFont(Font.BOLD, 16.0f));
     listPanel.setListData(new Vector<Scenario>(scenarios));
     listPanel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    listPanel.setToolTipText("Hello");  
     add(listPanel, cc.xy(2, 2));
   }
 
