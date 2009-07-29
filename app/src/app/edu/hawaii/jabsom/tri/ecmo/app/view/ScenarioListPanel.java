@@ -9,6 +9,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.RolloverList;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.RolloverList.RolloverListener;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 
 import java.awt.Color;
@@ -53,7 +54,7 @@ public class ScenarioListPanel extends JPanel {
    * 
    * @param scenarios  The scenarios.
    */
-  public ScenarioListPanel(List<Scenario> scenarios) {
+  public ScenarioListPanel(final List<Scenario> scenarios) {
     // set look
     setOpaque(false);
     
@@ -76,10 +77,23 @@ public class ScenarioListPanel extends JPanel {
         }
       }      
     });
+    listPanel.addRolloverListener(new RolloverListener() {
+      public void rollover(int index) {
+        if (index >= 0) {
+          Scenario scenario = scenarios.get(index);
+          String description = scenario.getDescription();
+          listPanel.setToolTipText("<html><b>" + scenario.getName() + "</b><br>" + description + "</html>");
+        }
+        else {
+          listPanel.setToolTipText(null);
+        }
+      }      
+    });
     listPanel.setOpaque(false);
     listPanel.setFont(listPanel.getFont().deriveFont(Font.BOLD, 16.0f));
     listPanel.setListData(new Vector<Scenario>(scenarios));
     listPanel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    listPanel.setToolTipText("Hello");  
     add(listPanel, cc.xy(2, 2));
   }
 
