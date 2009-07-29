@@ -145,6 +145,7 @@ public class MenuStatePanel extends JPanel {
     buttonGroup.add(scenarioButton);
 
     // add start button
+/*
     Image startNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Start.png");
     Image startRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-StartRol.png");
     Image startSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-StartSel.png");
@@ -229,7 +230,8 @@ public class MenuStatePanel extends JPanel {
     startButton.setLocation(274, 126);
     startButton.setVisible(false);
     add(startButton);
-
+*/
+    
     // add tutorial list panel
     tutorialListPanel = new ScenarioListPanel(state.getTutorials());
     Image tutorialImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/tutorial-background.png");
@@ -356,10 +358,75 @@ public class MenuStatePanel extends JPanel {
       public void handleSelection(Scenario scenario) {
         // set the new scenario
         if (scenario != null) {
-          startButton.setVisible(true);
-        }
-        else {
-          startButton.setVisible(false);
+          // add selected components
+          Equipment equipment = scenario.getEquipment();
+          
+          // update tubing
+          TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
+          if (vvRadio.isSelected()) {
+            tube.setMode(Mode.VV);
+          }
+          else {
+            tube.setMode(Mode.VA);
+            // ECMO Mode VA reduces patient HR 10%
+            Patient patient = scenario.getPatient();
+            double hr = patient.getHeartRate();
+            patient.setHeartRate(hr * 0.9);
+          }
+          
+          // update oxigenator
+          OxigenatorComponent oxi = (OxigenatorComponent)equipment.getComponent(OxigenatorComponent.class);
+          if (sciMedRadio.isSelected()) {
+            oxi.setOxiType(OxiType.SCI_MED);
+          }
+          else {
+            oxi.setOxiType(OxiType.QUADROX_D);
+          }
+          
+          // update pump
+          PumpComponent pump = (PumpComponent)equipment.getComponent(PumpComponent.class);
+          if (rollerRadio.isSelected()) {
+            pump.setPumpType(PumpType.ROLLER);
+          }
+          else {
+            pump.setPumpType(PumpType.CENTRIFUGAL);
+          }
+
+          // update ventilator
+          VentilatorComponent ventilator = (VentilatorComponent)equipment.getComponent(VentilatorComponent.class);
+          if (conventionalRadio.isSelected()) {
+            ventilator.setSubtype(new VentilatorComponent.ConventionalSubtype());
+          }
+          else {
+            ventilator.setSubtype(new VentilatorComponent.HighFrequencySubtype());
+          }
+          
+          // init tube values depending on selection
+          tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
+          if (oxi.getOxiType() == OxigenatorComponent.OxiType.QUADROX_D) { 
+            // PMP
+            tube.setPostMembranePressure(tube.getPreMembranePressure());
+          }
+          else { 
+            // Silicon
+            tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
+          }
+          tube.setPostPCO2(35);
+          tube.setPostPH(7.4);
+
+          // show dialog and ask for the username
+          String user;
+          if (scenarioListPanel.isVisible()) {
+            // let's ask for a username to continue to the scenario
+            user = "TODO:DialogWindow";  // TODO: add a input dialog for username
+          }
+          else {
+            // Tutorial: we don't set a username
+            user = "N/A";
+          }
+          
+          // proceed to game state
+          state.gameState(scenario, user);
         }
         scenarioInfoPanel.setScenario(scenario); 
       }      

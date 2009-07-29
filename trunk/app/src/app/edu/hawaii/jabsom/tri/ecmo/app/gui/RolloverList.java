@@ -7,6 +7,8 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
@@ -20,6 +22,17 @@ import javax.swing.JList;
  * @since September 17, 2007
  */
 public class RolloverList extends JList {
+  
+  /** The rollover listener. */
+  public static interface RolloverListener {
+    
+    /**
+     * Called for rollover.
+     * 
+     * @param index  The selected index or -1 for none.
+     */
+    void rollover(int index);
+  }
   
   /** The rollover list cell renderer. */
   public class RolloverListCellRenderer extends DefaultListCellRenderer {
@@ -115,7 +128,10 @@ public class RolloverList extends JList {
   }
   
   /** The mouse over index or -1 for none. */
-  int mouseOver;
+  private int mouseOver;
+
+  /** Listeners for changes. */
+  private List<RolloverListener> listeners = new ArrayList<RolloverListener>();
 
   
   /**
@@ -132,14 +148,45 @@ public class RolloverList extends JList {
     addMouseMotionListener(new MouseMotionAdapter() {
       public void mouseMoved(MouseEvent event) {
         mouseOver = locationToIndex(new Point(event.getX(), event.getY()));
+        notifyRollover(mouseOver);
         repaint();
       }
     });
     addMouseListener(new MouseAdapter() {
       public void mouseExited(MouseEvent e) {
         mouseOver = -1;
+        notifyRollover(mouseOver);
         repaint();
       }
     });
+  }
+  
+  /**
+   * Adds a listener.
+   * 
+   * @param listener  The listener to add.
+   */
+  public void addRolloverListener(RolloverListener listener) {
+    listeners.add(listener);
+  }
+  
+  /**
+   * Removes a listener.
+   * 
+   * @param listener  The listener to add.
+   */
+  public void removeRolloverListener(RolloverListener listener) {
+    listeners.remove(listener);
+  }
+  
+  /**
+   * Notify about rollover.
+   * 
+   * @param index  The rollover index or -1 for none.
+   */
+  private void notifyRollover(int index) {
+    for (int i = 0; i < listeners.size(); i++) {
+      listeners.get(i).rollover(index);
+    }
   }
 }
