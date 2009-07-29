@@ -82,7 +82,7 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
     
     // set size and location
     setLocation(0, 256);
-    setSize(288, 96);
+    setSize(315, 96);
     
     // set layout
     setLayout(null);
@@ -119,7 +119,7 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
       }
     });
     selectionButton.setLocation(0, 0);
-    selectionButton.setSize(288, 96);
+    selectionButton.setSize(315, 96);
     add(selectionButton);
   }
 
