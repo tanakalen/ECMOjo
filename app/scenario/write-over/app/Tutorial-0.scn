@@ -1,37 +1,27 @@
 1
 
 # Scenario Information
-name = Tutorial 3
-desc = Run the tutorial for an advanced ECMOjo example. 
+name = Tutorial 0
+desc = Run the tutorial for an ECMOjo overview. 
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Welcome to Tutorial 3. Let's run an advanced ECMOjo example.
+tutorial-item1-text = Welcome to Tutorial 0. Let us give you an overview of ECMOjo.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = Let's have a look at the Lab and ACT values.
+tutorial-item2-text = The patient that is connected to the ECMO circuit is shown in the bottom left corner.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Task 1: Select the lab [ABG] button to view blood gas lab values.
-tutorial-item3-trigger = Action:View:LabTest:BloodGasLabTest
-tutorial-item4-text = Task 2: Click the [Lab] button to request new lab values.
-tutorial-item4-trigger = Action:LabRequest
-tutorial-item5-text = Task 3: Select the lab [CHEM] button to view chemistry lab values.
-tutorial-item5-trigger = Action:View:LabTest:ChemistryLabTest
-tutorial-item6-text = Task 4: Click the [Lab] button to request new lab values.
-tutorial-item6-trigger = Action:LabRequest
-tutorial-item7-text = Task 5: Select the lab [HEME] button to view hematology lab values.
-tutorial-item7-trigger = Action:View:LabTest:HematologyLabTest
-tutorial-item8-text = Task 6: Click the [Lab] button to request new lab values.
-tutorial-item8-trigger = Action:LabRequest
-tutorial-item9-text = Task 7: Select the lab [IMG] button to view imaging lab values.
-tutorial-item9-trigger = Action:View:LabTest:ImagingLabTest
-tutorial-item10-text = You can click on the underlined lab values to view the images.
-tutorial-item10-trigger = N/A
-tutorial-item11-text = Task 8: Select the [ACT] button to view the ACT values.
-tutorial-item11-trigger = Action:View:ACTComponent
-tutorial-item12-text = Task 9: Click the [Lab] button to request new values.
-tutorial-item12-trigger = Action:ACTRequest
-tutorial-item13-text = Congratulations, you successfully completed Tutorial 3!
-tutorial-item13-trigger = N/A
+tutorial-item3-text = Ventilator settings, Physiological Monitor and CDI Monitor are shown just above the baby.
+tutorial-item3-trigger = N/A
+tutorial-item4-text = Consider the tubing that is connecting the patient to the ECMO equipment on the right.
+tutorial-item4-trigger = N/A
+tutorial-item5-text = The main ECMO components are on the right are the pump, oxigenator and heater.
+tutorial-item5-trigger = N/A
+tutorial-item6-text = The elapsed time is diplayed in the upper right corner.
+tutorial-item6-trigger = N/A
+tutorial-item7-text = To the right side of the time is the alarm indicator light which when alarming starts blinking.
+tutorial-item7-trigger = N/A
+tutorial-item8-text = Congratulations, you successfully completed Tutorial 0!
+tutorial-item8-trigger = N/A
 
 # Baseline Values
 baseline-bleeding = false;
@@ -77,7 +67,7 @@ patient-weight = 5
 patient-lung-function = good
 patient-heart-function = good
 patient-bleeding = false
-patient-temperature = 37
+patient-temperature = 34
 
 # Heater
 heater-temperature = 37
