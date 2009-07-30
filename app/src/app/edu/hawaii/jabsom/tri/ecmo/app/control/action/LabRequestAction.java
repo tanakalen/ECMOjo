@@ -192,7 +192,6 @@ public class LabRequestAction extends Action {
       labTest.setDescription("Ultrasound");
       
       // Create image name depending on the patient
-      Patient patient = game.getPatient();
       TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
       String name = "us-nb-";
       name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
@@ -210,7 +209,6 @@ public class LabRequestAction extends Action {
       labTest.setDescription("Echo");
       
       // Create image name depending on the patient
-      Patient patient = game.getPatient();
       TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
       String name = "echo-nb-";
       name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
@@ -227,7 +225,6 @@ public class LabRequestAction extends Action {
       labTest.setDescription("X-Ray");
       
       // Create image name depending on the patient
-      Patient patient = game.getPatient();      
       TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
       String name = "xr-nb-";
       name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va" : "vv");
