@@ -17,10 +17,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent.OxiType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
-import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioInfoPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel.ScenarioSelectionListener;
 
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -45,9 +45,6 @@ public class MenuStatePanel extends JPanel {
   /** The scenario list panel. */
   private ScenarioListPanel scenarioListPanel;
   
-  /** The scenario info panel. */
-  private ScenarioInfoPanel scenarioInfoPanel;
-  
   /** The vv radio button. */
   private ImageToggleButton vvRadio;
   /** The va radio button. */
@@ -64,8 +61,6 @@ public class MenuStatePanel extends JPanel {
   private ImageToggleButton conventionalRadio;
   /** The high frequency ventilator radio button. */
   private ImageToggleButton highfrequencyRadio;    
-  /** The start button. */
-  private ImageButton startButton;
   
 
   
@@ -143,94 +138,6 @@ public class MenuStatePanel extends JPanel {
     scenarioButton.setLocation(176, 130);
     add(scenarioButton);
     buttonGroup.add(scenarioButton);
-
-    // add start button
-/*
-    Image startNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Start.png");
-    Image startRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-StartRol.png");
-    Image startSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-StartSel.png");
-    startButton = new ImageButton(startNormalImage, startRolloverImage, startSelectedImage);
-    startButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent event) {
-        // build scenario
-        Scenario scenario = getSelectedScenario();
-        
-        // add selected components
-        Equipment equipment = scenario.getEquipment();
-        
-        // update tubing
-        TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
-        if (vvRadio.isSelected()) {
-          tube.setMode(Mode.VV);
-        }
-        else {
-          tube.setMode(Mode.VA);
-          // ECMO Mode VA reduces patient HR 10%
-          Patient patient = scenario.getPatient();
-          double hr = patient.getHeartRate();
-          patient.setHeartRate(hr * 0.9);
-        }
-        
-        // update oxigenator
-        OxigenatorComponent oxi = (OxigenatorComponent)equipment.getComponent(OxigenatorComponent.class);
-        if (sciMedRadio.isSelected()) {
-          oxi.setOxiType(OxiType.SCI_MED);
-        }
-        else {
-          oxi.setOxiType(OxiType.QUADROX_D);
-        }
-        
-        // update pump
-        PumpComponent pump = (PumpComponent)equipment.getComponent(PumpComponent.class);
-        if (rollerRadio.isSelected()) {
-          pump.setPumpType(PumpType.ROLLER);
-        }
-        else {
-          pump.setPumpType(PumpType.CENTRIFUGAL);
-        }
-
-        // update ventilator
-        VentilatorComponent ventilator = (VentilatorComponent)equipment.getComponent(VentilatorComponent.class);
-        if (conventionalRadio.isSelected()) {
-          ventilator.setSubtype(new VentilatorComponent.ConventionalSubtype());
-        }
-        else {
-          ventilator.setSubtype(new VentilatorComponent.HighFrequencySubtype());
-        }
-        
-        // init tube values depending on selection
-        tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
-        if (oxi.getOxiType() == OxigenatorComponent.OxiType.QUADROX_D) { 
-          // PMP
-          tube.setPostMembranePressure(tube.getPreMembranePressure());
-        }
-        else { 
-          // Silicon
-          tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
-        }
-        tube.setPostPCO2(35);
-        tube.setPostPH(7.4);
-
-        // show dialog and ask for the username
-        String user;
-        if (scenarioListPanel.isVisible()) {
-          // let's ask for a username to continue to the scenario
-          user = "TODO:DialogWindow";  // TODO: add a input dialog for username
-        }
-        else {
-          // Tutorial: we don't set a username
-          user = "N/A";
-        }
-        
-        // proceed to game state
-        state.gameState(scenario, user);
-      }
-    });
-    startButton.setSize(120, 48);
-    startButton.setLocation(274, 126);
-    startButton.setVisible(false);
-    add(startButton);
-*/
     
     // add tutorial list panel
     tutorialListPanel = new ScenarioListPanel(state.getTutorials());
@@ -347,12 +254,6 @@ public class MenuStatePanel extends JPanel {
     componentSelectionPanel.add(highfrequencyRadio);    
     ventilatorButtonGroup.add(highfrequencyRadio);
     
-    // add scenario description panel
-    scenarioInfoPanel = new ScenarioInfoPanel();
-    scenarioInfoPanel.setSize(307, 261);
-    scenarioInfoPanel.setLocation(446, 298);
-    add(scenarioInfoPanel);
-    
     // add scenario selection listener
     ScenarioSelectionListener scenarioSelectionListener = new ScenarioSelectionListener() {
       public void handleSelection(Scenario scenario) {
@@ -425,10 +326,12 @@ public class MenuStatePanel extends JPanel {
             user = "N/A";
           }
           
+          // show cursor busy
+          setCursor(new Cursor(Cursor.WAIT_CURSOR));
+          
           // proceed to game state
           state.gameState(scenario, user);
         }
-        scenarioInfoPanel.setScenario(scenario); 
       }      
     };
     tutorialListPanel.addScenarioSelectionListener(scenarioSelectionListener);
@@ -439,23 +342,7 @@ public class MenuStatePanel extends JPanel {
     tutorialListPanel.setVisible(true);
   }
   
-  /**
-   * Returns the selected scenario.
-   * 
-   * @return  The selected scenario or null for none.
-   */
-  private Scenario getSelectedScenario() {
-    if (tutorialListPanel.isVisible()) {
-      return tutorialListPanel.getSelectedValue();
-    }
-    else if (scenarioListPanel.isVisible()) {
-      return scenarioListPanel.getSelectedValue();
-    }
-    else {
-      return null;
-    }
-  }
-  
+
   /**
    * Paints this component.
    * 
