@@ -62,7 +62,6 @@ public class MenuStatePanel extends JPanel {
   /** The high frequency ventilator radio button. */
   private ImageToggleButton highfrequencyRadio;    
   
-
   
   /**
    * Constructor for panel. 

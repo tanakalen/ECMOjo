@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.BubbleAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.HeaterAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.InterventionAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.OxigenatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PressureMonitorAction;
@@ -19,6 +21,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.TubeAction.Location;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.InterventionComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.AlbuminIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.BloodIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.CatecholamineIntervention;
@@ -144,10 +147,6 @@ public class TutorialGoal extends Goal {
    */
   @Override
   public void handle(Action action) {
-    
-    // TODO: Implement all the action triggers as listed above! 
-    //       -> add missing ones as needed...
-    
     String trigger = getItem().getTrigger();
     if (trigger != null) {
       String[] items = trigger.split(":");
@@ -172,11 +171,11 @@ public class TutorialGoal extends Goal {
               if (items.length <= 4) {
                 // Action:View:LabTest:[LabTest]  viewing, where [LabTest] is "BloodGasLabTest", "ChemistryLabTest", ...
                 if (action instanceof ViewAction) {
-                  String triggerComponent = items[3];
-                  Component component = ((ViewAction)action).getComponent();
-                  String actualComponent = component.getClass().getName();
-                  actualComponent = actualComponent.substring(actualComponent.lastIndexOf(".") + 1);
-                  if (actualComponent.equals(triggerComponent)) {
+                  String requiredLabTest = items[3];
+                  LabComponent component = (LabComponent)((ViewAction)action).getComponent();
+                  String actualLabTest = component.getLabTest().getName();
+                  actualLabTest = actualLabTest.substring(actualLabTest.lastIndexOf(".") + 1);
+                  if (actualLabTest.equals(requiredLabTest)) {
                     progress++;
                     notifyUpdate();
                   }
@@ -530,6 +529,26 @@ public class TutorialGoal extends Goal {
                 progress++;
                 notifyUpdate();
               }
+            }
+          }
+        }
+        else if (items[1].equals("LabRequest")) {
+          // Requesting lab values
+          if (action instanceof LabRequestAction) {
+            if (items.length <= 2) {
+              // Action:LabRequest  lab request action performed
+              progress++;
+              notifyUpdate();
+            }
+          }
+        }
+        else if (items[1].equals("ACTRequest")) {
+          // Requesting lab values
+          if (action instanceof ACTRequestAction) {
+            if (items.length <= 2) {
+              // Action:LabRequest  lab request action performed
+              progress++;
+              notifyUpdate();
             }
           }
         }
