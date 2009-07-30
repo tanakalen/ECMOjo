@@ -261,6 +261,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
               public void mousePressed(MouseEvent event) {
                 imageDialog.setVisible(false);
                 imageDialog.dispose();
+                ImagingLabTestPanel.this.getParent().repaint();
               }
             });
             imageDialog.setVisible(true);
