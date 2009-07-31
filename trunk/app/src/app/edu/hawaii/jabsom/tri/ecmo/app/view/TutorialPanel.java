@@ -1,7 +1,5 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view;
 
-import java.awt.Graphics;
-
 import javax.swing.JPanel;
 
 import king.lib.out.Error;
@@ -40,6 +38,7 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
     
     // set look
     setOpaque(false);
+    setSize(800, 600);
     
     // no layout
     setLayout(null);
@@ -56,9 +55,6 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
     box.setSize(312, 76);
     add(box);
     box.setVisible(false);
-    
-    // no blinking for now
-    blink = false;
     
     // update the box
     updateBox();
@@ -81,10 +77,10 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
     // add listener
     goal.addTutorialListener(this);
     
-    // start thread
-    this.thread = new Thread(this);
-    this.thread.setPriority(Thread.MIN_PRIORITY);
-    this.thread.start();
+    // start blink thread
+    thread = new Thread(this);
+    thread.setPriority(Thread.MIN_PRIORITY);
+    thread.start();
   }
   
   /**
@@ -94,7 +90,7 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
   public void removeNotify() {
     // stop thread
     this.thread = null;
-    
+      
     // remove listener
     goal.removeTutorialListener(this);
     
@@ -117,55 +113,37 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
       box.setText(item.getText());
       box.setShowNext(item.getTrigger() == null);
       box.setVisible(true);
-      
-      // make it blinking
-      thread = new Thread(this);
-      thread.start();
     }
-    else {
-      box.setVisible(false);
-    }
-    
-    // let's update the display...
-    repaint();
+    blink = true;
   }
   
   /**
    * The time updater thread.
    */
   public void run() {
-    try {
-      // blink 3 times
-      for (int i = 0; i < 3; i++) {
-        blink = true;
-        repaint();
-        Thread.sleep(170);
-  
-        blink = false;
-        repaint();
-        Thread.sleep(350);
+    Thread currentThread = Thread.currentThread();
+    while (this.thread == currentThread) {
+      // the blink thread
+      try {
+        // blink 3 times
+        if (blink) {
+          String text = box.getText();
+          for (int i = 0; i < 3; i++) {
+            box.setText("");
+            Thread.sleep(250);
+      
+            box.setText(text);
+            Thread.sleep(350);
+          }
+          blink = false;
+        }
+        
+        // wait
+        Thread.sleep(50);
       }
-    }
-    catch (InterruptedException e) {
-      Error.out(e);
-    }
-  }
-  
-  /**
-   * Paints this component.
-   * 
-   * @param g  Where to draw to.
-   */
-  @Override
-  public void paintComponent(Graphics g) {
-    Item item = goal.getItem();
-    if (item != null) {
-      box.setText(blink ? "" : item.getText());
-      box.setShowNext(item.getTrigger() == null);
-      box.setVisible(true);
-    }
-    else {
-      box.setVisible(false);
+      catch (InterruptedException e) {
+        Error.out(e);
+      }
     }
   }
 }

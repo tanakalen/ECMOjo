@@ -1,5 +1,6 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view.lab;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
@@ -246,7 +247,8 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
             
             // lt add: create pane, add image to fix blank dialog
             JPanel contentPane = new JPanel();
-            contentPane.add(imageLabel);
+            contentPane.setLayout(new BorderLayout());
+            contentPane.add(imageLabel, BorderLayout.CENTER);
             contentPane.setOpaque(true);
             imageDialog.setContentPane(contentPane);
             if ((System.getProperty("os.name").equals("Mac OS X")) 
@@ -256,12 +258,12 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
             imageDialog.setUndecorated(true);
             imageDialog.setSize(700, 500);
             imageDialog.pack();
-            imageDialog.setLocationRelativeTo(JOptionPane.getFrameForComponent(viewButton));
+            imageDialog.setLocationRelativeTo(JOptionPane.getFrameForComponent(ImagingLabTestPanel.this));
             imageDialog.addMouseListener(new MouseAdapter() {
               public void mousePressed(MouseEvent event) {
                 imageDialog.setVisible(false);
                 imageDialog.dispose();
-                ImagingLabTestPanel.this.getParent().repaint();
+                JOptionPane.getFrameForComponent(ImagingLabTestPanel.this).repaint();
               }
             });
             imageDialog.setVisible(true);
