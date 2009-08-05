@@ -89,8 +89,9 @@ public final class ECMOApp extends JApplet {
       e.printStackTrace();
     }
 
-    // tooltip shows faster
-    ToolTipManager.sharedInstance().setInitialDelay(500);
+    // tooltip shows faster and longer
+    ToolTipManager.sharedInstance().setInitialDelay(400);
+    ToolTipManager.sharedInstance().setDismissDelay(60000);
     
     // load configuration
     Configuration.init();   
