@@ -16,6 +16,9 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.KillAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PressureMonitorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PressureMonitorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
 
 /**
  * The detail panel. 
@@ -125,6 +128,11 @@ public class PressureMonitorDetailPanel extends DetailPanel implements Runnable 
           KillAction action = new KillAction();
           notifyActionListeners(action);
         }
+        
+        // no function
+        StandardDialog.showDialog(PressureMonitorDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+            , "No Change Detected"
+            , "This button doesn't do anything.");
       }
     });
     middle1Button.setLocation(176, 58);
@@ -209,6 +217,11 @@ public class PressureMonitorDetailPanel extends DetailPanel implements Runnable 
       public void actionPerformed(ActionEvent event) {
         code *= 10;
         code += 2;
+        
+        // no function
+        StandardDialog.showDialog(PressureMonitorDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+            , "No Change Detected"
+            , "This button doesn't do anything.");
       }
     });
     middle2Button.setLocation(176, 137);
@@ -293,6 +306,11 @@ public class PressureMonitorDetailPanel extends DetailPanel implements Runnable 
       public void actionPerformed(ActionEvent event) {
         code *= 10;
         code += 3;
+        
+        // no function
+        StandardDialog.showDialog(PressureMonitorDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+            , "No Change Detected"
+            , "This button doesn't do anything.");
       }
     });
     middle3Button.setLocation(176, 217);
