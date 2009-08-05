@@ -132,7 +132,7 @@ public class ManagerPanel extends JPanel {
     infoLabel.setWrapStyleWord(true);
     infoLabel.setLineWrap(true);
     infoLabel.setSize(140, 45);
-    infoLabel.setLocation(345, 378);
+    infoLabel.setLocation(345, 368);
     add(infoLabel);
   }
 
