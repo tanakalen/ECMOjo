@@ -55,6 +55,9 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
     // set layout
     setLayout(null);
     
+    // set the tooltip
+    setToolTipText(component.getName());
+    
     // the alarm audio player
     alarmFx = AudioPlayer.create("conf/sound/alarm.mp3");
     alarmFx.setLooping(true);
