@@ -115,6 +115,14 @@ public class TutorialGoal extends Goal {
   }
   
   /**
+   * And exit the tutorial.
+   */
+  public void exit() {
+    progress = items.size();
+    notifyUpdate();
+  }
+  
+  /**
    * Handles an action. The following trigger actions are supported:
    * <p>
    *   Action:View:[Component]              viewing, where [Component] is "PumpComponent", "ACTComponent", "Patient"... 

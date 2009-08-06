@@ -48,7 +48,7 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
     box.addTutorialBoxListener(new TutorialBox.TutorialBoxListener() {
       public void handleAction() {
         // proceed to the next state
-       goal.proceed();
+        goal.proceed();
       }
     });
     box.setLocation(293, 2);

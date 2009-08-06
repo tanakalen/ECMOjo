@@ -13,8 +13,11 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.TutorialPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import king.lib.access.ImageLoader;
 
@@ -24,7 +27,7 @@ import king.lib.access.ImageLoader;
  * @author   Christoph Aschwanden
  * @since    August 13, 2008
  */
-public class GameStatePanel extends JPanel implements ManagerListener {
+public class GameStatePanel extends JPanel implements ManagerListener, KeyEventDispatcher {
 
   /** The game state. */
   private GameState state;
@@ -63,15 +66,7 @@ public class GameStatePanel extends JPanel implements ManagerListener {
       ImageButton exitButton = new ImageButton(exitNormalImage, exitRolloverImage, exitSelectedImage);
       exitButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent arg0) {
-          Goal goal = state.getManager().getGame().getGoal();
-          if (goal instanceof SimulationGoal) {
-            // and exit to menu
-            state.menuState();
-          }
-          else {
-            // exit to result state
-            state.resultState();
-          }
+          exit();
         }      
       });
       exitButton.setLocation(308, 18);
@@ -89,17 +84,55 @@ public class GameStatePanel extends JPanel implements ManagerListener {
     
     // add listener
     state.getManager().addManagerListener(this);
+    
+    // listen to key presses
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this);
   }
   
   /**
    * Called when panel is removed.
    */
   @Override
-  public void removeNotify() {
+  public void removeNotify() {  
+    // remove key listener
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(this);
+
     // remove listener
     state.getManager().removeManagerListener(this);
     
     super.removeNotify();
+  }
+  
+  /** 
+   * Listen to key events. 
+   * 
+   * @param event  The event.
+   * @return  True, if the event was handled.
+   */
+  public boolean dispatchKeyEvent(KeyEvent event) {
+    // handle key event
+    if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+      // [ESC] = exit
+      exit();
+    }
+
+    // If the key should not be dispatched to the focused component, set discard event to true
+    return false;
+  }
+
+  /**
+   * Called when the state is exited.
+   */
+  public void exit() {
+    Goal goal = state.getManager().getGame().getGoal();
+    if (goal instanceof SimulationGoal) {
+      // and exit to menu
+      state.menuState();
+    }
+    else {
+      // exit to result state
+      state.resultState();
+    }
   }
   
   /**
