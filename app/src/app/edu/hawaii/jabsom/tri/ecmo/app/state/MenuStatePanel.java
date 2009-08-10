@@ -169,7 +169,7 @@ public class MenuStatePanel extends JPanel {
     vvRadio = new ImageToggleButton(null, vvRadioRolloverImage, vvRadioSelectedImage);
     vvRadio.setOpaque(false);
     vvRadio.setSize(32, 32);
-    vvRadio.setLocation(120, 6);
+    vvRadio.setLocation(0, 8);
     vvRadio.setSelected(true);
     componentSelectionPanel.add(vvRadio);
     modeTubeButtonGroup.add(vvRadio);
@@ -178,7 +178,7 @@ public class MenuStatePanel extends JPanel {
     vaRadio = new ImageToggleButton(null, vaRadioRolloverImage, vaRadioSelectedImage);    
     vaRadio.setOpaque(false);
     vaRadio.setSize(32, 32);
-    vaRadio.setLocation(262, 6);
+    vaRadio.setLocation(142, 8);
     componentSelectionPanel.add(vaRadio);   
     modeTubeButtonGroup.add(vaRadio);
     
@@ -190,7 +190,7 @@ public class MenuStatePanel extends JPanel {
     sciMedRadio = new ImageToggleButton(null, sciMedRadioRolloverImage, sciMedRadioSelectedImage);    
     sciMedRadio.setOpaque(false);
     sciMedRadio.setSize(32, 32);
-    sciMedRadio.setLocation(120, 37);
+    sciMedRadio.setLocation(0, 39);
     sciMedRadio.setSelected(true);
     componentSelectionPanel.add(sciMedRadio);    
     oxigenatorButtonGroup.add(sciMedRadio);
@@ -201,7 +201,7 @@ public class MenuStatePanel extends JPanel {
     quadroxDRadio = new ImageToggleButton(null, quadroxDRadioRolloverImage, quadroxDRadioSelectedImage);    
     quadroxDRadio.setOpaque(false);
     quadroxDRadio.setSize(32, 32);
-    quadroxDRadio.setLocation(262, 37);
+    quadroxDRadio.setLocation(142, 39);
     componentSelectionPanel.add(quadroxDRadio);    
     oxigenatorButtonGroup.add(quadroxDRadio);
     
@@ -213,7 +213,7 @@ public class MenuStatePanel extends JPanel {
     rollerRadio = new ImageToggleButton(null, rollerRadioRolloverImage, rollerRadioSelectedImage);    
     rollerRadio.setOpaque(false);
     rollerRadio.setSize(32, 32);
-    rollerRadio.setLocation(120, 69);
+    rollerRadio.setLocation(0, 71);
     rollerRadio.setSelected(true);
     componentSelectionPanel.add(rollerRadio);    
     pumpButtonGroup.add(rollerRadio);
@@ -224,7 +224,7 @@ public class MenuStatePanel extends JPanel {
     centrifugalRadio = new ImageToggleButton(null, centrifugalRadioRolloverImage, centrifugalRadioSelectedImage);       
     centrifugalRadio.setOpaque(false);
     centrifugalRadio.setSize(32, 32);
-    centrifugalRadio.setLocation(262, 69);
+    centrifugalRadio.setLocation(142, 71);
     componentSelectionPanel.add(centrifugalRadio);    
     pumpButtonGroup.add(centrifugalRadio);
 
@@ -237,7 +237,7 @@ public class MenuStatePanel extends JPanel {
       = new ImageToggleButton(null, conventionalRadioRolloverImage, conventionalRadioSelectedImage);
     conventionalRadio.setOpaque(false);
     conventionalRadio.setSize(32, 32);
-    conventionalRadio.setLocation(120, 101);
+    conventionalRadio.setLocation(0, 103);
     conventionalRadio.setSelected(true);
     componentSelectionPanel.add(conventionalRadio);    
     ventilatorButtonGroup.add(conventionalRadio);
@@ -249,7 +249,7 @@ public class MenuStatePanel extends JPanel {
       = new ImageToggleButton(null, highfrequencyRadioRolloverImage, highfrequencyRadioSelectedImage);    
     highfrequencyRadio.setOpaque(false);
     highfrequencyRadio.setSize(32, 32);
-    highfrequencyRadio.setLocation(262, 101);
+    highfrequencyRadio.setLocation(142, 103);
     componentSelectionPanel.add(highfrequencyRadio);    
     ventilatorButtonGroup.add(highfrequencyRadio);
     
