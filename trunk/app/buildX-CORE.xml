@@ -412,6 +412,9 @@
       <mapper type="regexp" from="${subdirs}" to="\3"/>
       <fileset dir="${scenario.dir}/write"/>
     </copy>
+    <!-- make logs and scores directories -->
+    <mkdir dir="${build.app.dir}/scenario/logs"/>
+    <mkdir dir="${build.app.dir}/scenario/scores"/>
     <copy todir="${build.app.dir}/scenario" overwrite="true">
       <mapper type="regexp" from="${subdirs}" to="\3"/>
       <fileset dir="${scenario.dir}/write-over"/>
