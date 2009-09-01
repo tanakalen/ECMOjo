@@ -1,0 +1,158 @@
+/* CSS Reset */
+html, body, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, input, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: top; }
+body { line-height: 1; color: black; background: white; }
+table {	border-collapse: separate; border-spacing: 0; }
+caption, th, td { text-align: left; font-weight: normal; }
+ol, ul { list-style: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ""; }
+blockquote, q { quotes: "" ""; }
+:focus { outline: 0; }
+
+/* Actual CSS */
+body { font-family: Arial, Helvetica, sans-serif; color: #404040; font-size: 12px; background: #EEEEEE url(../image/interface/fade.gif) repeat-x top center; }
+
+strong { font-weight: bold; }
+b { font-weight: bold; }
+i { font-style: italic; }
+p { font-size: 12px; line-height: 17px; margin-top: 6px; margin-bottom: 6px; }
+
+.hr { border-bottom: 3px solid #777777; }
+
+a { color: #0078C2; }
+a:visited { color: #004488; }
+a:hover { color: #D91312; }
+
+a[href^="mailto:"] { display:inline-block; padding-left:20px; line-height:15px; background:transparent url(../image/icon/MailTo.gif) center left no-repeat; }
+a[href$='.pdf'] { display:inline-block; padding-left:20px; line-height:15px; background:transparent url(../image/icon/PDFIcon.gif) center left no-repeat; }
+a[href$='.swf'], a[href$='.fla'], a[href$='.swd'] { display:inline-block; padding-left:20px; line-height:15px; background:transparent url(../image/icon/FlashIcon.gif) center left no-repeat; }
+a[href$='.xls'], a[href$='.csv'], a[href$='.xlt'], a[href$='.xlw'] { display:inline-block; padding-left:20px; line-height:15px; background:transparent url(../image/icon/ExcelIcon.gif) center left no-repeat; }
+a[href$='.ppt'], a[href$='.pps'] { display:inline-block; padding-left:20px; line-height:15px; background:transparent url(../image/icon/PowerPointIcon.gif) center left no-repeat; }
+a[href$='.doc'], a[href$='.rtf'], a[href$='.txt'], a[href$='.wps'] { display:inline-block; padding-left:20px; line-height:15px; background:transparent url(../image/icon/WordDocIcon.gif) center left no-repeat; }
+a[href$='.zip'], a[href$='.gzip'], a[href$='.rar'] { display:inline-block; padding-left:20px; line-height:15px; background:transparent url(../image/icon/ZIPIcon.gif) center left no-repeat; }
+
+h1 { font-family: Times; font-size: 11px; font-weight: normal; color: #000000; text-transform: uppercase; letter-spacing: 1px; }
+h2 { font-family: Arial; font-size: 15px; font-weight: bold; color: #000000; letter-spacing: 1px; padding-left: 4px; padding-top: 2px; padding-bottom: 2px; }
+h3 { font-family: Times; font-size: 12px; font-weight: normal; color: #000000; text-transform: uppercase; letter-spacing: 1px; padding-left: 4px; padding-top: 1px; padding-bottom: 1px; margin-bottom: 2px; background: #C5DDF6;  border: 1px solid #D6F0FF;}
+h4 { font-family: Times; font-size: 12px; font-weight: normal; color: #000000; text-transform: uppercase; border-bottom: 1px solid #bbbbbb; background: #dddddd url(../image/interface/stripes-white.gif) no-repeat center right; letter-spacing: 1px; padding-left: 4px; padding-top: 1px; padding-bottom: 1px;}
+
+form { display: inline; }
+input { margin: 3px; padding: 2px; font-size: 12px; border: 1px solid #a0a0a0; background-color: #f0f0f0; }
+select { margin: 3px; padding: 2px; font-size: 12px; border: 1px solid #a0a0a0; background-color: #e0e0e0; }
+button { margin-left: 2px; }
+textarea { display: block; margin: 3px; padding: 2px; font-size: 12px; border: 1px solid #a0a0a0; background-color: #f0f0f0; font-family: Arial; }
+.checkbox, .radio { border: 0px; background: transparent; margin-top: 1px; }
+.required { color: #e00000; }
+
+ol { list-style-type: lower-roman; font-size: 12px; list-style-position: inside; }
+ul { list-style-type: circle; font-size: 12px; list-style-position: inside; }
+
+code { border: 1px dotted #999999; background-color: #eeeeee; font-family: Times; font-size: 11px; display: block; }
+
+.quote { padding: 3px; margin: 10px; font-size: 12px; border: 1px solid #e0e0e0; background-color: #f0f0f0; }
+.code { padding: 3px; margin: 10px; font-family: serif; font-size: 12px; border: 1px dashed #b0b0b0; background-color: #f0f0f0; }
+.smallscript { font-size: 9px; margin-left: 8px; }
+.subtext { font-size: 10px; margin-top: 2px; }
+
+.playbutton {  display: block; width: 91px; height: 20px; text-decoration: none; background: url("../image/interface/PlayButton.gif") no-repeat 0 0; }
+.playbutton:hover { background-position: 0 -20px; }
+.playbutton span { text-transform: uppercase; font-weight: bold; padding-left: 5px; color: #606060; line-height: 19px; }
+
+.alert { background: #fff6bf url(../image/interface/message-alert.png) center no-repeat; background-position: 15px 50%; text-align: left; padding: 5px 20px 5px 45px; border: 2px solid #ffd324; }
+.error { background: #F6CBCA url(../image/interface/message-error.png) center no-repeat; background-position: 15px 50%; text-align: left; padding: 5px 20px 5px 45px; border: 2px solid #CB2026; }
+.success { background: #BFE5FF url(../image/interface/message-success.png) center no-repeat; background-position: 15px 50%; text-align: left; padding: 5px 20px 5px 45px; border: 2px solid #24B2FF; }
+
+.navigation { padding-top: 2px; padding-bottom: 2px; }
+
+.content { background-color: #ffffff; }
+
+.contentheader { background-image: url(../image/interface/banner.jpg); }
+.contentnavbar { margin-top: 0px; margin-bottom: 0px; margin-left: 224px; margin-top: 0px; padding:0px;}
+.contentnavbar a { margin: 0px; margin-top: 1px; color: #9A9A9A; font-family: Arial; font-weight: bold; letter-spacing: 1px; font-size: 16px; text-decoration: none; padding: 8px; height: 36px; border-left: 1px solid #DCDCDC; border-right: 1px solid #BABABA; }
+.contentnavbar a:hover { color: #ffffff; background: #CBDCEF; }
+.contentnavbar a:visited { color: #9A9A9A; }
+
+.contenttitle a { text-decoration: none; color: #0000b0; }
+.contenttitle a:hover { text-decoration: underline; }
+
+.contentmenu { margin:1px; padding-left: 2px; padding-right: 3px; padding-top: 4px; }
+.contentmenutitle { font-size: 14px; font-weight: bold; color: #404040; padding-left: 16px; padding-top: 4px; margin-left: 1px; margin-bottom: 3px; background: #eeeeee url(../image/interface/roundbox.gif) top left no-repeat; height: 25px;}
+.contentfull { background: #ffffff url(../image/interface/shade.jpg) repeat-x top left; }
+.contentmain { width: 825px; margin-left: 4px; margin-top: 2px; padding: 0px; background: #FFFFFF; }
+.contentplayer { width: 825px; margin-left: 0px; margin-top: 0px; padding: 0px; background: #FFFFFF; }
+.contentside { width: 160px; margin-left: 4px; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; padding: 0; border: 1px solid #bbbbbb; }
+
+.titlebar { background: url(../image/interface/h2lightblue-left.gif) no-repeat top left; padding-left: 2px; margin-top: 4px; margin-bottom: 6px; }
+.titlebar div { background: url(../image/interface/h2lightblue-right.gif) no-repeat top right; padding-right: 52px; }
+.titlebar div div { background: url(../image/interface/h2lightblue-center.gif) repeat-x top center; padding-top: 2px; padding-bottom: 2px; }
+.titlebar div div h2 { color: #404040; display: inline; font-family: Times; font-weight: normal; text-transform: uppercase; }
+
+.gamebar { border-bottom: 3px solid #777777; }
+.gameinfo { margin: 0px; padding: 1px; padding-bottom: 2px; }
+.gameinfo a { color: #333333; }
+.gameinfo a:visited { color: #333333; }
+.gameinfo a:hover { color: #e00000; }
+.gameinfo table { }
+.gameinfo .category { font-size: 10px; }
+.gameinfo .gamedate { font-size: 10px; color: #000000; }
+.gameinfo .players { font-size: 10px; }
+.gameinfo .development { font-size: 10px; }
+.gameinfo .user { font-size: 10px; }
+.gameinfo .developer { font-size: 10px; }
+.gameinfo .license { font-size: 10px; }
+.gameinfo .cost { font-size: 10px; }
+.gametitle { padding-left: 5px; padding-top: 2px; margin: 0; color: #000000; background: #eFeFeF; letter-spacing: 1px; font-size: 14px; font-weight: normal; font-family: Times; text-transform: uppercase; }
+.gamelinks { margin-top: 5px; border-top: 1px solid #a0a0a0; }
+.gameextra { font-size: 11px; background: #f4f4f4; }
+.gamethumbnail { width:120px; height:100px; position:relative; margin-top: 2px; margin-right: 3px; }
+.gamethumbnail .main { position:absolute; width:120px; height:100px; z-index:0; }
+.gamethumbnail .frame { position:absolute; width:120px; height:100px; z-index:1; }
+
+.indexthumbnail1 { width:200px; height:210px; position:relative; margin-top: 2px; margin-right: 3px; }
+.indexthumbnail1 .main { position:absolute; width:200px; height:210px; z-index:0; }
+.indexthumbnail1 .frame { position:absolute; width:200px; height:210px; z-index:1; }
+
+.indexthumbnail2 { width:200px; height:150px; position:relative; margin-top: 2px; margin-right: 3px; }
+.indexthumbnail2 .main { position:absolute; width:200px; height:150px; z-index:0; }
+.indexthumbnail2 .frame { position:absolute; width:200px; height:150px; z-index:1; }
+
+.footer { margin-top: 2px; text-align: left; margin-left: 224px; }
+.footermenu { padding-bottom: 3px; padding-top: 2px; font-size: 11px; letter-spacing: 3px; }
+.copyright { margin-top: 0px; margin-bottom: 0px; font-size: 10px;}
+.copyright a { text-decoration: none; color: #404040; }
+.copyright a:hover { text-decoration: underline; }
+
+.arrowlistmenu ul { list-style-type: none; list-style-position: outside; margin: 0; padding: 0; margin-bottom: 8px; }
+.arrowlistmenu ul li { padding-bottom: 2px; font-size: 12px; }
+.arrowlistmenu ul li a { color: #004488; background: url(../image/interface/arrowbullet.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.arrowlistmenusearch { color: #004488; background: url(../image/interface/search.gif) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.arrowlistmenurss { color: #004488; background: url(../image/icon/RSS.gif) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.toprated { color: #004488; background: url(../image/interface/award.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.Windows { color: #004488; background: url(../image/OS/WINDOWS-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.Macintosh { color: #004488; background: url(../image/OS/MACINTOSH-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.Linux { color: #004488; background: url(../image/OS/LINUX-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.UNIX { color: #004488; background: url(../image/OS/UNIX-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a:visited{ color: #004488; }
+.arrowlistmenu ul li a:hover{ color: #004488; background-color: #CBDCEF; }
+
+.languagebar { text-align: left; margin-left: 4px; margin-top: 4px; margin-right: 4px; margin-bottom: 0px; }
+
+.rankingtopgames ul { list-style-type: none; list-style-position: outside; margin: 0; padding: 0; margin-top: 2px; margin-bottom: 4px; }
+.rankingtopgames ul li { padding-bottom: 2px; font-weight: bold; background-color: #FFFFFF; font-size: 11px; }
+.rankingtopgames ul li strong { color: #000000; margin-right: 6px; }
+.rankingtopgames ul li a { color: #d00000; display: block; padding: 2px; padding-left: 7px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.rankingtopgames ul li a:visited{ color: #d00000; }
+.rankingtopgames ul li a:hover{ color: #d00000; background-color: #FFFFA0; }
+
+.othertopic ul { list-style-type: none; list-style-position: outside; margin: 0; padding: 0; margin-top: 2px; margin-bottom: 4px; }
+.othertopic ul li { padding-bottom: 2px; background-color: #FFFFFF; font-size: 12px; }
+.othertopic ul li strong { color: #0078C2; font-weight: bold; margin-right: 6px; }
+.othertopic ul li a { color: #666666; display: block; padding: 2px; text-decoration: none; font-weight: normal; border-bottom: 1px solid #dadada; }
+.othertopic ul li a:visited{ color: #666666; }
+.othertopic ul li a:hover{ color: #666666; background-color: #FFFFA0; }
+
+.screenshot {	border-collapse: separate; border-spacing: 13px; }
+.indexscreenshot {	border-collapse: separate; border-spacing: 5px; }
+
+.aboutus a { color: #333333; }
+.aboutus a:hover { color: #333333; }
+.aboutus a:visited { color: #333333; }
