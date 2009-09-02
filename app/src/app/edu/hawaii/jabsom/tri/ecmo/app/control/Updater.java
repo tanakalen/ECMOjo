@@ -101,7 +101,7 @@ public final class Updater {
            .getComponent(PumpComponent.class);
       TubeComponent tube = (TubeComponent)equipment
            .getComponent(TubeComponent.class);
-      OxigenatorComponent oxigenator = (OxigenatorComponent)equipment
+      OxigenatorComponent oxygenator = (OxigenatorComponent)equipment
            .getComponent(OxigenatorComponent.class);
       VentilatorComponent ventilator = (VentilatorComponent)equipment
            .getComponent(VentilatorComponent.class);
@@ -119,7 +119,10 @@ public final class Updater {
       HeartFunction heartFunction = patient.getHeartFunction();
       LungFunction lungFunction = patient.getLungFunction();
       double ccPerKg = pump.getFlow() * 1000 / patient.getWeight();
-
+      if (!pump.isOn()) {
+        ccPerKg = 0;
+      }
+      
       // update equipment (physiologic monitor)
       physiologicMonitor.setTemperature(Math.rint(patient.getTemperature()));
       physiologicMonitor.setHeartRate(patient.getHeartRate());
@@ -130,7 +133,7 @@ public final class Updater {
       physiologicMonitor.setCentralVenousPressure(patient.getCentralVenousPressure());
       
       // update equipment (tubing)
-      double paO2 = ((99.663 * oxigenator.getFiO2()) - 6.17) * 7.5;  // see PaO2-FiO2.spv (SPSS)
+      double paO2 = ((99.663 * oxygenator.getFiO2()) - 6.17) * 7.5;  // see PaO2-FiO2.spv (SPSS)
       if (paO2 == 0) {
         paO2 = 0.001;
       }  
@@ -139,7 +142,7 @@ public final class Updater {
       tube.setSaO2(tubeSaO2);
       
       try{ 
-        double tubeSvO2 = Mediator.flowToSvO2(mode, pump.getFlow(), patient);
+        double tubeSvO2 = Mediator.flowToSvO2(mode, ccPerKg, patient);
         tube.setSvO2(tubeSvO2); 
       }
       catch (Exception e) {
@@ -150,7 +153,7 @@ public final class Updater {
       tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
       // TODO: reconfirm if this is valid
-      tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxigenator.getClotting() * 50));
+      tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxygenator.getClotting() * 50));
       // change in venous pressure changes pump flow
       double diffVenousPressure = tube.getVenousPressure() - history.getVenousPressure();
       if (diffVenousPressure != 0) {
@@ -165,10 +168,27 @@ public final class Updater {
       }
       // change in pump flow changes post-membrane CO2
       double currentTubePCO2 = tube.getPostPCO2();
-      tube.setPostPCO2(currentTubePCO2 * pump.getFlow() / history.getFlow());
+      // tube.setPostPCO2(currentTubePCO2 * pump.getFlow() / history.getFlow());
       // change in sweep changes pCO2: increase drops pCO2, decrease raises pCO2
+      
       // TODO: reconfirm following behavior as rate of change is tiny! and reconfirm interaction
-      tube.setPostPCO2(currentTubePCO2 - ((oxigenator.getTotalSweep() - history.getSweep()) * 0.15));
+      // LT: tube.setPostPCO2(currentTubePCO2 - ((oxygenator.getTotalSweep() - history.getSweep()) * 0.15));
+      if (pump.getFlow() == 0) {
+        tube.setPostPCO2(0);
+      }
+      else {
+        double sweepFactor = oxygenator.getTotalSweep() / pump.getFlow();
+        if (sweepFactor < 0.5) {
+          tube.setPostPCO2(80 - 30 / 0.5 * sweepFactor);
+        }
+        else if (sweepFactor < 3) {
+          tube.setPostPCO2(60 - 10 / 0.5 * sweepFactor);
+        }
+        else {
+          tube.setPostPCO2(0);
+        }
+      }
+      
       //for debug:
 //        if (oxigenator.getTotalSweep() - oldSweep != 0) {
 //          System.out.println("old: " + oldSweep + ", new: " + oxigenator.getTotalSweep());
@@ -189,11 +209,16 @@ public final class Updater {
        || tube.isBridgeOpen() != history.isBridgeOpen()
        || tube.isVenousAOpen() != history.isVenousAOpen() || tube.isVenousBOpen() != history.isVenousBOpen()) { 
         // do interaction of clamping  
-        tubeUndo(tube, pump, pressureMonitor, oxigenator, physiologicMonitor, patient, history);
-        tubeDo(tube, pump, pressureMonitor, oxigenator, physiologicMonitor, patient);
+        tubeUndo(tube, pump, pressureMonitor, oxygenator, physiologicMonitor, patient, history);
+        tubeDo(tube, pump, pressureMonitor, oxygenator, physiologicMonitor, patient);
       }
       
-      if ((tube.getVenousPressure() < -75) && (pump.isOn())) { // Consider abstract 75 out
+      if ((pump.isOn() && (pump.getFlow() > 0)) && ((!tube.isVenousAOpen()) || (!tube.isVenousBOpen())
+                                                 || (!tube.isArterialAOpen()) || (!tube.isArterialBOpen()))) {
+        pump.setOn(false);
+      }
+      
+      if ((tube.getVenousPressure() < -75) && (pump.isOn()) && (pump.getFlow() > 0)) { // Consider abstract 75 out
         tube.setVenousBubbles(true);
       }
       else if (pump.isOn()) {
@@ -243,7 +268,7 @@ public final class Updater {
             } 
             
             // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases. 
-            if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxiType() == OxiType.SCI_MED) {
+            if (pump.getPumpType() == PumpType.ROLLER && oxygenator.getOxiType() == OxiType.SCI_MED) {
               tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.999);
               tube.setVenousPressure(tube.getVenousPressure() + 0.002);
             }
@@ -258,7 +283,7 @@ public final class Updater {
                 pump.setFlow(0.0);
               }
               // Else if roller pump, air in venous line.
-              if (pump.getPumpType() == PumpType.ROLLER) {
+              if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0.0))) {
                 tube.setVenousBubbles(true);
               }   
             }
@@ -317,7 +342,7 @@ public final class Updater {
       if ((difference != 0) && (history.getFlow() != 0)) {
         double pre = tube.getPreMembranePressure();
         double post = tube.getPostMembranePressure();
-        if (oxigenator.getOxiType().equals(OxigenatorComponent.OxiType.QUADROX_D)) {
+        if (oxygenator.getOxiType().equals(OxigenatorComponent.OxiType.QUADROX_D)) {
           if (difference > 0) {
             tube.setPreMembranePressure((((difference * 1000) * 0.0001) + 1) * pre);
             tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);
@@ -327,7 +352,7 @@ public final class Updater {
             tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
           }
         }
-        else if (oxigenator.getOxiType().equals(OxigenatorComponent.OxiType.SCI_MED)) {
+        else if (oxygenator.getOxiType().equals(OxigenatorComponent.OxiType.SCI_MED)) {
           if (difference > 0) {
             tube.setPreMembranePressure((((difference * 1000) * 0.00055) + 1) * pre);
             tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);            
@@ -378,7 +403,7 @@ public final class Updater {
       if (pressureMonitor.isAlarm()
           || bubbleDetector.isAlarm()
           || pump.isAlarm() 
-          || oxigenator.isAlarm()
+          || oxygenator.isAlarm()
           || heater.isAlarm()) {
         alarmIndicator.setAlarm(true);
         if (bubbleDetector.isAlarm()) {
@@ -490,6 +515,12 @@ public final class Updater {
         // pump flow to patient PaO2
         try {
           double patientSaturation = Mediator.flowToSPO2(mode, ccPerKg, patient);
+          if (ventilator.isEmergencyFuction()) {
+            patientSaturation *= 1.25;
+            if (patientSaturation > 1.0) {
+              patientSaturation = 1.0;
+            }
+          }
           // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
           double po2 = Mediator.calcPaO2(patientSaturation);
           patient.setO2Saturation(patientSaturation);
@@ -499,7 +530,8 @@ public final class Updater {
           Error.out(e.getMessage());
         }
       }
-      else { // patient is not on the pump
+      else { 
+        // patient is not on the pump
         if (ventilator.isEmergencyFuction()) {
           if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
               && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
@@ -559,7 +591,7 @@ public final class Updater {
       // TODO Patient bicarb and base excess calc? from Mark's table
       
       // update the patients life
-      if (oxigenator.isBroken()) {
+      if (oxygenator.isBroken()) {
         double life = patient.getLife();
         life -= increment / 5000.0;   // 5 seconds to die...
         if (life < 0.0) {
@@ -787,38 +819,43 @@ public final class Updater {
     // Arterial: Closed, Venous: Open, Bridge: Closed
     else if (!tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen()) {
       // form arterial bubbles?????
-      tube.setArterialBubbles(true);
-      
-      // If limits set appropriately,  
-      if (!pressureMonitor.isAlarm()) {
-        // premembrane pressure will equal postmembrane pressure up to 750.
-        tube.setPreMembranePressure(tube.getPostMembranePressure());
-        // If roller then pressures will stay at 750, else it's centrifugal then it would stop and reset to 35. 
+      if (pump.isOn() && (pump.getFlow() > 0.0)) {
+        tube.setArterialBubbles(true);
         if (pump.getPumpType() == PumpType.ROLLER) {
-          // stay at 750???????
-          if (tube.getPreMembranePressure() > 750) {
-            tube.setPreMembranePressure(750.0);
-            tube.setPostMembranePressure(750.0);
+          oxigenator.setBroken(true);
+        }
+        
+        // If limits set appropriately,  
+        if (!pressureMonitor.isAlarm()) {
+          // premembrane pressure will equal postmembrane pressure up to 750.
+          tube.setPreMembranePressure(tube.getPostMembranePressure());
+          // If roller then pressures will stay at 750, else it's centrifugal then it would stop and reset to 35. 
+          if (pump.getPumpType() == PumpType.ROLLER) {
+            // stay at 750???????
+            if (tube.getPreMembranePressure() > 750) {
+              tube.setPreMembranePressure(750.0);
+              tube.setPostMembranePressure(750.0);
+            }
+          }
+          if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+            // reset to 35 or decrease to 35???
+            tube.setPreMembranePressure(35.0);
           }
         }
-        if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
-          // reset to 35 or decrease to 35???
-          tube.setPreMembranePressure(35.0);
-        }
-      }
-      else {
-        // If limits not set appropriately then rupture for roller else centrifugal stop then reset to 35. 
-        if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
-          // reset to 35 or decrease to 35???
-          tube.setPreMembranePressure(35.0);
-        }
-        // The venous pressure increases by 2. Pump flow to 0. ??????
-        tube.setVenousPressure(pressureMonitor.getVenousPressure() + 2.0);
-        pump.setFlow(0.0); 
-        // If limits not set appropriately then for roller pump tubing will rupture, else flow is 0.
-        if (pump.getPumpType() == PumpType.ROLLER) {
-          // roller pump broken????
-          oxigenator.setBroken(true);
+        else {
+          // If limits not set appropriately then rupture for roller else centrifugal stop then reset to 35. 
+          if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+            // reset to 35 or decrease to 35???
+            tube.setPreMembranePressure(35.0);
+          }
+          // The venous pressure increases by 2. Pump flow to 0. ??????
+          tube.setVenousPressure(pressureMonitor.getVenousPressure() + 2.0);
+          pump.setFlow(0.0); 
+          // If limits not set appropriately then for roller pump tubing will rupture, else flow is 0.
+          if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0))) {
+            // roller pump broken????
+            oxigenator.setBroken(true);
+          }
         }
       }
     }
@@ -848,7 +885,7 @@ public final class Updater {
           pump.setFlow(0.0);
         }
         // Else if roller pump, air in venous line.
-        if (pump.getPumpType() == PumpType.ROLLER) {
+        if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0.0))) {
           tube.setVenousBubbles(true);
         }   
       }
@@ -857,7 +894,7 @@ public final class Updater {
     else if (!tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {
       // Massively bloody explosion with lots of alarms and noise. 
       // If roller pump then "God of War" blood shower. 
-      if (pump.getPumpType() == PumpType.ROLLER) {
+      if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0))) {
         oxigenator.setBroken(true);
       }
       // If centrifugal then alarm, patient decompensates, pump stops.

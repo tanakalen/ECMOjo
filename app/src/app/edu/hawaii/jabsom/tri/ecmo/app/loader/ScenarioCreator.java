@@ -96,14 +96,14 @@ public final class ScenarioCreator {
     tubeComponent.setBrokenCannula(false, TubeComponent.Status.normal, TubeComponent.problemLocation.none);
     tubeComponent.setBrokenETT(false);
     tubeComponent.setSuctionETT(false);
-    tubeComponent.setVenousPressure(0);
+    tubeComponent.setVenousPressure(-10);
     tubeComponent.setArterialBubbles(false);
     tubeComponent.setVenousBubbles(false);
     equipment.add(tubeComponent);
     
     OxigenatorComponent oxiComponent = new OxigenatorComponent();
     oxiComponent.setOxiType(OxiType.SCI_MED);
-    oxiComponent.setTotalSweep(0.3);
+    oxiComponent.setTotalSweep(0.6);
     oxiComponent.setFiO2(0.5);
     oxiComponent.setClotting(0.0);
     oxiComponent.setBroken(false);

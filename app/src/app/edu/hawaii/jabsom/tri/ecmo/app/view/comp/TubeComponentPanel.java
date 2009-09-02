@@ -3,6 +3,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.view.comp;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -324,9 +325,9 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     }
         
     // draw what ECMO we are using
-    g.setFont(g.getFont().deriveFont(10f));
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 14f));
     g.setColor(Color.DARK_GRAY);
-    g.drawString(component.getName(), 93, 10);
+    g.drawString(component.getName(), 89, 10);
   }
   
   /**

@@ -91,6 +91,9 @@ public class InterventionAction extends Action {
       tube.setVenousPressure(5.0f + tube.getVenousPressure());
     }
     else if (intervention instanceof PlateletsIntervention) {
+      // add platelets
+      patient.setPlatelets(patient.getPlatelets() + 100);
+      
       // affect blood pressure
       patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() + 5);
 
