@@ -120,11 +120,11 @@ public class VentilatorComponent extends Component {
   public static class HighFrequencySubtype extends Subtype {
     
     /** The mean pressure [5.0, 50.0]. */
-    private double meanPressure = 15;
+    private double meanPressure = 25;
     /** The hertz value [0, 100]. */
-    private double hz = 25;
+    private double hz = 10;
     /** The amplitude [0, 100]. */
-    private double amp = 10;
+    private double amp = 40;
     
     
     /**
