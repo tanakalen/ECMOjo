@@ -65,11 +65,9 @@ code { border: 1px dotted #999999; background-color: #eeeeee; font-family: Times
 
 .content { background-color: #ffffff; }
 
-.contentheader { background-image: url(../image/interface/banner.jpg); }
-.contentnavbar { margin-top: 0px; margin-bottom: 0px; margin-left: 224px; margin-top: 0px; padding:0px;}
-.contentnavbar a { margin: 0px; margin-top: 1px; color: #9A9A9A; font-family: Arial; font-weight: bold; letter-spacing: 1px; font-size: 16px; text-decoration: none; padding: 8px; height: 36px; border-left: 1px solid #DCDCDC; border-right: 1px solid #BABABA; }
-.contentnavbar a:hover { color: #ffffff; background: #CBDCEF; }
-.contentnavbar a:visited { color: #9A9A9A; }
+.menubutton { display:block; margin-left: 0px; margin-right: 0px; margin-bottom: 0px; margin-top: 1px; padding-left: 8px; padding-right: 8px; padding-top:8px; padding-bottom:9px; color: #9A9A9A; font-family: Arial; font-weight: bold; letter-spacing: 1px; font-size: 16px; text-decoration: none; border-left: 1px solid #DCDCDC; border-right: 1px solid #BABABA; }
+.menubutton:hover { color: #ffffff; background: #CBDCEF; }
+.menubutton:visited { color: #9A9A9A; }
 
 .contenttitle a { text-decoration: none; color: #0000b0; }
 .contenttitle a:hover { text-decoration: underline; }
@@ -123,7 +121,7 @@ code { border: 1px dotted #999999; background-color: #eeeeee; font-family: Times
 
 .arrowlistmenu ul { list-style-type: none; list-style-position: outside; margin: 0; padding: 0; margin-bottom: 8px; }
 .arrowlistmenu ul li { padding-bottom: 2px; font-size: 12px; }
-.arrowlistmenu ul li a { color: #004488; background: url(../image/interface/arrowbullet.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a { color: #0078C2; background: url(../image/interface/arrowbullet.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
 .arrowlistmenu ul li a.arrowlistmenusearch { color: #004488; background: url(../image/interface/search.gif) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
 .arrowlistmenu ul li a.arrowlistmenurss { color: #004488; background: url(../image/icon/RSS.gif) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
 .arrowlistmenu ul li a.toprated { color: #004488; background: url(../image/interface/award.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
