@@ -360,14 +360,17 @@ public final class Updater {
       if (ventilator.isEmergencyFuction()) {
         if (ventilator.getName().equals("High Frequency Ventilator")) {
           patient.setRespiratoryRate(0);
+          ventilator.setFiO2(1.0);
         }
         if (ventilator.getName().equals("Conventional Ventilator")) {
           patient.setRespiratoryRate(((ConventionalSubtype) ventilator.getSubtype()).getRate());
+          ventilator.setFiO2(1.0);
         }
       }
       else {
         if (ventilator.getName().equals("Conventional Ventilator")) {
           patient.setRespiratoryRate(10); // non rescue rate?
+          ventilator.setFiO2(0.5);
         }
       }
 
