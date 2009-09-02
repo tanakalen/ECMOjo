@@ -381,86 +381,23 @@ public final class Mediator {
    * @return Saturation
    */
   public static double flowToSPO2(Mode ecmo, double flow, Patient patient) throws Exception {
-    double value = 0;
-    if (flow < 0) {
-      throw new Exception("Flow cannot be less than 0");
-    }
     if (ecmo == Mode.VV) {
-      if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
-        throw new Exception("VV ECMO and bad heart function not ideal");
-      }
-      else {
-        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          // fit R-squared 0.9999 polynomial degree 2
-          value = (0.0007 * Math.pow(flow, 2) + 0.1138 * flow + 34.399) / 100;
-          if (isValidSaturation(value)) {
-            return value;
-          }
-          else {
-            return 1.0;
-          }
-        }
-        else { // lung function good
-          // fit R-squared 0.9926 polynomial degree 3
-          value = (0.000007 * Math.pow(flow, 3) - 0.0014 * Math.pow(flow, 2) 
-              + 0.1349 * flow + 71.21) / 100;
-          if (isValidSaturation(value)) {
-            return value;
-          }
-          else {
-            return 1.0;
-          }
-        }
+      if (flow > 120) {
+        // the saturation is going down
+        flow = 2 * 120 - flow;
       }
     }
-    else { // Mode is VA
-      if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
-        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          // fit R-squared 1 polynomial degree 3
-          value = (0.00001*Math.pow(flow, 3) - 0.0007*Math.pow(flow, 2) 
-              + 0.0073*flow + 23.213) / 100;
-          if (isValidSaturation(value)) {
-            return value;
-          }
-          else {
-            return 1.0;
-          }
-        }
-        else { // Patient lung function is good
-          // fit R-squared 1 polynomial degree 3
-          value = (0.000007*Math.pow(flow, 3) + 0.0005*Math.pow(flow, 2) 
-              - 0.0099*flow + 23.316) / 100;
-          if (isValidSaturation(value)) {
-            return value;
-          }
-          else {
-            return 1.0;
-          }
-        }        
-      }
-      else { // Patient heart function is good
-        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          // fit R-squared 0.9999 polynomial degree 2
-          value = (0.0007*Math.pow(flow, 2) + 0.1563*flow + 37.59) / 100;
-          if (isValidSaturation(value)) {
-            return value;
-          }
-          else {
-            return 1.0;
-          }
-        }
-        else { // Patient lung function is good
-          // fit R-squared 0.9995 polynomial degree 3
-          value = (0.000001*Math.pow(flow, 3) + 0.0003*Math.pow(flow, 2) 
-              + 0.0609*flow + 82.817) / 100;
-          if (isValidSaturation(value)) {
-            return value;
-          }
-          else {
-            return 1.0;
-          }
-        }
-      }
+    
+    // linear relation to flow
+    double value = 0.50 + flow / 120 * 0.49;
+    if (value < 0.5) {
+      return 0.5;
+    }
+    else if (value > 1.0) {
+      return 1.0;
+    }
+    else {
+      return value;
     }
   }
     
@@ -478,64 +415,41 @@ public final class Mediator {
    * @return SvO2 by linear interpolation of Mark's chart
    */
   public static double flowToSvO2(Mode ecmo, double flow, Patient patient) throws Exception {
-    if (flow < 0) {
-      throw new Exception("Flow cannot be less than 0");
-    }
     if (ecmo == Mode.VV) {
+      // VV ECMO
       if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
         // SvO2_VV_LGHP and SvO2_VV_LPHP
         throw new Exception("VV ECMO and bad heart function not ideal");
       }
-      else { // Heart function is good
-        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          // SvO2_VV_LPHG lung is bad
-          return -0.483 * flow * flow * flow + 0.610 * flow * flow + 0.080 * flow + 0.534;
+      else { 
+        // Heart function is good
+        if (flow < 50) {
+          return 0.1 + flow / 50 * 0.4;
         }
-        else { // Lungs are working why are we on ECMO?
-          // SvO2_VV_LGHG lung is good
-          if (flow <= 0.1) {
-            return 0.73;
-          }
-          else if (flow > 0.1 && flow <= 0.4) {
-            return 0.76;
-          }
-          else if (flow > 0.4 && flow <= 0.75) {
-            return 0.108 * flow + 0.719;
-          }
-          else {
-            return 0.80;
-          }
+        else if (flow < 120) {
+          return 0.5 + (flow - 50) / 70 * 0.28;
+        }
+        else if (flow < 150) {
+          return 0.78 + (flow - 120) / 30 * 0.12;
+        }
+        else {
+          return 0.9;
         }
       }
     }
-    else { // must be VA
-      if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
-        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          // SvO2_VA_LPHP
-          return 0.378 * flow * flow * flow - 0.932 * flow * flow + 0.943 * flow + 0.383;
-        }
-        else { // Lungs are working but heart not so good
-          // SvO2_VA_LGHP
-          return 0.388 * flow * flow * flow - 0.840 * flow * flow + 0.739 * flow + 0.483;
-        }
+    else { 
+      // VA ECMO
+      if (flow < 50) {
+        return 0.1 + flow / 50 * 0.4;
       }
-      else { // Heart function is good
-        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          // SvO2_VA_LPHG
-          return 0.241 * flow + 0.530;
-        }
-        else { // Lungs & Heart are working why are we on ECMO?
-          // SvO2_VA_LGHG
-          if (flow <= 0.1) {
-            return 0.73;
-          }
-          else if (flow > 0.1 && flow <= 0.7) {
-            return 0.76;
-          }
-          else {
-            return 0.77;
-          }
-        }
+      else if (flow < 120) {
+        return 0.5 + (flow - 50) / 70 * 0.25;
+      }
+      else if (flow < 150) {
+        return 0.75 + (flow - 120) / 30 * 0.05;
+      }
+      else {
+        return 0.8;
       }
     }
   }
@@ -581,22 +495,6 @@ public final class Mediator {
                                                double venousPressure) {
     if ((venousPressure >= 0) && (venousPressure <= 20)) {
       return true;      
-    }
-    else {
-      return false;
-    }
-  }
-  
-  /**
-   * Check if saturation is a valid number in [0, 1.0].
-   * 
-   * @param saturation
-   *          The saturation of patient in form 0.0.
-   * @return Boolean value if in range
-   */
-  private static boolean isValidSaturation(double saturation) {
-    if ((saturation >= 0) && (saturation <= 1.0)) {
-      return true;
     }
     else {
       return false;

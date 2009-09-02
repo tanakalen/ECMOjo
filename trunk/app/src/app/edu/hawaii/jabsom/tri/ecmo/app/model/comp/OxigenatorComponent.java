@@ -62,8 +62,8 @@ public class OxigenatorComponent extends Component {
    * @param totalSweep  The total sweep.
    */
   public void setTotalSweep(double totalSweep) {
-    this.totalSweepInteger = (int) totalSweep;
-    this.totalSweepDecimal = (int) (totalSweep - (int) totalSweep) * 10;
+    this.totalSweepInteger = (int)totalSweep;
+    this.totalSweepDecimal = (int)((totalSweep - (int)totalSweep) * 10);
   }
 
   /**
@@ -175,10 +175,10 @@ public class OxigenatorComponent extends Component {
    */
   public String getName() {
     if (oxiType == OxiType.QUADROX_D) {
-      return "Quadrox D Oxigenator";
+      return "Quadrox D Oxygenator";
     }
     else {
-      return "SciMed Oxigenator";
+      return "SciMed Oxygenator";
     }
   }
 }
