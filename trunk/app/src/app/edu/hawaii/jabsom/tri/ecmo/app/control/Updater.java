@@ -268,7 +268,7 @@ public final class Updater {
             } 
             
             // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases. 
-            if (pump.getPumpType() == PumpType.ROLLER && oxygenator.getOxyType() == OxyType.SCI_MED) {
+            if (pump.getPumpType() == PumpType.ROLLER && oxygenator.getOxyType() == OxyType.SILICONE) {
               tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.999);
               tube.setVenousPressure(tube.getVenousPressure() + 0.002);
             }
@@ -352,7 +352,7 @@ public final class Updater {
             tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
           }
         }
-        else if (oxygenator.getOxyType().equals(OxygenatorComponent.OxyType.SCI_MED)) {
+        else if (oxygenator.getOxyType().equals(OxygenatorComponent.OxyType.SILICONE)) {
           if (difference > 0) {
             tube.setPreMembranePressure((((difference * 1000) * 0.00055) + 1) * pre);
             tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);            
@@ -717,7 +717,7 @@ public final class Updater {
       } 
       
       // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2. 
-      if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SCI_MED) {
+      if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SILICONE) {
         tube.setPreMembranePressure(tube.getPreMembranePressure() / 0.90);
         tube.setVenousPressure(tube.getVenousPressure() - 2.0);
       }
@@ -870,7 +870,7 @@ public final class Updater {
       } 
       
       // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2. 
-      if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SCI_MED) {
+      if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SILICONE) {
         tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
         tube.setVenousPressure(tube.getVenousPressure() + 2.0);
       }

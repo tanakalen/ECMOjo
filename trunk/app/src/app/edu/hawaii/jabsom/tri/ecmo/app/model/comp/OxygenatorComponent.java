@@ -10,7 +10,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 public class OxygenatorComponent extends Component {
   
   /** The available types. */
-  public enum OxyType { SCI_MED, QUADROX_D };
+  public enum OxyType { SILICONE, QUADROX_D };
   
   /** The oxigenator type. */
   private OxyType oxyType;
@@ -178,7 +178,7 @@ public class OxygenatorComponent extends Component {
       return "Quadrox D Oxygenator";
     }
     else {
-      return "SciMed Oxygenator";
+      return "Silicone Oxygenator";
     }
   }
 }

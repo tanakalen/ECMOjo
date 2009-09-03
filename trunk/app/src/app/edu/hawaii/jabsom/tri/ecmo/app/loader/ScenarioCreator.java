@@ -103,7 +103,7 @@ public final class ScenarioCreator {
     equipment.add(tubeComponent);
     
     OxygenatorComponent oxiComponent = new OxygenatorComponent();
-    oxiComponent.setOxyType(OxyType.SCI_MED);
+    oxiComponent.setOxyType(OxyType.SILICONE);
     oxiComponent.setTotalSweep(0.6);
     oxiComponent.setFiO2(0.5);
     oxiComponent.setClotting(0.0);

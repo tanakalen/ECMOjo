@@ -277,7 +277,7 @@ public class MenuStatePanel extends JPanel {
           // update oxigenator
           OxygenatorComponent oxi = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
           if (sciMedRadio.isSelected()) {
-            oxi.setOxyType(OxyType.SCI_MED);
+            oxi.setOxyType(OxyType.SILICONE);
           }
           else {
             oxi.setOxyType(OxyType.QUADROX_D);
