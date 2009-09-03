@@ -92,7 +92,7 @@ public class InterventionDetailPanel extends DetailPanel {
         intervene(new BloodIntervention());
       }
     });
-    bloodButton.setLocation(31, 37);
+    bloodButton.setLocation(22, 28);
     bloodButton.setSize(192, 32);
     add(bloodButton);
     
@@ -105,7 +105,7 @@ public class InterventionDetailPanel extends DetailPanel {
         intervene(new PlateletsIntervention());
       }
     });
-    plateletsButton.setLocation(31, 69);
+    plateletsButton.setLocation(22, 60);
     plateletsButton.setSize(192, 32);
     add(plateletsButton); 
 
@@ -118,7 +118,7 @@ public class InterventionDetailPanel extends DetailPanel {
         intervene(new FFPIntervention());
       }
     });
-    ffpButton.setLocation(31, 101);
+    ffpButton.setLocation(22, 92);
     ffpButton.setSize(192, 32);
     add(ffpButton); 
     
@@ -131,7 +131,7 @@ public class InterventionDetailPanel extends DetailPanel {
         intervene(new HeparinBolusIntervention());
       }
     });
-    heparinButton.setLocation(31, 133);
+    heparinButton.setLocation(22, 124);
     heparinButton.setSize(192, 32);
     add(heparinButton); 
  
@@ -148,7 +148,7 @@ public class InterventionDetailPanel extends DetailPanel {
         intervene(new CatecholamineIntervention());
       }
     });
-    catecholamineButton.setLocation(31, 165);
+    catecholamineButton.setLocation(22, 156);
     catecholamineButton.setSize(192, 32);
     add(catecholamineButton); 
  
@@ -162,9 +162,23 @@ public class InterventionDetailPanel extends DetailPanel {
         intervene(new AlbuminIntervention());
       }
     });
-    albuminButton.setLocation(31, 197);
+    albuminButton.setLocation(22, 188);
     albuminButton.setSize(192, 32);
     add(albuminButton);    
+    
+    Image sedationNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Sedation.png");
+    Image sedationRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SedationRol.png");
+    Image sedationSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SedationSel.png");
+    ImageButton sedationButton
+      = new ImageButton(sedationNormalImage, sedationRolloverImage, sedationSelectedImage);
+    sedationButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        intervene(new AlbuminIntervention());
+      }
+    });
+    sedationButton.setLocation(22, 220);
+    sedationButton.setSize(192, 32);
+    add(sedationButton);    
   }
 
   /**

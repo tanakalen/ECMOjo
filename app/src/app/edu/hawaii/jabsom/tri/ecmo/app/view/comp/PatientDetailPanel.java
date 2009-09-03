@@ -80,7 +80,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkCanulaSiteButton.setLocation(31, 28);
+    checkCanulaSiteButton.setLocation(22, 28);
     checkCanulaSiteButton.setSize(192, 32);
     add(checkCanulaSiteButton);
     
@@ -116,7 +116,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkforBleedingButton.setLocation(31, 60);
+    checkforBleedingButton.setLocation(22, 60);
     checkforBleedingButton.setSize(192, 32);
     add(checkforBleedingButton);
     
@@ -152,7 +152,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkUrineOutputButton.setLocation(31, 92);
+    checkUrineOutputButton.setLocation(22, 92);
     checkUrineOutputButton.setSize(192, 32);
     add(checkUrineOutputButton);
     
@@ -188,7 +188,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    suctionETTButton.setLocation(31, 124);
+    suctionETTButton.setLocation(22, 124);
     suctionETTButton.setSize(192, 32);
     add(suctionETTButton);
     
@@ -212,7 +212,7 @@ public class PatientDetailPanel extends DetailPanel {
             , "The circuit has been changed.");
       }
     });
-    changeCircuitButton.setLocation(31, 156);
+    changeCircuitButton.setLocation(22, 156);
     changeCircuitButton.setSize(192, 32);
     add(changeCircuitButton);
     
@@ -237,19 +237,19 @@ public class PatientDetailPanel extends DetailPanel {
             , "A unpleasant odor has been detected.");
       }
     });
-    checkDiaperButton.setLocation(31, 188);
+    checkDiaperButton.setLocation(22, 188);
     checkDiaperButton.setSize(192, 32);
     add(checkDiaperButton);
     
-    Image checkActivityLevelNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckActivityLevel.png");
-    Image checkActivityLevelRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckActivityLevelRol.png");
-    Image checkActivityLevelSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckActivityLevelSel.png");
-    ImageButton checkActivityLevelButton = new ImageButton(checkActivityLevelNormalImage
-        , checkActivityLevelRolloverImage, checkActivityLevelSelectedImage);    
-    checkActivityLevelButton.addActionListener(new ActionListener() {
+    Image checkSedationNormalImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckSedation.png");
+    Image checkSedationRolloverImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckSedationRol.png");
+    Image checkSedationSelectedImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckSedationSel.png");
+    ImageButton checkSedationButton = new ImageButton(checkSedationNormalImage
+        , checkSedationRolloverImage, checkSedationSelectedImage);    
+    checkSedationButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         // send the action
         PatientAction action = new PatientAction();
@@ -262,9 +262,9 @@ public class PatientDetailPanel extends DetailPanel {
             , "The patient has been stimulated.");
       }
     });
-    checkActivityLevelButton.setLocation(31, 220);
-    checkActivityLevelButton.setSize(192, 32);
-    add(checkActivityLevelButton);
+    checkSedationButton.setLocation(22, 220);
+    checkSedationButton.setSize(192, 32);
+    add(checkSedationButton);
   }
   
   /**
