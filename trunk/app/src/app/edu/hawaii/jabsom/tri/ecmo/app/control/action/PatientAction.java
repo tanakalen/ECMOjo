@@ -15,7 +15,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 public class PatientAction extends Action {
 
   /** The checks. */
-  public enum Check { CANULA_SITE, BLEEDING, URINE_OUTPUT, SUCTION_ETT, DIAPER, ACTIVITY_LEVEL };
+  public enum Check { CANULA_SITE, BLEEDING, URINE_OUTPUT, SUCTION_ETT, DIAPER, SEDATION };
   
   /** The check done. */
   private Check check;
@@ -68,7 +68,7 @@ public class PatientAction extends Action {
     else if (check == Check.DIAPER) {
       // no action taken...
     }
-    else if (check == Check.ACTIVITY_LEVEL) {
+    else if (check == Check.SEDATION) {
       // no action taken...
     }
     else {

@@ -8,7 +8,8 @@ desc = The never ending simulation...
 goal = Simulation
 
 # Baseline Values
-baseline-bleeding = false;
+baseline-sedated = true
+baseline-bleeding = false
 baseline-min-heart-rate = 100
 baseline-max-heart-rate = 160
 baseline-min-O2-saturation = 0.85
@@ -50,6 +51,7 @@ patient-age = 1
 patient-weight = 5
 patient-lung-function = good
 patient-heart-function = good
+patient-sedated = true
 patient-bleeding = false
 patient-temperature = 37
 

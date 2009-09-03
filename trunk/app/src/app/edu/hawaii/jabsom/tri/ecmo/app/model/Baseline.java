@@ -15,6 +15,8 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
  */
 public class Baseline {
 
+  /** Baseline value for sedated. */
+  private boolean sedated;
   /** Baseline value for bleeding. */
   private boolean bleeding;
   /** Baseline value for min heart rate. */
@@ -342,6 +344,7 @@ public class Baseline {
     
     // patient
     return (patient.isAlive())
+        && (sedated == patient.isSedated())
         && (bleeding == patient.isBleeding())
         && (patient.getHeartRate() >= minHeartRate) 
         && (patient.getHeartRate() <= maxHeartRate)
@@ -412,6 +415,24 @@ public class Baseline {
    */
   public void setAlarming(boolean alarming) {
     this.alarming = alarming;
+  }
+  
+  /**
+   * Returns true for sedated.
+   *
+   * @return  True for sedated.
+   */
+  public boolean isSedated() {
+    return sedated;
+  }
+
+  /**
+   * Sets true for sedated.
+   *
+   * @param sedated  True for sedated.
+   */
+  public void setSedated(boolean sedated) {
+    this.sedated = sedated;
   }
 
   /**

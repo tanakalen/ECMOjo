@@ -15,6 +15,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.engage.AlbuminIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.Intervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.InterventionLocation;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.PlateletsIntervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.SedationIntervention;
 
 /**
  * The intervention action. 
@@ -132,6 +133,10 @@ public class InterventionAction extends Action {
       // affect ACT
       patient.setAct(patient.getAct() * 1.11);    // +11% 
     } 
+    else if (intervention instanceof SedationIntervention) {
+      // sedate patient
+      patient.setSedated(true);
+    }
     
     // track intervention
     game.getTracker().track(intervention.getClass());

@@ -34,7 +34,8 @@ tutorial-item13-text = Congratulations, you successfully completed Tutorial 3!
 tutorial-item13-trigger = N/A
 
 # Baseline Values
-baseline-bleeding = false;
+baseline-sedated = true
+baseline-bleeding = false
 baseline-min-heart-rate = 100
 baseline-max-heart-rate = 160
 baseline-min-O2-saturation = 0.85
@@ -76,6 +77,7 @@ patient-age = 1
 patient-weight = 5
 patient-lung-function = good
 patient-heart-function = good
+patient-sedated = true
 patient-bleeding = false
 patient-temperature = 37
 

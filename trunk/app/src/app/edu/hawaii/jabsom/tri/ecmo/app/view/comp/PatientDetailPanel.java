@@ -251,15 +251,26 @@ public class PatientDetailPanel extends DetailPanel {
         , checkSedationRolloverImage, checkSedationSelectedImage);    
     checkSedationButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
+        boolean sedated = patient.isSedated();
+        
         // send the action
         PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.ACTIVITY_LEVEL);
+        action.setCheck(PatientAction.Check.SEDATION);
         notifyActionListeners(action);
             
         // output dialog
-        StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-            , "Patient Stimulated"
-            , "The patient has been stimulated.");
+        if (!sedated) {
+          // not sedated!
+          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.WARNING, DialogOption.OK
+              , "Not Sedated"
+              , "The patient appears to be awake!?");
+        }
+        else {
+          // the patient is sleeping
+          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+              , "Sedated"
+              , "The patient is fully sedated.");
+        }
       }
     });
     checkSedationButton.setLocation(22, 220);

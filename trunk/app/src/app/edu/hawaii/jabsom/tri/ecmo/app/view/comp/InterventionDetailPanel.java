@@ -21,6 +21,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.engage.AlbuminIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.Intervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.InterventionLocation;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.PlateletsIntervention;
+import edu.hawaii.jabsom.tri.ecmo.app.model.engage.SedationIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.Tracker;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
@@ -173,7 +174,7 @@ public class InterventionDetailPanel extends DetailPanel {
       = new ImageButton(sedationNormalImage, sedationRolloverImage, sedationSelectedImage);
     sedationButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        intervene(new AlbuminIntervention());
+        intervene(new SedationIntervention());
       }
     });
     sedationButton.setLocation(22, 220);

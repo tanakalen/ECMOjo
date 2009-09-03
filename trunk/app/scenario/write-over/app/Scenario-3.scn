@@ -9,7 +9,8 @@ goal = Baseline
 time = 300
 
 # Baseline Values
-baseline-bleeding = false;
+baseline-sedated = true
+baseline-bleeding = false
 baseline-min-heart-rate = 100
 baseline-max-heart-rate = 160
 baseline-min-O2-saturation = 0.85
@@ -51,6 +52,7 @@ patient-age = 3
 patient-weight = 4
 patient-lung-function = bad
 patient-heart-function = good
+patient-sedated = true
 patient-bleeding = false
 patient-temperature = 37
 

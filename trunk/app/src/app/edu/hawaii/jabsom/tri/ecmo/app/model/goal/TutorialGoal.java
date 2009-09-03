@@ -427,8 +427,8 @@ public class TutorialGoal extends Goal {
               else if (items[2].equals("DIAPER")) {
                 triggerCheck = Check.DIAPER;
               }
-              else if (items[2].equals("ACTIVITY_LEVEL")) {
-                triggerCheck = Check.ACTIVITY_LEVEL;
+              else if (items[2].equals("SEDATION")) {
+                triggerCheck = Check.SEDATION;
               }
               if (actualCheck == triggerCheck) {                    
                 progress++;
