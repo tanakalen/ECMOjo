@@ -98,7 +98,7 @@ public class ACTDetailPanel extends DetailPanel implements LabTestListener {
       }
       public String getColumnName(int col) {
         if (col == 0) {
-          return "Time";
+          return "Time [seconds]";
         }
         else if (col == 1){
           return "ACT"; 
