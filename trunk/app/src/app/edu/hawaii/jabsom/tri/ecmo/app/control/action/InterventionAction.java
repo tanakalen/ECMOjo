@@ -99,7 +99,7 @@ public class InterventionAction extends Action {
       patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() + 5);
 
       // add clotting if entered at wrong location
-      if ((location == InterventionLocation.BEFORE_OXIGENATOR)
+      if ((location == InterventionLocation.BEFORE_OXYGENATOR)
        || (location == InterventionLocation.BEFORE_PUMP)) {
         OxygenatorComponent oxigenator = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
         oxigenator.setClotting(oxigenator.getClotting() + 1);

@@ -12,9 +12,9 @@ public enum InterventionLocation {
   /** Before the pump. */
   BEFORE_PUMP, 
   /** Before the oxigenator. */
-  BEFORE_OXIGENATOR, 
+  BEFORE_OXYGENATOR, 
   /** After the oxigenator. */
-  AFTER_OXIGENATOR, 
+  AFTER_OXYGENATOR, 
   /** By the patient. */
   PATIENT;
   

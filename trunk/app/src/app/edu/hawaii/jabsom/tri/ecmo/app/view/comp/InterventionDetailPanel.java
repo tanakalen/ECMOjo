@@ -74,10 +74,10 @@ public class InterventionDetailPanel extends DetailPanel {
     else if (interventionLocation == InterventionLocation.BEFORE_PUMP) {
       labelImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Lbl-B.png");
     }
-    else if (interventionLocation == InterventionLocation.BEFORE_OXIGENATOR) {
+    else if (interventionLocation == InterventionLocation.BEFORE_OXYGENATOR) {
       labelImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Lbl-C.png");
     }
-    else if (interventionLocation == InterventionLocation.AFTER_OXIGENATOR) {
+    else if (interventionLocation == InterventionLocation.AFTER_OXYGENATOR) {
       labelImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Lbl-D.png");
     }
     else {
@@ -202,11 +202,11 @@ public class InterventionDetailPanel extends DetailPanel {
       notifyActionListeners(action);
       
       // output location warning as needed
-      if (((intervention instanceof BloodIntervention) && (location == InterventionLocation.BEFORE_OXIGENATOR))
-        || ((intervention instanceof FFPIntervention) && (location == InterventionLocation.BEFORE_OXIGENATOR))
-        || ((intervention instanceof HeparinBolusIntervention) && (location != InterventionLocation.BEFORE_OXIGENATOR))
-        || ((intervention instanceof CatecholamineIntervention) && (location == InterventionLocation.BEFORE_OXIGENATOR))
-        || ((intervention instanceof AlbuminIntervention) && (location == InterventionLocation.BEFORE_OXIGENATOR))) {
+      if (((intervention instanceof BloodIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))
+        || ((intervention instanceof FFPIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))
+        || ((intervention instanceof HeparinBolusIntervention) && (location != InterventionLocation.BEFORE_OXYGENATOR))
+        || ((intervention instanceof CatecholamineIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))
+        || ((intervention instanceof AlbuminIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))) {
         StandardDialog.showDialog(this, DialogType.WARNING, DialogOption.OK
             , "Intervention Location Warning"
             , "The intervention has been executed. Please choose a better "

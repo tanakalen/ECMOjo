@@ -10,7 +10,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
  * @author   Christoph Aschwanden
  * @since    October 1, 2008
  */
-public class OxigenatorAction extends Action {
+public class OxygenatorAction extends Action {
 
   /** The total sweep integer. total sweep = integer + decimal / 10 [0.0, 10.0]. */
   private int totalSweepInteger;

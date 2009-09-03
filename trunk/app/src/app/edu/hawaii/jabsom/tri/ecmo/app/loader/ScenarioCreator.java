@@ -158,7 +158,7 @@ public final class ScenarioCreator {
     equipment.add(interventionComponent1);
 
     InterventionComponent interventionComponent2 = new InterventionComponent();
-    interventionComponent2.setInterventionLocation(InterventionLocation.BEFORE_OXIGENATOR);
+    interventionComponent2.setInterventionLocation(InterventionLocation.BEFORE_OXYGENATOR);
     equipment.add(interventionComponent2);
 
     InterventionComponent interventionComponent3 = new InterventionComponent();
@@ -166,7 +166,7 @@ public final class ScenarioCreator {
     equipment.add(interventionComponent3);
 
     InterventionComponent interventionComponent4 = new InterventionComponent();
-    interventionComponent4.setInterventionLocation(InterventionLocation.AFTER_OXIGENATOR);
+    interventionComponent4.setInterventionLocation(InterventionLocation.AFTER_OXYGENATOR);
     equipment.add(interventionComponent4);
     
     LabComponent labComponent1 = new LabComponent();

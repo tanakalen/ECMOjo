@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
 
-import edu.hawaii.jabsom.tri.ecmo.app.control.action.OxigenatorAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.OxygenatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.KnobButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.KnobButton.RotationListener;
@@ -98,7 +98,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     incTotalSweepIntegerButton = new ImageButton(incButtonImage, incButtonRolloverImage, incButtonSelectedImage);
     incTotalSweepIntegerButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        OxigenatorAction action = new OxigenatorAction();
+        OxygenatorAction action = new OxygenatorAction();
         if ((component.getTotalSweepInteger() + 1) > 10) {
           action.setTotalSweepInteger(10);
         }
@@ -118,7 +118,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     decTotalSweepIntegerButton = new ImageButton(decButtonImage, decButtonRolloverImage, decButtonSelectedImage);    
     decTotalSweepIntegerButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        OxigenatorAction action = new OxigenatorAction();
+        OxygenatorAction action = new OxygenatorAction();
         if ((component.getTotalSweepInteger() - 1) < 0) {
           action.setTotalSweepInteger(0);
         }
@@ -138,7 +138,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     incTotalSweepDecimalButton = new ImageButton(incButtonImage, incButtonRolloverImage, incButtonSelectedImage);  
     incTotalSweepDecimalButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        OxigenatorAction action = new OxigenatorAction();
+        OxygenatorAction action = new OxygenatorAction();
         if ((component.getTotalSweepDecimal() + 1) > 9) {
           action.setTotalSweepDecimal(9);
         }
@@ -158,7 +158,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     decTotalSweepDecimalButton = new ImageButton(decButtonImage, decButtonRolloverImage, decButtonSelectedImage);    
     decTotalSweepDecimalButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        OxigenatorAction action = new OxigenatorAction();
+        OxygenatorAction action = new OxygenatorAction();
         if ((component.getTotalSweepDecimal() - 1) < 0) {
           action.setTotalSweepDecimal(0);
         }
@@ -182,7 +182,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     knobButton.addRotationListener(new RotationListener() {
       public void handleRotation(double angle, boolean valueAdjusting) {
         double value = (angle - (Math.PI / 4)) / (Math.PI * 6 / 4);
-        OxigenatorAction action = new OxigenatorAction();
+        OxygenatorAction action = new OxygenatorAction();
         action.setTotalSweepInteger(component.getTotalSweepInteger());
         action.setTotalSweepDecimal(component.getTotalSweepDecimal());          
         action.setFiO2(value);
