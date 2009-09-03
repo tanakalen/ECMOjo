@@ -2,7 +2,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.model;
 
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.BubbleDetectorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
@@ -335,7 +335,7 @@ public class Baseline {
     Patient patient = game.getPatient(); 
     HeaterComponent heater = (HeaterComponent)game.getEquipment().getComponent(HeaterComponent.class);
     TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
-    OxigenatorComponent oxigenator = (OxigenatorComponent)game.getEquipment().getComponent(OxigenatorComponent.class);
+    OxygenatorComponent oxigenator = (OxygenatorComponent)game.getEquipment().getComponent(OxygenatorComponent.class);
     PumpComponent pump = (PumpComponent)game.getEquipment().getComponent(PumpComponent.class);
     BubbleDetectorComponent bubbleDetector 
       = (BubbleDetectorComponent)game.getEquipment().getComponent(BubbleDetectorComponent.class);

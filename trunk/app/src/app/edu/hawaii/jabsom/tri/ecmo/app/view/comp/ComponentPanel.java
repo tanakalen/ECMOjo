@@ -15,7 +15,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.InterventionComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PhysiologicMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PressureMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
@@ -102,8 +102,8 @@ public abstract class ComponentPanel extends JPanel implements UpdateListener {
     else if (component instanceof PressureMonitorComponent) {
       return new PressureMonitorComponentPanel((PressureMonitorComponent)component);
     }    
-    else if (component instanceof OxigenatorComponent) {
-      return new OxiComponentPanel((OxigenatorComponent)component);
+    else if (component instanceof OxygenatorComponent) {
+      return new OxyComponentPanel((OxygenatorComponent)component);
     }
     else if (component instanceof TubeComponent) {
       return new TubeComponentPanel((TubeComponent)component);

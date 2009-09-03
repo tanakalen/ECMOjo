@@ -16,8 +16,8 @@ import king.lib.access.ImageLoader;
 import king.lib.out.Error;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent.OxiType;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 
 /**
  * The component panel. 
@@ -25,10 +25,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent.OxiType;
  * @author   Christoph Aschwanden
  * @since    September 4, 2008
  */
-public class OxiComponentPanel extends ComponentPanel implements Runnable {
+public class OxyComponentPanel extends ComponentPanel implements Runnable {
 
   /** The oxi image. */
-  private Image oxiImage;
+  private Image oxyImage;
   /** The oxigenator broken image. */
   private Image brokenImage;
 
@@ -68,7 +68,7 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
   private final Color textColor = new Color(0.2f, 0.2f, 0.2f);
   
   /** The component. */
-  protected OxigenatorComponent component;
+  protected OxygenatorComponent component;
   
   /** The selection button. */
   private AbstractButton selectionButton;
@@ -81,7 +81,7 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
    * 
    * @param component  The associated component.
    */
-  protected OxiComponentPanel(OxigenatorComponent component) {
+  protected OxyComponentPanel(OxygenatorComponent component) {
     super(component);
     this.component = component;
     
@@ -93,12 +93,12 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
     setLayout(null);
     
     // load images
-    if (component.getOxiType() == OxiType.QUADROX_D) {
-      oxiImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-QuadroxDOxigenator.png");
+    if (component.getOxyType() == OxyType.QUADROX_D) {
+      oxyImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-QuadroxDOxigenator.png");
       brokenImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-QuadroxDOxigenatorBroken.png");
     }
     else {
-      oxiImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-SciMedOxigenator.png");
+      oxyImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-SciMedOxigenator.png");
       brokenImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-SciMedOxigenatorBroken.png");
     }
     
@@ -190,18 +190,18 @@ public class OxiComponentPanel extends ComponentPanel implements Runnable {
                         RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
     // draws the image
-    if (component.getOxiType() == OxiType.QUADROX_D) {
-      g.drawImage(oxiImage, 13, 0, this);
+    if (component.getOxyType() == OxyType.QUADROX_D) {
+      g.drawImage(oxyImage, 13, 0, this);
     }
     else {
-      g.drawImage(oxiImage, 5, 33, this);
+      g.drawImage(oxyImage, 5, 33, this);
     }
     
     if (component.isBroken()) {
       int[] positions = new int[3];
       
       // draws the broken image
-      if (component.getOxiType() == OxiType.QUADROX_D) {
+      if (component.getOxyType() == OxyType.QUADROX_D) {
         g.drawImage(brokenImage, 13, 0, this);
       }
       else {

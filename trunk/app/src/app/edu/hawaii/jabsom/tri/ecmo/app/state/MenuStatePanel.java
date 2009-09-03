@@ -9,12 +9,12 @@ import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent.OxiType;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel;
@@ -275,12 +275,12 @@ public class MenuStatePanel extends JPanel {
           }
           
           // update oxigenator
-          OxigenatorComponent oxi = (OxigenatorComponent)equipment.getComponent(OxigenatorComponent.class);
+          OxygenatorComponent oxi = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
           if (sciMedRadio.isSelected()) {
-            oxi.setOxiType(OxiType.SCI_MED);
+            oxi.setOxyType(OxyType.SCI_MED);
           }
           else {
-            oxi.setOxiType(OxiType.QUADROX_D);
+            oxi.setOxyType(OxyType.QUADROX_D);
           }
           
           // update pump
@@ -303,7 +303,7 @@ public class MenuStatePanel extends JPanel {
           
           // init tube values depending on selection
           tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
-          if (oxi.getOxiType() == OxigenatorComponent.OxiType.QUADROX_D) { 
+          if (oxi.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
             // PMP
             tube.setPostMembranePressure(tube.getPreMembranePressure());
           }

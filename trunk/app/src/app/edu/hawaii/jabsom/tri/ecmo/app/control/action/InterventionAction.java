@@ -3,7 +3,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.control.action;
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
@@ -100,7 +100,7 @@ public class InterventionAction extends Action {
       // add clotting if entered at wrong location
       if ((location == InterventionLocation.BEFORE_OXIGENATOR)
        || (location == InterventionLocation.BEFORE_PUMP)) {
-        OxigenatorComponent oxigenator = (OxigenatorComponent)equipment.getComponent(OxigenatorComponent.class);
+        OxygenatorComponent oxigenator = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
         oxigenator.setClotting(oxigenator.getClotting() + 1);
       }
     }
