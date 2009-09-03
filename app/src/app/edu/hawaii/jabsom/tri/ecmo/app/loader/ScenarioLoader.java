@@ -150,6 +150,7 @@ public final class ScenarioLoader {
         
         // the baseline
         Baseline baseline = scenario.getBaseline();
+        baseline.setSedated(Boolean.parseBoolean(parameters.get("baseline-sedated")));
         baseline.setBleeding(Boolean.parseBoolean(parameters.get("baseline-bleeding")));
         baseline.setMinHeartRate(Double.parseDouble(parameters.get("baseline-min-heart-rate")));
         baseline.setMaxHeartRate(Double.parseDouble(parameters.get("baseline-max-heart-rate")));
@@ -193,6 +194,7 @@ public final class ScenarioLoader {
         patient.setWeight(Double.parseDouble(parameters.get("patient-weight")));
         patient.setLungFunction(LungFunction.parse(parameters.get("patient-lung-function")));
         patient.setHeartFunction(HeartFunction.parse(parameters.get("patient-heart-function")));
+        patient.setSedated(Boolean.parseBoolean(parameters.get("patient-sedated")));
         patient.setBleeding(Boolean.parseBoolean(parameters.get("patient-bleeding")));
         // TODO: load other patient values
         patient.setTemperature(Double.parseDouble(parameters.get("patient-temperature")));

@@ -112,6 +112,9 @@ public class Patient  extends Component {
   /** The heart function. */
   private HeartFunction heartFunction;
   
+  /** True for sedated. */
+  private boolean sedated;
+  
   /** True if patient is bleeding. */
   private boolean bleeding;
   
@@ -398,6 +401,24 @@ public class Patient  extends Component {
     this.lungFunction = lungFunction;
   }
   
+  /**
+   * Returns the sedated.
+   *
+   * @return  The sedated.
+   */
+  public boolean isSedated() {
+    return sedated;
+  }
+
+  /**
+   * Sets the sedated.
+   *
+   * @param sedated  The sedated.
+   */
+  public void setSedated(boolean sedated) {
+    this.sedated = sedated;
+  }
+
   /**
    * Returns true for bleeding.
    *

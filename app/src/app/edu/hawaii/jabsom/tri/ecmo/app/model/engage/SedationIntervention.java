@@ -1,12 +1,12 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.engage;
 
 /**
- * The Albumin intervention. 
+ * The Sedation intervention. 
  *
- * @author   king
- * @since    August 29, 2008
+ * @author   noblemaster
+ * @since    September 2, 2009
  */
-public class AlbuminIntervention extends Intervention {
+public class SedationIntervention extends Intervention {
     
   /**
    * Returns the name of the intervention.
@@ -14,6 +14,6 @@ public class AlbuminIntervention extends Intervention {
    * @return  The name.
    */
   public String getName() {
-    return "Albumin";
+    return "Sedation";
   }
 }
