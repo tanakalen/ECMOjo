@@ -2,7 +2,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.control.action;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 
 /**
  * The oxigenator action. 
@@ -100,7 +100,7 @@ public class OxigenatorAction extends Action {
   @Override
   public void execute(Game game) {
     // sets the oxigenator
-    OxigenatorComponent component = (OxigenatorComponent)game.getEquipment().getComponent(OxigenatorComponent.class);
+    OxygenatorComponent component = (OxygenatorComponent)game.getEquipment().getComponent(OxygenatorComponent.class);
     if (totalSweepInteger != -1) {
       component.setTotalSweepInteger(totalSweepInteger);
     }

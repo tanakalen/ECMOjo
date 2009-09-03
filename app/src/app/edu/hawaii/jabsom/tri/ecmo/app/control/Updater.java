@@ -7,14 +7,14 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.BubbleDetectorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.CDIMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PhysiologicMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PressureMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent.OxiType;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
@@ -56,8 +56,8 @@ public final class Updater {
         .getComponent(PumpComponent.class);
     TubeComponent tube = (TubeComponent)equipment
         .getComponent(TubeComponent.class);
-    OxigenatorComponent oxigenator = (OxigenatorComponent)equipment
-        .getComponent(OxigenatorComponent.class);
+    OxygenatorComponent oxigenator = (OxygenatorComponent)equipment
+        .getComponent(OxygenatorComponent.class);
 
     // store the heart rate
     history.setPatientTemperature(patient.getTemperature());
@@ -101,8 +101,8 @@ public final class Updater {
            .getComponent(PumpComponent.class);
       TubeComponent tube = (TubeComponent)equipment
            .getComponent(TubeComponent.class);
-      OxigenatorComponent oxygenator = (OxigenatorComponent)equipment
-           .getComponent(OxigenatorComponent.class);
+      OxygenatorComponent oxygenator = (OxygenatorComponent)equipment
+           .getComponent(OxygenatorComponent.class);
       VentilatorComponent ventilator = (VentilatorComponent)equipment
            .getComponent(VentilatorComponent.class);
       HeaterComponent heater = (HeaterComponent)equipment
@@ -268,7 +268,7 @@ public final class Updater {
             } 
             
             // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases. 
-            if (pump.getPumpType() == PumpType.ROLLER && oxygenator.getOxiType() == OxiType.SCI_MED) {
+            if (pump.getPumpType() == PumpType.ROLLER && oxygenator.getOxyType() == OxyType.SCI_MED) {
               tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.999);
               tube.setVenousPressure(tube.getVenousPressure() + 0.002);
             }
@@ -342,7 +342,7 @@ public final class Updater {
       if ((difference != 0) && (history.getFlow() != 0)) {
         double pre = tube.getPreMembranePressure();
         double post = tube.getPostMembranePressure();
-        if (oxygenator.getOxiType().equals(OxigenatorComponent.OxiType.QUADROX_D)) {
+        if (oxygenator.getOxyType().equals(OxygenatorComponent.OxyType.QUADROX_D)) {
           if (difference > 0) {
             tube.setPreMembranePressure((((difference * 1000) * 0.0001) + 1) * pre);
             tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);
@@ -352,7 +352,7 @@ public final class Updater {
             tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
           }
         }
-        else if (oxygenator.getOxiType().equals(OxigenatorComponent.OxiType.SCI_MED)) {
+        else if (oxygenator.getOxyType().equals(OxygenatorComponent.OxyType.SCI_MED)) {
           if (difference > 0) {
             tube.setPreMembranePressure((((difference * 1000) * 0.00055) + 1) * pre);
             tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);            
@@ -620,7 +620,7 @@ public final class Updater {
    * @param history  The history.
    */
   private static void tubeUndo(TubeComponent tube, PumpComponent pump, PressureMonitorComponent pressureMonitor, 
-      OxigenatorComponent oxigenator, PhysiologicMonitorComponent physiologicMonitor, Patient patient, 
+      OxygenatorComponent oxigenator, PhysiologicMonitorComponent physiologicMonitor, Patient patient, 
       History history) {
     // Arterial: Open, Venous: Open, Bridge: Open
     if (history.isArterialBOpen() && history.isVenousBOpen() && history.isBridgeOpen()) {
@@ -717,7 +717,7 @@ public final class Updater {
       } 
       
       // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2. 
-      if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxiType() == OxiType.SCI_MED) {
+      if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SCI_MED) {
         tube.setPreMembranePressure(tube.getPreMembranePressure() / 0.90);
         tube.setVenousPressure(tube.getVenousPressure() - 2.0);
       }
@@ -768,7 +768,7 @@ public final class Updater {
    * @param patient  The patient.
    */
   private static void tubeDo(TubeComponent tube, PumpComponent pump, PressureMonitorComponent pressureMonitor, 
-      OxigenatorComponent oxigenator, PhysiologicMonitorComponent physiologicMonitor, Patient patient) {
+      OxygenatorComponent oxigenator, PhysiologicMonitorComponent physiologicMonitor, Patient patient) {
     // Arterial: Open, Venous: Open, Bridge: Open
     if (tube.isArterialBOpen() && tube.isVenousBOpen() && tube.isBridgeOpen()) {
       // heart rate increase 10%, 
@@ -870,7 +870,7 @@ public final class Updater {
       } 
       
       // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2. 
-      if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxiType() == OxiType.SCI_MED) {
+      if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SCI_MED) {
         tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
         tube.setVenousPressure(tube.getVenousPressure() + 2.0);
       }

@@ -4,7 +4,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.AlarmIndicatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 
@@ -32,8 +32,8 @@ public class CircuitChangeAction extends Action {
     tubeComponent.setVenousPressure(0);
     
     // reset the oxigenator
-    OxigenatorComponent oxiComponent = (OxigenatorComponent)equipment
-                                       .getComponent(OxigenatorComponent.class);
+    OxygenatorComponent oxiComponent = (OxygenatorComponent)equipment
+                                       .getComponent(OxygenatorComponent.class);
     oxiComponent.setClotting(0.0);
     oxiComponent.setBroken(false);
 

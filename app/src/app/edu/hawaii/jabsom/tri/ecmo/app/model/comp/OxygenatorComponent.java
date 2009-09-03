@@ -7,13 +7,13 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
  * @author   king
  * @since    August 19, 2008
  */
-public class OxigenatorComponent extends Component {
+public class OxygenatorComponent extends Component {
   
   /** The available types. */
-  public enum OxiType { SCI_MED, QUADROX_D };
+  public enum OxyType { SCI_MED, QUADROX_D };
   
   /** The oxigenator type. */
-  private OxiType oxiType;
+  private OxyType oxyType;
   
   /** The total sweep integer. total sweep = integer + decimal / 10 [0.0, 10.0]. */
   private int totalSweepInteger;
@@ -34,17 +34,17 @@ public class OxigenatorComponent extends Component {
    *
    * @return  The oxi type.
    */
-  public OxiType getOxiType() {
-    return oxiType;
+  public OxyType getOxyType() {
+    return oxyType;
   }
 
   /**
    * Sets the oxi type.
    *
-   * @param oxiType  The oxi type.
+   * @param oxyType  The oxi type.
    */
-  public void setOxiType(OxiType oxiType) {
-    this.oxiType = oxiType;
+  public void setOxyType(OxyType oxyType) {
+    this.oxyType = oxyType;
   }
 
   /**
@@ -174,7 +174,7 @@ public class OxigenatorComponent extends Component {
    * @return  The name.
    */
   public String getName() {
-    if (oxiType == OxiType.QUADROX_D) {
+    if (oxyType == OxyType.QUADROX_D) {
       return "Quadrox D Oxygenator";
     }
     else {

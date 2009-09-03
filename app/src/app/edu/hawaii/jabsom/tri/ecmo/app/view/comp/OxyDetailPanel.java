@@ -17,7 +17,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.OxigenatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.KnobButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.KnobButton.RotationListener;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 
 /**
  * The detail panel. 
@@ -25,7 +25,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
  * @author   Christoph Aschwanden
  * @since    September 5, 2008
  */
-public class OxiDetailPanel extends DetailPanel implements Runnable {
+public class OxyDetailPanel extends DetailPanel implements Runnable {
 
   /** The detail image. */
   private Image detailImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Oxigenator.png");
@@ -61,7 +61,7 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
   private final Color textColor = new Color(0.2f, 0.2f, 0.2f);
   
   /** The component. */
-  private OxigenatorComponent component;
+  private OxygenatorComponent component;
   
   /** The updater thread. */
   private Thread thread;
@@ -74,7 +74,7 @@ public class OxiDetailPanel extends DetailPanel implements Runnable {
    * 
    * @param component  The associated component.
    */
-  protected OxiDetailPanel(final OxigenatorComponent component) {
+  protected OxyDetailPanel(final OxygenatorComponent component) {
     super(component);
     this.component = component;
     

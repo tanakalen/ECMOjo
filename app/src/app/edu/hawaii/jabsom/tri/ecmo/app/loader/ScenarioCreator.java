@@ -14,14 +14,14 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.InterventionComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PhysiologicMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PressureMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxigenatorComponent.OxiType;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
@@ -101,8 +101,8 @@ public final class ScenarioCreator {
     tubeComponent.setVenousBubbles(false);
     equipment.add(tubeComponent);
     
-    OxigenatorComponent oxiComponent = new OxigenatorComponent();
-    oxiComponent.setOxiType(OxiType.SCI_MED);
+    OxygenatorComponent oxiComponent = new OxygenatorComponent();
+    oxiComponent.setOxyType(OxyType.SCI_MED);
     oxiComponent.setTotalSweep(0.6);
     oxiComponent.setFiO2(0.5);
     oxiComponent.setClotting(0.0);
