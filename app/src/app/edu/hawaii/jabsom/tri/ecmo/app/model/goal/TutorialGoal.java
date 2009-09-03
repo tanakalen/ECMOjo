@@ -9,7 +9,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.BubbleAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.HeaterAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.InterventionAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
-import edu.hawaii.jabsom.tri.ecmo.app.control.action.OxigenatorAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.OxygenatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PressureMonitorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PumpAction;
@@ -132,9 +132,9 @@ public class TutorialGoal extends Goal {
    *   Action:Pump:on                       pump turned on
    *   Action:Pump:off                      pump turned off
    *   Action:Pump:flow:[>|<][flow]         pump flow changed: e.g.  Action:Pump:flow:>1.304  or  Action:Pump:flow:<1.4
-   *   Action:Oxi                           oxigenator action performed
-   *   Action:Oxi:totalSweep:[>|<][flow]    total sweep flow changed.
-   *   Action:Oxi:fiO2:[>|<][flow]          fiO2 flow changed.
+   *   Action:Oxy                           oxygenator action performed
+   *   Action:Oxy:totalSweep:[>|<][flow]    total sweep flow changed.
+   *   Action:Oxy:fiO2:[>|<][flow]          fiO2 flow changed.
    *   Action:Intervention                  intervention performed
    *   Action:Intervention:[Name]           intervention executed where [Name] is "Albumin", "Blood", "Dopamine", ...
    *   Action:Tube                          action on tubs performed
@@ -202,11 +202,11 @@ public class TutorialGoal extends Goal {
                     if (items[3].equals("BEFORE_PUMP")) {
                       triggerLocation = InterventionLocation.BEFORE_PUMP;
                     }
-                    else if (items[3].equals("BEFORE_OXIGENATOR")) {
-                      triggerLocation = InterventionLocation.BEFORE_OXIGENATOR;
+                    else if (items[3].equals("BEFORE_OXYGENATOR")) {
+                      triggerLocation = InterventionLocation.BEFORE_OXYGENATOR;
                     }
-                    else if (items[3].equals("AFTER_OXIGENATOR")) {
-                      triggerLocation = InterventionLocation.AFTER_OXIGENATOR; 
+                    else if (items[3].equals("AFTER_OXYGENATOR")) {
+                      triggerLocation = InterventionLocation.AFTER_OXYGENATOR; 
                     }
                     else if (items[3].equals("PATIENT")) {
                       triggerLocation = InterventionLocation.PATIENT;
@@ -259,27 +259,27 @@ public class TutorialGoal extends Goal {
             }
           }
         }
-        else if (items[1].equals("Oxi")) {
-          // Changing oxigenator parameters
-          if (action instanceof OxigenatorAction) {
+        else if (items[1].equals("Oxy")) {
+          // Changing oxygenator parameters
+          if (action instanceof OxygenatorAction) {
             if (items.length <= 2) {
-              // Action:Oxi  oxigenator action performed
+              // Action:Oxy  oxygenator action performed
               progress++;
               notifyUpdate();
             }
             else {
               if (items[2].equals("totalSweep")) {
-                // Action:Oxi:totalSweep:[>|<][flow]  total sweep flow changed.
+                // Action:Oxy:totalSweep:[>|<][flow]  total sweep flow changed.
                 String operator = items[3].substring(0, 1);
                 double triggerFlow = Double.parseDouble(items[3].substring(1));
-                double actualFlow = ((OxigenatorAction) action).getTotalSweep();
+                double actualFlow = ((OxygenatorAction) action).getTotalSweep();
                 checkFlow(operator, actualFlow, triggerFlow);
               }
               else if (items[2].equals("fiO2")) {
-                // Action:Oxi:fiO2:[>|<][flow]  fiO2 flow changed.
+                // Action:Oxy:fiO2:[>|<][flow]  fiO2 flow changed.
                 String operator = items[3].substring(0, 1);
                 double triggerFlow = Double.parseDouble(items[3].substring(1));
-                double actualFlow = ((OxigenatorAction) action).getFiO2();
+                double actualFlow = ((OxygenatorAction) action).getFiO2();
                 checkFlow(operator, actualFlow, triggerFlow);
               }
             }

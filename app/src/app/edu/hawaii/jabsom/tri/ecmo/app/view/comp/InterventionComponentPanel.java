@@ -52,10 +52,10 @@ public class InterventionComponentPanel extends ComponentPanel {
     else if (interventionLocation == InterventionLocation.BEFORE_PUMP) {
       setLocation(512, 484);
     }
-    else if (interventionLocation == InterventionLocation.BEFORE_OXIGENATOR) {
+    else if (interventionLocation == InterventionLocation.BEFORE_OXYGENATOR) {
       setLocation(628, 428);
     }
-    else if (interventionLocation == InterventionLocation.AFTER_OXIGENATOR) {
+    else if (interventionLocation == InterventionLocation.AFTER_OXYGENATOR) {
       setLocation(515, 348);
     }
     else {
