@@ -32,7 +32,7 @@ public class PumpComponentPanel extends ComponentPanel implements Runnable {
   private Image bladderImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-RollerBladder.png");
 
   /** The panel image. */
-  private Image pumpImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-RollerPump.png");
+  private Image pumpImage;
 
   /** The start time in nano second. */
   private long lastUpdate;
@@ -81,6 +81,14 @@ public class PumpComponentPanel extends ComponentPanel implements Runnable {
     
     // set layout
     setLayout(null);
+    
+    // load the correct image
+    if (component.getPumpType() == PumpType.ROLLER) {
+      pumpImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-RollerPump.png");
+    }
+    else {
+      pumpImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-CentrifugalPump.png");
+    }
     
     // variable for rotation
     lastUpdate = System.nanoTime();
@@ -192,23 +200,23 @@ public class PumpComponentPanel extends ComponentPanel implements Runnable {
     if (component.getPumpType() == PumpType.ROLLER) {
       // draws the image
       g2.drawImage(bladderImage, 11, 18, this);
-
-      // draws the image
-      long currentUpdate = System.nanoTime();
-      long delta = currentUpdate - lastUpdate;
-      lastUpdate = currentUpdate;
-  
-      if (component.isOn()) {    
-        double deltaAngle = delta * 0.0000003 * component.getFlow();
-        angle += deltaAngle;
-        if (angle > 360.0) {
-          angle -= 360.0;
-        }
-      }
-      g2.rotate(-angle * Math.PI / 180.0, 162, 41);
-      g2.drawImage(pumpImage, 130, 9, this);
-      g2.rotate(angle * Math.PI / 180.0, 162, 41);    
     }
+    
+    // draws the rotating pump image
+    long currentUpdate = System.nanoTime();
+    long delta = currentUpdate - lastUpdate;
+    lastUpdate = currentUpdate;
+
+    if (component.isOn()) {    
+      double deltaAngle = delta * 0.0000003 * component.getFlow();
+      angle += deltaAngle;
+      if (angle > 360.0) {
+        angle -= 360.0;
+      }
+    }
+    g2.rotate(-angle * Math.PI / 180.0, 162, 41);
+    g2.drawImage(pumpImage, 130, 9, this);
+    g2.rotate(angle * Math.PI / 180.0, 162, 41);    
   }
   
   /**
