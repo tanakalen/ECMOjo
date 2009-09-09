@@ -4,6 +4,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
@@ -50,7 +51,7 @@ public class MenuStatePanel extends JPanel {
   /** The va radio button. */
   private ImageToggleButton vaRadio;
   /** The sciMed radio button. */  
-  private ImageToggleButton sciMedRadio; 
+  private ImageToggleButton siliconeRadio; 
   /** The quadrox D radio button. */
   private ImageToggleButton quadroxDRadio;
   /** The roller pump radio button. */
@@ -170,7 +171,6 @@ public class MenuStatePanel extends JPanel {
     vvRadio.setOpaque(false);
     vvRadio.setSize(32, 32);
     vvRadio.setLocation(0, 8);
-    vvRadio.setSelected(true);
     componentSelectionPanel.add(vvRadio);
     modeTubeButtonGroup.add(vvRadio);
     Image vaRadioRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkRol.png");
@@ -181,19 +181,24 @@ public class MenuStatePanel extends JPanel {
     vaRadio.setLocation(142, 8);
     componentSelectionPanel.add(vaRadio);   
     modeTubeButtonGroup.add(vaRadio);
+    if (Configuration.getInstance().isSelectionVVModeECMO()) {
+      vvRadio.setSelected(true);
+    }
+    else {
+      vaRadio.setSelected(true);
+    }
     
-    ButtonGroup oxigenatorButtonGroup = new ButtonGroup();
+    ButtonGroup oxygenatorButtonGroup = new ButtonGroup();
     Image sciMedRadioRolloverImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkRol.png");
     Image sciMedRadioSelectedImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkSel.png");
-    sciMedRadio = new ImageToggleButton(null, sciMedRadioRolloverImage, sciMedRadioSelectedImage);    
-    sciMedRadio.setOpaque(false);
-    sciMedRadio.setSize(32, 32);
-    sciMedRadio.setLocation(0, 39);
-    sciMedRadio.setSelected(true);
-    componentSelectionPanel.add(sciMedRadio);    
-    oxigenatorButtonGroup.add(sciMedRadio);
+    siliconeRadio = new ImageToggleButton(null, sciMedRadioRolloverImage, sciMedRadioSelectedImage);    
+    siliconeRadio.setOpaque(false);
+    siliconeRadio.setSize(32, 32);
+    siliconeRadio.setLocation(0, 39);
+    componentSelectionPanel.add(siliconeRadio);    
+    oxygenatorButtonGroup.add(siliconeRadio);
     Image quadroxDRadioRolloverImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkRol.png");
     Image quadroxDRadioSelectedImage 
@@ -203,7 +208,13 @@ public class MenuStatePanel extends JPanel {
     quadroxDRadio.setSize(32, 32);
     quadroxDRadio.setLocation(142, 39);
     componentSelectionPanel.add(quadroxDRadio);    
-    oxigenatorButtonGroup.add(quadroxDRadio);
+    oxygenatorButtonGroup.add(quadroxDRadio);
+    if (Configuration.getInstance().isSelectionSiliconeOxygenator()) {
+      siliconeRadio.setSelected(true);
+    }
+    else {
+      quadroxDRadio.setSelected(true);
+    }
     
     ButtonGroup pumpButtonGroup = new ButtonGroup();
     Image rollerRadioRolloverImage 
@@ -214,7 +225,6 @@ public class MenuStatePanel extends JPanel {
     rollerRadio.setOpaque(false);
     rollerRadio.setSize(32, 32);
     rollerRadio.setLocation(0, 71);
-    rollerRadio.setSelected(true);
     componentSelectionPanel.add(rollerRadio);    
     pumpButtonGroup.add(rollerRadio);
     Image centrifugalRadioRolloverImage
@@ -227,6 +237,12 @@ public class MenuStatePanel extends JPanel {
     centrifugalRadio.setLocation(142, 71);
     componentSelectionPanel.add(centrifugalRadio);    
     pumpButtonGroup.add(centrifugalRadio);
+    if (Configuration.getInstance().isSelectionRollerPump()) {
+      rollerRadio.setSelected(true);
+    }
+    else {
+      centrifugalRadio.setSelected(true);
+    }
 
     ButtonGroup ventilatorButtonGroup = new ButtonGroup();
     Image conventionalRadioRolloverImage 
@@ -238,7 +254,6 @@ public class MenuStatePanel extends JPanel {
     conventionalRadio.setOpaque(false);
     conventionalRadio.setSize(32, 32);
     conventionalRadio.setLocation(0, 103);
-    conventionalRadio.setSelected(true);
     componentSelectionPanel.add(conventionalRadio);    
     ventilatorButtonGroup.add(conventionalRadio);
     Image highfrequencyRadioRolloverImage 
@@ -252,6 +267,12 @@ public class MenuStatePanel extends JPanel {
     highfrequencyRadio.setLocation(142, 103);
     componentSelectionPanel.add(highfrequencyRadio);    
     ventilatorButtonGroup.add(highfrequencyRadio);
+    if (Configuration.getInstance().isSelectionConventionalVentilator()) {
+      conventionalRadio.setSelected(true);
+    }
+    else {
+      highfrequencyRadio.setSelected(true);
+    }
     
     // add scenario selection listener
     ScenarioSelectionListener scenarioSelectionListener = new ScenarioSelectionListener() {
@@ -273,15 +294,17 @@ public class MenuStatePanel extends JPanel {
             double hr = patient.getHeartRate();
             patient.setHeartRate(hr * 0.9);
           }
+          Configuration.getInstance().setSelectionVVModeECMO(vvRadio.isSelected());
           
           // update oxigenator
           OxygenatorComponent oxi = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
-          if (sciMedRadio.isSelected()) {
+          if (siliconeRadio.isSelected()) {
             oxi.setOxyType(OxyType.SILICONE);
           }
           else {
             oxi.setOxyType(OxyType.QUADROX_D);
           }
+          Configuration.getInstance().setSelectionSiliconeOxygenator(siliconeRadio.isSelected());
           
           // update pump
           PumpComponent pump = (PumpComponent)equipment.getComponent(PumpComponent.class);
@@ -291,6 +314,7 @@ public class MenuStatePanel extends JPanel {
           else {
             pump.setPumpType(PumpType.CENTRIFUGAL);
           }
+          Configuration.getInstance().setSelectionRollerPump(rollerRadio.isSelected());
 
           // update ventilator
           VentilatorComponent ventilator = (VentilatorComponent)equipment.getComponent(VentilatorComponent.class);
@@ -300,7 +324,8 @@ public class MenuStatePanel extends JPanel {
           else {
             ventilator.setSubtype(new VentilatorComponent.HighFrequencySubtype());
           }
-          
+          Configuration.getInstance().setSelectionConventionalVentilator(conventionalRadio.isSelected());
+
           // init tube values depending on selection
           tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
           if (oxi.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
@@ -324,6 +349,8 @@ public class MenuStatePanel extends JPanel {
             // Tutorial: we don't set a username
             user = "N/A";
           }
+          Configuration.getInstance().setSelectionScenarioTab(scenarioListPanel.isVisible());
+          Configuration.getInstance().saveConfiguration();
           
           // show cursor busy
           setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -337,8 +364,11 @@ public class MenuStatePanel extends JPanel {
     scenarioListPanel.addScenarioSelectionListener(scenarioSelectionListener);
     
     // enable tutorial
-    tutorialButton.setSelected(true);
-    tutorialListPanel.setVisible(true);
+    boolean scenarioSelection = Configuration.getInstance().isSelectionScenarioTab();
+    tutorialButton.setSelected(!scenarioSelection);
+    tutorialListPanel.setVisible(!scenarioSelection);
+    scenarioButton.setSelected(scenarioSelection);
+    scenarioListPanel.setVisible(scenarioSelection);
   }
   
 
