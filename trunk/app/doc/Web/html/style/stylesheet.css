@@ -100,15 +100,22 @@ code { border: 1px dotted #999999; background-color: #eeeeee; font-family: Times
 
 .arrowlistmenu ul { list-style-type: none; list-style-position: outside; margin: 0; padding: 0; margin-bottom: 8px; }
 .arrowlistmenu ul li { padding-bottom: 2px; font-size: 12px; }
-.arrowlistmenu ul li a { color: #2E88EB; background: url(../image/interface/arrowbullet.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.arrowlistmenusearch { background: url(../image/interface/search.gif) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.arrowlistmenurss { background: url(../image/icon/RSS.gif) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.download { background: url(../image/icon/DownloadIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.video { background: url(../image/icon/VideoIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.Windows { background: url(../image/OS/WINDOWS-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.Macintosh { background: url(../image/OS/MACINTOSH-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.Linux { background: url(../image/OS/LINUX-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.UNIX { background: url(../image/OS/UNIX-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 17px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a { color: #2E88EB; background: url(../image/icon/HollowIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.arrowlistmenusearch { background: url(../image/interface/search.gif) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.arrowlistmenurss { background: url(../image/icon/RSS.gif) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.home { background: url(../image/icon/RoundIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.target { background: url(../image/icon/TargetIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.s { background: url(../image/icon/SIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.play { background: url(../image/icon/PlayIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.download { background: url(../image/icon/DownloadIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.support { background: url(../image/icon/ExclamationIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.screenshot { background: url(../image/icon/ScreenshotIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.video { background: url(../image/icon/VideoIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.help { background: url(../image/icon/HelpIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.Windows { background: url(../image/OS/WINDOWS-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.Macintosh { background: url(../image/OS/MACINTOSH-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.Linux { background: url(../image/OS/LINUX-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.UNIX { background: url(../image/OS/UNIX-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
 .arrowlistmenu ul li a:visited{ color: #2E88EB; }
 .arrowlistmenu ul li a:hover{ color: #2E88EB; background-color: #CBDCEF; }
 
