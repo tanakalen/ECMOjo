@@ -28,11 +28,11 @@ require_once($root.'lib/model/user.inc.'.$phpEx);
 require_once($root.'conf/setup.inc');
 
 // Mailing 
-require_once($root.'lib/common/mail.inc.'.$phpEx);
+//require_once($root.'lib/common/mail.inc.'.$phpEx);
 
 // Include the DB classes
-require_once($root.'lib/common/db.inc.'.$phpEx);
-require_once($root.'lib/dao/dao_factory.inc.'.$phpEx);
+//require_once($root.'lib/common/db.inc.'.$phpEx);
+//require_once($root.'lib/dao/dao_factory.inc.'.$phpEx);
 
 // Include the security
 session_start();
