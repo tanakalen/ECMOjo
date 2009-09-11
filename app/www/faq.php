@@ -8,7 +8,7 @@
   include($root.'include/begin.inc.'.$phpEx);
 ?>
 
-<div class="titlebar"><div><div><h2>Frequently Asked Questions</h2></div></div></div>
+<h1>Frequently Asked Questions</h1>
 <p>
   <strong>What is ECMOjo/ECMO?</strong><br>
   ECMOjo is a simulator and trainer for extracorporeal membrane oxygenation (ECMO).  It consists of a graphical user

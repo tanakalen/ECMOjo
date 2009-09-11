@@ -2,103 +2,84 @@
 <html>
 <head>
   <title>ECMOjo</title>
-
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <script type="text/javascript" src="script/jquery/jquery.js"></script>
   <link href="style/stylesheet.css" type="text/css" rel="stylesheet">
+  <script type="text/javascript" src="script/jquery/jquery.js"></script>
 </head>
 <body>
 
 <center>
 <table border="0" cellspacing="0" cellpadding="0" height="100%" class="content">
-<tr height="100%">
-  <td width="9" valign="top" style="background-image: url(image/interface/b2_left.gif); background-repeat: repeat-y; background-position: top;"><img src="image/interface/spacer.gif" width="9" height="32"></td>
-  <td>
+  <tr height="85"> 
+    <td style="background-image: url(image/interface/banner.jpg);" width="960" height="85">
+  
+<!-- BANNER start -->
+<div class="banner" style="margin-left: 680; margin-top: 28">
+  
+  <a href="http://www.hanuola.com">Hanuola</a> &nbsp;&nbsp;&amp;&nbsp;&nbsp; <a href="http://www.tri.jabsom.hawaii.edu">Telehealth Research Institute</a><br>
+  <a href="http://simtiki.org">SimTiki</a> &nbsp;&nbsp;&amp;&nbsp;&nbsp; <a href="http://www.simtikinihon.org/">シムチキ日本</a><br>
+  <a href="http://www.jabsom.com">John A. Burns School of Medicine</a>
 
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td colspan="2" class="contentheader" height="75"><table border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td colspan="2" width="983" height="75"><table border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td>
-              </td>
-              <td>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-              </td>
-            </tr>
-          </table></td>
-        </tr>
-        <tr style="background: #000000 url(image/interface/menu.gif) top center repeat-x;">
-          <td class="contentnavbar" width="983" height="20" valign="top">
-            &nbsp;&nbsp;&nbsp;
-            <a href="index.php">Home</a> |
-            <a href="webstart/ECMOjo.jnlp">Online Demo</a> |
-            <a href="about.php">About</a>
-          </td>
-        </tr>
-      </table></td>
+</div>
+<!-- BANNER end -->
+  
+  </td>
   </tr>
+  <tr> 
+    <td style="line-height:38px; margin:0px; padding:0px; background-image: url(image/interface/menu-horizontal.gif);" width="960" height="38">
+  
+<!-- H-MENU start -->
+<table border="0" cellspacing="0" cellpadding="0" height="100%" height="38"><tr height="38">
+  <td width="224">&nbsp;</td>
+  <td><a href="index.php" class="menubutton">Home</a></td>
+  <td><a href="webstart/ECMOjo.jnlp" class="menubutton">Online Demo</a></td>
+  <td><a href="about.php" class="menubutton">About</a></td>
+</tr></table>
+<!-- H-MENU end -->
 
-  <tr>
-
-<td width="160" valign="top">
-
-<!-- MENU start -->
+  </td>
+  </tr>
+  
+  <tr height="100%"><td><table border="0" cellspacing="0" cellpadding="0" width="960" height="100%"><tr>
+    <td style="background: #EEEEEE" width="5"><img src="image/interface/fade-left-top.gif" width="5" height="240"></td>
+    <td width="949">
+      <table id="content_table" border="0" cellspacing="0" cellpadding="0" width="949" height="100%">
+        <tr height="5"><td style="background-image: url(image/interface/body-shade.gif);" width="949" height="5"></td></tr>
+        <tr><td style="background-image: url(image/interface/body-repeat.gif);">
+          <table border="0" cellspacing="0" cellpadding="0" width="949" height="100%"><tr>
+        <td width="219" valign="top">
+          <table width="219"><tr width="219"><td width="219">
+          
+<!-- V-MENU start -->
 <div class="contentmenu">
-  <br><br><br>
   <div class="arrowlistmenu">
-    <h3>&divide; Menu</h3>
+    <div class="contentmenutitle">Navigation</div>
     <ul>
-      <li><a href="index.php">Home</a>
-      <li><a href="demo.php">Demo</a>
+      <li><a href="index.php" class="home">home &there4;</a>
+      <li><a href="demo.php" class="play">Applet</a>
       <li><a href="screenshot.php">Screenshots</a>
-      <li><a href="video.php">Videos</a>
-      <li><a href="component.php">Components</a>
-      <li><a href="download.php">Download</a>
-      <li><a href="faq.php">FAQ</a>            
+      <li><a href="video.php">Media</a>
+      <li><a href="download.php" class="download">Download</a>
+      <li><a href="faq.php" class="help">FAQ</a>            
+      <li><a href="about.php">About</a>
     </ul>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>       
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>    
-    <br>
-    <br>       
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
   </div>
 </div>
-<!-- MENU end -->
-
-</td><td width="832" valign="top" class="contentfull"><table border="0" cellspacing="0" cellpadding="0"><tr><td width="100%" valign="top">
-
-<!-- CONTENT start -->
-<div class="contentmain">
-
+<div class="contentmenu">
+  <div class="arrowlistmenu">
+    <div class="contentmenutitle">Development</div>
+    <ul>
+      <li><a href="http://sourceforge.net/projects/ecmojo/" class="target">Source Forge</a>
+      <li><a href="http://sourceforge.net/projects/ecmojo/support" class="support">Support</a>
+    </ul>
+  </div>
+</div>
+<!-- V-MENU end -->       
+           </td></tr></table>
+        </td>
+        <td width="730" valign="top" style="padding-left: 8px; padding-right: 8px; margin-bottom: 4px">
+          <table width="714"><tr width="714"><td width="714">
+        
 <!-- ERROR + MESSAGE OUTPUT start -->
 <?php
   if ($controller->message != NULL) {
@@ -117,3 +98,5 @@
   }
 ?>
 <!-- ERROR + MESSAGE OUTPUT end -->
+
+<!-- BODY start -->
