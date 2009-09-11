@@ -8,33 +8,50 @@
   include($root.'include/begin.inc.'.$phpEx);
 ?>
 
-<div class="titlebar"><div><div><h2>Download</h2></div></div></div>
-<p>You can either run ECMOjo via online demo or download the installer.  The source code is also provided for download.</p>
+<h1>Download</h1>
+<p>
+  You can either run ECMOjo online via a Java Applet or Webstart. You can also download the ECMOjo installer.  
+  The source code is provided for download via SourceForge.net.
+</p>
 <br>
-<strong>Online Demo</strong><br>
+
+<h2>Online Demo</h2>
 <p>To run ECMOjo, you need at least <a href="http://www.java.com/getjava/" target="_blank">Java 1.5 or higher</a> installed on your system.<br>
 <p>
   <ul>
-    <li><a href="webstart/ECMOjo.jnlp">Online Demo</a> (Java Webstart):<br>&nbsp;&nbsp;&nbsp; 
-    <i>Run ECMOjo directly with a single click from the link.</i></li>
-    <li><a href="demo.php">Demo page</a> (Applet):<br>&nbsp;&nbsp;&nbsp; 
-    <i>Run ECMOjo inside a browser window.</i></li>
+    <li>
+      <a href="webstart/ECMOjo.jnlp">Online Demo</a> (Java Webstart): <i>Run ECMOjo directly with a single click from the link.</i>
+    </li>
+    <li>
+      <a href="demo.php">Applet Page</a> (Applet): <i>Run ECMOjo inside a browser window.</i>
+    </li>
   </ul>
 </p>
 <br>
-<strong>Binary Files</strong><br>
+
+<h2>Binary Files</h2>
 <p>Download the platform dependant version for your operating system. </p>
 <ul>
-  <li><a name="windows" style="color: rgb(0, 0, 0);">(Windows)</a>:<br>&nbsp;&nbsp;&nbsp; 
-    <img src="image/OS/WINDOWS-ICON.png"><i>Windows Installer.</i></li>
-  <li><a name="macintosh" style="color: rgb(0, 0, 0);">(Mac OS 10.4.2+)</a>:<br>&nbsp;&nbsp;&nbsp; 
-    <img src="image/OS/MACINTOSH-ICON.png"><i>Mac OS X Installer.</i></li>
-  <li><a name="linux" style="color: rgb(0, 0, 0);"></a><a name="unix" style="color: rgb(0, 0, 0);">(Linux/Unix)</a>:<br>&nbsp;&nbsp;&nbsp;
-    <img src="image/OS/LINUX-ICON.png"><i>Linux/Unix Installer.</i></li>
- </ul>
+  <li>
+    <a name="windows">
+      <img src="image/OS/WINDOWS-ICON.png"> Windows Installer (XP, Vista, Win 7)
+    </a>
+  </li>
+  <li>
+    <a name="macintosh">
+      <img src="image/OS/MACINTOSH-ICON.png"> Mac OS X Installer (10.4.2+)
+    </a>
+  </li>
+  <li>
+    <a name="linux">
+      <img src="image/OS/LINUX-ICON.png"> Linux/UNIX Installer
+    </a>
+  </li>
+</ul>
 <br>
-<strong>Source Code</strong><br>
-<p>Download the source code via <a href="http://sourceforge.net/project/showfiles.php?group_id=241657" target="_blank">Sourceforge</a>.</p>    
+
+<h2>Source Code</h2>
+<p>Download the source code via <a href="http://sourceforge.net/project/showfiles.php?group_id=241657" target="_blank">SourceForge.net</a>.</p>    
 <br>
 <?php
   include($root.'include/end.inc.'.$phpEx);
