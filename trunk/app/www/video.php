@@ -27,7 +27,7 @@
     </td>
   </tr>
 </table>
-<hr>
+<div class="hr"/>
 <br>
 
 <?php
