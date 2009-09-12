@@ -20,7 +20,7 @@
   
   <a href="http://www.hanuola.com">Hanuola</a> &nbsp;&nbsp;&amp;&nbsp;&nbsp; <a href="http://www.tri.jabsom.hawaii.edu">Telehealth Research Institute</a><br>
   <a href="http://simtiki.org">SimTiki</a> &nbsp;&nbsp;&amp;&nbsp;&nbsp; <a href="http://www.simtikinihon.org/">シムチキ日本</a><br>
-  <a href="http://www.jabsom.com">John A. Burns School of Medicine</a>
+  <a href="http://www.jabsom.hawaii.edu">John A. Burns School of Medicine</a>
 
 </div>
 <!-- BANNER end -->
