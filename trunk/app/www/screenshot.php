@@ -4,7 +4,7 @@
   require_once('control/screenshot_controller.inc.'.$phpEx);
   $controller =& new PageController();
 
-  $pageTitle = "Screenshot";
+  $pageTitle = "Screenshots";
   include($root.'include/begin.inc.'.$phpEx);
 ?>
 

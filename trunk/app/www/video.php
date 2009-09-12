@@ -4,7 +4,7 @@
   require_once('control/video_controller.inc.'.$phpEx);
   $controller =& new PageController();
 
-  $pageTitle = "Screenshot";
+  $pageTitle = "Video and Media";
   include($root.'include/begin.inc.'.$phpEx);
 ?>
 
