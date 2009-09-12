@@ -4,7 +4,7 @@
   require_once('control/index_controller.inc.'.$phpEx);
   $controller =& new PageController();
 
-  $pageTitle = "ECMOjo";
+  $pageTitle = "Home";
   include($root.'include/begin.inc.'.$phpEx);
 ?>
 
