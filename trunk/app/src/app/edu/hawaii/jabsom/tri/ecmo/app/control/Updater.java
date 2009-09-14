@@ -511,8 +511,14 @@ public final class Updater {
               patient.setHeartRate(patient.getHeartRate() - (0.1 * patient.getHeartRate() * difference));
             }
             else {
-              patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
               patient.setHeartRate(patient.getHeartRate() + (0.1 * patient.getHeartRate() * difference));
+              double newbp = patient.getSystolicBloodPressure() * (1 - bpadjust);
+              if (newbp < 50) {
+                patient.setSystolicBloodPressure(50);
+              }
+              else {
+                patient.setSystolicBloodPressure(newbp);
+              }
             }
           }
           else {
@@ -525,8 +531,14 @@ public final class Updater {
             }
             else {
               // flow lower then blood pressure drops & heart rate increases
-              patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
               patient.setHeartRate(patient.getHeartRate() + (0.1 * patient.getHeartRate() * difference));
+              double newbp = patient.getSystolicBloodPressure() * (1 - bpadjust);
+              if (newbp < 50) {
+                patient.setSystolicBloodPressure(50);
+              }
+              else {
+                patient.setSystolicBloodPressure(newbp);
+              }
             }
           }
         }
