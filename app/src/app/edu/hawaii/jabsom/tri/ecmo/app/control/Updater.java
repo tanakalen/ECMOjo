@@ -367,11 +367,11 @@ public final class Updater {
         double curVenousPressure = tube.getVenousPressure();
         if (difference > 0) {
           tube.setVenousPressure(curVenousPressure 
-              - Math.rint(difference * 1000 * (1 / (patient.getWeight() * 10))));
+              - Math.rint(difference * 3000 * (1 / (patient.getWeight() * 10))));
         }
         else {
           tube.setVenousPressure(curVenousPressure 
-              + Math.rint(Math.abs(difference) * 1000 * (1 / (patient.getWeight() * 10))));          
+              + Math.rint(Math.abs(difference) * 3000 * (1 / (patient.getWeight() * 10))));          
         }
       }
       
@@ -411,14 +411,8 @@ public final class Updater {
           pump.setOn(false);
         }
         if (pressureMonitor.isAlarm()) {
-          if (pump.getPumpType() == PumpComponent.PumpType.ROLLER) {
-            // Pump flow stops
-            pump.setOn(false);
-          }
-          else {
-            // Pump flow slows to very low rate
-            pump.setFlow(0.02f * patient.getWeight()); // from pump update above
-          }
+          // Pump flow stops
+          pump.setOn(false);
         }
       }
       else {
@@ -546,6 +540,9 @@ public final class Updater {
         // pump flow to patient PaO2
         try {
           double patientSaturation = Mediator.flowToSPO2(mode, ccPerKg, patient);
+          if (tube.isBridgeOpen()) {
+            patientSaturation -= patientSaturation * 0.3;
+          }
           if (ventilator.isEmergencyFuction()) {
             patientSaturation *= 1.25;
             if (patientSaturation > 1.0) {
@@ -553,7 +550,7 @@ public final class Updater {
             }
           }
           // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
-          double po2 = Mediator.calcPaO2(patientSaturation);
+          double po2 = Mediator.calcPaO2(patientSaturation, tube.getMode());
           patient.setO2Saturation(patientSaturation);
           patient.setPO2(po2); // TODO: set from graph FiO2 with varying shunts?
         }
@@ -618,7 +615,7 @@ public final class Updater {
           }
         }
       }
-      
+            
       // TODO Patient bicarb and base excess calc? from Mark's table
       
       // update the patients life

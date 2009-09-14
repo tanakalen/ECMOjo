@@ -211,6 +211,15 @@ public class PressureMonitorComponent extends Component {
   }
   
   /**
+   * Returns true if there is an warning.
+   * 
+   * @return  True for warning.
+   */
+  public boolean isPreMembranePressureWarning() {
+    return preMembranePressure > (preMembranePressureMax - 50);
+  }
+
+  /**
    * Returns true if there is an alarm.
    * 
    * @return  True for alarm.
@@ -220,12 +229,30 @@ public class PressureMonitorComponent extends Component {
   }
 
   /**
+   * Returns true if there is an warning.
+   * 
+   * @return  True for warning.
+   */
+  public boolean isPostMembranePressureWarning() {
+    return postMembranePressure > (postMembranePressureMax - 50);
+  }
+
+  /**
    * Returns true if there is an alarm.
    * 
    * @return  True for alarm.
    */
   public boolean isVenousPressureAlarm() {
     return (venousPressure < venousPressureMin) || (venousPressure > venousPressureMax);
+  }
+
+  /**
+   * Returns true if there is a warning.
+   * 
+   * @return  True for warning.
+   */
+  public boolean isVenousPressureWarning() {
+    return (venousPressure < (venousPressureMin + 7)) || (venousPressure > (venousPressureMax - 7));
   }
 
   /**

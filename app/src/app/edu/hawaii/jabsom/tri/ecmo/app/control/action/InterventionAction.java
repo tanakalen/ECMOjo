@@ -114,6 +114,7 @@ public class InterventionAction extends Action {
       else if (patient.getHeartFunction() == HeartFunction.BAD) {
         patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 4.5f);   // 4.5 mmHg increase
       }
+      patient.setFibrinogen(patient.getFibrinogen() * 1.1);
     }
     else if (intervention instanceof AlbuminIntervention) {
       // affect blood pressure
