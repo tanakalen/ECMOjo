@@ -34,6 +34,8 @@ public class PressureMonitorDetailPanel extends DetailPanel implements Runnable 
 
   /** The red alert image. */
   private Image redAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-RedMedium.png");
+  /** The yellow alert image. */
+  private Image yelAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-YellowMedium.png");
 
   /** The black alert image. */
   private Image blackAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-BlackMedium.png");
@@ -430,6 +432,15 @@ public class PressureMonitorDetailPanel extends DetailPanel implements Runnable 
         g.drawImage(blackAlertImage, 32, 63, this);        
       }      
     }
+    else if (component.isVenousPressureWarning()){
+      // draw blinking yellow light
+      if ((((System.nanoTime()) / 500000000) % 2) == 0) {
+        g.drawImage(yelAlertImage, 32, 63, this);
+      }
+      else {
+        g.drawImage(blackAlertImage, 32, 63, this);        
+      }      
+    }
 
     if (component.isPreMembranePressureAlarm()){
       // draw blinking red light
@@ -440,11 +451,29 @@ public class PressureMonitorDetailPanel extends DetailPanel implements Runnable 
         g.drawImage(blackAlertImage, 32, 143, this);        
       }      
     }
+    else if (component.isPreMembranePressureWarning()){
+      // draw blinking yellow light
+      if ((((System.nanoTime()) / 500000000) % 2) == 0) {
+        g.drawImage(yelAlertImage, 32, 143, this);
+      }
+      else {
+        g.drawImage(blackAlertImage, 32, 143, this);        
+      }      
+    }
     
     if (component.isPostMembranePressureAlarm()){
       // draw blinking red light
       if ((((System.nanoTime()) / 500000000) % 2) == 0) {
         g.drawImage(redAlertImage, 32, 223, this);
+      }
+      else {
+        g.drawImage(blackAlertImage, 32, 223, this);        
+      }      
+    }
+    else if (component.isPostMembranePressureWarning()){
+      // draw blinking yellow light
+      if ((((System.nanoTime()) / 500000000) % 2) == 0) {
+        g.drawImage(yelAlertImage, 32, 223, this);
       }
       else {
         g.drawImage(blackAlertImage, 32, 223, this);        

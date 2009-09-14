@@ -468,18 +468,25 @@ public final class Mediator {
   /**
    * calcPaO2 calculates partial pressure of oxygen from saturation.
    * 
-   * @param spO2
-   *          saturation of oxygen as form (0.00)
+   * @param spO2  Saturation of oxygen as form (0.00).
+   * @param mode  VV or VA.
    * @return paO2 as mmHg
    */
-  public static double calcPaO2(double spO2) {
+  public static double calcPaO2(double spO2, Mode mode) {
+    // From CubeEquation-Sat-PaO2.xls
+    double pao2 = ((366.214 * Math.pow(spO2, 3)) - (455.117 * Math.pow(spO2, 2)) + (188.15 * spO2) - 2.609);
+    
     if (spO2 == 1.0) { // To strictly follow Patient PaO2 excel sheet
-      return 500;
+      if (mode == Mode.VA) {
+        pao2 += 100;
+      }
+      else {
+        pao2 += 50;
+      }
     }
-    else {  // From CubeEquation-Sat-PaO2.xls
-      return((366.214 * Math.pow(spO2, 3)) - (455.117 * Math.pow(spO2, 2)) 
-          + (188.15 * spO2) - 2.609);
-    }
+    
+    // and return PaO2
+    return pao2;
   }
   
   /**
