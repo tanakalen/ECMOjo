@@ -71,8 +71,8 @@
   <div class="arrowlistmenu">
     <div class="contentmenutitle">Development</div>
     <ul>
-      <li><a href="http://sourceforge.net/projects/ecmojo/" class="target">Source Forge</a>
-      <li><a href="http://sourceforge.net/projects/ecmojo/support" class="support">Support</a>
+      <li><a href="http://sourceforge.net/projects/ecmojo/" class="target" style="color: #505050; font-weight: normal;">Source Forge</a>
+      <li><a href="http://sourceforge.net/projects/ecmojo/support" class="support" style="color: #505050; font-weight: normal;">Support</a>
     </ul>
   </div>
 </div>
