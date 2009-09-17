@@ -66,7 +66,7 @@ public final class Updater {
     else {
       history.setPatientSedatedTime(0);
     }
-    // store the heart rate
+    // store the temperature
     history.setPatientTemperature(patient.getTemperature());
     // Set last updated flow to check pump flow, for membrane pressure interaction
     history.setFlow(pump.getFlow());
@@ -430,10 +430,10 @@ public final class Updater {
       if (onPump) {
         double patientTemperature = patient.getTemperature();
         if (patientTemperature < heater.getTemperature()) {
-          patient.setTemperature(patientTemperature + 0.01);
+          patient.setTemperature(patientTemperature + 0.001);
         }
         else if (patientTemperature > heater.getTemperature()) {
-          patient.setTemperature(patientTemperature - 0.01);
+          patient.setTemperature(patientTemperature - 0.001);
         }
 
         // update patient pH, pCO2, HCO3, base excess
@@ -487,18 +487,24 @@ public final class Updater {
         }
 
         // temperature effect
-        if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
+        //if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
+        if (patient.getTemperature() != history.getPatientTemperature()) {
+          double bpadjust = 0.0001;
+          double hradjust = 0.0001;
+          double actadjust = 0.1;
           if (patient.getTemperature() > history.getPatientTemperature()) {
-            patient.setHeartRate(patient.getHeartRate() + (0.1 * patient.getHeartRate()
-                * Math.rint(patient.getTemperature() - history.getPatientTemperature())));
-            patient.setAct(patient.getAct() + (0.1 * patient.getAct()
-                * Math.rint(patient.getTemperature() - history.getPatientTemperature())));
+            patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate()));
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
+            if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
+              patient.setAct(patient.getAct() * (1 + actadjust));
+            }
           }
           else {
-            patient.setHeartRate(patient.getHeartRate() - (0.1 * patient.getHeartRate()
-                * Math.rint(history.getPatientTemperature() - patient.getTemperature())));
-            patient.setAct(patient.getAct() - (0.1 * patient.getAct()
-                * Math.rint(history.getPatientTemperature() - patient.getTemperature())));
+            patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate()));
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
+            if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
+              patient.setAct(patient.getAct() * (1 - actadjust));
+            }
           }
         }
 
