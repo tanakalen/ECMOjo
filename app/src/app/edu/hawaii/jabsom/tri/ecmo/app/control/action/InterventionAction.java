@@ -136,7 +136,11 @@ public class InterventionAction extends Action {
     } 
     else if (intervention instanceof SedationIntervention) {
       // sedate patient
+      //   possible issue: if given sedation when patient isSedated = true
+      //   timer is not reset and will continue to countdown.
       patient.setSedated(true);
+      patient.setHeartRate(patient.getHeartRate() * 0.9);
+      patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * 0.9);
     }
     
     // track intervention

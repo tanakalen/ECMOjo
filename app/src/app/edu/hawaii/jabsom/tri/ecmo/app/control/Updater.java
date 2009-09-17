@@ -59,6 +59,13 @@ public final class Updater {
     OxygenatorComponent oxigenator = (OxygenatorComponent)equipment
         .getComponent(OxygenatorComponent.class);
 
+    // store current update cycle if patient isSedated
+    if (patient.isSedated()) {
+      history.setPatientSedatedTime(history.getPatientSedatedTime() + 1);
+    }
+    else {
+      history.setPatientSedatedTime(0);
+    }
     // store the heart rate
     history.setPatientTemperature(patient.getTemperature());
     // Set last updated flow to check pump flow, for membrane pressure interaction
@@ -76,7 +83,7 @@ public final class Updater {
   }
   
   /**
-   * Updates the inputed game. Called from Manager.java about every 20ms.
+   * Updates the inputed game. Called from Manager.java about every 20ms. 50 updates/sec
    * 
    * @param game  The game.
    * @param history  The historical values.
@@ -497,6 +504,7 @@ public final class Updater {
 
         // Link of flow to heart rate and blood pressure
         if ((difference != 0) && (history.getFlow() != 0)) {
+          System.out.println(difference);
           // SBP increase 10% if flow increase by 20mL/kg/min in VA AND bad heart
           if ((mode == Mode.VA) && (heartFunction == HeartFunction.BAD)) {
             double bpadjust = 10 / (20 * patient.getWeight()); // % change SBP for 1mL/min flow change
@@ -617,6 +625,27 @@ public final class Updater {
       }
             
       // TODO Patient bicarb and base excess calc? from Mark's table
+      
+      // Update patient sedated status
+      //   This is independent of on or off pump
+      //   *adjust are constants to change rate of rise
+      //   limits are if HR >180 or SBP >120 then no change
+      if (!patient.isSedated()) {
+        double bpadjust = 0.0001;
+        double hradjust = 0.0001;
+        if (patient.getHeartRate() < 180) {
+          patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate()));
+        }
+        if (patient.getSystolicBloodPressure() < 120) {
+          patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
+        }
+      }
+      else {
+        // Arbitrary run out of sedation in 3000 cycles (1min)
+        if (history.getPatientSedatedTime() >= 3000) {
+          patient.setSedated(false);
+        }
+      }
       
       // update the patients life
       if (oxygenator.isBroken()) {
