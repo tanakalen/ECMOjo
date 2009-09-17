@@ -8,6 +8,8 @@ package edu.hawaii.jabsom.tri.ecmo.app.control;
  */
 public class History {
   
+  /** Holds time patient remains sedated in 20ms intervals. */
+  private double patientSedatedTime = 0;
   /** Holds prior patient temperature information. */
   private double patientTemperature;
   /** Holds prior flow rate information. */
@@ -116,6 +118,24 @@ public class History {
    */
   public void setVenousBOpen(boolean venousBOpen) {
     this.venousBOpen = venousBOpen;
+  }
+
+  /**
+   * Returns the patient's time remains isSedated == TRUE.
+   *
+   * @return  The time in 20ms intervals patient isSedated.
+   */
+  public double getPatientSedatedTime() {
+    return patientSedatedTime;
+  }
+
+  /**
+   * Sets the variable tracking 20ms intervals patient.isSedated() == TRUE.
+   *
+   * @param patientIsSedated  The number of 20ms intervals patient isSedated.
+   */
+  public void setPatientSedatedTime(double patientIsSedated) {
+    this.patientSedatedTime = patientIsSedated;
   }
 
   /**
