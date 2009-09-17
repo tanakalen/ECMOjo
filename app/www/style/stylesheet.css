@@ -18,7 +18,7 @@ p { font-family: Times; font-size: 14px; line-height: 17px; margin-top: 6px; mar
 .footnote { font-size: 12px; }
 
 hr { border: none; border-top: 1px solid #afafaf; padding: 0; margin-top: 5px; margin-bottom: 5px; }
-.hr { border-top: 1px solid #afafaf; padding: 0; margin-top: 5px; margin-bottom: 5px; }
+.hr { border-top: 1px solid #bfbfbf; padding: 0; margin-top: 5px; margin-bottom: 5px; }
 
 a { color: #0078C2; }
 a:visited { color: #004488; }
@@ -45,9 +45,9 @@ textarea { display: block; margin: 3px; padding: 2px; font-size: 12px; border: 1
 .checkbox, .radio { border: 0px; background: transparent; margin-top: 1px; }
 .required { color: #e00000; }
 
-ol { list-style-type: lower-roman; font-size: 12px; list-style-position: inside; }
-ul { list-style-type: circle; font-size: 12px; list-style-position: inside; }
-li { padding-bottom: 4px; }
+ol { list-style-type: lower-roman; font-family: Times; font-size: 14px; }
+ul { list-style-type: circle; font-family: Times; font-size: 14px; margin-left: 30px; margin-top: 5px; margin-bottom: 10px; }
+li { padding-bottom: 4px;}
 
 code { border: 1px dotted #999999; background-color: #eeeeee; font-family: Times; font-size: 11px; display: block; }
 
@@ -80,7 +80,7 @@ code { border: 1px dotted #999999; background-color: #eeeeee; font-family: Times
 .contenttitle a:hover { text-decoration: underline; }
 
 .contentmenu { margin:1px; padding-left: 2px; padding-right: 3px; padding-top: 4px; }
-.contentmenutitle { font-family: Arial; font-size: 16px; font-weight: bold; letter-spacing: 1px; color: #909090; padding-left: 16px; padding-top: 2px; margin-left: 1px; margin-bottom: 3px; background: #eeeeee url(../image/interface/roundbox.gif) top left no-repeat; height: 25px;}
+.contentmenutitle { font-family: Arial; font-size: 16px; font-weight: bold; letter-spacing: 1px; color: #808080; padding-left: 18px; padding-top: 2px; margin-left: 1px; margin-bottom: 3px; background: #eeeeee url(../image/interface/roundbox.gif) top left no-repeat; height: 25px;}
 .contentfull { background: #ffffff url(../image/interface/shade.jpg) repeat-x top left; }
 .contentmain { width: 825px; margin-left: 4px; margin-top: 2px; padding: 0px; background: #FFFFFF; }
 .contentplayer { width: 825px; margin-left: 0px; margin-top: 0px; padding: 0px; background: #FFFFFF; }
@@ -108,24 +108,24 @@ code { border: 1px dotted #999999; background-color: #eeeeee; font-family: Times
 .aboutus a:hover { color: #333333; }
 .aboutus a:visited { color: #333333; }
 
-.arrowlistmenu ul { list-style-type: none; list-style-position: outside; margin: 0; padding: 0; margin-bottom: 8px; }
-.arrowlistmenu ul li { padding-bottom: 2px; font-size: 12px; }
-.arrowlistmenu ul li a { color: #2E88EB; background: url(../image/icon/HollowIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.arrowlistmenusearch { background: url(../image/interface/search.gif) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.arrowlistmenurss { background: url(../image/icon/RSS.gif) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.home { background: url(../image/icon/RoundIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.target { background: url(../image/icon/TargetIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.s { background: url(../image/icon/SIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.play { background: url(../image/icon/PlayIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.download { background: url(../image/icon/DownloadIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.support { background: url(../image/icon/ExclamationIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.screenshot { background: url(../image/icon/ScreenshotIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.video { background: url(../image/icon/VideoIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.help { background: url(../image/icon/HelpIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.Windows { background: url(../image/OS/WINDOWS-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.Macintosh { background: url(../image/OS/MACINTOSH-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.Linux { background: url(../image/OS/LINUX-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
-.arrowlistmenu ul li a.UNIX { background: url(../image/OS/UNIX-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; font-weight: bold; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul { list-style-type: none; font-family: Arial; list-style-position: outside; margin: 0; padding: 0; margin-bottom: 8px; }
+.arrowlistmenu ul li { padding-bottom: 2px; font-size: 14px; font-weight: bold; }
+.arrowlistmenu ul li a { color: #2E88EB; background: url(../image/icon/HollowIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.arrowlistmenusearch { background: url(../image/interface/search.gif) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.arrowlistmenurss { background: url(../image/icon/RSS.gif) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.home { background: url(../image/icon/RoundIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.target { background: url(../image/icon/TargetIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.s { background: url(../image/icon/SIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.play { background: url(../image/icon/PlayIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.download { background: url(../image/icon/DownloadIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.support { background: url(../image/icon/ExclamationIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.screenshot { background: url(../image/icon/ScreenshotIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.video { background: url(../image/icon/VideoIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.help { background: url(../image/icon/HelpIcon.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.Windows { background: url(../image/OS/WINDOWS-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.Macintosh { background: url(../image/OS/MACINTOSH-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.Linux { background: url(../image/OS/LINUX-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
+.arrowlistmenu ul li a.UNIX { background: url(../image/OS/UNIX-ICON.png) no-repeat center left; display: block; padding: 2px; padding-left: 20px; text-decoration: none; border-bottom: 1px solid #dadada; }
 .arrowlistmenu ul li a:visited{ color: #2E88EB; }
 .arrowlistmenu ul li a:hover{ color: #2E88EB; background-color: #CBDCEF; }
 
