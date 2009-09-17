@@ -649,7 +649,9 @@ public final class Updater {
       else {
         // Arbitrary run out of sedation in 3000 cycles (1min)
         if (history.getPatientSedatedTime() >= 3000) {
-          patient.setSedated(false);
+          // CA: let's take that out for now - the patient will stay sedated and does not wake up
+          //     -> we can use it later
+          //patient.setSedated(false);
         }
       }
       
