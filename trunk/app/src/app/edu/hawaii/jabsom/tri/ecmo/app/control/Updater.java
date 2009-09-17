@@ -504,16 +504,16 @@ public final class Updater {
 
         // Link of flow to heart rate and blood pressure
         if ((difference != 0) && (history.getFlow() != 0)) {
-          System.out.println(difference);
           // SBP increase 10% if flow increase by 20mL/kg/min in VA AND bad heart
+          double hradjust = 0.5;
           if ((mode == Mode.VA) && (heartFunction == HeartFunction.BAD)) {
             double bpadjust = 10 / (20 * patient.getWeight()); // % change SBP for 1mL/min flow change
             if (difference > 0) {
               patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
-              patient.setHeartRate(patient.getHeartRate() - (0.1 * patient.getHeartRate() * difference));
+              patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate() * difference));
             }
             else {
-              patient.setHeartRate(patient.getHeartRate() + (0.1 * patient.getHeartRate() * difference));
+              patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate() * difference));
               double newbp = patient.getSystolicBloodPressure() * (1 - bpadjust);
               if (newbp < 50) {
                 patient.setSystolicBloodPressure(50);
@@ -524,16 +524,16 @@ public final class Updater {
             }
           }
           else {
-            double bpadjust = 0.005; // Constant to adjust bp (note: 5% change too big!!!)
+            double bpadjust = 0.007; // Constant to adjust bp (note: 5% change too big!!!)
             // pump flow to patient heart rate & blood pressure
             if (difference > 0) {
               // flow higher then BP increases & heart rate decreases
               patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
-              patient.setHeartRate(patient.getHeartRate() - (0.1 * patient.getHeartRate() * difference));
+              patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate() * difference));
             }
             else {
               // flow lower then blood pressure drops & heart rate increases
-              patient.setHeartRate(patient.getHeartRate() + (0.1 * patient.getHeartRate() * difference));
+              patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate() * difference));
               double newbp = patient.getSystolicBloodPressure() * (1 - bpadjust);
               if (newbp < 50) {
                 patient.setSystolicBloodPressure(50);
