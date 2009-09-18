@@ -44,6 +44,8 @@
   <strong>What is an Applet?</strong><br>
   An Applet is a Java program that can be run inside a browser window.
 </p>
+<br>
+<br>
 
 <?php
   include($root.'include/end.inc.'.$phpEx);

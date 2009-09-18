@@ -8,23 +8,6 @@
   include($root.'include/begin.inc.'.$phpEx);
 ?>
 
-<!-- SPOTLIGHT start -->
-<div id="spotlight">
-  <div style="width: 420px;">
-	  <br>
-	  <div style="font-size: 14px; border-bottom: 1px solid #b0b0b0">Spotlight</div>
-	  <div class="spotlight" style="margin-top: 5px">
-	    <a href="webstart/ECMOjo.jnlp" class="spotlight">&raquo; PLAY ONLINE</a>
-	    <a href="download.html" class="spotlight">&raquo; DOWNLOAD</a>
-	  </div>
-	  <br>
-	  Please note ECMOjo is an <strong>Open Source</strong> project. <a href="about.php">Contact us</a> to 
-	  participate in the effort.
-	</div>
-</div>
-<!-- SPOTLIGHT end -->
-
-
 <h1>Information</h1>
 <p>
   <img src="image/interface/jostracart.png" style="float: right;">
