@@ -9,7 +9,7 @@
 ?>
 
 <h1>About Us</h1>
-
+<img src="image/interface/minilogo.png" style="float: right;">
 <p>
   ECMOjo is a simulator and trainer for extracorporeal membrane oxygenation (ECMO). 
 </p>

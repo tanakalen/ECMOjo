@@ -82,6 +82,22 @@
         <td width="730" valign="top" style="padding-left: 8px; padding-right: 8px; margin-bottom: 4px">
           <table width="714"><tr width="714"><td width="714">
         
+<!-- SPOTLIGHT start -->
+<div id="spotlight">
+  <div style="width: 420px;">
+    <br>
+    <div style="font-size: 14px; border-bottom: 1px solid #b0b0b0">Spotlight</div>
+    <div class="spotlight" style="margin-top: 5px">
+      <a href="webstart/ECMOjo.jnlp" class="spotlight">&raquo; PLAY ONLINE</a>
+      <a href="download.html" class="spotlight">&raquo; DOWNLOAD</a>
+    </div>
+    <br>
+    Please note ECMOjo is an <strong>Open Source</strong> project. <a href="about.php">Contact us</a> to 
+    participate in the effort.
+  </div>
+</div>
+<!-- SPOTLIGHT end -->
+      
 <!-- ERROR + MESSAGE OUTPUT start -->
 <?php
   if ($controller->message != NULL) {
