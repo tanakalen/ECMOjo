@@ -147,8 +147,14 @@ public class RolloverList extends JList {
     // add listeners for mouse events
     addMouseMotionListener(new MouseMotionAdapter() {
       public void mouseMoved(MouseEvent event) {
-        mouseOver = locationToIndex(new Point(event.getX(), event.getY()));
-        notifyRollover(mouseOver);
+        Point mouseLoc = new Point(event.getX(), event.getY());
+        mouseOver = locationToIndex(mouseLoc);
+        if (getCellBounds(mouseOver, mouseOver).contains(mouseLoc)) {
+          notifyRollover(mouseOver);          
+        }
+        else {
+          notifyRollover(-1);
+        }
         repaint();
       }
     });
