@@ -71,7 +71,7 @@ public class ScenarioListPanel extends JPanel {
     listPanel.setBackground(new Color(0.9f, 0.9f, 0.9f, 0.0f)); 
     listPanel.addListSelectionListener(new ListSelectionListener() {
       public void valueChanged(ListSelectionEvent event) {
-        if (!event.getValueIsAdjusting()) {       
+        if (!event.getValueIsAdjusting()) {
           // notify about selection
           notifyScenarioSelection(getSelectedValue());
         }
