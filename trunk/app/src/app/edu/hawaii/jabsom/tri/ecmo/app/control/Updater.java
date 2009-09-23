@@ -196,11 +196,6 @@ public final class Updater {
         }
       }
       
-      //for debug:
-//        if (oxigenator.getTotalSweep() - oldSweep != 0) {
-//          System.out.println("old: " + oldSweep + ", new: " + oxigenator.getTotalSweep());
-//          System.out.println(tube.getPostPCO2());
-//        }
       double currentTubePH = tube.getPostPH();
       // TODO: reconfirm interaction as PCO2 increases PH falls
       tube.setPostPH(currentTubePH - ((tube.getPostPCO2() - currentTubePCO2) * 0.008));
@@ -208,9 +203,6 @@ public final class Updater {
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn()) && (!tube.isVenousAOpen())) {
         tube.setVenousPressure(-100);
       }
-//      else {
-//        tube.setVenousPressure(0);
-//      }
       
       if (tube.isArterialAOpen() != history.isArterialAOpen() || tube.isArterialBOpen() != history.isArterialBOpen() 
        || tube.isBridgeOpen() != history.isBridgeOpen()
