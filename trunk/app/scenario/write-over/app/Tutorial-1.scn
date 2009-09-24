@@ -1,12 +1,12 @@
 1
 
 # Scenario Information
-name = Tutorial 1
+name = Introduction
 desc = Run the tutorial for an introduction of ECMOjo. 
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Welcome to Tutorial 1. Try to identify the ECMOjo components.
+tutorial-item1-text = Welcome to the introduction. Try to identify the ECMOjo components.
 tutorial-item1-trigger = N/A
 tutorial-item2-text = Task 1: Select the ACT component.
 tutorial-item2-trigger = Action:View:ACTComponent
@@ -18,7 +18,7 @@ tutorial-item5-text = Task 4: Select one of the intervention points displayed as
 tutorial-item5-trigger = Action:View:InterventionComponent
 tutorial-item6-text = Task 5: Select one of the lab buttons at the bottom left corner of the screen.
 tutorial-item6-trigger = Action:View:LabComponent
-tutorial-item7-text = Task 6: Select the air/oxygen flowmeters.
+tutorial-item7-text = Task 6: Select the gas blender.
 tutorial-item7-trigger = Action:View:OxygenatorComponent
 tutorial-item8-text = Task 7: Click on the patient.
 tutorial-item8-trigger = Action:View:Patient
@@ -30,7 +30,7 @@ tutorial-item11-text = Task 10: Select the ventilator on the left hand side just
 tutorial-item11-trigger = Action:View:VentilatorComponent
 tutorial-item12-text = Task 11: Remove the clamp from the bridge (between arterial tube and venous tube).
 tutorial-item12-trigger = Action:Tube:-BRIDGE
-tutorial-item13-text = Congratulations, you successfully completed Tutorial 1!
+tutorial-item13-text = Congratulations, you successfully completed the introduction!
 tutorial-item13-trigger = N/A
 
 # Baseline Values
