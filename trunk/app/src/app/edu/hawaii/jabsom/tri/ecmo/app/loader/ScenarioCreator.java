@@ -119,7 +119,7 @@ public final class ScenarioCreator {
     VentilatorComponent ventilatorComponent = new VentilatorComponent();
     ventilatorComponent.setSubtype(new VentilatorComponent.ConventionalSubtype());
     ventilatorComponent.setEmergencyFuction(false);
-    ventilatorComponent.setFiO2(0.5);
+    ventilatorComponent.setFiO2(0.3);
     ventilatorComponent.setITime(0.5);
     equipment.add(ventilatorComponent);
 
