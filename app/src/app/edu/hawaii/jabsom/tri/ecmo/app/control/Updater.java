@@ -503,6 +503,7 @@ public final class Updater {
                 patient.setFibrinogen(patient.getFibrinogen() * (1 - (2 * actadjust)));
                 patient.setPt(patient.getPt() * (1 + actadjust));
                 patient.setPtt(patient.getPtt() * (1 + actadjust));
+                patient.setPlatelets(patient.getPlatelets() * (1 - (2 * actadjust)));
               }
             }
           }
