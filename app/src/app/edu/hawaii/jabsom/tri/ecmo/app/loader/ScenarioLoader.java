@@ -247,6 +247,10 @@ public final class ScenarioLoader {
         
         patient.setAct(parseNum(parameters.get("act-value")));
         
+        patient.setPH(parseNum(parameters.get("lab-component-abg-ph")));
+        patient.setPCO2(parseNum(parameters.get("lab-component-abg-pco2")));
+        patient.setPO2(parseNum(parameters.get("lab-component-abg-po2")));
+        
         patient.setFibrinogen(parseNum(parameters.get("lab-component-heme-fibrinogen")));
         patient.setPlatelets(parseNum(parameters.get("lab-component-heme-platelets")));
         patient.setPt(parseNum(parameters.get("lab-component-heme-pt")));

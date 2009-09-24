@@ -49,7 +49,7 @@ baseline-alarming = false
 # Patient Information
 patient-age = 1
 patient-weight = 5
-patient-lung-function = good
+patient-lung-function = bad
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
@@ -69,7 +69,9 @@ tube-cannula-venous-B = open
 act-value = 
 
 # Lab Component
-#lab-component-abg
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
 #lab-component-chem
 lab-component-heme-fibrinogen = 
 lab-component-heme-platelets = 
