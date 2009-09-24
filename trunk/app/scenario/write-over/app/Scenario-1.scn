@@ -70,7 +70,9 @@ tube-cannula-venous-B = open
 act-value = 
 
 # Lab Component
-#lab-component-abg
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
 #lab-component-chem
 lab-component-heme-fibrinogen = 
 lab-component-heme-platelets = 

@@ -483,7 +483,12 @@ public class Patient  extends Component {
    * @param pCO2 the pCO2 to set
    */
   public void setPCO2(double pCO2) {
-    this.pCO2 = pCO2;
+    if (Double.isNaN(pCO2)) {
+      this.pCO2 = 40;
+    }
+    else {
+      this.pCO2 = pCO2;
+    }
   }
   
   /**
@@ -501,7 +506,12 @@ public class Patient  extends Component {
    * @param pO2 the pO2 to set
    */
   public void setPO2(double pO2) {
-    this.pO2 = pO2;
+    if (Double.isNaN(pO2)) {
+      this.pO2 = 60;
+    }
+    else {
+      this.pO2 = pO2;
+    }
   }
 
   /**
@@ -519,7 +529,12 @@ public class Patient  extends Component {
    * @param pH the pH to set
    */
   public void setPH(double pH) {
-    this.pH = pH;
+    if (Double.isNaN(pH)) {
+      this.pH = 7.40;
+    }
+    else {
+      this.pH = pH;
+    }
   }
   
   /**
