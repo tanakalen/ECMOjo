@@ -1,12 +1,12 @@
 1
 
 # Scenario Information
-name = Tutorial 0
+name = Overview
 desc = Run the tutorial for an ECMOjo overview. 
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Welcome to Tutorial 0. Let us give you an overview of ECMOjo.
+tutorial-item1-text = Welcome to an overview of ECMOjo.
 tutorial-item1-trigger = N/A
 tutorial-item2-text = The patient that is connected to the ECMO circuit is shown in the bottom left corner.
 tutorial-item2-trigger = N/A
@@ -16,12 +16,10 @@ tutorial-item4-text = The tubing connects the patient to the ECMO equipment on t
 tutorial-item4-trigger = N/A
 tutorial-item5-text = The main ECMO components are located on the right-hand side: oxygenator, heater, pump and gas flowmeters.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = The elapsed time is diplayed in the upper right corner.
+tutorial-item6-text = The alarm indicator light on the right starts blinking when there is a problem.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = To the right side of the time is the alarm indicator light which when alarming starts blinking.
+tutorial-item7-text = Congratulations, you successfully completed the overview!
 tutorial-item7-trigger = N/A
-tutorial-item8-text = Congratulations, you successfully completed Tutorial 0!
-tutorial-item8-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true

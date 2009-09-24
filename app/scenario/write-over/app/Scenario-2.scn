@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Scenario 2
-desc = VV ECMO hour 52 (d2) for 5 kg LGA infant with persistent pulmonary hypertension. No change in pulmonary function, remaining poor. Cardiac function is normal.  Infant is awake and responsive, but well sedated. The baby received a platelet transfusion and a post transfusion lasix dose two hours ago. Morning labs were just sent.
+desc = ECMO hour 52 (d2) for 5 kg LGA infant with persistent pulmonary hypertension. No change in pulmonary function, remaining poor. Cardiac function is normal.  Infant is awake and responsive, but well sedated. The baby received a platelet transfusion and a post transfusion lasix dose two hours ago. Morning labs were just sent.
 
 # Goal Information
 goal = Baseline
