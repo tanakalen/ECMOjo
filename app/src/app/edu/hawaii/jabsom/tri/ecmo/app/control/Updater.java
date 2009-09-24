@@ -879,9 +879,7 @@ public final class Updater {
     }
     // Arterial: Closed, Venous: Open, Bridge: Closed
     else if (!tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen()) {
-      // form arterial bubbles?????
       if (pump.isOn() && (pump.getFlow() > 0.0)) {
-        tube.setArterialBubbles(true);
         if (pump.getPumpType() == PumpType.ROLLER) {
           oxigenator.setBroken(true);
         }
