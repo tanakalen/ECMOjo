@@ -387,14 +387,18 @@ public final class Updater {
           ventilator.setFiO2(1.0);
         }
         if (ventilator.getName().equals("Conventional Ventilator")) {
-          patient.setRespiratoryRate(((ConventionalSubtype) ventilator.getSubtype()).getRate());
+          patient.setRespiratoryRate(50);
+          ((ConventionalSubtype) ventilator.getSubtype()).setRate(50);
+          ((ConventionalSubtype) ventilator.getSubtype()).setPip(40);
           ventilator.setFiO2(1.0);
         }
       }
       else {
         if (ventilator.getName().equals("Conventional Ventilator")) {
-          patient.setRespiratoryRate(10); // non rescue rate?
-          ventilator.setFiO2(0.5);
+          patient.setRespiratoryRate(12);
+          ((ConventionalSubtype) ventilator.getSubtype()).setRate(12);
+          ((ConventionalSubtype) ventilator.getSubtype()).setPip(25);
+          ventilator.setFiO2(0.3);
         }
       }
 
