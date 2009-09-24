@@ -113,11 +113,11 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
         if (col == 0) {
           switch (row) {
             case 0:
-              return "Fibrinogen";
+              return "WBC";              
             case 1:
-              return "Hct";
-            case 2:
               return "Hgb";
+            case 2:
+              return "Hct";
             case 3:
               return "Platelets";
             case 4:
@@ -125,7 +125,7 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
             case 5:
               return "PTT";
             case 6:
-              return "WBC";              
+              return "Fibrinogen";
             default:
               // error condition
               return null;
@@ -136,11 +136,11 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
           if (col <= size) {
             switch (row) {
               case 0:
-                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getFibrinogen());
+                return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getWbc());
               case 1:
-                return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHct());
-              case 2:
                 return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHgb());
+              case 2:
+                return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHct());
               case 3:
                 return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getPlatelets());
               case 4:
@@ -148,7 +148,7 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
               case 5:
                 return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getPtt());
               case 6:
-                return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getWbc());
+                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getFibrinogen());
               default:
                 // error condition
                 return null;

@@ -114,15 +114,15 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
         if (col == 0) {
           switch (row) {
             case 0:
-              return "Gluc";
-            case 1:
-              return "iCa";
-            case 2:
-              return "K";
-            case 3:
-              return "Lactate";
-            case 4:
               return "Na";
+            case 1:
+              return "K";
+            case 2:
+              return "iCa";
+            case 3:
+              return "Gluc";
+            case 4:
+              return "Lactate";
             default:
               // error condition
               return null;
@@ -133,17 +133,17 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
           if (col <= size) {
             switch (row) {
               case 0:
-                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getGluc());
+                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getNa());
               case 1:
+                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getK());
+              case 2:
                 return labHundredthsFormatter.format(((ChemistryLabTest)component.getResults().get(size 
                     - col)).getIonCa());
-              case 2:
-                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getK());
               case 3:
+                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getGluc());
+              case 4:
                 return labTenthsFormatter.format(((ChemistryLabTest)component.getResults().get(size 
                     - col)).getLactate());
-              case 4:
-                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getNa());
               default:
                 // error condition
                 return null;
