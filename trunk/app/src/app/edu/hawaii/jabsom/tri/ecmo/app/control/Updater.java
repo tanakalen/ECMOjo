@@ -551,6 +551,30 @@ public final class Updater {
             }
           }
         }
+        
+        // Link change in pre-membrane pressure to patient CVP
+        double venpresdiff = tube.getVenousPressure() - history.getVenousPressure();
+        if ((venpresdiff != 0) && (history.getVenousPressure() != 0)) {
+          // if pumptype is centrifugal
+          double pumpadj = 75;
+          // else
+          if (pump.getPumpType() == PumpType.ROLLER) {
+            pumpadj = 50;
+          }
+          double cvpadjust = Math.abs(venpresdiff / pumpadj);
+          if (venpresdiff > 0) {
+            double newcvp = patient.getCentralVenousPressure() * (1 + cvpadjust);
+            if (newcvp <= 50) {
+              patient.setCentralVenousPressure(newcvp);
+            }
+          }
+          else {
+            double newcvp = patient.getCentralVenousPressure() * (1 - cvpadjust);
+            if (newcvp >= 0) {
+              patient.setCentralVenousPressure(newcvp);
+            }
+          }
+        }
 
         // pump flow to patient PaO2
         try {
