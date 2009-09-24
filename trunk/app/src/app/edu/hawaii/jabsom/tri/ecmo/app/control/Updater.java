@@ -483,23 +483,27 @@ public final class Updater {
         }
 
         // temperature effect
-        //if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
-        if (patient.getTemperature() != history.getPatientTemperature()) {
-          double bpadjust = 0.0001;
-          double hradjust = 0.0001;
-          double actadjust = 0.1;
-          if (patient.getTemperature() > history.getPatientTemperature()) {
-            patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate()));
-            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
-            if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
-              patient.setAct(patient.getAct() * (1 + actadjust));
+        if ((patient.getTemperature() < 36.0) || (patient.getTemperature() > 37.0)) {
+          if (patient.getTemperature() != history.getPatientTemperature()) {
+            double bpadjust = 0.0001;
+            double hradjust = 0.0001;
+            double actadjust = 0.1;
+            if (patient.getTemperature() > history.getPatientTemperature()) {
+              patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate()));
+              patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
+              if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
+                patient.setAct(patient.getAct() * (1 - actadjust));
+              }
             }
-          }
-          else {
-            patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate()));
-            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
-            if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
-              patient.setAct(patient.getAct() * (1 - actadjust));
+            else {
+              patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate()));
+              patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
+              if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
+                patient.setAct(patient.getAct() * (1 + actadjust));
+                patient.setFibrinogen(patient.getFibrinogen() * (1 - (2 * actadjust)));
+                patient.setPt(patient.getPt() * (1 + actadjust));
+                patient.setPtt(patient.getPtt() * (1 + actadjust));
+              }
             }
           }
         }
