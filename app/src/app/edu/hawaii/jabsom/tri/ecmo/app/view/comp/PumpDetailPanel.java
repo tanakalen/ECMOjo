@@ -82,7 +82,9 @@ public class PumpDetailPanel extends DetailPanel implements Runnable {
         double value = angle * flowFactor;
         PumpAction action = new PumpAction();
         action.setOn(component.isOn());
-        action.setFlow(value);
+        if (component.isOn()) {
+          action.setFlow(value);
+        }
         repaint();
         notifyActionListeners(action);
       }    
