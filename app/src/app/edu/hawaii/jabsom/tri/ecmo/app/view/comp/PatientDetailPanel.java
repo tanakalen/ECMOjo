@@ -263,7 +263,7 @@ public class PatientDetailPanel extends DetailPanel {
           // not sedated!
           StandardDialog.showDialog(PatientDetailPanel.this, DialogType.WARNING, DialogOption.OK
               , "Not Sedated"
-              , "The patient appears to be awake!?");
+              , "The patient is moving, wiggling and breathing.");
         }
         else {
           // the patient is sleeping
