@@ -160,7 +160,7 @@ public final class Updater {
       tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
       // TODO: reconfirm if this is valid
-      tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxygenator.getClotting() * 50));
+//      tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxygenator.getClotting() * 50));
       // change in venous pressure changes pump flow
       double diffVenousPressure = tube.getVenousPressure() - history.getVenousPressure();
       if (diffVenousPressure != 0) {
@@ -230,26 +230,26 @@ public final class Updater {
             // If limits set appropriately,  
             if (!pressureMonitor.isAlarm()) {
               // premembrane pressure will equal postmembrane pressure up to 750.
-              tube.setPreMembranePressure(tube.getPostMembranePressure());
+//              tube.setPreMembranePressure(tube.getPostMembranePressure());
               // If roller then pressures will stay at 750, else it's centrifugal then it would stop and reset to 35. 
               if (pump.getPumpType() == PumpType.ROLLER) {
-                tube.setPreMembranePressure(tube.getPreMembranePressure() + 0.03);
+//                tube.setPreMembranePressure(tube.getPreMembranePressure() + 0.03);
                 // stay at 750???????
                 if (tube.getPreMembranePressure() > 750) {
-                  tube.setPreMembranePressure(750.0);
-                  tube.setPostMembranePressure(750.0);
+//                  tube.setPreMembranePressure(750.0);
+//                  tube.setPostMembranePressure(750.0);
                 }
               }
               if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
                 // reset to 35 or decrease to 35???
-                tube.setPreMembranePressure(35.0);
+//                tube.setPreMembranePressure(35.0);
               }
             }
             else {
               // If limits not set appropriately then rupture for roller else centrifugal stop then reset to 35. 
               if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
                 // reset to 35 or decrease to 35???
-                tube.setPreMembranePressure(35.0);
+//                tube.setPreMembranePressure(35.0);
               }
               // The venous pressure increases. Pump flow to 0. ??????
               tube.setVenousPressure(pressureMonitor.getVenousPressure() + 0.002);
@@ -260,15 +260,15 @@ public final class Updater {
             //TODO: venous kink
             // If roller pump then premembrane = mean BP, else if centrifugal then premembrane decreases. 
             if (pump.getPumpType() == PumpType.ROLLER) {
-              tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
+//              tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
             }
             if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
-              tube.setPreMembranePressure(tube.getPreMembranePressure() - 0.03);
+//              tube.setPreMembranePressure(tube.getPreMembranePressure() - 0.03);
             } 
             
             // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases. 
             if (pump.getPumpType() == PumpType.ROLLER && oxygenator.getOxyType() == OxyType.SILICONE) {
-              tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.999);
+//              tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.999);
               tube.setVenousPressure(tube.getVenousPressure() + 0.002);
             }
             
@@ -343,22 +343,22 @@ public final class Updater {
         double post = tube.getPostMembranePressure();
         if (oxygenator.getOxyType().equals(OxygenatorComponent.OxyType.QUADROX_D)) {
           if (difference > 0) {
-            tube.setPreMembranePressure((((difference * 1000) * 0.0001) + 1) * pre);
-            tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);
+//            tube.setPreMembranePressure((((difference * 1000) * 0.0001) + 1) * pre);
+//            tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);
           }
           else {
-            tube.setPreMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * pre);
-            tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
+//            tube.setPreMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * pre);
+//            tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
           }
         }
         else if (oxygenator.getOxyType().equals(OxygenatorComponent.OxyType.SILICONE)) {
           if (difference > 0) {
-            tube.setPreMembranePressure((((difference * 1000) * 0.00055) + 1) * pre);
-            tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);            
+//            tube.setPreMembranePressure((((difference * 1000) * 0.00055) + 1) * pre);
+//            tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);            
           }
           else {
-            tube.setPreMembranePressure((1 - (Math.abs(difference * 1000) * 0.00055)) * pre);
-            tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);            
+//            tube.setPreMembranePressure((1 - (Math.abs(difference * 1000) * 0.00055)) * pre);
+//            tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
           }
         }
         
@@ -736,15 +736,15 @@ public final class Updater {
     // Arterial: Closed, Venous: Open, Bridge: Open
     else if (!history.isArterialBOpen() && history.isVenousBOpen() && history.isBridgeOpen()) {
       // premembrane and postmembrane pressures drop by 10%. 
-      tube.setPreMembranePressure(tube.getPreMembranePressure() / 0.90);
-      tube.setPostMembranePressure(tube.getPostMembranePressure() / 0.90);
+//      tube.setPreMembranePressure(tube.getPreMembranePressure() / 0.90);
+//      tube.setPostMembranePressure(tube.getPostMembranePressure() / 0.90);
       // Venous pressure increase by 1.
       tube.setVenousPressure(tube.getVenousPressure() - 1.0);
     }
     // Arterial: Open, Venous: Closed, Bridge: Open
     else if (history.isArterialBOpen() && !history.isVenousBOpen() && history.isBridgeOpen()) {
       // premembrane pressure decreases by 10%. 
-      tube.setPreMembranePressure(tube.getPreMembranePressure() / 0.90);
+//      tube.setPreMembranePressure(tube.getPreMembranePressure() / 0.90);
       // Venous pressure increases by 4.
       tube.setVenousPressure(tube.getVenousPressure() - 4.0);
     }
@@ -803,12 +803,12 @@ public final class Updater {
         // tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
       }
       if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
-        tube.setPreMembranePressure(tube.getPreMembranePressure() + 35.0);
+//        tube.setPreMembranePressure(tube.getPreMembranePressure() + 35.0);
       } 
       
       // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2. 
       if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SILICONE) {
-        tube.setPreMembranePressure(tube.getPreMembranePressure() / 0.90);
+//        tube.setPreMembranePressure(tube.getPreMembranePressure() / 0.90);
         tube.setVenousPressure(tube.getVenousPressure() - 2.0);
       }
       
@@ -883,15 +883,15 @@ public final class Updater {
     // Arterial: Closed, Venous: Open, Bridge: Open
     else if (!tube.isArterialBOpen() && tube.isVenousBOpen() && tube.isBridgeOpen()) {
       // premembrane and postmembrane pressures drop by 10%. 
-      tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
-      tube.setPostMembranePressure(tube.getPostMembranePressure() * 0.90);
+//      tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
+//      tube.setPostMembranePressure(tube.getPostMembranePressure() * 0.90);
       // Venous pressure increase by 1.
       tube.setVenousPressure(tube.getVenousPressure() + 1.0);
     }
     // Arterial: Open, Venous: Closed, Bridge: Open
     else if (tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen()) {
       // premembrane pressure decreases by 10%. 
-      tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
+//      tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
       // Venous pressure increases by 4.
       tube.setVenousPressure(tube.getVenousPressure() + 4.0);
     }
@@ -916,25 +916,25 @@ public final class Updater {
         // If limits set appropriately,  
         if (!pressureMonitor.isAlarm()) {
           // premembrane pressure will equal postmembrane pressure up to 750.
-          tube.setPreMembranePressure(tube.getPostMembranePressure());
+//          tube.setPreMembranePressure(tube.getPostMembranePressure());
           // If roller then pressures will stay at 750, else it's centrifugal then it would stop and reset to 35. 
           if (pump.getPumpType() == PumpType.ROLLER) {
             // stay at 750???????
             if (tube.getPreMembranePressure() > 750) {
-              tube.setPreMembranePressure(750.0);
-              tube.setPostMembranePressure(750.0);
+//              tube.setPreMembranePressure(750.0);
+//              tube.setPostMembranePressure(750.0);
             }
           }
           if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
             // reset to 35 or decrease to 35???
-            tube.setPreMembranePressure(35.0);
+//            tube.setPreMembranePressure(35.0);
           }
         }
         else {
           // If limits not set appropriately then rupture for roller else centrifugal stop then reset to 35. 
           if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
             // reset to 35 or decrease to 35???
-            tube.setPreMembranePressure(35.0);
+//            tube.setPreMembranePressure(35.0);
           }
           // The venous pressure increases by 2. Pump flow to 0. ??????
           tube.setVenousPressure(pressureMonitor.getVenousPressure() + 2.0);
@@ -951,15 +951,15 @@ public final class Updater {
     else if (tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {      
       // If roller pump then premembrane = mean BP, else if centrifugal then premembrane decreases by 35. 
       if (pump.getPumpType() == PumpType.ROLLER) {
-        tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
+//        tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
       }
       if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
-        tube.setPreMembranePressure(tube.getPreMembranePressure() - 35.0);
+//        tube.setPreMembranePressure(tube.getPreMembranePressure() - 35.0);
       } 
       
       // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2. 
       if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SILICONE) {
-        tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
+//        tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
         tube.setVenousPressure(tube.getVenousPressure() + 2.0);
       }
       
