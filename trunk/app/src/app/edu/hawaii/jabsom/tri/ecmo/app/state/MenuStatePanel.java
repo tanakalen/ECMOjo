@@ -296,14 +296,14 @@ public class MenuStatePanel extends JPanel {
           Configuration.getInstance().setSelectionConventionalVentilator(true);
 
           // init tube values depending on selection
-          tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
+//          tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
           if (oxi.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
             // PMP
-            tube.setPostMembranePressure(tube.getPreMembranePressure());
+//            tube.setPostMembranePressure(tube.getPreMembranePressure());
           }
           else { 
             // Silicon
-            tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
+//            tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
           }
           tube.setPostPCO2(35);
           tube.setPostPH(7.4);
