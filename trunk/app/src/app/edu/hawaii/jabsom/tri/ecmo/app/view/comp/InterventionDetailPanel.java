@@ -203,10 +203,16 @@ public class InterventionDetailPanel extends DetailPanel {
       
       // output location warning as needed
       if (((intervention instanceof BloodIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))
-        || ((intervention instanceof FFPIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))
-        || ((intervention instanceof HeparinBolusIntervention) && (location != InterventionLocation.BEFORE_OXYGENATOR))
-        || ((intervention instanceof CatecholamineIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))
-        || ((intervention instanceof AlbuminIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))) {
+       || ((intervention instanceof FFPIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))
+       || ((intervention instanceof PlateletsIntervention) && (location != InterventionLocation.BEFORE_OXYGENATOR))
+       || ((intervention instanceof HeparinBolusIntervention) && (location != InterventionLocation.BEFORE_OXYGENATOR))
+       || ((intervention instanceof CatecholamineIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))
+       || ((intervention instanceof AlbuminIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))
+       || ((intervention instanceof SedationIntervention) && (location == InterventionLocation.BEFORE_OXYGENATOR))
+       || ((intervention instanceof PlateletsIntervention) && (location == InterventionLocation.PATIENT))
+       || ((!(intervention instanceof PlateletsIntervention)) && (location == InterventionLocation.AFTER_OXYGENATOR))) {
+        
+        // shows the location warning dialog box when the intervention is executed at the wrong place
         StandardDialog.showDialog(this, DialogType.WARNING, DialogOption.OK
             , "Intervention Location Warning"
             , "The intervention has been executed. Please choose a better "
