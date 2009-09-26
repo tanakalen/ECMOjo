@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Scenario 3
-desc = VA ECMO hour 220 (d9) for 4 kg female with pertussis pneumonia. Improving pulmonary function. Worsening coagulation studies.
+desc = ECMO hour 220 (d9) for 4 kg female with pertussis pneumonia. Improving pulmonary function. Worsening coagulation studies.
 
 # Goal Information
 goal = Baseline
