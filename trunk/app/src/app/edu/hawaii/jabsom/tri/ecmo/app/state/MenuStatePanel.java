@@ -1,6 +1,8 @@
 package edu.hawaii.jabsom.tri.ecmo.app.state;
 
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -58,10 +60,6 @@ public class MenuStatePanel extends JPanel {
   private ImageToggleButton rollerRadio;
   /** The centrifugal pump radio button. */
   private ImageToggleButton centrifugalRadio;
-  /** The conventional ventilator radio button. */
-  private ImageToggleButton conventionalRadio;
-  /** The high frequency ventilator radio button. */
-  private ImageToggleButton highfrequencyRadio;    
   
   
   /**
@@ -244,35 +242,11 @@ public class MenuStatePanel extends JPanel {
       centrifugalRadio.setSelected(true);
     }
 
-    ButtonGroup ventilatorButtonGroup = new ButtonGroup();
-    Image conventionalRadioRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkRol.png");
-    Image conventionalRadioSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkSel.png");
-    conventionalRadio 
-      = new ImageToggleButton(null, conventionalRadioRolloverImage, conventionalRadioSelectedImage);
-    conventionalRadio.setOpaque(false);
-    conventionalRadio.setSize(32, 32);
-    conventionalRadio.setLocation(0, 103);
-    componentSelectionPanel.add(conventionalRadio);    
-    ventilatorButtonGroup.add(conventionalRadio);
-    Image highfrequencyRadioRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkRol.png");
-    Image highfrequencyRadioSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkSel.png");
-    highfrequencyRadio 
-      = new ImageToggleButton(null, highfrequencyRadioRolloverImage, highfrequencyRadioSelectedImage);    
-    highfrequencyRadio.setOpaque(false);
-    highfrequencyRadio.setSize(32, 32);
-    highfrequencyRadio.setLocation(142, 103);
-    componentSelectionPanel.add(highfrequencyRadio);    
-    ventilatorButtonGroup.add(highfrequencyRadio);
-    if (Configuration.getInstance().isSelectionConventionalVentilator()) {
-      conventionalRadio.setSelected(true);
-    }
-    else {
-      highfrequencyRadio.setSelected(true);
-    }
+    Icon disabled = new ImageIcon(ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkDis.png"));
+    JLabel ventilatorCheckmark = new JLabel(disabled);
+    ventilatorCheckmark.setSize(32, 32);
+    ventilatorCheckmark.setLocation(0, 103);
+    componentSelectionPanel.add(ventilatorCheckmark);    
     
     // add scenario selection listener
     ScenarioSelectionListener scenarioSelectionListener = new ScenarioSelectionListener() {
@@ -318,13 +292,8 @@ public class MenuStatePanel extends JPanel {
 
           // update ventilator
           VentilatorComponent ventilator = (VentilatorComponent)equipment.getComponent(VentilatorComponent.class);
-          if (conventionalRadio.isSelected()) {
-            ventilator.setSubtype(new VentilatorComponent.ConventionalSubtype());
-          }
-          else {
-            ventilator.setSubtype(new VentilatorComponent.HighFrequencySubtype());
-          }
-          Configuration.getInstance().setSelectionConventionalVentilator(conventionalRadio.isSelected());
+          ventilator.setSubtype(new VentilatorComponent.ConventionalSubtype());
+          Configuration.getInstance().setSelectionConventionalVentilator(true);
 
           // init tube values depending on selection
           tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
