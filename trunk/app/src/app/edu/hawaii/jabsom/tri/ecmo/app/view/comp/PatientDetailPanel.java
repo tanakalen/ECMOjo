@@ -84,21 +84,21 @@ public class PatientDetailPanel extends DetailPanel {
     suctionETTButton.setSize(192, 32);
     add(suctionETTButton);
   
-    Image checkCanulaSiteNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCanulaSite.png");
-    Image checkCanulaSiteRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCanulaSiteRol.png");
-    Image checkCanulaSiteSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCanulaSiteSel.png");
-    ImageButton checkCanulaSiteButton 
-      = new ImageButton(checkCanulaSiteNormalImage, checkCanulaSiteRolloverImage, checkCanulaSiteSelectedImage);
-    checkCanulaSiteButton.addActionListener(new ActionListener() {
+    Image checkCannulaSiteNormalImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCannulaSite.png");
+    Image checkCannulaSiteRolloverImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCannulaSiteRol.png");
+    Image checkCannulaSiteSelectedImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCannulaSiteSel.png");
+    ImageButton checkCannulaSiteButton 
+      = new ImageButton(checkCannulaSiteNormalImage, checkCannulaSiteRolloverImage, checkCannulaSiteSelectedImage);
+    checkCannulaSiteButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         boolean problem = tubeComponent.isBrokenCannula();
         
         // send the action
         PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.CANULA_SITE);
+        action.setCheck(PatientAction.Check.CANNULA_SITE);
         notifyActionListeners(action);
             
         // output dialog
@@ -106,7 +106,7 @@ public class PatientDetailPanel extends DetailPanel {
           // fixed
           StandardDialog.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
-              , "Good catch! The canula site was broken and has been fixed.");
+              , "Good catch! The cannula site was broken and has been fixed.");
         }
         else {
           // no problem = nothing done
@@ -116,9 +116,9 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkCanulaSiteButton.setLocation(22, 60);
-    checkCanulaSiteButton.setSize(192, 32);
-    add(checkCanulaSiteButton);
+    checkCannulaSiteButton.setLocation(22, 60);
+    checkCannulaSiteButton.setSize(192, 32);
+    add(checkCannulaSiteButton);
     
     Image checkforBleedingNormalImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckforBleeding.png");
