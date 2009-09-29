@@ -58,8 +58,8 @@ public class ManagerPanel extends JPanel {
     final Game game = manager.getGame();
     
     // add the time
-    TimePanel timePanel = new TimePanel(game);
-    add(timePanel);
+    // REM TimePanel timePanel = new TimePanel(game);
+    // REM add(timePanel);
     
     // set the detail panel
     detailPanel = null;
