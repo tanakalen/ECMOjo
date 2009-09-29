@@ -413,7 +413,7 @@ public class TutorialGoal extends Goal {
               Check actualCheck = ((PatientAction) action).getCheck();
               Check triggerCheck = null;
               if (items[2].equals("CANULA_SITE")) {
-                triggerCheck = Check.CANULA_SITE;
+                triggerCheck = Check.CANNULA_SITE;
               }
               else if (items[2].equals("BLEEDING")) {
                 triggerCheck = Check.BLEEDING;

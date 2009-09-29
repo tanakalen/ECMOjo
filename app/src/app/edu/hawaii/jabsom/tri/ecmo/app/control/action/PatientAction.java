@@ -15,7 +15,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 public class PatientAction extends Action {
 
   /** The checks. */
-  public enum Check { CANULA_SITE, BLEEDING, URINE_OUTPUT, SUCTION_ETT, DIAPER, SEDATION };
+  public enum Check { CANNULA_SITE, BLEEDING, URINE_OUTPUT, SUCTION_ETT, DIAPER, SEDATION };
   
   /** The check done. */
   private Check check;
@@ -48,7 +48,7 @@ public class PatientAction extends Action {
   public void execute(Game game) {
     // update patient
     Check check = getCheck();
-    if (check == Check.CANULA_SITE) {
+    if (check == Check.CANNULA_SITE) {
       TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
       // TODO: Should this display the problem location and kind of problem?
       tube.setBrokenCannula(false, TubeComponent.Status.normal, TubeComponent.problemLocation.none);
