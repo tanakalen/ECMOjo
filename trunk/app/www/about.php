@@ -43,6 +43,12 @@
 
 <h2>Credits</h2>
 <div style="border: 1px solid #e0e0e0; background: #f7f7f7; padding: 4px;">
+  <strong>Principal Investigator</strong>: <br>
+  &nbsp;&nbsp;&nbsp;Lawrence P. Burgess, MD -
+     <script type="text/javascript">
+       document.write("<n uers=\"<?php echo str_rot13('mailto:lburgess@hawaii.edu'); ?>\"><?php echo str_rot13('lburgess@hawaii.edu'); ?></n>".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
+     </script><br><br>
+
 	<strong>Project Manager</strong>: <br>
 	&nbsp;&nbsp;&nbsp;Mark T. Ogino, MD -
 	   <script type="text/javascript">
@@ -78,10 +84,6 @@
      </script><br><br>
      
 	<strong>Advisors</strong>: <br>
-	&nbsp;&nbsp;&nbsp;Lawrence P. Burgess, MD -
-	   <script type="text/javascript">
-	     document.write("<n uers=\"<?php echo str_rot13('mailto:lburgess@hawaii.edu'); ?>\"><?php echo str_rot13('lburgess@hawaii.edu'); ?></n>".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
-	   </script><br>
 	&nbsp;&nbsp;&nbsp;Kristen Costales, CCP -
 	   <script type="text/javascript">
 	     document.write("<n uers=\"<?php echo str_rot13('mailto:kristen.costales@kapiolani.org'); ?>\"><?php echo str_rot13('kristen.costales@kapiolani.org'); ?></n>".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
@@ -105,6 +107,13 @@
 </div>
 <p class="footnote">
   (*) Please contact us if we forgot to add your name. Our apologies.
+</p>
+<br>
+
+<h2>Acknowledgment</h2>
+<p>
+  This project has been supported by grant No. W81XWH-06-2-0061 awarded by Department of Defense (DoD), 
+  United States of America.
 </p>
 <br>
 
