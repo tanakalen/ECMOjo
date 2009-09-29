@@ -48,6 +48,42 @@ public class PatientDetailPanel extends DetailPanel {
     setOpaque(false);
 
     // patient buttons and actions
+    Image suctionETTNormalImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETT.png");
+    Image suctionETTRolloverImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETTRol.png");
+    Image suctionETTSelectedImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETTSel.png");
+    ImageButton suctionETTButton 
+      = new ImageButton(suctionETTNormalImage, suctionETTRolloverImage, suctionETTSelectedImage);
+    suctionETTButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        boolean problem = tubeComponent.isSuctionETT();
+        
+        // send the action
+        PatientAction action = new PatientAction();
+        action.setCheck(PatientAction.Check.SUCTION_ETT);
+        notifyActionListeners(action);
+            
+        // output dialog
+        if (problem) {
+          // fixed
+          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
+              , "Problem Fixed"
+              , "Good catch! The ETT suction was broken and has been fixed.");
+        }
+        else {
+          // no problem = nothing done
+          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+              , "No Problem Detected"
+              , "No problem has been detected.");
+        }
+      }
+    });
+    suctionETTButton.setLocation(22, 28);
+    suctionETTButton.setSize(192, 32);
+    add(suctionETTButton);
+  
     Image checkCanulaSiteNormalImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCanulaSite.png");
     Image checkCanulaSiteRolloverImage 
@@ -80,7 +116,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkCanulaSiteButton.setLocation(22, 28);
+    checkCanulaSiteButton.setLocation(22, 60);
     checkCanulaSiteButton.setSize(192, 32);
     add(checkCanulaSiteButton);
     
@@ -116,7 +152,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkforBleedingButton.setLocation(22, 60);
+    checkforBleedingButton.setLocation(22, 92);
     checkforBleedingButton.setSize(192, 32);
     add(checkforBleedingButton);
     
@@ -152,70 +188,10 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkUrineOutputButton.setLocation(22, 92);
+    checkUrineOutputButton.setLocation(22, 124);
     checkUrineOutputButton.setSize(192, 32);
     add(checkUrineOutputButton);
-    
-    Image suctionETTNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETT.png");
-    Image suctionETTRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETTRol.png");
-    Image suctionETTSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETTSel.png");
-    ImageButton suctionETTButton 
-      = new ImageButton(suctionETTNormalImage, suctionETTRolloverImage, suctionETTSelectedImage);
-    suctionETTButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent event) {
-        boolean problem = tubeComponent.isSuctionETT();
         
-        // send the action
-        PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.SUCTION_ETT);
-        notifyActionListeners(action);
-            
-        // output dialog
-        if (problem) {
-          // fixed
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
-              , "Problem Fixed"
-              , "Good catch! The ETT suction was broken and has been fixed.");
-        }
-        else {
-          // no problem = nothing done
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-              , "No Problem Detected"
-              , "No problem has been detected.");
-        }
-      }
-    });
-    suctionETTButton.setLocation(22, 124);
-    suctionETTButton.setSize(192, 32);
-    add(suctionETTButton);
-    
-    Image changeCircuitNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuit.png");
-    Image changeCircuitRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuitRol.png");
-    Image changeCircuitSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuitSel.png");
-    ImageButton changeCircuitButton 
-      = new ImageButton(changeCircuitNormalImage, changeCircuitRolloverImage, changeCircuitSelectedImage);
-    changeCircuitButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent event) {
-        // send the action
-        CircuitChangeAction action = new CircuitChangeAction();
-        notifyActionListeners(action);
-            
-        // output dialog
-        StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-            , "Circuit Changed"
-            , "The circuit has been changed.");
-      }
-    });
-    changeCircuitButton.setLocation(22, 156);
-    changeCircuitButton.setSize(192, 32);
-    add(changeCircuitButton);
-    
     Image checkDiaperNormalImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckDiaper.png");
     Image checkDiaperRolloverImage
@@ -237,7 +213,7 @@ public class PatientDetailPanel extends DetailPanel {
             , "A unpleasant odor has been detected.");
       }
     });
-    checkDiaperButton.setLocation(22, 188);
+    checkDiaperButton.setLocation(22, 156);
     checkDiaperButton.setSize(192, 32);
     add(checkDiaperButton);
     
@@ -273,9 +249,33 @@ public class PatientDetailPanel extends DetailPanel {
         }
       }
     });
-    checkSedationButton.setLocation(22, 220);
+    checkSedationButton.setLocation(22, 188);
     checkSedationButton.setSize(192, 32);
     add(checkSedationButton);
+    
+    Image changeCircuitNormalImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuit.png");
+    Image changeCircuitRolloverImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuitRol.png");
+    Image changeCircuitSelectedImage 
+      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuitSel.png");
+    ImageButton changeCircuitButton 
+      = new ImageButton(changeCircuitNormalImage, changeCircuitRolloverImage, changeCircuitSelectedImage);
+    changeCircuitButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        // send the action
+        CircuitChangeAction action = new CircuitChangeAction();
+        notifyActionListeners(action);
+            
+        // output dialog
+        StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+            , "Circuit Changed"
+            , "The circuit has been changed.");
+      }
+    });
+    changeCircuitButton.setLocation(22, 220);
+    changeCircuitButton.setSize(192, 32);
+    add(changeCircuitButton);
   }
   
   /**
