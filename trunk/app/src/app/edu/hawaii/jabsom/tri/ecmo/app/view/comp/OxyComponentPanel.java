@@ -51,18 +51,15 @@ public class OxyComponentPanel extends ComponentPanel implements Runnable {
 
   /** The red alert image. */
   private Image redAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-RedSmall.png");
-
   /** The black alert image. */
   private Image blackAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-BlackSmall.png");
 
   /** The top bar image. */
-  private Image topBarImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Bar-Top.png");
-
+  private Image topBarImage = ImageLoader.getInstance().getImage("conf/image/interface/game/BarMini-Top.png");
   /** The middle bar image. */
-  private Image middleBarImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Bar-Middle.png");
-  
+  private Image middleBarImage = ImageLoader.getInstance().getImage("conf/image/interface/game/BarMini-Middle.png");
   /** The bottom bar image. */
-  private Image bottomBarImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Bar-Bottom.png");
+  private Image bottomBarImage = ImageLoader.getInstance().getImage("conf/image/interface/game/BarMini-Bottom.png");
   
   /** The font color. */
   private final Color textColor = new Color(0.2f, 0.2f, 0.2f);
@@ -249,24 +246,25 @@ public class OxyComponentPanel extends ComponentPanel implements Runnable {
       lastUpdate = 0;
     }
     
-    // 0-10 bar
-    g.drawImage(bottomBarImage, 197, 137, this);    
-    int co2barTopHeight = 0;  // TODO: alex (int) (component.getCo2Flow() * 150 * 0.38);
-    for (int i = 0; i < (co2barTopHeight - 2); i++) {
-      g.drawImage(middleBarImage, 197, 136 - i, this); 
+    // total sweep integer bar
+    g.drawImage(bottomBarImage, 199, 138, this);
+    int totalSweepIntegerBarTopHeight = (int)component.getTotalSweep() * 6;
+    for (int i = 0; i < (totalSweepIntegerBarTopHeight - 2); i++) {
+      g.drawImage(middleBarImage, 199, 137 - i, this); 
     }  
-    g.drawImage(topBarImage, 197, 135 - co2barTopHeight, this);
+    g.drawImage(topBarImage, 199, 138 - totalSweepIntegerBarTopHeight, this);
     
-    // O2 bar
-    g.drawImage(bottomBarImage, 214, 137, this);
-    int o2barTopHeight = 0;   // TODO: alex (int) (component.getO2Flow() * 15 * 0.38);
-    for (int i = 0; i < (o2barTopHeight - 2); i++) {
-      g.drawImage(middleBarImage, 214, 136 - i, this);    
+    // total sweep decimal bar
+    g.drawImage(bottomBarImage, 216, 138, this);
+    int totalSweepDecimalBarTopHeight = ((int)(component.getTotalSweep() * 10.0)
+                                      - (int)component.getTotalSweep() * 10) * 6;
+    for (int i = 0; i < (totalSweepDecimalBarTopHeight - 2); i++) {
+      g.drawImage(middleBarImage, 216, 137 - i, this);    
     }
-    g.drawImage(topBarImage, 214, 135 - o2barTopHeight, this);
-    
+    g.drawImage(topBarImage, 216, 138 - totalSweepDecimalBarTopHeight, this);
+  
+    // draw blinking red light if there is an alarm
     if (component.isAlarm()){
-      // draw blinking red light
       if ((((System.nanoTime()) / 500000000) % 2) == 0) {
         g.drawImage(redAlertImage, 178, 77, this);
       }

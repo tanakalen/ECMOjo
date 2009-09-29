@@ -29,31 +29,25 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
 
   /** The detail image. */
   private Image detailImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Oxigenator.png");
-
+  
   /** The red alert image. */
   private Image redAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-RedMedium.png");
-
   /** The black alert image. */
   private Image blackAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-BlackMedium.png");
 
   /** The top bar image. */
   private Image topBarImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Bar-Top.png");
-
   /** The middle bar image. */
   private Image middleBarImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Bar-Middle.png");
-  
   /** The bottom bar image. */
   private Image bottomBarImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Bar-Bottom.png");
   
   /** The increase Co2 button. */
   private ImageButton incTotalSweepIntegerButton;
-  
   /** The decrease Co2 button. */
   private ImageButton decTotalSweepIntegerButton;
-
   /** The increase O2 button. */
-  private ImageButton incTotalSweepDecimalButton;
-  
+  private ImageButton incTotalSweepDecimalButton; 
   /** The decrease O2 button. */
   private ImageButton decTotalSweepDecimalButton;
   
@@ -68,6 +62,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
   
   /** The total sweep tenth formatter. */
   private DecimalFormat totalSweepTenthFormatter = new DecimalFormat("#0.0");
+  
   
   /**
    * Constructor for panel.
@@ -264,7 +259,8 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
    
     // draw base
     g2.drawImage(detailImage, 0, 0, this);
-    // total sweep integere bar
+    
+    // total sweep integer bar
     g.drawImage(bottomBarImage, 188, 182, this);
     int totalSweepIntegerBarTopHeight = (int) component.getTotalSweep() * 15;
     for (int i = 0; i < (totalSweepIntegerBarTopHeight - 2); i++) {
@@ -274,15 +270,15 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     
     // total sweep decimal bar
     g.drawImage(bottomBarImage, 228, 182, this);
-    int totalSweepDecimalBarTopHeight 
-      = ((int) (component.getTotalSweep() * 10.0) - (int) component.getTotalSweep() * 10) * 15;
+    int totalSweepDecimalBarTopHeight = ((int) (component.getTotalSweep() * 10.0)
+                                      - (int) component.getTotalSweep() * 10) * 15;
     for (int i = 0; i < (totalSweepDecimalBarTopHeight - 2); i++) {
       g.drawImage(middleBarImage, 228, 181 - i, this);    
     }
     g.drawImage(topBarImage, 228, 180 - totalSweepDecimalBarTopHeight, this);
 
+    // draw blinking red light if there is an alarm
     if (component.isAlarm()){
-      // draw blinking red light
       if ((((System.nanoTime()) / 500000000) % 2) == 0) {
         g.drawImage(redAlertImage, 136, 31, this);
       }
