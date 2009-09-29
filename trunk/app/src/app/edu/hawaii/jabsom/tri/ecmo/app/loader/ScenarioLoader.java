@@ -27,6 +27,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.Species;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.SimulationGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
@@ -190,6 +191,7 @@ public final class ScenarioLoader {
         
         // the patient
         Patient patient = scenario.getPatient();
+        patient.setSpecies(Species.parse(parameters.get("patient-species")));
         patient.setAge(Double.parseDouble(parameters.get("patient-age")));
         patient.setWeight(Double.parseDouble(parameters.get("patient-weight")));
         patient.setLungFunction(LungFunction.parse(parameters.get("patient-lung-function")));

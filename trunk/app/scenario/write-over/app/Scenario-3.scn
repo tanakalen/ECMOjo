@@ -48,6 +48,7 @@ baseline-power = on
 baseline-alarming = false
 
 # Patient Information
+patient-species = human
 patient-age = 3
 patient-weight = 4
 patient-lung-function = bad
