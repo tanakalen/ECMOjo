@@ -32,6 +32,7 @@
 
 <h1>News & Updates</h1>
 <ul>
+  <li><strong>September 25, 2009</strong> - New ECMOjo version uploaded and online.<li>
   <li><strong>September 10, 2009</strong> - Updated the ECMOjo website.</li>
   <li><strong>August 31, 2009</strong> - Usability evaluation completed.</li>
   <li><strong>May 6, 2009</strong> - Added ECMOjo Tutorial 1 video.</li>

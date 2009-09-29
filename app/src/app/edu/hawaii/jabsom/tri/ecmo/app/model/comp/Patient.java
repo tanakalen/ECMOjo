@@ -8,6 +8,51 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
  */
 public class Patient  extends Component {
 
+  /** The species. */
+  public enum Species { 
+    /** Human. */
+    HUMAN("human"), 
+    /** Pig. */
+    PIG("pig");
+    
+    /** The name. */
+    private String name;
+    
+    /**
+     * The constructor.
+     *
+     * @param name  The name.
+     */
+    private Species(String name) {
+      this.name = name;
+    }
+    
+    /**
+     * Returns the name.
+     * 
+     * @return  The name.
+     */
+    public String getName() {
+      return name;
+    }
+    
+    /**
+     * Returns the lung function that matches the name.
+     * 
+     * @param name  The name.
+     * @return  The matching lung function or null for none.
+     */
+    public static Species parse(String name) {
+      for (int i = 0; i < values().length; i++) {
+        Species value = values()[i];
+        if (name.equalsIgnoreCase(values()[i].getName())) {
+          return value;
+        }
+      }
+      return null;
+    }
+  };
+
   /** The lung function enumeration. */
   public enum LungFunction { 
     /** Good function. */
@@ -99,6 +144,9 @@ public class Patient  extends Component {
   };  
   
   
+  /** The species. */
+  private Species species;
+  
   /** 0.0 for dead, 1.0 for fully alive. */
   private double life;
   
@@ -155,6 +203,24 @@ public class Patient  extends Component {
   private double fibrinogen;
 
   
+  /**
+   * Returns the species.
+   *
+   * @return  The species.
+   */
+  public Species getSpecies() {
+    return species;
+  }
+
+  /**
+   * Sets the species.
+   *
+   * @param species  The species.
+   */
+  public void setSpecies(Species species) {
+    this.species = species;
+  }
+
   /**
    * Returns true for alive.
    *
