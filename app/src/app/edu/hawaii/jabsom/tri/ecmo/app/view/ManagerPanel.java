@@ -102,7 +102,7 @@ public class ManagerPanel extends JPanel {
     };
     
     // add patient
-    PatientPanel patientPanel = new PatientPanel(game.getPatient());
+    PatientPanel patientPanel = new PatientPanel(game.getPatient(), game.getName(), game.getDescription());
     add(patientPanel);
     patientPanel.assign(componentGroup);
     patientPanel.addComponentActionListener(componentActionListener);
