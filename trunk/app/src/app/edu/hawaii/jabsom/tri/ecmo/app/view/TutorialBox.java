@@ -59,7 +59,7 @@ public class TutorialBox extends JPanel {
     setOpaque(false);
     
     // no layout
-    setLayout(new FormLayout("4px, fill:220px, 2px, 75px, 8px"
+    setLayout(new FormLayout("4px, fill:360px, 2px, 75px, 8px"
                            , "4px, fill:36px, 2px, 30px, 4px"
       ));
     CellConstraints cc = new CellConstraints();

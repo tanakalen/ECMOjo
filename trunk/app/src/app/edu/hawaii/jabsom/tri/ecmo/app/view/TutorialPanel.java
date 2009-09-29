@@ -52,7 +52,7 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
       }
     });
     box.setLocation(293, 2);
-    box.setSize(312, 76);
+    box.setSize(452, 76);
     add(box);
     box.setVisible(false);
     
