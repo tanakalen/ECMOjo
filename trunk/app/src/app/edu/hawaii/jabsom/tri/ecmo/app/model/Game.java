@@ -75,6 +75,15 @@ public class Game implements Serializable {
   }
   
   /**
+   * Returns the description.
+   * 
+   * @return  The description.
+   */
+  public String getDescription() {
+    return scenario.getDescription();
+  }
+  
+  /**
    * Returns the goal.
    * 
    * @return  The goal.

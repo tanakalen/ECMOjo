@@ -43,8 +43,10 @@ public class PatientPanel extends ComponentPanel {
    * Default constructor.
    * 
    * @param patient  The patient.
+   * @param name  The name.
+   * @param description  The description.
    */
-  public PatientPanel(Patient patient) {
+  public PatientPanel(Patient patient, String name, String description) {
     super(patient);
     
     // set transparent
@@ -59,7 +61,9 @@ public class PatientPanel extends ComponentPanel {
     
     // add toggle button
     selectionButton = new ImageToggleButton(null, rolloverImage, selectedImage, selectedImage);
-    selectionButton.setToolTipText(patient.getName());
+    selectionButton.setToolTipText("<html><table><tr><td width=\"250\" height=\"200\" valign=\"top\"><b>" 
+        + name + "</b><br>" 
+        + description + "</td></tr></table></html>");
     selectionButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         notifyActivationListeners();
