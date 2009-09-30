@@ -128,34 +128,50 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel implements 
     g.setColor(textColor);
     g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
     
-    // true for alarm
-    boolean alarm = component.isAlarm();
+    // true for blinking
+    boolean blink = (((System.nanoTime()) / 500000000) % 2) == 0;
     
     // draw text
-    String text = String.valueOf((int)component.getTemperature()) + "\u00B0C";
-    g.drawString(text, 88, 34);
-    text = String.valueOf((int)component.getHeartRate());
-    g.drawString(text, 88, 60);
-
-    g.setFont(g.getFont().deriveFont(Font.BOLD, 12f));
-    text = String.valueOf((int)component.getSystolicBloodPressure()) + " / "
-         + String.valueOf((int)component.getDiastolicBloodPressure());
-    g.drawString(text, 88, 77);
-    g.setFont(g.getFont().deriveFont(Font.PLAIN, 11f));
-    text = "Mean: " + String.valueOf((int)component.getMeanBloodPressure());
-    g.drawString(text, 88, 86);
-   
+    if (blink || (!component.isTemperatureAlarm())) {
+      String text = String.valueOf((int)component.getTemperature()) + "\u00B0C";
+      g.drawString(text, 88, 34);
+    }
+    
+    if (blink || (!component.isHeartRateAlarm())) {
+      String text = String.valueOf((int)component.getHeartRate());
+      g.drawString(text, 88, 60);
+    }
+    
+    if (blink || ((!component.isDiastolicBloodPressureAlarm()) 
+                  && (!component.isSystolicBloodPressureAlarm()))) {
+      g.setFont(g.getFont().deriveFont(Font.BOLD, 12f));
+      String text = String.valueOf((int)component.getSystolicBloodPressure()) + " / "
+                  + String.valueOf((int)component.getDiastolicBloodPressure());
+      g.drawString(text, 88, 77);
+      g.setFont(g.getFont().deriveFont(Font.PLAIN, 11f));
+      text = "Mean: " + String.valueOf((int)component.getMeanBloodPressure());
+      g.drawString(text, 88, 86);
+    }
+  
     g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
-    text = String.valueOf((int)component.getRespiratoryRate());
-    g.drawString(text, 212, 34);
-    text = String.valueOf((int)(component.getO2Saturation() * 100)) + "%";
-    g.drawString(text, 212, 60);
-    text = String.valueOf((int)(component.getCentralVenousPressure()));
-    g.drawString(text, 212, 84);
+    if (blink || (!component.isRespiratoryRateAlarm())) {
+      String text = String.valueOf((int)component.getRespiratoryRate());
+      g.drawString(text, 212, 34);
+    }
+    
+    if (blink || (!component.isO2SaturationAlarm())) {
+      String text = String.valueOf((int)(component.getO2Saturation() * 100)) + "%";
+      g.drawString(text, 212, 60);
+    }
+    
+    if (blink || (!component.isCentralVenousPressureAlarm())) {
+      String text = String.valueOf((int)(component.getCentralVenousPressure()));
+      g.drawString(text, 212, 84);
+    }
     
     // draw blinking red light if alerting
-    if (alarm) {
-      if ((((System.nanoTime()) / 500000000) % 2) == 0) {
+    if (component.isAlarm()) {
+      if (blink) {
         g.drawImage(redAlertImage, 1, 3, this);
       }
       else {
