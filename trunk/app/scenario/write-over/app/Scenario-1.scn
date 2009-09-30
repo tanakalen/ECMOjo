@@ -59,6 +59,7 @@ patient-temperature = 37
 
 # Heater
 heater-temperature = 37
+heater-broken = false
 
 # Tube
 tube-cannula-broken = true

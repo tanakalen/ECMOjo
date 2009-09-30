@@ -183,7 +183,11 @@ public class HeaterDetailPanel extends DetailPanel implements Runnable {
     g.setFont(g.getFont().deriveFont(Font.BOLD, 40f));
     
     // draw text
-    String text = String.valueOf((int)component.getTemperature()) + "\u00B0C";
+    int temperature = (int)component.getTemperature();
+    if (component.isBroken()) {
+      temperature = 37;
+    }
+    String text = String.valueOf(temperature) + "\u00B0C";
     g.drawString(text, 136, 118);
   }
 }

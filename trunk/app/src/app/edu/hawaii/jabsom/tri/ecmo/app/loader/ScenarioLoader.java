@@ -207,6 +207,7 @@ public final class ScenarioLoader {
         // load the heater component
         HeaterComponent heater = (HeaterComponent)equipment.getComponent(HeaterComponent.class);
         heater.setTemperature(Double.parseDouble(parameters.get("heater-temperature")));
+        heater.setBroken(Boolean.parseBoolean(parameters.get("heater-broken")));
         
         // load the tube component
         TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
