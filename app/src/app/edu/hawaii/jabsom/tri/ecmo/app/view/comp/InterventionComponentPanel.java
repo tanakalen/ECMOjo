@@ -23,12 +23,12 @@ public class InterventionComponentPanel extends ComponentPanel {
 
   /** The selection button. */
   private AbstractButton selectionButton;
+  
   /** The rollover image. */
-  private Image rolloverImage
-    = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-InterventionRol.png");
+  private Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-InterventionRol.png");
   /** The selected image. */
-  private Image selectedImage
-    = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-InterventionSel.png"); 
+  private Image selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-InterventionSel.png");
+  
   
   /**
    * Constructor for panel.

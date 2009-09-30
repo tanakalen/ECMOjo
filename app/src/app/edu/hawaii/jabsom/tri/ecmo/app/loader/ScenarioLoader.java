@@ -22,6 +22,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.UrineOutputFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.InterventionComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
@@ -198,7 +199,6 @@ public final class ScenarioLoader {
         patient.setHeartFunction(HeartFunction.parse(parameters.get("patient-heart-function")));
         patient.setSedated(Boolean.parseBoolean(parameters.get("patient-sedated")));
         patient.setBleeding(Boolean.parseBoolean(parameters.get("patient-bleeding")));
-        // TODO: load other patient values
         patient.setTemperature(Double.parseDouble(parameters.get("patient-temperature")));
         
         // the equipment
@@ -208,6 +208,17 @@ public final class ScenarioLoader {
         HeaterComponent heater = (HeaterComponent)equipment.getComponent(HeaterComponent.class);
         heater.setTemperature(Double.parseDouble(parameters.get("heater-temperature")));
         heater.setBroken(Boolean.parseBoolean(parameters.get("heater-broken")));
+        
+        // load the intervention point information
+        for (int i = 0; i < equipment.size(); i++) {
+          Component component = equipment.get(i);
+          if (component instanceof InterventionComponent) {
+            InterventionComponent intervention = (InterventionComponent)component;
+            String loc = intervention.getInterventionLocation().getName();
+            String key = "intervention-" + loc + "-cracked-pigtail";
+            intervention.setCrackedPigtail(Boolean.parseBoolean(parameters.get(key)));
+          }
+        }
         
         // load the tube component
         TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);

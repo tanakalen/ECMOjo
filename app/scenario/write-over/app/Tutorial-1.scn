@@ -86,6 +86,12 @@ patient-temperature = 34
 heater-temperature = 37
 heater-broken = false
 
+# Intervention
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
+
 # Tube
 tube-cannula-broken = false
 tube-cannula-status = 

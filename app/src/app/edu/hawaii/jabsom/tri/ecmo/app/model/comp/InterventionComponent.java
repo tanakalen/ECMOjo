@@ -13,7 +13,10 @@ public class InterventionComponent extends Component {
   /** The intervention location. */
   private InterventionLocation interventionLocation;
   
-
+  /** True for cracked pigtail. */
+  private boolean crackedPigtail;
+  
+  
   /**
    * Returns the intervention location.
    *
@@ -30,6 +33,24 @@ public class InterventionComponent extends Component {
    */
   public void setInterventionLocation(InterventionLocation interventionLocation) {
     this.interventionLocation = interventionLocation;
+  }
+  
+  /**
+   * Returns true for cracked pigtail.
+   *
+   * @return  True for cracked pigtail.
+   */
+  public boolean isCrackedPigtail() {
+    return crackedPigtail;
+  }
+
+  /**
+   * Set true for cracked pigtail.
+   *
+   * @param crackedPigtail  True for cracked pigtail.
+   */
+  public void setCrackedPigtail(boolean crackedPigtail) {
+    this.crackedPigtail = crackedPigtail;
   }
 
   /**
