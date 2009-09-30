@@ -4,6 +4,12 @@
 name = Scenario 0 - Simulation
 desc = The never ending simulation...
 
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = *
+scenario-pump-type = *
+scenario-vent-type = *
+
 # Goal Information
 goal = Simulation
 
