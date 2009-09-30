@@ -404,17 +404,17 @@ public final class Updater {
 
       // update equipment (alarm)
       if (pressureMonitor.isAlarm()
+          || physiologicMonitor.isAlarm()
           || bubbleDetector.isAlarm()
           || pump.isAlarm() 
           || oxygenator.isAlarm()
           || heater.isAlarm()) {
+        
+        // the alarm indicator becomes true
         alarmIndicator.setAlarm(true);
-        if (bubbleDetector.isAlarm()) {
-          // turn off the pump
-          pump.setOn(false);
-        }
-        if (pressureMonitor.isAlarm()) {
-          // Pump flow stops
+        
+        // pump action necessary?
+        if (bubbleDetector.isAlarm() || pressureMonitor.isAlarm()) {
           pump.setOn(false);
         }
       }
