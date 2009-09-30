@@ -12,6 +12,9 @@ public class HeaterComponent extends Component {
   /** The temperature in centigrade [0, 100]. */
   private double temperature;
 
+  /** True if the heater is broken. */
+  private boolean broken;
+  
   
   /**
    * Returns the temperature in centigrade.
@@ -31,6 +34,24 @@ public class HeaterComponent extends Component {
     this.temperature = temperature;
     notifyUpdate();
   }
+  
+  /**
+   * Returns true for broken.
+   *
+   * @return  True for broken.
+   */
+  public boolean isBroken() {
+    return broken;
+  }
+
+  /**
+   * Set true for broken.
+   *
+   * @param broken  True for broken.
+   */
+  public void setBroken(boolean broken) {
+    this.broken = broken;
+  }
 
   /**
    * Returns true for alarm.
@@ -38,7 +59,7 @@ public class HeaterComponent extends Component {
    * @return  True for alarm.
    */
   public boolean isAlarm() {
-    return ((temperature < 34) || (temperature > 39));
+    return (!broken) && ((temperature < 34) || (temperature > 39));
   }
 
   /**
