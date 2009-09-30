@@ -4,6 +4,12 @@
 name = Scenario 3
 desc = ECMO hour 220 (d9) for 4 kg female with pertussis pneumonia. Improving pulmonary function. Worsening coagulation studies.
 
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = *
+scenario-pump-type = *
+scenario-vent-type = *
+
 # Goal Information
 goal = Baseline
 time = 300

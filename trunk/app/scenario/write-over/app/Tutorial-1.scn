@@ -4,6 +4,12 @@
 name = Introduction
 desc = Run the tutorial for an introduction of ECMOjo. 
 
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = *
+scenario-pump-type = *
+scenario-vent-type = *
+
 # Goal Information
 goal = Tutorial
 tutorial-item1-text = Welcome to the introduction. Try to identify the ECMOjo components.
