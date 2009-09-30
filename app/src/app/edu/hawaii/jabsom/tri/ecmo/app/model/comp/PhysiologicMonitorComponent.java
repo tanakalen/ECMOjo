@@ -166,6 +166,101 @@ public class PhysiologicMonitorComponent extends Component {
   }
 
   /**
+   * Returns true for temperature alarm.
+   * 
+   * @return  True for alarm.
+   */
+  public boolean isTemperatureAlarm() {
+    return ((temperature < 34) || (temperature > 39));
+  }
+  
+  /**
+   * Returns true for heart rate alarm.
+   * 
+   * @return  True for alarm.
+   */
+  public boolean isHeartRateAlarm() {
+    return ((heartRate < 95) || (heartRate > 160));
+  }
+
+  /**
+   * Returns true for respiratory rate alarm.
+   * 
+   * @return  True for alarm.
+   */
+  public boolean isRespiratoryRateAlarm() {
+    return respiratoryRate < 5;
+  }
+
+  /** 
+   * Returns true if there is an O2 saturation alarm.
+   * 
+   * @return  True for alarm.
+   */
+  public boolean isO2SaturationAlarm() {
+    return o2Saturation <= 0.53;
+  }
+  
+  /**
+   * Returns true for systolic blood pressure alarm.
+   * 
+   * @return  True for alarm.
+   */
+  public boolean isSystolicBloodPressureAlarm() {
+    return ((systolicBloodPressure < 70) || (systolicBloodPressure > 80));
+  }
+
+  /**
+   * Returns true for diastolic blood pressure alarm.
+   * 
+   * @return  True for alarm.
+   */
+  public boolean isDiastolicBloodPressureAlarm() {
+    return ((diastolicBloodPressure < 0) || (diastolicBloodPressure > 100));  // TODO: values need adjustment...
+  }
+
+  /**
+   * Returns true for central venous pressure alarm.
+   * 
+   * @return  True for alarm.
+   */
+  public boolean isCentralVenousPressureAlarm() {
+    return ((centralVenousPressure < 0) || (centralVenousPressure > 8));
+  }
+
+  /**
+   * Returns true if there is an alarm.
+   * 
+   * @return  True for alarm.
+   */
+  public boolean isAlarm() {
+    if (isTemperatureAlarm()) {
+      return true;
+    }
+    else if (isHeartRateAlarm()) {
+      return true;
+    }
+    else if (isRespiratoryRateAlarm())  {
+      return true;
+    }
+    else if (isO2SaturationAlarm()) {
+      return true;
+    }
+    else if (isSystolicBloodPressureAlarm()) {
+      return true;
+    }
+    else if (isDiastolicBloodPressureAlarm()) {
+      return true;
+    }
+    else if (isCentralVenousPressureAlarm()) {
+      return true;
+    }
+
+    // otherwise, no alarm
+    return false;
+  }
+
+  /**
    * Returns the name of the component.
    * 
    * @return  The name.

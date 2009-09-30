@@ -27,15 +27,12 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
 public class HeaterComponentPanel extends ComponentPanel implements Runnable {
 
   /** The rollover image. */
-  private Image rolloverImage 
-    = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-HeaterRol.png");
+  private Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-HeaterRol.png");
   /** The selected image. */
-  private Image selectedImage 
-    = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-HeaterSel.png");
+  private Image selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-HeaterSel.png");
 
   /** The red alert image. */
   private Image redAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-RedSmall.png");
-
   /** The black alert image. */
   private Image blackAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-BlackSmall.png");
   
@@ -50,6 +47,7 @@ public class HeaterComponentPanel extends ComponentPanel implements Runnable {
   
   /** The updater thread. */
   private Thread thread;
+  
   
   /**
    * Constructor for panel.
@@ -144,7 +142,7 @@ public class HeaterComponentPanel extends ComponentPanel implements Runnable {
     g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                         RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-    if (component.isAlarm()){
+    if (component.isAlarm()) {
       // draw blinking red light
       if ((((System.nanoTime()) / 500000000) % 2) == 0) {
         g.drawImage(redAlertImage, 10, 11, this);

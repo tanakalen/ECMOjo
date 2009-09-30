@@ -10,6 +10,7 @@ import java.awt.RenderingHints;
 import javax.swing.ButtonGroup;
 
 import king.lib.access.ImageLoader;
+import king.lib.out.Error;
 
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PhysiologicMonitorComponent;
 
@@ -19,10 +20,15 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PhysiologicMonitorComponent;
  * @author   Christoph Aschwanden
  * @since    September 4, 2008
  */
-public class PhysiologicMonitorComponentPanel extends ComponentPanel {
+public class PhysiologicMonitorComponentPanel extends ComponentPanel implements Runnable {
 
   /** The panel image. */
   private Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/Mtr-Physiologic.png");
+
+  /** The red alert image. */
+  private Image redAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-RedSmall.png");
+  /** The black alert image. */
+  private Image blackAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-BlackSmall.png");
 
   /** The font color. */
   private final Color textColor = new Color(0.2f, 0.2f, 0.2f);
@@ -30,6 +36,9 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel {
   /** The component. */
   private PhysiologicMonitorComponent component;
   
+  /** The updater thread. */
+  private Thread thread;
+
   
   /**
    * Constructor for panel.
@@ -46,8 +55,6 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel {
     
     // set layout
     setLayout(null);
-    
-    
   }
 
   /**
@@ -57,6 +64,49 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel {
     repaint();
   }
   
+  /**
+   * Called when panel is added.
+   */
+  @Override
+  public void addNotify() {
+    super.addNotify();
+    
+    // start thread
+    this.thread = new Thread(this);
+    this.thread.setPriority(Thread.MIN_PRIORITY);
+    this.thread.start();
+  }
+  
+  /**
+   * Called when panel is removed.
+   */
+  @Override
+  public void removeNotify() {
+    // stop thread
+    this.thread = null;
+    
+    super.removeNotify();
+  }
+  
+  /**
+   * The time updater thread.
+   */
+  public void run() {
+    Thread currentThread = Thread.currentThread();
+    while (this.thread == currentThread) {
+      // update
+      repaint();
+      
+      // wait for next update
+      try {
+        Thread.sleep(50);
+      }
+      catch (InterruptedException e) {
+        Error.out(e);
+      }
+    }
+  }
+
   /**
    * Paints this component.
    * 
@@ -78,8 +128,10 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel {
     g.setColor(textColor);
     g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
     
+    // true for alarm
+    boolean alarm = component.isAlarm();
+    
     // draw text
- // TODO: Fix labels on conf/image/interface/game/Mtr-Physiologic.png
     String text = String.valueOf((int)component.getTemperature()) + "\u00B0C";
     g.drawString(text, 88, 34);
     text = String.valueOf((int)component.getHeartRate());
@@ -100,6 +152,16 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel {
     g.drawString(text, 212, 60);
     text = String.valueOf((int)(component.getCentralVenousPressure()));
     g.drawString(text, 212, 84);
+    
+    // draw blinking red light if alerting
+    if (alarm) {
+      if ((((System.nanoTime()) / 500000000) % 2) == 0) {
+        g.drawImage(redAlertImage, 1, 3, this);
+      }
+      else {
+        g.drawImage(blackAlertImage, 1, 3, this);        
+      }      
+    } 
   }
   
   /**
