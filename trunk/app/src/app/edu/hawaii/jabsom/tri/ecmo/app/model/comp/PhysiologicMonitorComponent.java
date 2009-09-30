@@ -207,7 +207,7 @@ public class PhysiologicMonitorComponent extends Component {
    * @return  True for alarm.
    */
   public boolean isSystolicBloodPressureAlarm() {
-    return ((systolicBloodPressure < 70) || (systolicBloodPressure > 80));
+    return ((systolicBloodPressure < 40) || (systolicBloodPressure > 80));  // TODO: values need adjustment...
   }
 
   /**
@@ -225,7 +225,7 @@ public class PhysiologicMonitorComponent extends Component {
    * @return  True for alarm.
    */
   public boolean isCentralVenousPressureAlarm() {
-    return ((centralVenousPressure < 0) || (centralVenousPressure > 8));
+    return ((centralVenousPressure < 0) || (centralVenousPressure > 12));  // TODO: values need adjustment...
   }
 
   /**
