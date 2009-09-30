@@ -13,8 +13,12 @@ import king.lib.access.ImageLoader;
 import king.lib.out.Error;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.HeaterAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.ReplaceHeaterAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
 
 /**
  * The detail panel. 
@@ -98,6 +102,42 @@ public class HeaterDetailPanel extends DetailPanel implements Runnable {
     decButton.setSize(32, 32);
     add(decButton); 
     
+    // add replace heater button
+    Image replaceHeaterNormalImage 
+        = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ReplaceHeater.png");
+    Image replaceHeaterRolloverImage 
+        = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ReplaceHeaterRol.png");
+    Image replaceHeaterSelectedImage 
+        = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ReplaceHeaterSel.png");
+    ImageButton replaceHeaterButton 
+        = new ImageButton(replaceHeaterNormalImage, replaceHeaterRolloverImage, replaceHeaterSelectedImage);
+    replaceHeaterButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        boolean problem = component.isBroken();
+        
+        // send the action
+        ReplaceHeaterAction action = new ReplaceHeaterAction();
+        notifyActionListeners(action);
+            
+        // output dialog
+        if (problem) {
+          // fixed
+          StandardDialog.showDialog(HeaterDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
+              , "Problem Fixed"
+              , "Good catch! The heater was broken and has been replaced.");
+        }
+        else {
+          // no problem = nothing done
+          StandardDialog.showDialog(HeaterDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+              , "No Problem Detected"
+              , "Although the heater has now been replaced, no problem was detected. " 
+              + "The old heater was working just fine.");
+        }
+      }
+    });
+    replaceHeaterButton.setLocation(70, 186);
+    replaceHeaterButton.setSize(192, 32);
+    add(replaceHeaterButton);
   }
 
   /**
