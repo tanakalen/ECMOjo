@@ -24,11 +24,17 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.InterventionComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.Species;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.SimulationGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
@@ -108,10 +114,50 @@ public final class ScenarioLoader {
         // parse and load data
         Scenario scenario = ScenarioCreator.create();
         
+        // the equipment
+        Equipment equipment = scenario.getEquipment();
+        
         // the name
         scenario.setName(parameters.get("name"));
         scenario.setDescription(parameters.get("desc"));
 
+        // the parameters
+        String tubeType = parameters.get("scenario-ecmo-mode");
+        TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
+        if (tubeType.equalsIgnoreCase("va")) {
+          tube.setMode(Mode.VA);
+        }
+        else if (tubeType.equalsIgnoreCase("vv")) {
+          tube.setMode(Mode.VV);
+        }
+        
+        String oxyType = parameters.get("scenario-oxy-type");
+        OxygenatorComponent oxy = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
+        if (oxyType.equalsIgnoreCase("quadrox")) {
+          oxy.setOxyType(OxyType.QUADROX_D);
+        }
+        else if (oxyType.equalsIgnoreCase("silicone")) {
+          oxy.setOxyType(OxyType.SILICONE);
+        }
+        
+        String pumpType = parameters.get("scenario-pump-type");
+        PumpComponent pump = (PumpComponent)equipment.getComponent(PumpComponent.class);
+        if (pumpType.equalsIgnoreCase("centrifugal")) {
+          pump.setPumpType(PumpType.CENTRIFUGAL);
+        }
+        else if (pumpType.equalsIgnoreCase("roller")) {
+          pump.setPumpType(PumpType.ROLLER);
+        }
+
+        String ventType = parameters.get("scenario-vent-type");
+        VentilatorComponent vent = (VentilatorComponent)equipment.getComponent(VentilatorComponent.class);
+        if (ventType.equalsIgnoreCase("conventional")) {
+          vent.setSubtype(new VentilatorComponent.ConventionalSubtype());
+        }
+        else if (ventType.equalsIgnoreCase("highfrequency")) {
+          vent.setSubtype(new VentilatorComponent.HighFrequencySubtype());
+        }
+        
         // the goal
         String goalName = parameters.get("goal");
         if (goalName != null) {
@@ -201,9 +247,6 @@ public final class ScenarioLoader {
         patient.setBleeding(Boolean.parseBoolean(parameters.get("patient-bleeding")));
         patient.setTemperature(Double.parseDouble(parameters.get("patient-temperature")));
         
-        // the equipment
-        Equipment equipment = scenario.getEquipment();
-        
         // load the heater component
         HeaterComponent heater = (HeaterComponent)equipment.getComponent(HeaterComponent.class);
         heater.setTemperature(Double.parseDouble(parameters.get("heater-temperature")));
@@ -221,7 +264,6 @@ public final class ScenarioLoader {
         }
         
         // load the tube component
-        TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
         boolean broke = Boolean.parseBoolean(parameters.get("tube-cannula-broken"));
         String prob = parameters.get("tube-cannula-status");
         TubeComponent.Status problem;
