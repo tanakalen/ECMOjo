@@ -5,6 +5,7 @@ import javax.swing.SwingUtilities;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Manager.ManagerListener;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
+import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.SimulationGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
@@ -132,9 +133,13 @@ public class GameStatePanel extends JPanel implements ManagerListener, KeyEventD
       // and exit to menu
       state.menuState();
     }
-    else {
-      // exit to result state
+    else if (goal instanceof BaselineGoal) {
+      // proceed to the result state
       state.resultState();
+    }
+    else {
+      // just exit
+      state.menuState();
     }
   }
   
@@ -154,9 +159,13 @@ public class GameStatePanel extends JPanel implements ManagerListener, KeyEventD
           // and exit to menu
           state.menuState();
         }
-        else {
+        else if (goal instanceof BaselineGoal) {
           // proceed to the result state
           state.resultState();
+        }
+        else {
+          // just exit
+          state.menuState();
         }
       }
     });

@@ -127,12 +127,11 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
       try {
         // blink 3 times
         if (blink) {
-          String text = box.getText();
           for (int i = 0; i < 3; i++) {
-            box.setText("");
+            box.setTextVisible(false);
             Thread.sleep(250);
       
-            box.setText(text);
+            box.setTextVisible(true);
             Thread.sleep(350);
           }
           blink = false;
