@@ -17,6 +17,7 @@ import king.lib.out.Error;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.Species;
 
 /**
  * The patient panel. 
@@ -26,15 +27,14 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
  */
 public class PatientPanel extends ComponentPanel implements Runnable {
 
-  /** The rollover image. */
-  private Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-PatientRol.png");
-  /** The selected image. */
-  private Image selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-PatientSel.png");
-
   /** The patient image. */
-  private Image patientImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Patient-Baby.png");
+  private Image patientImage;
+  /** The rollover image. */
+  private Image patientRolImage;
+  /** The selected image. */
+  private Image patientSelImage;
   /** The patient blue image. */
-  private Image patientBlueImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Patient-BabyBlue.png");
+  private Image patientBlueImage;
   
   /** The dripping blood image. */
   private Image drippingBloodImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-Blood.png");
@@ -81,8 +81,18 @@ public class PatientPanel extends ComponentPanel implements Runnable {
       randomFlag[i] = false;
     }
 
+    // load the images
+    String species = "Baby";
+    if (patient.getSpecies() == Species.PIG) {
+      species = "Pig";
+    }
+    patientImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Patient-" + species + ".png");
+    patientRolImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Patient-" + species + "Rol.png");
+    patientSelImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Patient-" + species + "Sel.png");
+    patientBlueImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Patient-" + species + "Blue.png");
+
     // add toggle button
-    selectionButton = new ImageToggleButton(null, rolloverImage, selectedImage, selectedImage);
+    selectionButton = new ImageToggleButton(null, patientRolImage, patientSelImage, patientSelImage);
     selectionButton.setToolTipText("<html><table><tr><td width=\"250\" height=\"200\" valign=\"top\"><b>" 
         + name + "</b><br>" 
         + description + "</td></tr></table></html>");
