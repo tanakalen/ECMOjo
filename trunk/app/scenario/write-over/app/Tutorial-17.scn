@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Sweep Gases 2
-desc = ...
+desc = Adjusting the total sweep gas delivered to the oxygenator.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

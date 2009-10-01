@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Air in the Venous Limb
-desc = ...
+desc = Actions to take when air is seen in the venous limb of the circuit.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
