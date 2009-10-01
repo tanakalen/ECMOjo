@@ -84,7 +84,7 @@ public class PatientPanel extends ComponentPanel implements Runnable {
     // load the images
     String species = "Baby";
     if (patient.getSpecies() == Species.PIG) {
-      species = "Pig";
+      // species = "Pig";
     }
     patientImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Patient-" + species + ".png");
     patientRolImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Patient-" + species + "Rol.png");
