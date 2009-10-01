@@ -264,7 +264,6 @@ public final class ScenarioLoader {
         }
         
         // load the tube component
-        TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
         Boolean broke = Boolean.parseBoolean(parameters.get("tube-cannula-broken"));
         String prob = parameters.get("tube-cannula-status");
         TubeComponent.Status problem;
