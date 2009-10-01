@@ -225,7 +225,6 @@ public final class Updater {
       }
       // check tubing status (normal, kink, high or low) then location
       if (tube.isBrokenCannula()) {
-        System.out.println(tube.getCannulaProblem());
         if (tube.getCannulaProblem() == TubeComponent.Status.KINK) {
           if (tube.getCannlaProblemLocation() == TubeComponent.problemLocation.arterial) {
             if (tube.getPreMembranePressure() > 750) {
