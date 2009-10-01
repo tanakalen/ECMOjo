@@ -10,6 +10,9 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.goal.SimulationGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ManagerPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.TutorialPanel;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -141,8 +144,20 @@ public class GameStatePanel extends JPanel implements ManagerListener, KeyEventD
   public void goalReached() {
     SwingUtilities.invokeLater(new Runnable() {
       public void run() {
-        // proceed to the result state
-        state.resultState();
+        Goal goal = state.getManager().getGame().getGoal();
+        if (goal instanceof TutorialGoal) {
+          // show completed dialog
+          StandardDialog.showDialog(GameStatePanel.this, DialogType.SUCCESS, DialogOption.OK
+              , "Tutorial Completed"
+              , "You successfully completed the tutorial.");
+
+          // and exit to menu
+          state.menuState();
+        }
+        else {
+          // proceed to the result state
+          state.resultState();
+        }
       }
     });
   }
