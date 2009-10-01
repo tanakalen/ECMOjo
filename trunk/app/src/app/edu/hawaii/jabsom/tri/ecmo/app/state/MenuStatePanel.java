@@ -258,55 +258,52 @@ public class MenuStatePanel extends JPanel {
           
           // update tubing
           TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
-          if (vvRadio.isSelected()) {
-            tube.setMode(Mode.VV);
+System.out.println("tub " + tube.getMode());
+          if (tube.getMode() == null) {
+            if (vvRadio.isSelected()) {
+              tube.setMode(Mode.VV);
+            }
+            else {
+              tube.setMode(Mode.VA);
+              
+              // ECMO Mode VA reduces patient HR 10%
+              Patient patient = scenario.getPatient();
+              double hr = patient.getHeartRate();
+              patient.setHeartRate(hr * 0.9);
+            }
+            Configuration.getInstance().setSelectionVVModeECMO(vvRadio.isSelected());
           }
-          else {
-            tube.setMode(Mode.VA);
-            // ECMO Mode VA reduces patient HR 10%
-            Patient patient = scenario.getPatient();
-            double hr = patient.getHeartRate();
-            patient.setHeartRate(hr * 0.9);
-          }
-          Configuration.getInstance().setSelectionVVModeECMO(vvRadio.isSelected());
-          
+          tube.setPostPCO2(35);
+          tube.setPostPH(7.4);
+
           // update oxigenator
-          OxygenatorComponent oxi = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
-          if (siliconeRadio.isSelected()) {
-            oxi.setOxyType(OxyType.SILICONE);
+          OxygenatorComponent oxy = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
+          if (oxy.getOxyType() == null) {
+            if (siliconeRadio.isSelected()) {
+              oxy.setOxyType(OxyType.SILICONE);
+            }
+            else {
+              oxy.setOxyType(OxyType.QUADROX_D);
+            }
+            Configuration.getInstance().setSelectionSiliconeOxygenator(siliconeRadio.isSelected());
           }
-          else {
-            oxi.setOxyType(OxyType.QUADROX_D);
-          }
-          Configuration.getInstance().setSelectionSiliconeOxygenator(siliconeRadio.isSelected());
           
           // update pump
           PumpComponent pump = (PumpComponent)equipment.getComponent(PumpComponent.class);
-          if (rollerRadio.isSelected()) {
-            pump.setPumpType(PumpType.ROLLER);
+          if (pump.getPumpType() == null) {
+            if (rollerRadio.isSelected()) {
+              pump.setPumpType(PumpType.ROLLER);
+            }
+            else {
+              pump.setPumpType(PumpType.CENTRIFUGAL);
+            }
+            Configuration.getInstance().setSelectionRollerPump(rollerRadio.isSelected());
           }
-          else {
-            pump.setPumpType(PumpType.CENTRIFUGAL);
-          }
-          Configuration.getInstance().setSelectionRollerPump(rollerRadio.isSelected());
-
+          
           // update ventilator
           VentilatorComponent ventilator = (VentilatorComponent)equipment.getComponent(VentilatorComponent.class);
           ventilator.setSubtype(new VentilatorComponent.ConventionalSubtype());
           Configuration.getInstance().setSelectionConventionalVentilator(true);
-
-          // init tube values depending on selection
-//          tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
-          if (oxi.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
-            // PMP
-//            tube.setPostMembranePressure(tube.getPreMembranePressure());
-          }
-          else { 
-            // Silicon
-//            tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
-          }
-          tube.setPostPCO2(35);
-          tube.setPostPH(7.4);
 
           // show dialog and ask for the username
           String user;

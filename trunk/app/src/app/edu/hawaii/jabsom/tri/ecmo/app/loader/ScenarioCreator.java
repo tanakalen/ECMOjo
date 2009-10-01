@@ -21,11 +21,8 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PressureMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.InterventionLocation;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
@@ -86,7 +83,6 @@ public final class ScenarioCreator {
     scenario.setEquipment(equipment);
     
     TubeComponent tubeComponent = new TubeComponent();
-    tubeComponent.setMode(Mode.VA);
     tubeComponent.setArterialAOpen(true);
     tubeComponent.setArterialBOpen(true);
     tubeComponent.setVenousAOpen(true);
@@ -101,7 +97,6 @@ public final class ScenarioCreator {
     equipment.add(tubeComponent);
     
     OxygenatorComponent oxiComponent = new OxygenatorComponent();
-    oxiComponent.setOxyType(OxyType.SILICONE);
     oxiComponent.setTotalSweep(0.6);
     oxiComponent.setFiO2(0.5);
     oxiComponent.setClotting(0.0);
@@ -109,13 +104,11 @@ public final class ScenarioCreator {
     equipment.add(oxiComponent);
 
     PumpComponent pumpComponent = new PumpComponent();
-    pumpComponent.setPumpType(PumpType.CENTRIFUGAL);
     pumpComponent.setOn(true);
     pumpComponent.setFlow(0.6);
     equipment.add(pumpComponent);
 
     VentilatorComponent ventilatorComponent = new VentilatorComponent();
-    ventilatorComponent.setSubtype(new VentilatorComponent.ConventionalSubtype());
     ventilatorComponent.setEmergencyFuction(false);
     ventilatorComponent.setFiO2(0.3);
     ventilatorComponent.setITime(0.5);
