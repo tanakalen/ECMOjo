@@ -56,11 +56,11 @@ baseline-alarming = false
 patient-species = human
 patient-age = 1
 patient-weight = 5
-patient-lung-function = bad
+patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
-patient-temperature = 37
+patient-temperature = 34
 
 # Heater
 heater-temperature = 37
@@ -93,6 +93,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-nb-vv+v-whiteout,xr-2m-vv-va+v-cannulahigh
-lab-img-us = us-nb-va-ivh
+lab-img-xray = xr-none
+lab-img-us = us-none
 lab-img-echo = echo-none

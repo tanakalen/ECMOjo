@@ -1,7 +1,6 @@
 package edu.hawaii.jabsom.tri.ecmo.app.state;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -72,7 +71,7 @@ public class MenuState extends State {
           Scenario scenario = ScenarioLoader.load(hookup, file);
           scenarios.add(scenario);
         }
-        catch (IOException e) {
+        catch (Exception e) {
           Error.out("Error loading file: " + fileName);
           Error.out(e);
         }
