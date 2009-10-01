@@ -296,8 +296,6 @@ public final class ScenarioLoader {
         else {
           place = TubeComponent.problemLocation.none;
         }
-        System.out.println(broke.toString() + prob + loc);
-        System.out.println(broke.toString() + problem + place);
         tube.setBrokenCannula(broke, problem, place);
         
         tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
