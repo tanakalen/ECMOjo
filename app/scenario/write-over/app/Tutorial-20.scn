@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = VV ECMO Pump Flow
-desc = ...
+desc = Physiologic and ECMO variables impacted by VV pump flow.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

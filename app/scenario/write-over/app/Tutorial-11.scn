@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Coming off ECMO
-desc = ...
+desc = Steps to emergently come off of ECLS support.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

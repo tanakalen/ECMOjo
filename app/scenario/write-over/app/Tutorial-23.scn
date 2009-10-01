@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Oxygenator Failure
-desc = ...
+desc = Identifying an oxygenator failure.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

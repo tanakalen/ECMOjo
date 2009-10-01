@@ -1,8 +1,8 @@
 1
 
 # Scenario Information
-name = Sweep Gases 1
-desc = Adjusting the FiO2 delivered to the oxygenator.
+name = ECMOisms
+desc = The unofficial laws of ECMO, by J Devn Cornish, MD.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

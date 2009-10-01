@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Circuit Check
-desc = ...
+desc = The circuit check is to ensure the integrity of the circuit and to catch problems early or real time.  This simulation represents a generic circuit and may not include all of the components used at your center.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

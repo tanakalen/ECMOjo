@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Negative Venous Pressure
-desc = ...
+desc = Identifying the cause of a very negative venous/bladder pressure.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

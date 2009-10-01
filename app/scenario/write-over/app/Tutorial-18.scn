@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Temperature Control
-desc = ...
+desc = Functions of the heater.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

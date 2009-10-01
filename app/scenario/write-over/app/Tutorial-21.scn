@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Circuit Failure
-desc = ...
+desc = Events associated with a circuit failure.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

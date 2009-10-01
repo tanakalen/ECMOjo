@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = High Post-Membrane Pressure
-desc = ...
+desc = Identifying the cause of a high post-membrane pressure.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Oxygenator Rupture
-desc = ...
+desc = Description of events that occur with a oxgenator rupture.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
