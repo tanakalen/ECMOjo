@@ -26,22 +26,32 @@ public class CircuitChangeAction extends Action {
     // change circuit <=> "reset the circuit"   
     Equipment equipment = game.getEquipment();
     
-    // reset the tubing
-    TubeComponent tubeComponent = (TubeComponent)equipment
-                                  .getComponent(TubeComponent.class);
-    tubeComponent.setVenousPressure(0);
-    
     // reset the oxigenator
     OxygenatorComponent oxiComponent = (OxygenatorComponent)equipment
                                        .getComponent(OxygenatorComponent.class);
     oxiComponent.setClotting(0.0);
     oxiComponent.setBroken(false);
 
+    // reset the tubing
+    TubeComponent tubeComponent = (TubeComponent)equipment
+                                  .getComponent(TubeComponent.class);
+    tubeComponent.setVenousPressure(0);
+    if (oxiComponent.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
+      // PMP
+      tubeComponent.setPreMembranePressure(125);
+      tubeComponent.setPostMembranePressure(120);
+    }
+    else { 
+      // Silicon
+      tubeComponent.setPreMembranePressure(140);
+      tubeComponent.setPostMembranePressure(120);
+    }
+
     // reset the pump
     PumpComponent pumpComponent = (PumpComponent)equipment
                                   .getComponent(PumpComponent.class);
     pumpComponent.setOn(false);
-    pumpComponent.setFlow(0.6);
+    pumpComponent.setFlow(0.0);
     
     // reset alarms
     AlarmIndicatorComponent alarmIndicatorComponent = (AlarmIndicatorComponent)equipment

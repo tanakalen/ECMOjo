@@ -640,6 +640,7 @@ public final class Updater {
       
       // update the patients life
       if (oxygenator.isBroken()) {
+        tube.setPreMembranePressure(tube.getPreMembranePressure() + 0.1);
         double life = patient.getLife();
         life -= increment / 5000.0;   // 5 seconds to die...
         if (life < 0.0) {
@@ -776,7 +777,7 @@ public final class Updater {
         // pump.setFlow(0.0);
       }
       else {
-        // if cenrifugal pump then pump flow to 0. 
+        // if centrifugal pump then pump flow to 0. 
         if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
           // ??? undo the flow
           // pump.setFlow(0.0);
@@ -841,15 +842,15 @@ public final class Updater {
     // Arterial: Closed, Venous: Open, Bridge: Open
     else if (!tube.isArterialBOpen() && tube.isVenousBOpen() && tube.isBridgeOpen()) {
       // premembrane and postmembrane pressures drop by 10%. 
-//      tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
-//      tube.setPostMembranePressure(tube.getPostMembranePressure() * 0.90);
+      tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
+      tube.setPostMembranePressure(tube.getPostMembranePressure() * 0.90);
       // Venous pressure increase by 1.
       tube.setVenousPressure(tube.getVenousPressure() + 1.0);
     }
     // Arterial: Open, Venous: Closed, Bridge: Open
     else if (tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen()) {
       // premembrane pressure decreases by 10%. 
-//      tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
+      tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
       // Venous pressure increases by 4.
       tube.setVenousPressure(tube.getVenousPressure() + 4.0);
     }
@@ -858,15 +859,38 @@ public final class Updater {
       // Standard operation termed recirculation: no change
       // TODO: if patient is sick, vital signs should decrease
       onPump = false;
+      if (oxigenator.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
+        // PMP
+        tube.setPreMembranePressure(125);
+        tube.setPostMembranePressure(120);
+      }
+      else { 
+        // Silicon
+        tube.setPreMembranePressure(140);
+        tube.setPostMembranePressure(120);
+      }
     }
     // Arterial: Open, Venous: Open, Bridge: Closed
     else if (tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen()) {
       // Standard operation: no change
       onPump = true;
+      if (oxigenator.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
+        // PMP
+        tube.setPreMembranePressure(125);
+        tube.setPostMembranePressure(120);
+      }
+      else { 
+        // Silicon
+        tube.setPreMembranePressure(140);
+        tube.setPostMembranePressure(120);
+      }
     }
     // Arterial: Closed, Venous: Open, Bridge: Closed
     else if (!tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen()) {
       if (pump.isOn() && (pump.getFlow() > 0.0)) {
+        tube.setPreMembranePressure(500.0);
+        tube.setPostMembranePressure(500.0);              
+
         if (pump.getPumpType() == PumpType.ROLLER) {
           oxigenator.setBroken(true);
         }
@@ -909,15 +933,15 @@ public final class Updater {
     else if (tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {      
       // If roller pump then premembrane = mean BP, else if centrifugal then premembrane decreases by 35. 
       if (pump.getPumpType() == PumpType.ROLLER) {
-//        tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
+        tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
       }
       if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
-//        tube.setPreMembranePressure(tube.getPreMembranePressure() - 35.0);
+        tube.setPreMembranePressure(tube.getPreMembranePressure() - 35.0);
       } 
       
       // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2. 
       if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SILICONE) {
-//        tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
+        tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
         tube.setVenousPressure(tube.getVenousPressure() + 2.0);
       }
       
@@ -938,6 +962,8 @@ public final class Updater {
     }
     // Arterial: Closed, Venous: Closed, Bridge: Closed
     else if (!tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {
+      tube.setPreMembranePressure(750.0);
+      tube.setPostMembranePressure(750.0);              
       // Massively bloody explosion with lots of alarms and noise. 
       // If roller pump then "God of War" blood shower. 
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0))) {
