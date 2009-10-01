@@ -59,7 +59,7 @@ patient-weight = 5
 patient-lung-function = bad
 patient-heart-function = good
 patient-sedated = true
-patient-bleeding = true
+patient-bleeding = false
 patient-temperature = 37
 
 # Heater
@@ -67,10 +67,10 @@ heater-temperature = 37
 heater-broken = false
 
 # Intervention
-intervention-1-cracked-pigtail = true
-intervention-2-cracked-pigtail = true
-intervention-3-cracked-pigtail = true
-intervention-neck-cracked-pigtail = true
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
 
 # Tube
 tube-cannula-broken = false
