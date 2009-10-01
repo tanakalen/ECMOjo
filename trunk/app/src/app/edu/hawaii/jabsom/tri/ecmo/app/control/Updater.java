@@ -232,7 +232,7 @@ public final class Updater {
               tube.setPostMembranePressure(750.0);              
             }
             else {
-              tube.setPreMembranePressure(tube.getPostMembranePressure());
+              tube.setPreMembranePressure(tube.getPreMembranePressure() + 0.03);
               tube.setPostMembranePressure(tube.getPostMembranePressure() + 0.03);
             }
             // If limits set appropriately,  
@@ -263,6 +263,8 @@ public final class Updater {
               tube.setVenousPressure(pressureMonitor.getVenousPressure() + 0.002);
               //pump.setFlow(0.0);
             }
+            // patient gets worse
+            patientDies(patient, ventilator, increment);
           }
           else if (tube.getCannlaProblemLocation() == TubeComponent.problemLocation.venous) {
             //TODO: venous kink
@@ -607,60 +609,8 @@ public final class Updater {
       }
       else { 
         // patient is not on the pump
-        if (ventilator.isEmergencyFuction()) {
-          if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
-              && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
-            // stays alive
-          }
-          else {
-            // dies slower
-            patient.setPH(patient.getPH() - 0.0001);
-            patient.setPCO2(patient.getPCO2() + 0.01);
-            patient.setHeartRate(patient.getHeartRate() - 0.1);
-            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
-            patient.setO2Saturation(patient.getO2Saturation() - 0.0001);
-            patient.setPO2(patient.getPO2() - 0.01);
-            double life = patient.getLife();
-            life -= increment / 60000.0;   // 1 minute to die...
-            if (life < 0.0) {
-              life = 0.0;
-            }
-            patient.setLife(life);
-          }          
-        }
-        else {
-          if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
-              && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
-            // dies slower
-            patient.setPH(patient.getPH() - 0.0001);
-            patient.setPCO2(patient.getPCO2() + 0.01);
-            patient.setHeartRate(patient.getHeartRate() - 0.01);
-            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
-            patient.setO2Saturation(patient.getO2Saturation() - 0.0001);
-            patient.setPO2(patient.getPO2() - 0.01);
-            double life = patient.getLife();
-            life -= increment / 60000.0;   // 1 minute to die...
-            if (life < 0.0) {
-              life = 0.0;
-            }
-            patient.setLife(life);
-          }
-          else {
-            // dies faster
-            patient.setPH(patient.getPH() - 0.001);
-            patient.setPCO2(patient.getPCO2() + 0.1);
-            patient.setHeartRate(patient.getHeartRate() - 0.1);
-            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.1);
-            patient.setO2Saturation(patient.getO2Saturation() - 0.001);
-            patient.setPO2(patient.getPO2() - 0.1);
-            double life = patient.getLife();
-            life -= increment / 30000.0;   // 30 seconds to die...
-            if (life < 0.0) {
-              life = 0.0;
-            }
-            patient.setLife(life);
-          }
-        }
+        patientDies(patient, ventilator, increment);
+        
       }
             
       // TODO Patient bicarb and base excess calc? from Mark's table
@@ -1000,4 +950,70 @@ public final class Updater {
       }
     }
   }
+  
+  /**
+   * Patient dying process.
+   * 
+   * @param patient  The patient.
+   * @param ventilator  The ventilator.
+   * @param increment  The game time increment.
+   */
+  private static void patientDies(Patient patient, VentilatorComponent ventilator,
+      long increment) {
+    if (ventilator.isEmergencyFuction()) {
+      if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
+          && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
+        // stays alive
+      }
+      else {
+        // dies slower
+        patient.setPH(patient.getPH() - 0.0001);
+        patient.setPCO2(patient.getPCO2() + 0.01);
+        patient.setHeartRate(patient.getHeartRate() - 0.1);
+        patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
+        patient.setO2Saturation(patient.getO2Saturation() - 0.0001);
+        patient.setPO2(patient.getPO2() - 0.01);
+        double life = patient.getLife();
+        life -= increment / 60000.0;   // 1 minute to die...
+        if (life < 0.0) {
+          life = 0.0;
+        }
+        patient.setLife(life);
+      }          
+    }
+    else {
+      if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
+          && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
+        // dies slower
+        patient.setPH(patient.getPH() - 0.0001);
+        patient.setPCO2(patient.getPCO2() + 0.01);
+        patient.setHeartRate(patient.getHeartRate() - 0.01);
+        patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
+        patient.setO2Saturation(patient.getO2Saturation() - 0.0001);
+        patient.setPO2(patient.getPO2() - 0.01);
+        double life = patient.getLife();
+        life -= increment / 60000.0;   // 1 minute to die...
+        if (life < 0.0) {
+          life = 0.0;
+        }
+        patient.setLife(life);
+      }
+      else {
+        // dies faster
+        patient.setPH(patient.getPH() - 0.001);
+        patient.setPCO2(patient.getPCO2() + 0.1);
+        patient.setHeartRate(patient.getHeartRate() - 0.1);
+        patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.1);
+        patient.setO2Saturation(patient.getO2Saturation() - 0.001);
+        patient.setPO2(patient.getPO2() - 0.1);
+        double life = patient.getLife();
+        life -= increment / 30000.0;   // 30 seconds to die...
+        if (life < 0.0) {
+          life = 0.0;
+        }
+        patient.setLife(life);
+      }
+    }
+  }
+
 }
