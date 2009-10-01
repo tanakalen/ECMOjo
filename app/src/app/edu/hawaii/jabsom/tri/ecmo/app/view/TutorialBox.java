@@ -130,6 +130,24 @@ public class TutorialBox extends JPanel {
   }
   
   /**
+   * Sets the text (in)visible.
+   * 
+   * @param visible  True for visible.
+   */
+  public void setTextVisible(boolean visible) {
+    textArea.setVisible(visible);
+  }
+  
+  /**
+   * Returns if the text is (in)visible.
+   * 
+   * @return  True for visible.
+   */
+  public boolean isTextVisible() {
+    return textArea.isVisible();
+  }
+  
+  /**
    * Adds a listener.
    * 
    * @param listener  The listener to add.
