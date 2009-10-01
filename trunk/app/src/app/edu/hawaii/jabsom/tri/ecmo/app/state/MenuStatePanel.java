@@ -258,7 +258,6 @@ public class MenuStatePanel extends JPanel {
           
           // update tubing
           TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
-System.out.println("tub " + tube.getMode());
           if (tube.getMode() == null) {
             if (vvRadio.isSelected()) {
               tube.setMode(Mode.VV);

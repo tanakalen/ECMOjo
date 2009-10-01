@@ -31,18 +31,6 @@ public class OxyComponentPanel extends ComponentPanel implements Runnable {
   private Image oxyImage;
   /** The oxigenator broken image. */
   private Image brokenImage;
-
-  /** The dripping blood image. */
-  private Image drippingBloodImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-Blood.png");
-  /** The dripping blood time. */
-  private long[] elapsedTime = new long[3];
-  /** The dripping blood start flag. */
-  private boolean[] startFlag = new boolean[3];
-  /** The dripping blood random flag. */
-  private boolean[] randomFlag = new boolean[3];
-  
-  /** The last update in nano second. */
-  private long lastUpdate;
   
   /** The rollover image. */
   private Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-OxiRol.png");
@@ -64,14 +52,25 @@ public class OxyComponentPanel extends ComponentPanel implements Runnable {
   /** The font color. */
   private final Color textColor = new Color(0.2f, 0.2f, 0.2f);
   
+  /** The dripping blood image. */
+  private Image drippingBloodImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-Blood.png");
+  /** The dripping blood time. */
+  private long[] elapsedTime = new long[3];
+  /** The dripping blood start flag. */
+  private boolean[] startFlag = new boolean[3];
+  /** The dripping blood random flag. */
+  private boolean[] randomFlag = new boolean[3]; 
+  /** The last update in nano second. */
+  private long lastUpdate;
+  /** The updater thread. */
+  private Thread thread;
+
   /** The component. */
   protected OxygenatorComponent component;
   
   /** The selection button. */
   private AbstractButton selectionButton;
   
-  /** The updater thread. */
-  private Thread thread;
   
   /**
    * Constructor for panel.
@@ -99,10 +98,8 @@ public class OxyComponentPanel extends ComponentPanel implements Runnable {
       brokenImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-SciMedOxigenatorBroken.png");
     }
     
-    // set the last update
+    // setup blood dripping
     lastUpdate = 0;
-    
-    // set elapsed time
     for (int i = 0; i < 3; i++) {
       elapsedTime[i] = 0;
       startFlag[i] = false;
@@ -193,7 +190,43 @@ public class OxyComponentPanel extends ComponentPanel implements Runnable {
     else {
       g.drawImage(oxyImage, 5, 33, this);
     }
+        
+    // total sweep integer bar
+    g.drawImage(bottomBarImage, 199, 138, this);
+    int totalSweepIntegerBarTopHeight = (int)component.getTotalSweep() * 6;
+    for (int i = 0; i < (totalSweepIntegerBarTopHeight - 2); i++) {
+      g.drawImage(middleBarImage, 199, 137 - i, this); 
+    }  
+    g.drawImage(topBarImage, 199, 138 - totalSweepIntegerBarTopHeight, this);
     
+    // total sweep decimal bar
+    g.drawImage(bottomBarImage, 216, 138, this);
+    int totalSweepDecimalBarTopHeight = ((int)(component.getTotalSweep() * 10.0)
+                                      - (int)component.getTotalSweep() * 10) * 6;
+    for (int i = 0; i < (totalSweepDecimalBarTopHeight - 2); i++) {
+      g.drawImage(middleBarImage, 216, 137 - i, this);    
+    }
+    g.drawImage(topBarImage, 216, 138 - totalSweepDecimalBarTopHeight, this);
+  
+    // draw blinking red light if there is an alarm
+    if (component.isAlarm()){
+      if ((((System.nanoTime()) / 500000000) % 2) == 0) {
+        g.drawImage(redAlertImage, 178, 77, this);
+      }
+      else {
+        g.drawImage(blackAlertImage, 178, 77, this);        
+      }      
+    } 
+    
+    // set text properties
+    g.setColor(textColor);
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 15f));
+    
+    // draw text
+    String text = Math.round(component.getFiO2() * 100) + "%";
+    g.drawString(text, 148, 120);
+    
+    // draw blood dripping as needed
     if (component.isBroken()) {
       int[] positions = new int[3];
       
@@ -245,41 +278,6 @@ public class OxyComponentPanel extends ComponentPanel implements Runnable {
     else {
       lastUpdate = 0;
     }
-    
-    // total sweep integer bar
-    g.drawImage(bottomBarImage, 199, 138, this);
-    int totalSweepIntegerBarTopHeight = (int)component.getTotalSweep() * 6;
-    for (int i = 0; i < (totalSweepIntegerBarTopHeight - 2); i++) {
-      g.drawImage(middleBarImage, 199, 137 - i, this); 
-    }  
-    g.drawImage(topBarImage, 199, 138 - totalSweepIntegerBarTopHeight, this);
-    
-    // total sweep decimal bar
-    g.drawImage(bottomBarImage, 216, 138, this);
-    int totalSweepDecimalBarTopHeight = ((int)(component.getTotalSweep() * 10.0)
-                                      - (int)component.getTotalSweep() * 10) * 6;
-    for (int i = 0; i < (totalSweepDecimalBarTopHeight - 2); i++) {
-      g.drawImage(middleBarImage, 216, 137 - i, this);    
-    }
-    g.drawImage(topBarImage, 216, 138 - totalSweepDecimalBarTopHeight, this);
-  
-    // draw blinking red light if there is an alarm
-    if (component.isAlarm()){
-      if ((((System.nanoTime()) / 500000000) % 2) == 0) {
-        g.drawImage(redAlertImage, 178, 77, this);
-      }
-      else {
-        g.drawImage(blackAlertImage, 178, 77, this);        
-      }      
-    } 
-    
-    // set text properties
-    g.setColor(textColor);
-    g.setFont(g.getFont().deriveFont(Font.BOLD, 15f));
-    
-    // draw text
-    String text = Math.round(component.getFiO2() * 100) + "%";
-    g.drawString(text, 148, 120);
   }
   
   /**
