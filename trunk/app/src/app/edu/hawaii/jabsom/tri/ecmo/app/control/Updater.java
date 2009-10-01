@@ -225,8 +225,17 @@ public final class Updater {
       }
       // check tubing status (normal, kink, high or low) then location
       if (tube.isBrokenCannula()) {
-        if (tube.getCannulaProblem() == TubeComponent.Status.kink) {
+        System.out.println(tube.getCannulaProblem());
+        if (tube.getCannulaProblem() == TubeComponent.Status.KINK) {
           if (tube.getCannlaProblemLocation() == TubeComponent.problemLocation.arterial) {
+            if (tube.getPreMembranePressure() > 750) {
+              tube.setPreMembranePressure(750.0);
+              tube.setPostMembranePressure(750.0);              
+            }
+            else {
+              tube.setPreMembranePressure(tube.getPostMembranePressure());
+              tube.setPostMembranePressure(tube.getPostMembranePressure() + 0.03);
+            }
             // If limits set appropriately,  
             if (!pressureMonitor.isAlarm()) {
               // premembrane pressure will equal postmembrane pressure up to 750.
@@ -291,7 +300,7 @@ public final class Updater {
             //TODO: no kink or cephalad
           }
         }
-        else if (tube.getCannulaProblem() == TubeComponent.Status.leak) {
+        else if (tube.getCannulaProblem() == TubeComponent.Status.LEAK) {
           //TODO: for roller pump, raceway tubing leak
           /*
            * What happens here is there is small drops of blood usually on the 
