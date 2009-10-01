@@ -1,6 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -59,8 +60,8 @@ public class ScenarioListPanel extends JPanel {
     setOpaque(false);
     
     // set layout
-    setLayout(new FormLayout("20px, fill:1px:grow, 40px"
-                           , "80px, fill:1px:grow, 20px"));
+    setLayout(new FormLayout("20px, fill:1px:grow, 33px"
+                           , "70px, fill:1px:grow, 20px"));
     CellConstraints cc = new CellConstraints();
     
     // add list
@@ -94,7 +95,11 @@ public class ScenarioListPanel extends JPanel {
     listPanel.setFont(listPanel.getFont().deriveFont(Font.BOLD, 16.0f));
     listPanel.setListData(new Vector<Scenario>(scenarios));
     listPanel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    add(listPanel, cc.xy(2, 2));
+    JScrollPane scrollPane = new JScrollPane(listPanel);
+    scrollPane.setOpaque(false);
+    scrollPane.getViewport().setOpaque(false);
+    scrollPane.setBorder(null);
+    add(scrollPane, cc.xy(2, 2));
   }
 
   /**
