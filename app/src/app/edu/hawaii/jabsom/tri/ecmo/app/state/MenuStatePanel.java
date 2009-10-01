@@ -272,8 +272,6 @@ public class MenuStatePanel extends JPanel {
             }
             Configuration.getInstance().setSelectionVVModeECMO(vvRadio.isSelected());
           }
-          tube.setPostPCO2(35);
-          tube.setPostPH(7.4);
 
           // update oxigenator
           OxygenatorComponent oxy = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
@@ -306,7 +304,7 @@ public class MenuStatePanel extends JPanel {
 
           // init tube values depending on selection
 //          tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
-          if (oxi.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
+          if (oxy.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
             // PMP
 //            tube.setPostMembranePressure(tube.getPreMembranePressure());
             tube.setPreMembranePressure(125);
