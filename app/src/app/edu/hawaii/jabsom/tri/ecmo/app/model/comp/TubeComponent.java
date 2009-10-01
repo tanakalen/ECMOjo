@@ -13,10 +13,59 @@ public class TubeComponent extends Component {
   public enum Mode { VA, VV };
   
   /** Current Tubing status. */
-  public enum Status { normal, kink, high, low, leak }
+  public enum Status {
+    /** Normal status. */
+    NORMAL("Normal"), 
+    /** Kink status. */
+    KINK("Kink"),
+    /** High status. */
+    HIGH("High"),
+    /** Low status. */
+    LOW("Low"),
+    /** Leak status. */
+    LEAK("Leak");
+    
+    /** The name. */
+    private String name;
+    
+    /**
+     * The constructor.
+     *
+     * @param name  The name.
+     */
+    private Status(String name) {
+      this.name = name;
+    }
+    
+    /**
+     * Returns the name.
+     * 
+     * @return  The name.
+     */
+    public String getName() {
+      return name;
+    }
+    
+    /**
+     * Returns the tube status that matches the name.
+     * 
+     * @param name  The name.
+     * @return  The matching tube status or null for none.
+     */
+    public static Status parse(String name) {
+      for (int i = 0; i < values().length; i++) {
+        Status value = values()[i];
+        if (name.equalsIgnoreCase(values()[i].getName())) {
+          return value;
+        }
+      }
+      return null;
+    }
+  };
+  
   
   /** Problem location. */
-  public enum problemLocation { none, arterial, venous, cephalad }
+  public enum problemLocation { none, arterial, venous, cephalad };
   
   /** The ECMO mode. */
   private Mode mode;
@@ -201,12 +250,12 @@ public class TubeComponent extends Component {
    */
   public void setBrokenCannula(boolean brokenCannula, Status problem, problemLocation place) {
     this.brokenCannula = brokenCannula;
-    if (brokenCannula == false) {
+    if (brokenCannula) {
       this.problem = problem;
       this.place = place;
     }
     else {
-      this.problem = TubeComponent.Status.normal;
+      this.problem = TubeComponent.Status.NORMAL;
       this.place = TubeComponent.problemLocation.none;
     }
   }

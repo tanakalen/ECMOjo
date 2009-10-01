@@ -264,38 +264,41 @@ public final class ScenarioLoader {
         }
         
         // load the tube component
-        boolean broke = Boolean.parseBoolean(parameters.get("tube-cannula-broken"));
+        TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
+        Boolean broke = Boolean.parseBoolean(parameters.get("tube-cannula-broken"));
         String prob = parameters.get("tube-cannula-status");
         TubeComponent.Status problem;
-        if (prob == "Kink") {
-          problem = TubeComponent.Status.kink;
+        if (prob.equals("Kink")) {
+          problem = TubeComponent.Status.KINK;
         }
-        else if (prob == "High") {
-          problem = TubeComponent.Status.high;
+        else if (prob.equals("High")) {
+          problem = TubeComponent.Status.HIGH;
         }
-        else if (prob == "Low") {
-          problem = TubeComponent.Status.low;
+        else if (prob.equals("Low")) {
+          problem = TubeComponent.Status.LOW;
         }
-        else if (prob == "Leak") {
-          problem = TubeComponent.Status.leak;
+        else if (prob.equals("Leak")) {
+          problem = TubeComponent.Status.LEAK;
         }
         else {
-          problem = TubeComponent.Status.normal;
+          problem = TubeComponent.Status.NORMAL;
         }
         String loc = parameters.get("tube-cannula-problem-location");
         TubeComponent.problemLocation place;
-        if (loc == "Arterial") {
+        if (loc.equals("Arterial")) {
           place = TubeComponent.problemLocation.arterial;
         }
-        else if (loc == "Venous") {
+        else if (loc.equals("Venous")) {
           place = TubeComponent.problemLocation.venous;
         }
-        else if (loc == "Cephalad") {
+        else if (loc.equals("Cephalad")) {
           place = TubeComponent.problemLocation.cephalad;
         }
         else {
           place = TubeComponent.problemLocation.none;
         }
+        System.out.println(broke.toString() + prob + loc);
+        System.out.println(broke.toString() + problem + place);
         tube.setBrokenCannula(broke, problem, place);
         
         tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
