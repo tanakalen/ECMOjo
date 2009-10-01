@@ -113,8 +113,8 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
       box.setText(item.getText());
       box.setShowNext(item.getTrigger() == null);
       box.setVisible(true);
+      blink = true;
     }
-    blink = true;
   }
   
   /**
