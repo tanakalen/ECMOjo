@@ -5,43 +5,25 @@ name = VA ECMO Pump Flow
 desc = Physiologic and ECMO variables impacted by VA pump flow.
 
 # Scenario Parameters
-scenario-ecmo-mode = *
+scenario-ecmo-mode = VA
 scenario-oxy-type = *
 scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = xxx
-tutorial-item1-trigger = N/A
-tutorial-item2-text = xxx
+tutorial-item1-text = Click on the pump control.
+tutorial-item1-trigger = Action:View:PumpComponent
+tutorial-item2-text = Notice the pump is rotating. To simplify the simulation, the pump control panel only shows the flow rate without RPM.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = xxx
-tutorial-item3-trigger = N/A
-tutorial-item4-text = xxx
+tutorial-item3-text = Turn the knob to increase the pump flow.
+tutorial-item3-trigger = Action:Pump:flow:>0.65
+tutorial-item4-text = What changes do you see when the pump flow is increased?
 tutorial-item4-trigger = N/A
-tutorial-item5-text = xxx
+tutorial-item5-text = Patient: Blood pressure and SaO2 increases. Mixed venous saturation increases.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = xxx
+tutorial-item6-text = Pressure Monitor: Venous pressure becomes more negative and  pre and post membrane pressure increase.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = xxx
-tutorial-item7-trigger = N/A
-tutorial-item8-text = xxx
-tutorial-item8-trigger = N/A
-tutorial-item9-text = xxx
-tutorial-item9-trigger = N/A
-tutorial-item10-text = xxx
-tutorial-item10-trigger = N/A
-tutorial-item11-text = xxx
-tutorial-item11-trigger = N/A
-tutorial-item12-text = xxx
-tutorial-item12-trigger = N/A
-tutorial-item13-text = xxx
-tutorial-item13-trigger = N/A
-tutorial-item14-text = xxx
-tutorial-item14-trigger = N/A
-tutorial-item15-text = xxx
-tutorial-item15-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
