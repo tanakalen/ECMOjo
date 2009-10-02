@@ -12,36 +12,28 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = xxx
+tutorial-item1-text = ECMOism:  ECMO is 95% boredom, and 5% sheer terror.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = xxx
+tutorial-item2-text = You are now one elite 5% that will experience the terror of ECMO.  If you can’t immediately see what’s causing all the alarms, what should you do?
 tutorial-item2-trigger = N/A
-tutorial-item3-text = xxx
+tutorial-item3-text = A circuit check.
 tutorial-item3-trigger = N/A
-tutorial-item4-text = xxx
+tutorial-item4-text = Call for HELP!
 tutorial-item4-trigger = N/A
-tutorial-item5-text = xxx
+tutorial-item5-text = You find a catastrophic problem, and you must come off ECMO.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = xxx
+tutorial-item6-text = Clamp the circuit!\n  Roller Pump: Clamp Venous, Unclamp Bridge, Clamp Arterial\n  Centrifugal: Clamp Arterial, Unclamp Bridge, Clamp Venous
 tutorial-item6-trigger = N/A
-tutorial-item7-text = xxx
+tutorial-item7-text = Increase the ventilator settings for additional support in respiratory cases. Click the [Emergency Vent] button. 
 tutorial-item7-trigger = N/A
-tutorial-item8-text = xxx
+tutorial-item8-text = Please note, in the simulation world, handbagging or institution of the emergency settings is accomplished in a single step.
 tutorial-item8-trigger = N/A
-tutorial-item9-text = xxx
+tutorial-item9-text = Resuscitate the patient as needed.
 tutorial-item9-trigger = N/A
-tutorial-item10-text = xxx
+tutorial-item10-text = Do you need a surgeon?
 tutorial-item10-trigger = N/A
-tutorial-item11-text = xxx
+tutorial-item11-text = If it involves the cannulas, the answer is yes.
 tutorial-item11-trigger = N/A
-tutorial-item12-text = xxx
-tutorial-item12-trigger = N/A
-tutorial-item13-text = xxx
-tutorial-item13-trigger = N/A
-tutorial-item14-text = xxx
-tutorial-item14-trigger = N/A
-tutorial-item15-text = xxx
-tutorial-item15-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -90,7 +82,7 @@ patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
-patient-temperature = 34
+patient-temperature = 37
 
 # Heater
 heater-temperature = 37

@@ -90,7 +90,7 @@ patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
-patient-temperature = 34
+patient-temperature = 37
 
 # Heater
 heater-temperature = 37
