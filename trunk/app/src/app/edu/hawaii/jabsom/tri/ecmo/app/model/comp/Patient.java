@@ -227,7 +227,8 @@ public class Patient  extends Component {
    * @return  True for alive.
    */
   public boolean isAlive() {
-    return life > 0.0;
+    return (this.life > 0.0) || (this.heartRate > 0) || (this.o2Saturation > 0) 
+      || (this.systolicBloodPressure > 0);
   }
   
   /**
@@ -245,7 +246,15 @@ public class Patient  extends Component {
    * @param life  The life where 0.0=dead and 1.0=fully alive.
    */
   public void setLife(double life) {
-    this.life = life;
+    if (life < 0.0) {
+      this.life = 0.0;
+    }
+    else if (life > 1.0) {
+      this.life = 1.0;
+    }
+    else {
+      this.life = life;
+    }
   }
 
   /**
@@ -263,7 +272,12 @@ public class Patient  extends Component {
    * @param age  The age to set.
    */
   public void setAge(double age) {
-    this.age = age;
+    if (age < 0) {
+      this.age = 0;
+    }
+    else {
+      this.age = age;
+    }
   }
   
   /**
@@ -281,7 +295,12 @@ public class Patient  extends Component {
    * @param weight  The weight to set.
    */
   public void setWeight(double weight) {
-    this.weight = weight;
+    if (weight < 0) {
+      this.weight = 0;
+    }
+    else {
+      this.weight = weight;
+    }
   }
   
   /**
@@ -368,7 +387,7 @@ public class Patient  extends Component {
   }
   
   /**
-   * Sets the O2 saturation.
+   * Sets the O2 saturation in hundredths.
    * 
    * @param saturation  The o2Saturation to set.
    */
