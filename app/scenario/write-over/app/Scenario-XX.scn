@@ -77,6 +77,13 @@ intervention-3-cracked-pigtail = true
 intervention-neck-cracked-pigtail = true
 
 # Tube
+tube-clamp-arterial-A = open
+tube-clamp-arterial-B = open
+tube-clamp-venous-A = open
+tube-clamp-venous-B = open
+tube-clamp-bridge = closed
+tube-bubbles-arterial = false
+tube-bubbles-venous = false
 tube-cannula-broken = false
 tube-cannula-status = 
 tube-cannula-problem-location = 
