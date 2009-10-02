@@ -57,11 +57,14 @@ public final class ECMOApp extends JApplet {
       multiOutput.add(new ErrorOutputUnit());
       multiOutput.add(logOutput);
       Error.setOutputUnit(multiOutput);
-      Info.setOutputUnit(logOutput);
+      Info.setOutputUnit(multiOutput);
     }
     catch (IOException e) {
       System.err.println("Error setting up log file: " + e);
     }
+    
+    // output release
+    Info.out("Release Version: " + ECMOAppRelease.getReleaseVersion() + " | " + ECMOAppRelease.getReleaseTime());
     
     // set look and feel
     try {
