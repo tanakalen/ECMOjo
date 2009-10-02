@@ -1057,7 +1057,7 @@ public final class Updater {
    */
   private static boolean onPump(TubeComponent tube) {
     // Are we on pump? for clamping interaction
-    return (tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen());
+    return !(!tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen());
 
   }
 
