@@ -5,43 +5,35 @@ name = VV ECMO Pump Flow
 desc = Physiologic and ECMO variables impacted by VV pump flow.
 
 # Scenario Parameters
-scenario-ecmo-mode = *
+scenario-ecmo-mode = VV
 scenario-oxy-type = *
 scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = xxx
-tutorial-item1-trigger = N/A
-tutorial-item2-text = xxx
+tutorial-item1-text = Click on the pump control.
+tutorial-item1-trigger = Action:View:PumpComponent
+tutorial-item2-text = Notice the pump is rotating. To simplify the simulation, the pump control panel only shows the flow rate without RPM.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = xxx
-tutorial-item3-trigger = N/A
-tutorial-item4-text = xxx
+tutorial-item3-text = Turn the knob to decrease the pump flow by 50 ml to approx 0.55.
+tutorial-item3-trigger = Action:Pump:flow:<0.56
+tutorial-item4-text = What changes do you see when the pump flow is decreased by 50 ml?
 tutorial-item4-trigger = N/A
-tutorial-item5-text = xxx
+tutorial-item5-text = Some of the changes: a) blood pressure minimal change, b) P1 minimal change, c) P2/P3 no change, d) SaO2 decreases and e) SvO2 decreases.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = xxx
+tutorial-item6-text = On VV, oxygen delivery is affect by flow. Less flow, less oxygen delivery. More flow, more oxygen delivery, but only up to a certain point (more later).
 tutorial-item6-trigger = N/A
-tutorial-item7-text = xxx
-tutorial-item7-trigger = N/A
-tutorial-item8-text = xxx
+tutorial-item7-text = Turn the knob to increase the pump flow by 200 ml to approx 0.75.
+tutorial-item7-trigger = Action:Pump:flow:>0.75
+tutorial-item8-text = What changes do you see when the pump flow is increased significantly?
 tutorial-item8-trigger = N/A
-tutorial-item9-text = xxx
+tutorial-item9-text = Some of the changes: a) blood pressure minmal change, b) P1 becomes more negative, c) P2/P3 small increases, d) SaO2 decreases and e) SvO2 increases.
 tutorial-item9-trigger = N/A
-tutorial-item10-text = xxx
+tutorial-item10-text = What does this suggest?
 tutorial-item10-trigger = N/A
-tutorial-item11-text = xxx
+tutorial-item11-text = Recirculation!
 tutorial-item11-trigger = N/A
-tutorial-item12-text = xxx
-tutorial-item12-trigger = N/A
-tutorial-item13-text = xxx
-tutorial-item13-trigger = N/A
-tutorial-item14-text = xxx
-tutorial-item14-trigger = N/A
-tutorial-item15-text = xxx
-tutorial-item15-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
