@@ -29,7 +29,6 @@ tutorial-item7-trigger = N/A
 tutorial-item8-text = Don't forget to call the surgeon for fix to cannula.
 tutorial-item8-trigger = N/A
 
-
 # Baseline Values
 baseline-sedated = true
 baseline-bleeding = false
@@ -82,6 +81,10 @@ patient-temperature = 37
 # Heater
 heater-temperature = 37
 heater-broken = false
+
+# Pump
+pump-on = true
+pump-flow = 0.6
 
 # Intervention
 intervention-1-cracked-pigtail = false

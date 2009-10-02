@@ -252,6 +252,10 @@ public final class ScenarioLoader {
         heater.setTemperature(Double.parseDouble(parameters.get("heater-temperature")));
         heater.setBroken(Boolean.parseBoolean(parameters.get("heater-broken")));
         
+        // load the pump component
+        pump.setOn(Boolean.parseBoolean(parameters.get("pump-on")));
+        pump.setFlow(Double.parseDouble(parameters.get("pump-flow")));
+        
         // load the intervention point information
         for (int i = 0; i < equipment.size(); i++) {
           Component component = equipment.get(i);

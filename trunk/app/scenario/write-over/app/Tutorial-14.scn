@@ -12,36 +12,18 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = xxx
+tutorial-item1-text = Notice what alarms are ringing and the changes in physiologic parameters.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = xxx
+tutorial-item2-text = You can’t handle this one by yourself. Call for help.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = xxx
-tutorial-item3-trigger = N/A
-tutorial-item4-text = xxx
-tutorial-item4-trigger = N/A
-tutorial-item5-text = xxx
+tutorial-item3-text = Clamp the circuit!\n  Roller Pump: Clamp Venous, Unclamp Bridge, Clamp Arterial\n  Centrifugal: Clamp Arterial, Unclamp Bridge, Clamp Venous
+tutorial-item3-trigger = Action:Tube:Clamped:true
+tutorial-item4-text = Increase the ventilator settings for additional support in respiratory cases. Click the [Emergency Vent] button.
+tutorial-item4-trigger = Action:Ventilator:Emergency:on
+tutorial-item5-text = Resuscitate the patient as needed.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = xxx
+tutorial-item6-text = 1.At the bedside, consider using the handcrank until the problem is solved.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = xxx
-tutorial-item7-trigger = N/A
-tutorial-item8-text = xxx
-tutorial-item8-trigger = N/A
-tutorial-item9-text = xxx
-tutorial-item9-trigger = N/A
-tutorial-item10-text = xxx
-tutorial-item10-trigger = N/A
-tutorial-item11-text = xxx
-tutorial-item11-trigger = N/A
-tutorial-item12-text = xxx
-tutorial-item12-trigger = N/A
-tutorial-item13-text = xxx
-tutorial-item13-trigger = N/A
-tutorial-item14-text = xxx
-tutorial-item14-trigger = N/A
-tutorial-item15-text = xxx
-tutorial-item15-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -95,6 +77,10 @@ patient-temperature = 37
 # Heater
 heater-temperature = 37
 heater-broken = false
+
+# Pump
+pump-on = false
+pump-flow = 0.6
 
 # Intervention
 intervention-1-cracked-pigtail = false
