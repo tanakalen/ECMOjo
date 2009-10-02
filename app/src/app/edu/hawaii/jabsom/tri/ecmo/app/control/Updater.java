@@ -31,11 +31,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
 public final class Updater {
 
   /**
-   * Private boolean whether we are on pump or not.
-   */
-  private static boolean onPump = true; // Are we on pump? for clamping interaction
-
-  /**
    * Private constructor to prevent instantiation.
    */
   private Updater() {
@@ -433,7 +428,7 @@ public final class Updater {
       }
       
       // update patient if on pump
-      if (onPump) {
+      if (onPump(tube)) {
         double patientTemperature = patient.getTemperature();
         if (patientTemperature < heater.getTemperature()) {
           patient.setTemperature(patientTemperature + 0.001);
@@ -723,12 +718,12 @@ public final class Updater {
     else if (!history.isArterialBOpen() && !history.isVenousBOpen() && history.isBridgeOpen()) {
       // Standard operation termed recirculation: no change
       // TODO: if patient is sick and not on emergency vent would steady decline to death
-      onPump = false;
+//      onPump = false;
     }
     // Arterial: Open, Venous: Open, Bridge: Closed
     else if (history.isArterialBOpen() && history.isVenousBOpen() && !history.isBridgeOpen()) {
       // Standard operation: no change
-      onPump = true;
+//      onPump = true;
     }
     // Arterial: Closed, Venous: Open, Bridge: Closed
     else if (!history.isArterialBOpen() && history.isVenousBOpen() && !history.isBridgeOpen()) {
@@ -870,7 +865,7 @@ public final class Updater {
     else if (!tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen()) {
       // Standard operation termed recirculation: no change
       // TODO: if patient is sick, vital signs should decrease
-      onPump = false;
+//      onPump = false;
       if (oxigenator.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
         // PMP
         tube.setPreMembranePressure(125);
@@ -885,7 +880,7 @@ public final class Updater {
     // Arterial: Open, Venous: Open, Bridge: Closed
     else if (tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen()) {
       // Standard operation: no change
-      onPump = true;
+//      onPump = true;
       if (oxigenator.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
         // PMP
         tube.setPreMembranePressure(125);
@@ -1052,6 +1047,18 @@ public final class Updater {
         patient.setLife(life);
       }
     }
+  }
+
+  /**
+   * Private boolean whether we are on pump or not.
+   * 
+   * @param tube  The tube.
+   * @return boolean Whether patient is on pump or not.
+   */
+  private static boolean onPump(TubeComponent tube) {
+    // Are we on pump? for clamping interaction
+    return (tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen());
+
   }
 
 }
