@@ -67,6 +67,12 @@ patient-temperature = 37
 heater-temperature = 37
 heater-broken = false
 
+# Oxygenator
+oxygenator-total-sweep = 0.6
+oxygenator-fio2 = 0.5
+oxygenator-broken = false
+oxygenator-clotting = 0.0
+
 # Pump
 pump-on = true
 pump-flow = 0.6

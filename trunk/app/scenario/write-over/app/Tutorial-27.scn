@@ -100,6 +100,12 @@ pump-flow = 0.6
 heater-temperature = 37
 heater-broken = false
 
+# Oxygenator
+oxygenator-total-sweep = 0.6
+oxygenator-fio2 = 0.5
+oxygenator-broken = false
+oxygenator-clotting = 0.0
+
 # Intervention
 intervention-1-cracked-pigtail = false
 intervention-2-cracked-pigtail = false

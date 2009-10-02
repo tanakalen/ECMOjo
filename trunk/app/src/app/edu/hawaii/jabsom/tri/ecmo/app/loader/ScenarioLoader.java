@@ -252,6 +252,12 @@ public final class ScenarioLoader {
         heater.setTemperature(Double.parseDouble(parameters.get("heater-temperature")));
         heater.setBroken(Boolean.parseBoolean(parameters.get("heater-broken")));
         
+        // load the oxygenator component
+        oxy.setTotalSweep(Double.parseDouble(parameters.get("oxygenator-total-sweep")));
+        oxy.setFiO2(Double.parseDouble(parameters.get("oxygenator-fio2")));
+        oxy.setBroken(Boolean.parseBoolean(parameters.get("oxygenator-broken")));
+        oxy.setClotting(Double.parseDouble(parameters.get("oxygenator-clotting")));
+        
         // load the pump component
         pump.setOn(Boolean.parseBoolean(parameters.get("pump-on")));
         pump.setFlow(Double.parseDouble(parameters.get("pump-flow")));
