@@ -6,42 +6,26 @@ desc = Actions to take when air is seen in the venous limb of the circuit.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
-scenario-oxy-type = *
+scenario-oxy-type = quadrox
 scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = xxx
+tutorial-item1-text = While performing your hourly circuit check you notice some air bubbles streaming down the venous side of the circuit.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = xxx
+tutorial-item2-text = What decision do you need to make immediately?
 tutorial-item2-trigger = N/A
-tutorial-item3-text = xxx
+tutorial-item3-text = Is this a "Terror Time" moment? Or is there time to triage the situation and get coffee?
 tutorial-item3-trigger = N/A
-tutorial-item4-text = xxx
+tutorial-item4-text = Let’s pretend that there isn’t much venous air. What sites are the most likely sources for venous air?
 tutorial-item4-trigger = N/A
-tutorial-item5-text = xxx
+tutorial-item5-text = Most likely sources for venous air are: a) entrainment air from venous catheter, b) open or cracked stopcock on the venous side and c) air introduced from medications infusing into the patient via a central venous line.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = xxx
+tutorial-item6-text = After you have made sure the patient is safe, remove air from system.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = xxx
+tutorial-item7-text = Identify and fix the cause, if possible.
 tutorial-item7-trigger = N/A
-tutorial-item8-text = xxx
-tutorial-item8-trigger = N/A
-tutorial-item9-text = xxx
-tutorial-item9-trigger = N/A
-tutorial-item10-text = xxx
-tutorial-item10-trigger = N/A
-tutorial-item11-text = xxx
-tutorial-item11-trigger = N/A
-tutorial-item12-text = xxx
-tutorial-item12-trigger = N/A
-tutorial-item13-text = xxx
-tutorial-item13-trigger = N/A
-tutorial-item14-text = xxx
-tutorial-item14-trigger = N/A
-tutorial-item15-text = xxx
-tutorial-item15-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -119,7 +103,7 @@ tube-clamp-venous-A = open
 tube-clamp-venous-B = open
 tube-clamp-bridge = closed
 tube-bubbles-arterial = false
-tube-bubbles-venous = false
+tube-bubbles-venous = true
 tube-cannula-broken = false
 tube-cannula-status = 
 tube-cannula-problem-location = 
