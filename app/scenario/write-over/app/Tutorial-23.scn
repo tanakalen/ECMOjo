@@ -12,36 +12,26 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = xxx
+tutorial-item1-text = The oxygenator can be a "black hole" for clotting factors.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = xxx
+tutorial-item2-text = This oxygenator is beginning to concern you. Can you find the warning signs?
 tutorial-item2-trigger = N/A
-tutorial-item3-text = xxx
+tutorial-item3-text = Pressure monitor changes: A higher P2, leading to a higher transmembrane gradient.
 tutorial-item3-trigger = N/A
-tutorial-item4-text = xxx
+tutorial-item4-text = Heme Lab value changes: Decreases in platelets, fibrinogen. Increases in ACT, PTT, PT.
 tutorial-item4-trigger = N/A
-tutorial-item5-text = xxx
+tutorial-item5-text = Post Membrane blood gases and sweep gas settings: a) Slight increases in post membrane PaO2 and PaCO2 and b) increased sweep gas settings.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = xxx
+tutorial-item6-text = You have given blood products but your lab values do not correct.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = xxx
+tutorial-item7-text = Looks like there may be a clot in the oxygenator that is consuming your blood products. What would you recommend at this time?
 tutorial-item7-trigger = N/A
-tutorial-item8-text = xxx
+tutorial-item8-text = You strongly encourage an oxygenator change as soon as possible. ECMOism: There is no time like the present.
 tutorial-item8-trigger = N/A
-tutorial-item9-text = xxx
-tutorial-item9-trigger = N/A
-tutorial-item10-text = xxx
+tutorial-item9-text = Click on patient, then the [Change Circuit] button.
+tutorial-item9-trigger = Action:Tube:replace
+tutorial-item10-text = You successfully changed the circuit and fixed the problem.
 tutorial-item10-trigger = N/A
-tutorial-item11-text = xxx
-tutorial-item11-trigger = N/A
-tutorial-item12-text = xxx
-tutorial-item12-trigger = N/A
-tutorial-item13-text = xxx
-tutorial-item13-trigger = N/A
-tutorial-item14-text = xxx
-tutorial-item14-trigger = N/A
-tutorial-item15-text = xxx
-tutorial-item15-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -97,10 +87,10 @@ heater-temperature = 37
 heater-broken = false
 
 # Oxygenator
-oxygenator-total-sweep = 0.6
-oxygenator-fio2 = 0.5
+oxygenator-total-sweep = 2.3
+oxygenator-fio2 = 0.85
 oxygenator-broken = false
-oxygenator-clotting = 0.0
+oxygenator-clotting = 2.0
 
 # Pump
 pump-on = true
