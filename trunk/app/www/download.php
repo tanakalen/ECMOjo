@@ -33,17 +33,17 @@
 <p>Download the platform dependant version for your operating system. </p>
 <ul>
   <li>
-    <a name="windows">
+    <a name="windows" href="https://sourceforge.net/projects/ecmojo/files/ecmojo_windows_2_2_1.exe/download">
       <img src="image/OS/WINDOWS-ICON.png"> Windows Installer (XP, Vista, Win 7)
     </a>
   </li>
   <li>
-    <a name="macintosh">
+    <a name="macintosh" href="https://sourceforge.net/projects/ecmojo/files/ecmojo_macos_2_2_1.dmg/download">
       <img src="image/OS/MACINTOSH-ICON.png"> Mac OS X Installer (10.4.2+)
     </a>
   </li>
   <li>
-    <a name="linux">
+    <a name="linux" href="https://sourceforge.net/projects/ecmojo/files/ecmojo_unix_2_2_1.sh/download">
       <img src="image/OS/LINUX-ICON.png"> Linux/UNIX Installer
     </a>
   </li>
