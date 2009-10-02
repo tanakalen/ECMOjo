@@ -148,7 +148,7 @@ public class TutorialGoal extends Goal {
    *   Action:Heater:[>|<][temp]            heater changed: e.g. Action:Heater:>38.9
    *   Action:Heater:replace                heater replaced
    *   Action:Patient                       patient action performed.
-   *   Action:Patient:[Check]               patient check performed where [Check] is "CANULA_SITE", "BLEEDING", ...
+   *   Action:Patient:[Check]               patient check performed where [Check] is "CANNULA_SITE", "BLEEDING", ...
    *   Action:Pressure                      action on pressure monitor performed.
    *   Action:Pressure:[Pref]:[>|<][x]      pressure monitor changed where [Pref] is "premin", "premax", "postmin", ...
    *   Action:Ventilator:Emergency:on       emergency ventilator action: on
@@ -451,7 +451,7 @@ public class TutorialGoal extends Goal {
               // Action:Patient:[Check]  patient check performed where [Check] is "CANULA_SITE", "BLEEDING", ...
               Check actualCheck = ((PatientAction) action).getCheck();
               Check triggerCheck = null;
-              if (items[2].equals("CANULA_SITE")) {
+              if (items[2].equals("CANNULA_SITE")) {
                 triggerCheck = Check.CANNULA_SITE;
               }
               else if (items[2].equals("BLEEDING")) {
