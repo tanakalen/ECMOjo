@@ -12,7 +12,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
  */
 public class PumpAction extends Action {
 
-  /** True for on. False for on. */
+  /** True for on. False for off. */
   private boolean on;
   
   /** The flow. */
@@ -64,8 +64,13 @@ public class PumpAction extends Action {
   public void execute(Game game) {
     // the component we are manipulating
     PumpComponent component = (PumpComponent)game.getEquipment().getComponent(PumpComponent.class);
-    component.setOn(on);
-    component.setFlow(flow);
+    if (isOn()) {
+      component.setOn(on);
+      component.setFlow(flow);
+    }
+    else {
+      component.setOn(on);
+    }
   }
   
   /**
