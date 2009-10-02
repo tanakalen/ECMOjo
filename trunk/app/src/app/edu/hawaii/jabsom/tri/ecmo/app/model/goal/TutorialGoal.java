@@ -22,6 +22,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.InterventionComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.AlbuminIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.BloodIntervention;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.CatecholamineIntervention;
@@ -139,6 +140,7 @@ public class TutorialGoal extends Goal {
    *   Action:Intervention:[Name]           intervention executed where [Name] is "Albumin", "Blood", "Dopamine", ...
    *   Action:Tube                          action on tubs performed
    *   Action:Tube:[+|-][Location]          tubing change where [Location] is "ARTERIAL_A", "ARTERIAL_B", ...
+   *   Action:Tube:Clamped:[true|false]     to wait for clamping/unclamping of tubing
    *   Action:Heater                        action on heater performed
    *   Action:Heater:[>|<][temp]            heater changed: e.g. Action:Heater:>38.9
    *   Action:Patient                       patient action performed.
@@ -151,10 +153,11 @@ public class TutorialGoal extends Goal {
    *   Action:Bubble:[+|-][Location]        bubble action where [Location] is "arterial" or "venous".
    * </p>
    * 
+   * @param game  The game.
    * @param action  The action to handle.
    */
   @Override
-  public void handle(Action action) {
+  public void handle(Game game, Action action) {
     String trigger = getItem().getTrigger();
     if (trigger != null) {
       String[] items = trigger.split(":");
@@ -343,45 +346,64 @@ public class TutorialGoal extends Goal {
               progress++;
               notifyUpdate();
             }
-            else {
-              // Action:Tube:[+|-][Location]  tubing change where [Location] is "ARTERIAL_A", "ARTERIAL_B", ...
-              String operator = items[2].substring(0, 1);
-              String triggerLocationString = items[2].substring(1);
-              Location actualLocation = ((TubeAction) action).getLocation();
-              boolean actualOpen = ((TubeAction) action).isOpen();
-              
-              Location triggerLocation = null;
-              boolean triggerOpen = false;
-              if (operator.equals("+")) {
-                triggerOpen = false;
+            else {            
+              char ch = items[2].substring(0, 1).charAt(0);
+              if ((ch == '+') || (ch == '-')) {
+                // Action:Tube:[+|-][Location]  tubing change where [Location] is "ARTERIAL_A", "ARTERIAL_B", ...
+                String operator = String.valueOf(ch);
+                String triggerLocationString = items[2].substring(1);
+                Location actualLocation = ((TubeAction) action).getLocation();
+                boolean actualOpen = ((TubeAction) action).isOpen();
+                
+                Location triggerLocation = null;
+                boolean triggerOpen = false;
+                if (operator.equals("+")) {
+                  triggerOpen = false;
+                }
+                else if (operator.equals("-")) {
+                  triggerOpen = true;
+                }
+                
+                if (triggerLocationString.equals("ARTERIAL_A")) {
+                  triggerLocation = Location.ARTERIAL_A;
+                }
+                else if (triggerLocationString.equals("ARTERIAL_B")) {
+                  triggerLocation = Location.ARTERIAL_B;
+                }
+                else if (triggerLocationString.equals("BRIDGE")) {
+                  triggerLocation = Location.BRIDGE;
+                }
+                else if (triggerLocationString.equals("VENOUS_A")) {
+                  triggerLocation = Location.VENOUS_A;
+                }
+                else if (triggerLocationString.equals("VENOUS_B")) {
+                  triggerLocation = Location.VENOUS_B;
+                }
+                
+                if (actualLocation == triggerLocation && actualOpen == triggerOpen) {                    
+                  progress++;
+                  notifyUpdate();
+                }
               }
-              else if (operator.equals("-")) {
-                triggerOpen = true;
-              }
-              
-              if (triggerLocationString.equals("ARTERIAL_A")) {
-                triggerLocation = Location.ARTERIAL_A;
-              }
-              else if (triggerLocationString.equals("ARTERIAL_B")) {
-                triggerLocation = Location.ARTERIAL_B;
-              }
-              else if (triggerLocationString.equals("BRIDGE")) {
-                triggerLocation = Location.BRIDGE;
-              }
-              else if (triggerLocationString.equals("VENOUS_A")) {
-                triggerLocation = Location.VENOUS_A;
-              }
-              else if (triggerLocationString.equals("VENOUS_B")) {
-                triggerLocation = Location.VENOUS_B;
-              }
-              
-              if (actualLocation == triggerLocation && actualOpen == triggerOpen) {                    
-                progress++;
-                notifyUpdate();
+              else {
+                // look for Action:Tube:Clamped:[true|false]
+                TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
+                boolean clamped = Boolean.parseBoolean(items[3]);
+                if (clamped) {
+                  if (tube.isBridgeOpen() && (!tube.isArterialBOpen()) && (!tube.isVenousBOpen())) {
+                    progress++;
+                    notifyUpdate();
+                  }
+                }
+                else {
+                  if ((!tube.isBridgeOpen()) && tube.isArterialBOpen() && tube.isVenousBOpen()) {
+                    progress++;
+                    notifyUpdate();
+                  }
+                }
               }
             }
           }
-
         }
         else if (items[1].equals("Heater")) {
           // Changing heater parameters

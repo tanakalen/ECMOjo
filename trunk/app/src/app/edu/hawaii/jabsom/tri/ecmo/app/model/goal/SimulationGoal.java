@@ -14,10 +14,11 @@ public class SimulationGoal extends Goal {
   /**
    * Handles an action.
    * 
+   * @param game  The game.
    * @param action  The action to handle.
    */
   @Override
-  public void handle(Action action) {
+  public void handle(Game game, Action action) {
     // not used
   }
     

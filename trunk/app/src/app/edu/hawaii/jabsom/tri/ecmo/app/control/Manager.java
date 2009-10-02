@@ -150,7 +150,7 @@ public class Manager implements Runnable {
             game.getActions().add(action);
             
             // pass on to goal
-            game.getGoal().handle(action);
+            game.getGoal().handle(game, action);
           }
           actions.clear();
         }

@@ -5,43 +5,30 @@ name = Accidental Arterial Decannulation
 desc = 5% Terror Time - One of four situations that you should recognize for coming off of ECMO emergently.
 
 # Scenario Parameters
-scenario-ecmo-mode = *
+scenario-ecmo-mode = VA
 scenario-oxy-type = *
 scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = xxx
+tutorial-item1-text = The bedside nurse is performing her patient assessment and you notice that her ID badge is under the arterial cannula.  She raises her head and her badge catches and pulls on the arterial cannula.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = xxx
+tutorial-item2-text = Notice what alarms are ringing and the changes in physiologic parameters.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = xxx
+tutorial-item3-text = You can’t handle this one by yourself. Call for help! ECMOism: ECMO is a team effort.
 tutorial-item3-trigger = N/A
-tutorial-item4-text = xxx
+tutorial-item4-text = At the bedside you would apply pressure to the cannulation site.
 tutorial-item4-trigger = N/A
-tutorial-item5-text = xxx
-tutorial-item5-trigger = N/A
-tutorial-item6-text = xxx
-tutorial-item6-trigger = N/A
-tutorial-item7-text = xxx
+tutorial-item5-text = Clamp the circuit!\n  Roller Pump: Clamp Venous, Unclamp Bridge, Clamp Arterial\n  Centrifugal: Clamp Arterial, Unclamp Bridge, Clamp Venous
+tutorial-item5-trigger = Action:Tube:Clamped:true
+tutorial-item6-text = Increase the ventilator settings for additional support in respiratory cases. Click the [Emergency Vent] button.
+tutorial-item6-trigger = Action:Ventilator:Emergency:on
+tutorial-item7-text = Resuscitate the patient as needed.
 tutorial-item7-trigger = N/A
-tutorial-item8-text = xxx
+tutorial-item8-text = Don't forget to call the surgeon for fix to cannula.
 tutorial-item8-trigger = N/A
-tutorial-item9-text = xxx
-tutorial-item9-trigger = N/A
-tutorial-item10-text = xxx
-tutorial-item10-trigger = N/A
-tutorial-item11-text = xxx
-tutorial-item11-trigger = N/A
-tutorial-item12-text = xxx
-tutorial-item12-trigger = N/A
-tutorial-item13-text = xxx
-tutorial-item13-trigger = N/A
-tutorial-item14-text = xxx
-tutorial-item14-trigger = N/A
-tutorial-item15-text = xxx
-tutorial-item15-trigger = N/A
+
 
 # Baseline Values
 baseline-sedated = true
@@ -89,7 +76,7 @@ patient-weight = 5
 patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
-patient-bleeding = false
+patient-bleeding = true
 patient-temperature = 37
 
 # Heater
