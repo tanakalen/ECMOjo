@@ -180,7 +180,7 @@ public class PhysiologicMonitorComponent extends Component {
    * @return  True for alarm.
    */
   public boolean isHeartRateAlarm() {
-    return ((heartRate < 95) || (heartRate > 160));
+    return ((heartRate < 60) || (heartRate > 180));
   }
 
   /**
@@ -198,7 +198,7 @@ public class PhysiologicMonitorComponent extends Component {
    * @return  True for alarm.
    */
   public boolean isO2SaturationAlarm() {
-    return o2Saturation <= 0.53;
+    return o2Saturation <= 0.8;
   }
   
   /**
@@ -207,7 +207,7 @@ public class PhysiologicMonitorComponent extends Component {
    * @return  True for alarm.
    */
   public boolean isSystolicBloodPressureAlarm() {
-    return ((systolicBloodPressure < 40) || (systolicBloodPressure > 80));  // TODO: values need adjustment...
+    return ((systolicBloodPressure < 40) || (systolicBloodPressure > 130));  // TODO: values need adjustment...
   }
 
   /**
@@ -216,7 +216,7 @@ public class PhysiologicMonitorComponent extends Component {
    * @return  True for alarm.
    */
   public boolean isDiastolicBloodPressureAlarm() {
-    return ((diastolicBloodPressure < 0) || (diastolicBloodPressure > 100));  // TODO: values need adjustment...
+    return ((diastolicBloodPressure < 30) || (diastolicBloodPressure > 100));  // TODO: values need adjustment...
   }
 
   /**
@@ -225,7 +225,7 @@ public class PhysiologicMonitorComponent extends Component {
    * @return  True for alarm.
    */
   public boolean isCentralVenousPressureAlarm() {
-    return ((centralVenousPressure < 0) || (centralVenousPressure > 12));  // TODO: values need adjustment...
+    return ((centralVenousPressure < 0) || (centralVenousPressure > 15));  // TODO: values need adjustment...
   }
 
   /**
