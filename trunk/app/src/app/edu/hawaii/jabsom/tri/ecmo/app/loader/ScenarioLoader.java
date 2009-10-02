@@ -268,7 +268,13 @@ public final class ScenarioLoader {
         }
         
         // load the tube component
-        Boolean broke = Boolean.parseBoolean(parameters.get("tube-cannula-broken"));
+        tube.setArterialAOpen(TubeFunction.parse(parameters.get("tube-clamp-arterial-A")) == TubeFunction.OPEN);
+        tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-clamp-arterial-B")) == TubeFunction.OPEN);
+        tube.setVenousAOpen(TubeFunction.parse(parameters.get("tube-clamp-venous-A")) == TubeFunction.OPEN);
+        tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-clamp-venous-A")) == TubeFunction.OPEN);
+        tube.setBridgeOpen(TubeFunction.parse(parameters.get("tube-clamp-bridge")) == TubeFunction.OPEN);
+        tube.setArterialBubbles(Boolean.parseBoolean(parameters.get("tube-bubbles-arterial")));
+        tube.setVenousBubbles(Boolean.parseBoolean(parameters.get("tube-bubbles-venous")));
         String prob = parameters.get("tube-cannula-status");
         TubeComponent.Status problem;
         if (prob.equals("Kink")) {
@@ -300,17 +306,15 @@ public final class ScenarioLoader {
         else {
           place = TubeComponent.problemLocation.none;
         }
-        tube.setBrokenCannula(broke, problem, place);
-        
+        tube.setBrokenCannula(Boolean.parseBoolean(parameters.get("tube-cannula-broken")), problem, place);      
         tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
         tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-cannula-venous-B")) == TubeFunction.OPEN);
         
-        patient.setAct(parseNum(parameters.get("act-value")));
-        
+        // load patient/lab values
+        patient.setAct(parseNum(parameters.get("act-value")));        
         patient.setPH(parseNum(parameters.get("lab-component-abg-ph")));
         patient.setPCO2(parseNum(parameters.get("lab-component-abg-pco2")));
-        patient.setPO2(parseNum(parameters.get("lab-component-abg-po2")));
-        
+        patient.setPO2(parseNum(parameters.get("lab-component-abg-po2")));        
         patient.setFibrinogen(parseNum(parameters.get("lab-component-heme-fibrinogen")));
         patient.setPlatelets(parseNum(parameters.get("lab-component-heme-platelets")));
         patient.setPt(parseNum(parameters.get("lab-component-heme-pt")));
