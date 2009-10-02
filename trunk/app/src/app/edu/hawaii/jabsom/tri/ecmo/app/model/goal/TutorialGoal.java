@@ -6,6 +6,7 @@ import java.util.List;
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.BubbleAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.CircuitChangeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.HeaterAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.InterventionAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
@@ -142,6 +143,7 @@ public class TutorialGoal extends Goal {
    *   Action:Tube                          action on tubs performed
    *   Action:Tube:[+|-][Location]          tubing change where [Location] is "ARTERIAL_A", "ARTERIAL_B", ...
    *   Action:Tube:Clamped:[true|false]     to wait for clamping/unclamping of tubing
+   *   Action:Tube:replace                  for circuit change actions
    *   Action:Heater                        action on heater performed
    *   Action:Heater:[>|<][temp]            heater changed: e.g. Action:Heater:>38.9
    *   Action:Heater:replace                heater replaced
@@ -404,6 +406,12 @@ public class TutorialGoal extends Goal {
                   }
                 }
               }
+            }
+          }
+          else if (action instanceof CircuitChangeAction) {
+            if (items[2].equals("replace")) {
+              progress++;
+              notifyUpdate();
             }
           }
         }
