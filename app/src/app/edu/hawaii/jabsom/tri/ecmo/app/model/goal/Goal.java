@@ -23,9 +23,10 @@ public abstract class Goal implements Serializable {
   /**
    * Handles an action.
    * 
+   * @param game  The game.
    * @param action  The action to handle.
    */
-  public abstract void handle(Action action);
+  public abstract void handle(Game game, Action action);
 
   /**
    * Returns true if the goal is reached.
