@@ -12,36 +12,20 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = xxx
+tutorial-item1-text = In the ICU, large blood loss can be caused by a broken stopcock or cracked pigtail. The component will need to be exchanged urgently.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = xxx
+tutorial-item2-text = Notice what alarms are ringing and the changes in physiologic parameters.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = xxx
+tutorial-item3-text = You can’t handle this one by yourself. Call for help!
 tutorial-item3-trigger = N/A
-tutorial-item4-text = xxx
-tutorial-item4-trigger = N/A
-tutorial-item5-text = xxx
-tutorial-item5-trigger = N/A
-tutorial-item6-text = xxx
+tutorial-item4-text = Clamp the circuit!\n  Roller Pump: Clamp Venous, Unclamp Bridge, Clamp Arterial\n  Centrifugal: Clamp Arterial, Unclamp Bridge, Clamp Venous
+tutorial-item4-trigger = Action:Tube:Clamped:true
+tutorial-item5-text = Increase the ventilator settings for additional support in respiratory cases. Click the [Emergency Vent] button.
+tutorial-item5-trigger = Action:Ventilator:Emergency:on
+tutorial-item6-text = Resuscitate the patient as needed.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = xxx
+tutorial-item7-text = Most times the stopcocks and pigtails will crack or break and create a small blood leak or minor venous air entrainment. The component will need to be exchanged under non-emergent controlled conditions.
 tutorial-item7-trigger = N/A
-tutorial-item8-text = xxx
-tutorial-item8-trigger = N/A
-tutorial-item9-text = xxx
-tutorial-item9-trigger = N/A
-tutorial-item10-text = xxx
-tutorial-item10-trigger = N/A
-tutorial-item11-text = xxx
-tutorial-item11-trigger = N/A
-tutorial-item12-text = xxx
-tutorial-item12-trigger = N/A
-tutorial-item13-text = xxx
-tutorial-item13-trigger = N/A
-tutorial-item14-text = xxx
-tutorial-item14-trigger = N/A
-tutorial-item15-text = xxx
-tutorial-item15-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -98,7 +82,7 @@ heater-broken = false
 
 # Intervention
 intervention-1-cracked-pigtail = false
-intervention-2-cracked-pigtail = false
+intervention-2-cracked-pigtail = true
 intervention-3-cracked-pigtail = false
 intervention-neck-cracked-pigtail = false
 
