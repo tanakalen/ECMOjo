@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <install4j version="4.0.6" transformSequenceNumber="1">
-  <directoryPresets config="" />
-  <application name="" distributionSourceDir="" applicationId="1507-1871-9700-2939" mediaDir="" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}" compression="6" lzmaCompression="false" pack200Compression="false" excludeSignedFromPacking="true" keepModificationTimes="false" shortName="" publisher="" publisherWeb="" version="" allPathsRelative="false" backupOnSave="false" autoSave="false" convertDotsToUnderscores="true" macSignature="????" javaMinVersion="" javaMaxVersion="" allowBetaVM="false">
+  <directoryPresets config="." />
+  <application name="ECMOjo" distributionSourceDir="" applicationId="1507-1871-9700-2939" mediaDir="." mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}" compression="6" lzmaCompression="false" pack200Compression="false" excludeSignedFromPacking="true" keepModificationTimes="false" shortName="ecmojo" publisher="ECMOjo on SourceForge.net" publisherWeb="http://ecmojo.sourceforge.net" version="2.2.1" allPathsRelative="true" backupOnSave="false" autoSave="false" convertDotsToUnderscores="true" macSignature="????" javaMinVersion="1.5" javaMaxVersion="" allowBetaVM="false">
     <languages skipLanguageSelection="false">
       <principalLanguage id="en" customLocalizationFile="" />
       <additionalLanguages />
@@ -15,11 +15,50 @@
   </application>
   <files>
     <roots />
-    <mountPoints />
-    <entries />
+    <mountPoints>
+      <mountPoint id="31" root="" location="extra" mode="755" />
+      <mountPoint id="32" root="" location="scenario" mode="755" />
+      <mountPoint id="33" root="" location="scenario/logs" mode="755" />
+      <mountPoint id="34" root="" location="scenario/scores" mode="755" />
+      <mountPoint id="35" root="" location="lib" mode="755" />
+    </mountPoints>
+    <entries>
+      <fileEntry mountPoint="32" file="../../scenario/write/app/Application.config" overwrite="1" shared="false" mode="644" uninstallMode="2" />
+      <dirEntry mountPoint="32" file="../../scenario/write-over/app" overwrite="1" shared="false" mode="644" uninstallMode="2" excludeSuffixes="" dirMode="755">
+        <exclude>
+          <entry location=".svn" launcher="false" />
+        </exclude>
+      </dirEntry>
+      <dirEntry mountPoint="35" file="../../build/app/application/lib" overwrite="1" shared="false" mode="644" uninstallMode="2" excludeSuffixes="" dirMode="755">
+        <exclude />
+      </dirEntry>
+    </entries>
     <components />
   </files>
-  <launchers />
+  <launchers>
+    <launcher name="ECMOjo" id="37" external="false" excludeFromMenu="false" menuName="" icnsFile="" pngIcon16File="./logo-16x16.png" pngIcon32File="./logo-32x32.png" macServiceDependencies="" swtApp="false">
+      <executable name="ECMOjo" type="1" iconSet="true" iconFile="" executableDir="." redirectStderr="true" stderrFile="error.log" redirectStdout="false" stdoutFile="output.log" failOnStderrOutput="true" executableMode="1" changeWorkingDirectory="true" workingDirectory="." singleInstance="false" serviceStartType="2" serviceDependencies="" serviceDescription="" jreLocation="" executionLevel="asInvoker">
+        <versionInfo include="false" fileVersion="" fileDescription="" legalCopyright="" internalName="" />
+      </executable>
+      <splashScreen show="false" autoOff="true" alwaysOnTop="true" width="0" height="0" bitmapFile="">
+        <text>
+          <statusLine x="20" y="20" text="" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
+          <versionLine x="20" y="40" text="version ${compiler:sys.version}" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
+        </text>
+      </splashScreen>
+      <java mainClass="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp" vmParameters="" arguments="" allowVMPassthroughParameters="true" preferredVM="">
+        <classPath>
+          <scanDirectory location="lib" failOnError="false" />
+        </classPath>
+        <nativeLibraryDirectories />
+      </java>
+      <includedFiles />
+      <unextractableFiles />
+      <customScript mode="1" file="">
+        <scriptLines />
+      </customScript>
+    </launcher>
+  </launchers>
   <installerGui installerType="1" suggestPreviousProgramGroup="false" addOnAppId="" suggestPreviousLocations="true" allowUnattended="true" allowConsole="true" useCustomInstallerHeaderImage="false" customInstallerHeaderImage="" useCustomUninstallerHeaderImage="false" customUninstallerHeaderImage="" customSize="false" customWidth="500" customHeight="390" useCustomIcon="false" customIcnsFile="" customPngIcon16File="" customPngIcon32File="" customIcoFile="" vmParameters="" watermark="true" resizable="true" suppressProgressDialog="false">
     <customCode useInstalledFiles="false" />
     <installerScreens>
@@ -205,7 +244,37 @@
       </screen>
     </uninstallerStartup>
   </installerGui>
-  <mediaSets />
+  <mediaSets>
+    <win32 name="Windows" id="39" mediaFileName="" installDir="ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" includedJRE="windows-x86-1.5.0_17" manualJREEntry="false" bundleType="1" jreURL="" jreFtpURL="" jreShared="false" customInstallBaseDir="" createUninstallIcon="true" contentFilesType="1" downloadURL="" runAsAdmin="false">
+      <excludedLaunchers />
+      <excludedComponents />
+      <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
+      <exclude />
+      <variables />
+      <excludedInstallerScreens />
+      <excludedUninstallerScreens />
+    </win32>
+    <macos name="Mac OS X Single Bundle" id="125" mediaFileName="" installDir="ECMOjo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" customInstallBaseDir="" createUninstallIcon="true" contentFilesType="1" downloadURL="" launcherId="37">
+      <excludedComponents />
+      <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
+      <exclude />
+      <variables />
+      <excludedInstallerScreens />
+      <excludedUninstallerScreens />
+    </macos>
+    <unixInstaller name="Unix Installer" id="126" mediaFileName="" installDir="ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" includedJRE="" manualJREEntry="false" bundleType="1" jreURL="" jreFtpURL="" jreShared="false" customInstallBaseDir="" createUninstallIcon="true" contentFilesType="1" downloadURL="">
+      <excludedLaunchers />
+      <excludedComponents />
+      <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
+      <exclude />
+      <variables />
+      <excludedInstallerScreens />
+      <excludedUninstallerScreens />
+      <installerScript mode="1" file="">
+        <scriptLines />
+      </installerScript>
+    </unixInstaller>
+  </mediaSets>
   <buildIds buildAll="true" />
 </install4j>
 
