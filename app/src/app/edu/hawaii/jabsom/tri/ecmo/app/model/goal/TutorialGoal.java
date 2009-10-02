@@ -13,6 +13,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.OxygenatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PressureMonitorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PumpAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.ReplaceHeaterAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.TubeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.VentilatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ViewAction;
@@ -143,6 +144,7 @@ public class TutorialGoal extends Goal {
    *   Action:Tube:Clamped:[true|false]     to wait for clamping/unclamping of tubing
    *   Action:Heater                        action on heater performed
    *   Action:Heater:[>|<][temp]            heater changed: e.g. Action:Heater:>38.9
+   *   Action:Heater:replace                heater replaced
    *   Action:Patient                       patient action performed.
    *   Action:Patient:[Check]               patient check performed where [Check] is "CANULA_SITE", "BLEEDING", ...
    *   Action:Pressure                      action on pressure monitor performed.
@@ -409,7 +411,7 @@ public class TutorialGoal extends Goal {
           // Changing heater parameters
           if (action instanceof HeaterAction) {
             if (items.length <= 2) {
-              // Action:Heater  action on heater performed
+              // Action:Heater action on heater performed
               progress++;
               notifyUpdate();
             }
@@ -419,6 +421,13 @@ public class TutorialGoal extends Goal {
               double triggerTemperature = Double.parseDouble(items[2].substring(1));
               double actualTemperature = ((HeaterAction) action).getTemperature();
               checkFlow(operator, actualTemperature, triggerTemperature);
+            }
+          }
+          else if (action instanceof ReplaceHeaterAction) {
+            if (items[2].equals("replace")) {
+              // Action:Heater:replace action on heater performed
+              progress++;
+              notifyUpdate();
             }
           }
         }
