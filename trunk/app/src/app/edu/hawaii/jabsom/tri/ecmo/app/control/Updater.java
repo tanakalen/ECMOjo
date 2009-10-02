@@ -540,6 +540,18 @@ public final class Updater {
               }
             }
           }
+          else if (mode == Mode.VV) {
+            // pump flow to patient heart rate & blood pressure however in VV
+            // NO blood pressure change
+            if (difference > 0) {
+              // flow higher then heart rate decreases
+              patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate() * difference));
+            }
+            else {
+              // flow lower then heart rate increases
+              patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate() * difference));
+            }
+          }
           else {
             double bpadjust = 0.007; // Constant to adjust bp (note: 5% change too big!!!)
             // pump flow to patient heart rate & blood pressure
@@ -558,7 +570,7 @@ public final class Updater {
               else {
                 patient.setSystolicBloodPressure(newbp);
               }
-            }
+            }            
           }
         }
         
