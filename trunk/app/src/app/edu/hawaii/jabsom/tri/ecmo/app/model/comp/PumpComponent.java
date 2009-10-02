@@ -57,7 +57,13 @@ public class PumpComponent extends Component {
    * @param on  True for on, false for off.
    */
   public void setOn(boolean on) {
-    this.on = on;
+    if (on) {
+      this.on = on;
+    }
+    else {
+      this.on = on;
+      setFlow(0.0);
+    }
     notifyUpdate();
   }
 
