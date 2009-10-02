@@ -108,7 +108,7 @@ public class TutorialBox extends JPanel {
    * @param text  The text.
    */
   public void setText(String text) {
-    textArea.setText(text);
+    textArea.setText(text.replace("\\n", "\n"));
   }
   
   /**
