@@ -92,6 +92,10 @@ patient-sedated = true
 patient-bleeding = false
 patient-temperature = 37
 
+# Pump
+pump-on = true
+pump-flow = 0.6
+
 # Heater
 heater-temperature = 37
 heater-broken = false

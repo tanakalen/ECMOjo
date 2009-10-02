@@ -88,6 +88,10 @@ patient-temperature = 37
 heater-temperature = 37
 heater-broken = false
 
+# Pump
+pump-on = true
+pump-flow = 0.6
+
 # Intervention
 intervention-1-cracked-pigtail = false
 intervention-2-cracked-pigtail = false
