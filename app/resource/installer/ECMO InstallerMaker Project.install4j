@@ -36,7 +36,7 @@
     <components />
   </files>
   <launchers>
-    <launcher name="ECMOjo" id="37" external="false" excludeFromMenu="false" menuName="" icnsFile="" pngIcon16File="./logo-16x16.png" pngIcon32File="./logo-32x32.png" macServiceDependencies="" swtApp="false">
+    <launcher name="ECMOjo" id="37" external="false" excludeFromMenu="false" menuName="" icnsFile="./logo-32x32.icns" pngIcon16File="./logo-16x16.png" pngIcon32File="./logo-32x32.png" macServiceDependencies="" swtApp="false">
       <executable name="ECMOjo" type="1" iconSet="true" iconFile="" executableDir="." redirectStderr="true" stderrFile="error.log" redirectStdout="false" stdoutFile="output.log" failOnStderrOutput="true" executableMode="1" changeWorkingDirectory="true" workingDirectory="." singleInstance="false" serviceStartType="2" serviceDependencies="" serviceDescription="" jreLocation="" executionLevel="asInvoker">
         <versionInfo include="false" fileVersion="" fileDescription="" legalCopyright="" internalName="" />
       </executable>
