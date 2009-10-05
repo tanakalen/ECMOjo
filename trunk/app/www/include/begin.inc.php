@@ -89,7 +89,7 @@
     <div style="font-size: 14px; border-bottom: 1px solid #b0b0b0">Spotlight</div>
     <div class="spotlight" style="margin-top: 5px">
       <a href="webstart/ECMOjo.jnlp" class="spotlight">&raquo; PLAY ONLINE</a>
-      <a href="download.html" class="spotlight">&raquo; DOWNLOAD</a>
+      <a href="download.php" class="spotlight">&raquo; DOWNLOAD</a>
     </div>
     <br>
     Please note ECMOjo is an <strong>Open Source</strong> project. <a href="about.php">Contact us</a> to 
