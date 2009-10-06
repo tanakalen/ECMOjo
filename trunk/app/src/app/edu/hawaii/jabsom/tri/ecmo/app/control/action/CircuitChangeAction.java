@@ -7,6 +7,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 
 /**
  * The circuit change action. 
@@ -57,6 +58,13 @@ public class CircuitChangeAction extends Action {
     AlarmIndicatorComponent alarmIndicatorComponent = (AlarmIndicatorComponent)equipment
                                                       .getComponent(AlarmIndicatorComponent.class);
     alarmIndicatorComponent.setAlarm(false);
+    
+    // reset patient and labs
+    Patient patient = game.getPatient();
+    patient.setAct(Double.NaN);
+    patient.setFibrinogen(Double.NaN);
+    patient.setPlatelets(Double.NaN);
+    patient.setPtt(Double.NaN);
   }
   
   /**
