@@ -14,6 +14,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
@@ -85,20 +86,39 @@ public class LabRequestAction extends Action {
       result = labTest;
     }
     else if (labTest.equals(EchoLabTest.class)) {
+      TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
+      LabComponent imagingComponent = null;
+      for (Component component: game.getEquipment()) {
+        if (component instanceof LabComponent) {
+          if (((LabComponent)component).getLabTest().isAssignableFrom(ImagingLabTest.class)) {
+            imagingComponent = (LabComponent)component;
+          }
+        }
+      }
       EchoLabTest labTest = new EchoLabTest();
       labTest.setDescription("Echo");
-      
-      // Create image name depending on the patient
-      TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
-      String name = "echo-nb-";
-      name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
-      labTest.setImageName(name + ".png");
-      Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
-      if (image == null) {
-        labTest.setImageName("echo-none.png");
-      } 
-      labTest.setTime(game.getElapsedTime() / 1000);
-      result = labTest;
+      if (imagingComponent.isScenarioEmpty()){
+        // Create image name depending on the patient
+        String name = "echo-nb-";
+        name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
+        labTest.setImageName(name + ".png");
+        Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
+        if (image == null) {
+          labTest.setImageName("echo-none.png");
+        } 
+        labTest.setTime(game.getElapsedTime() / 1000);
+        result = labTest;
+      }
+      else {
+        String name = (String) imagingComponent.getScenarioImaging("Echo").get(tube.getMode());
+        labTest.setImageName(name + ".png");
+        Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
+        if (image == null) {
+          labTest.setImageName("echo-none.png");
+        } 
+        labTest.setTime(game.getElapsedTime() / 1000);
+        result = labTest;
+      }
     }
     else if (labTest.equals(XRayLabTest.class)) {
       XRayLabTest labTest = new XRayLabTest();
