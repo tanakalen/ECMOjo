@@ -322,19 +322,27 @@ public final class ScenarioLoader {
         tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
         tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-cannula-venous-B")) == TubeFunction.OPEN);
         
-        // initialize game views
-        patient.setAct(Double.NaN);        
-//      for (Component component: equipment) {
-//        if (component instanceof ACTComponent) {
-//          ACTComponent actComponent = (ACTComponent)component;
-//          ACT act = new ACT();
-//          act.setValue(patient.getAct());
-//          act.setTime(0);
-//          actComponent.addACT(act);
+        // Begin of normal initial labs displayed on start
+        //act
+        patient.setAct(Double.NaN);
+        //FIXME: Code to initialize ACT prior to game start, Neither
+//        for (Component component: equipment) {
+//          if (component instanceof ACTComponent) {
+//            ACTComponent actComponent = (ACTComponent)component;
+//            ACT act = new ACT();
+//            act.setValue(patient.getAct());
+//            act.setTime(0);
+//            actComponent.addACT(act);
+//          }
 //        }
-//      }
+//        FIXME: nor the following work. See Manager.java for kludge fix.
 //        ACTComponent actComponent = (ACTComponent) equipment.getComponent(ACTComponent.class);
+//        ACT act = new ACT();
+//        act.setValue(patient.getAct());
+//        act.setTime(0);
+//        actComponent.addACT(act);
 
+        //blood gas
         patient.setPH(Double.NaN);
         patient.setPCO2(Double.NaN);
         patient.setPO2(Double.NaN);        
@@ -346,10 +354,10 @@ public final class ScenarioLoader {
             }
           }
         }
-        //baby gas
         LabRequestAction abgact = new LabRequestAction();
         labComponent.addResult(abgact.getBloodGas(patient));
         
+        //chemistry
         for (Component component: equipment) {
           if (component instanceof LabComponent) {
             if (((LabComponent)component).getLabTest().isAssignableFrom(ChemistryLabTest.class)) {
@@ -360,6 +368,7 @@ public final class ScenarioLoader {
         LabRequestAction chemact = new LabRequestAction();
         labComponent.addResult(chemact.getChemistry(patient));
         
+        //hematology
         patient.setFibrinogen(Double.NaN);
         patient.setPlatelets(Double.NaN);
         patient.setPt(Double.NaN);
@@ -373,6 +382,7 @@ public final class ScenarioLoader {
         }
         LabRequestAction hemeact = new LabRequestAction();
         labComponent.addResult(hemeact.getHematology(patient));
+        // End of initial lab display
 
         // load scenario specific patient/lab values
         patient.setAct(parseNum(parameters.get("act-value")));        
