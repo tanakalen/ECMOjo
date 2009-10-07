@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
+import java.util.HashMap;
+
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList;
 
@@ -13,6 +15,9 @@ public class LabComponent extends Component {
   
   /** The lab test assigned. */
   private Class<? extends LabTest> labTest;
+  
+  /** A hashmap (dictionary) of imaging. */
+  private HashMap<String, HashMap> scnMap = new HashMap();
   
   /** A list of lab results. */
   private LabTestList results = new LabTestList();
@@ -62,5 +67,34 @@ public class LabComponent extends Component {
    */
   public String getName() {
     return "Lab";
+  }
+  
+  /**
+   * Inserts string name for imaging file from Scenario by mode.
+   *
+   * @param  imaging The kind of imaging [Echo, Ultrasound, X-Ray].
+   * @param  map The filename for custom imaging from scenario
+   */
+  public void putScenarioImaging(String imaging, HashMap map) {
+    scnMap.put(imaging, map);
+  }
+  
+  /**
+   * Returns hashmap for imaging file from Scenario.
+   *
+   * @param  imaging The kind of imaging [Echo, Ultrasound, X-Ray].
+   * @return  Hashmap of specified imaging by ECMO Mode.
+   */
+  public HashMap getScenarioImaging(String imaging) {
+    return scnMap.get(imaging);
+  }
+  
+  /**
+   * Checks if there is imaging in scenario.
+   *
+   * @return  True if scenario has no imaging.
+   */
+  public boolean isScenarioEmpty() {
+    return scnMap.isEmpty();
   }
 }

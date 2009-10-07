@@ -1,6 +1,5 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
 
-
 /**
  * The imaging lab test. 
  *
