@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 
 /**
@@ -115,9 +116,9 @@ public class Manager implements Runnable {
     long nextLoop = (System.nanoTime() / 1000000) + increment;
     History history = new History();
     
-//    // initialize game views
-//    ACTRequestAction actact = new ACTRequestAction();
-//    actact.execute(game);
+    // initialize game views (See ScenarioLoader.java)
+    ACTRequestAction actact = new ACTRequestAction();
+    actact.execute(game);
     
     Thread currentThread = Thread.currentThread();
     while (this.thread == currentThread) {
