@@ -85,7 +85,7 @@ public final class Updater {
    * @param increment  The time increment in milliseconds.
    * @return  True, if goal is reached.
    */
-  public static boolean execute(Game game, History history, long increment) { 
+  public static boolean execute(Game game, History history, long increment) {
     Goal goal = game.getGoal();
     if (!goal.isReached(game)) {
       // increment time
