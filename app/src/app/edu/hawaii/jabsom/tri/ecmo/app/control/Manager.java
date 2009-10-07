@@ -5,12 +5,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
-import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
 
 /**
  * The manager. 
@@ -120,19 +115,9 @@ public class Manager implements Runnable {
     long nextLoop = (System.nanoTime() / 1000000) + increment;
     History history = new History();
     
-    // initialize game views
-    ACTRequestAction actact = new ACTRequestAction();
-    actact.execute(game);
-    LabRequestAction abgact = new LabRequestAction();
-    abgact.setLabTest(BloodGasLabTest.class);
-    abgact.execute(game);
-    LabRequestAction chemact = new LabRequestAction();
-    chemact.setLabTest(ChemistryLabTest.class);
-    chemact.execute(game);
-    LabRequestAction hemeact = new LabRequestAction();
-    hemeact.setLabTest(HematologyLabTest.class);
-    hemeact.execute(game);
-
+//    // initialize game views
+//    ACTRequestAction actact = new ACTRequestAction();
+//    actact.execute(game);
     
     Thread currentThread = Thread.currentThread();
     while (this.thread == currentThread) {

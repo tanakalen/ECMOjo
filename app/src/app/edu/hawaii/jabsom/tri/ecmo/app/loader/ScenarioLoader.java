@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.CannulaFunction;
@@ -19,6 +20,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.PowerFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.SuctionEttFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.TubeFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.UrineOutputFunction;
+//import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
@@ -29,6 +31,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
+//import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent.ACT;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
@@ -39,7 +42,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.SimulationGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal.Item;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
@@ -316,11 +322,63 @@ public final class ScenarioLoader {
         tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
         tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-cannula-venous-B")) == TubeFunction.OPEN);
         
-        // load patient/lab values
+        // initialize game views
+        patient.setAct(Double.NaN);        
+//      for (Component component: equipment) {
+//        if (component instanceof ACTComponent) {
+//          ACTComponent actComponent = (ACTComponent)component;
+//          ACT act = new ACT();
+//          act.setValue(patient.getAct());
+//          act.setTime(0);
+//          actComponent.addACT(act);
+//        }
+//      }
+//        ACTComponent actComponent = (ACTComponent) equipment.getComponent(ACTComponent.class);
+
+        patient.setPH(Double.NaN);
+        patient.setPCO2(Double.NaN);
+        patient.setPO2(Double.NaN);        
+        LabComponent labComponent = null;
+        for (Component component: equipment) {
+          if (component instanceof LabComponent) {
+            if (((LabComponent)component).getLabTest().isAssignableFrom(BloodGasLabTest.class)) {
+              labComponent = (LabComponent)component;
+            }
+          }
+        }
+        //baby gas
+        LabRequestAction abgact = new LabRequestAction();
+        labComponent.addResult(abgact.getBloodGas(patient));
+        
+        for (Component component: equipment) {
+          if (component instanceof LabComponent) {
+            if (((LabComponent)component).getLabTest().isAssignableFrom(ChemistryLabTest.class)) {
+              labComponent = (LabComponent)component;
+            }
+          }
+        }
+        LabRequestAction chemact = new LabRequestAction();
+        labComponent.addResult(chemact.getChemistry(patient));
+        
+        patient.setFibrinogen(Double.NaN);
+        patient.setPlatelets(Double.NaN);
+        patient.setPt(Double.NaN);
+        patient.setPtt(Double.NaN);
+        for (Component component: equipment) {
+          if (component instanceof LabComponent) {
+            if (((LabComponent)component).getLabTest().isAssignableFrom(HematologyLabTest.class)) {
+              labComponent = (LabComponent)component;
+            }
+          }
+        }
+        LabRequestAction hemeact = new LabRequestAction();
+        labComponent.addResult(hemeact.getHematology(patient));
+
+        // load scenario specific patient/lab values
         patient.setAct(parseNum(parameters.get("act-value")));        
         patient.setPH(parseNum(parameters.get("lab-component-abg-ph")));
         patient.setPCO2(parseNum(parameters.get("lab-component-abg-pco2")));
-        patient.setPO2(parseNum(parameters.get("lab-component-abg-po2")));        
+        patient.setPO2(parseNum(parameters.get("lab-component-abg-po2")));
         patient.setFibrinogen(parseNum(parameters.get("lab-component-heme-fibrinogen")));
         patient.setPlatelets(parseNum(parameters.get("lab-component-heme-platelets")));
         patient.setPt(parseNum(parameters.get("lab-component-heme-pt")));
