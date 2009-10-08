@@ -20,7 +20,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.PowerFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.SuctionEttFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.TubeFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.UrineOutputFunction;
-//import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
@@ -31,7 +30,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
-//import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent.ACT;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
@@ -170,7 +168,8 @@ public final class ScenarioLoader {
           if (goalName.equals("Baseline")) {
             // create goal
             BaselineGoal goal = new BaselineGoal();
-            goal.setTimeLimit(Long.parseLong(parameters.get("time")) * 1000);      // time-limit in seconds...
+            goal.setTimeInit(Long.parseLong(parameters.get("time-init")) * 1000);       // time-init in seconds...
+            goal.setTimeLimit(Long.parseLong(parameters.get("time-limit")) * 1000);      // time-limit in seconds...
             scenario.setGoal(goal);            
           }
           else if (goalName.equals("Tutorial")) {

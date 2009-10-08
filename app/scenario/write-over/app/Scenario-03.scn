@@ -12,7 +12,8 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Baseline
-time = 300
+time-init = 30
+time-limit = 300
 
 # Baseline Values
 baseline-sedated = true
