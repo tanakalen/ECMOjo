@@ -10,6 +10,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.ViewAction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
+import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.ComponentPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.DetailPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.PatientPanel;
@@ -58,8 +59,10 @@ public class ManagerPanel extends JPanel {
     final Game game = manager.getGame();
     
     // add the time
-    // REM TimePanel timePanel = new TimePanel(game);
-    // REM add(timePanel);
+    if (game.getGoal() instanceof BaselineGoal) {
+      TimePanel timePanel = new TimePanel(game);
+      add(timePanel);
+    }
     
     // set the detail panel
     detailPanel = null;
