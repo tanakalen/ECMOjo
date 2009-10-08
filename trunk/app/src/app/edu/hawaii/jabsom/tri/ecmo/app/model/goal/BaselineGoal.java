@@ -11,23 +11,43 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
  */
 public class BaselineGoal extends Goal {
   
+  /** The time init to show the baseline values. */
+  private long timeInit = 30 * 1000;
   /** The time limit for the goal, i.e. when the goal is not reached. */
   private long timeLimit = Long.MAX_VALUE;
   
   
   /**
-   * Returns the timeLimit.
+   * Returns the time init.
    *
-   * @return  The timeLimit.
+   * @return  The time init in milliseconds.
+   */
+  public long getTimeInit() {
+    return timeInit;
+  }
+
+  /**
+   * Sets the time init.
+   *
+   * @param timeInit  The time init in milliseconds.
+   */
+  public void setTimeInit(long timeInit) {
+    this.timeInit = timeInit;
+  }
+
+  /**
+   * Returns the time limit.
+   *
+   * @return  The time limit in milliseconds.
    */
   public long getTimeLimit() {
     return timeLimit;
   }
 
   /**
-   * Sets the timeLimit.
+   * Sets the time limit.
    *
-   * @param timeLimit  The timeLimit.
+   * @param timeLimit  The time limit in milliseconds.
    */
   public void setTimeLimit(long timeLimit) {
     this.timeLimit = timeLimit;
@@ -42,6 +62,16 @@ public class BaselineGoal extends Goal {
   @Override
   public void handle(Game game, Action action) {
     // not used
+  }
+  
+  /**
+   * Returns true if we are in the init phase.
+   * 
+   * @param game  The game.
+   * @return  True for baseline init phase.
+   */
+  public boolean isInit(Game game) {
+    return game.getElapsedTime() < timeInit;
   }
   
   /**
@@ -72,7 +102,7 @@ public class BaselineGoal extends Goal {
    */
   @Override
   public boolean isReached(Game game) {
-    return (!game.getPatient().isAlive()) || (isTimeout(game)) || (isBaseline(game));
+    return (!isInit(game)) && ((!game.getPatient().isAlive()) || (isTimeout(game)) || (isBaseline(game)));
   }
 
   /**
@@ -83,7 +113,7 @@ public class BaselineGoal extends Goal {
    */
   @Override
   public boolean isWon(Game game) {
-    return isBaseline(game);
+    return (!isInit(game)) && (isBaseline(game));
   }
 
   /**
