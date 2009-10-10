@@ -170,6 +170,7 @@ public final class ScenarioLoader {
             BaselineGoal goal = new BaselineGoal();
             goal.setTimeInit(Long.parseLong(parameters.get("time-init")) * 1000);       // time-init in seconds...
             goal.setTimeLimit(Long.parseLong(parameters.get("time-limit")) * 1000);      // time-limit in seconds...
+            goal.setTrigger(parameters.get("trigger"));
             scenario.setGoal(goal);            
           }
           else if (goalName.equals("Tutorial")) {

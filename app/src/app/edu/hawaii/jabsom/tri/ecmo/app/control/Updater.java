@@ -20,6 +20,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent.ConventionalSubtype;
+import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
 
 /**
@@ -115,6 +116,20 @@ public final class Updater {
            .getComponent(PressureMonitorComponent.class);
       AlarmIndicatorComponent alarmIndicator = (AlarmIndicatorComponent)equipment
            .getComponent(AlarmIndicatorComponent.class);
+      
+      // if we are running a baseline goal, check if the trigger has to be executed
+      if (goal instanceof BaselineGoal) {
+        long timeInit = ((BaselineGoal)goal).getTimeInit();
+        if ((timeInit <= elapsedTime) && (timeInit > (elapsedTime - increment))) {
+          String trigger = ((BaselineGoal)goal).getTrigger();
+          if (trigger.equals("arterial-cannula-kink")) {
+            tube.setBrokenCannula(true, TubeComponent.Status.KINK, TubeComponent.problemLocation.arterial);      
+          }
+          else if (trigger.equals("patient-bleeding")) {
+            patient.setBleeding(true);
+          }
+        }
+      }
       
       // load some local variables for Updater
       Mode mode = tube.getMode();
