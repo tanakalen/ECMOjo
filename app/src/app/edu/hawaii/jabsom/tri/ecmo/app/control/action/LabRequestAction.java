@@ -136,7 +136,7 @@ public class LabRequestAction extends Action {
         // Create image name depending on the patient
         String name = "xr-nb-";
         name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va" : "vv");
-        name = name + ("+v-whiteout");
+        name = name + ("-whiteout");
         labTest.setImageName(name + ".png");
         Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
         if (image == null) {
