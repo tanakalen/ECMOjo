@@ -110,6 +110,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-nb-vv+v-whiteout,xr-2m-vv-va+v-cannulahigh
+lab-img-xray = xr-nb-vv-mas,xr-nb-va-ards
 lab-img-us = us-nb-va-ivh
 lab-img-echo = echo-nb-va-normal,echo-nb-vv-normal
