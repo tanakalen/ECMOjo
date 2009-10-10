@@ -97,7 +97,7 @@ public class LabRequestAction extends Action {
       }
       EchoLabTest labTest = new EchoLabTest();
       labTest.setDescription("Echo");
-      if (imagingComponent.isScenarioEmpty()){
+      if (imagingComponent.isScenarioEmpty() || imagingComponent.getScenarioImaging("Echo").isEmpty()) {
         // Create image name depending on the patient
         String name = "echo-nb-";
         name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
@@ -121,21 +121,40 @@ public class LabRequestAction extends Action {
       }
     }
     else if (labTest.equals(XRayLabTest.class)) {
+      TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
+      LabComponent imagingComponent = null;
+      for (Component component: game.getEquipment()) {
+        if (component instanceof LabComponent) {
+          if (((LabComponent)component).getLabTest().isAssignableFrom(ImagingLabTest.class)) {
+            imagingComponent = (LabComponent)component;
+          }
+        }
+      }
       XRayLabTest labTest = new XRayLabTest();
       labTest.setDescription("X-Ray");
-      
-      // Create image name depending on the patient
-      TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
-      String name = "xr-nb-";
-      name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va" : "vv");
-      name = name + ("+v-whiteout");
-      labTest.setImageName(name + ".png");
-      Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
-      if (image == null) {
-        labTest.setImageName("xr-none.png");
-      } 
-      labTest.setTime(game.getElapsedTime() / 1000);
-      result = labTest;
+      if (imagingComponent.isScenarioEmpty() || imagingComponent.getScenarioImaging("X-Ray").isEmpty()) {
+        // Create image name depending on the patient
+        String name = "xr-nb-";
+        name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va" : "vv");
+        name = name + ("+v-whiteout");
+        labTest.setImageName(name + ".png");
+        Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
+        if (image == null) {
+          labTest.setImageName("xr-none.png");
+        } 
+        labTest.setTime(game.getElapsedTime() / 1000);
+        result = labTest;
+      }
+      else {
+        String name = (String) imagingComponent.getScenarioImaging("X-Ray").get(tube.getMode());
+        labTest.setImageName(name + ".png");
+        Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
+        if (image == null) {
+          labTest.setImageName("xr-none.png");
+        } 
+        labTest.setTime(game.getElapsedTime() / 1000);
+        result = labTest;
+      }
     }
     else {
       // error

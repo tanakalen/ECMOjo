@@ -6,7 +6,10 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
 
 /**
  * The manager. 
@@ -119,6 +122,12 @@ public class Manager implements Runnable {
     // initialize game views (See ScenarioLoader.java)
     ACTRequestAction actact = new ACTRequestAction();
     actact.execute(game);
+    LabRequestAction cxract = new LabRequestAction();
+    cxract.setLabTest(XRayLabTest.class);
+    cxract.execute(game);
+    LabRequestAction echoact = new LabRequestAction();
+    echoact.setLabTest(EchoLabTest.class);
+    echoact.execute(game);
     
     Thread currentThread = Thread.currentThread();
     while (this.thread == currentThread) {

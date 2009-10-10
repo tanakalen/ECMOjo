@@ -404,15 +404,31 @@ public final class ScenarioLoader {
           }
         }
         String[] images;
+        
+        //cxr
+        HashMap<TubeComponent.Mode, String> cxrMap = new HashMap<Mode, String>();        
         images = parameters.get("lab-img-xray").split(",");
         for (int i = 0; i < images.length; i++) {
           String image = images[i];
-          XRayLabTest labTest = new XRayLabTest();
-          labTest.setDescription("Chest, X-Ray");
-          labTest.setImageName(image + ".png");          
-          labTest.setTime(0);
-          imagingComponent.addResult(labTest);
+          if (tube.getMode() == null) {
+            if (image.contains("-va-")) { //TODO: verify filenames
+              cxrMap.put(Mode.VA, image);
+            }
+            else if (image.contains("-vv-")) { //TODO: verify filenames
+              cxrMap.put(Mode.VV, image);
+            }
+          }
+          else {
+            XRayLabTest labTest = new XRayLabTest();
+            labTest.setDescription("Chest, X-Ray");
+            labTest.setImageName(image + ".png");          
+            labTest.setTime(0);
+            imagingComponent.addResult(labTest);
+          }
         }
+        imagingComponent.putScenarioImaging("X-Ray", cxrMap);
+        
+        //ultrasound
         images = parameters.get("lab-img-us").split(",");
         for (int i = 0; i < images.length; i++) {
           String image = images[i];
@@ -423,6 +439,7 @@ public final class ScenarioLoader {
           imagingComponent.addResult(labTest);
         }
         
+        //echo
         HashMap<TubeComponent.Mode, String> echoMap = new HashMap<Mode, String>();
         images = parameters.get("lab-img-echo").split(",");
         for (int i = 0; i < images.length; i++) {
