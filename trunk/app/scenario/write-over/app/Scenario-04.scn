@@ -14,6 +14,7 @@ scenario-vent-type = *
 goal = Baseline
 time-init = 30
 time-limit = 300
+trigger = 
 
 # Baseline Values
 baseline-sedated = true

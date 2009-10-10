@@ -14,6 +14,7 @@ scenario-vent-type = *
 goal = Baseline
 time-init = 30
 time-limit = 300
+trigger = arterial-cannula-kink
 
 # Baseline Values
 baseline-sedated = true
@@ -92,9 +93,9 @@ tube-clamp-venous-B = open
 tube-clamp-bridge = closed
 tube-bubbles-arterial = false
 tube-bubbles-venous = false
-tube-cannula-broken = true
-tube-cannula-status = Kink
-tube-cannula-problem-location = Arterial
+tube-cannula-broken = false
+tube-cannula-status = 
+tube-cannula-problem-location = 
 tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
 

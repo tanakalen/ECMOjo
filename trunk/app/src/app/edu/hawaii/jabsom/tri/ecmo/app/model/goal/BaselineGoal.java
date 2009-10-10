@@ -16,6 +16,9 @@ public class BaselineGoal extends Goal {
   /** The time limit for the goal, i.e. when the goal is not reached. */
   private long timeLimit = Long.MAX_VALUE;
   
+  /** The trigger. */
+  private String trigger;
+  
   
   /**
    * Returns the time init.
@@ -51,6 +54,24 @@ public class BaselineGoal extends Goal {
    */
   public void setTimeLimit(long timeLimit) {
     this.timeLimit = timeLimit;
+  }
+  
+  /**
+   * Returns the trigger.
+   *
+   * @return  The trigger.
+   */
+  public String getTrigger() {
+    return trigger;
+  }
+
+  /**
+   * Sets the trigger.
+   *
+   * @param trigger  The trigger.
+   */
+  public void setTrigger(String trigger) {
+    this.trigger = trigger;
   }
 
   /**

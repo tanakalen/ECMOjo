@@ -14,6 +14,7 @@ scenario-vent-type = *
 goal = Baseline
 time-init = 30
 time-limit = 480
+trigger = patient-bleeding
 
 # Baseline Values
 baseline-sedated = true
@@ -61,7 +62,7 @@ patient-weight = 5
 patient-lung-function = bad
 patient-heart-function = good
 patient-sedated = true
-patient-bleeding = true
+patient-bleeding = false
 patient-temperature = 37
 
 # Heater
