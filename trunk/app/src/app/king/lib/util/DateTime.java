@@ -54,6 +54,7 @@ public class DateTime implements Serializable, Comparable {
    * @param minute  The minute [0, 59].
    * @param second  The second [0, 59].
    * @param millisecond  The millisecond [0, 999].
+   * @return  The date time object created.
    */
   public static DateTime createUTC(int year, int month, int day
                                  , int hour, int minute, int second, int millisecond) {
@@ -75,6 +76,7 @@ public class DateTime implements Serializable, Comparable {
    * @param minute  The minute [0, 59].
    * @param second  The second [0, 59].
    * @param millisecond  The millisecond [0, 999].
+   * @return  The date time object created.
    */
   public static DateTime createLocal(int year, int month, int day
                                    , int hour, int minute, int second, int millisecond) {
@@ -97,6 +99,7 @@ public class DateTime implements Serializable, Comparable {
    * @param minute  The minute [0, 59].
    * @param second  The second [0, 59].
    * @param millisecond  The millisecond [0, 999].
+   * @return  The date time object created.
    */
   public static DateTime create(TimeZone zone, int year, int month, int day
                                              , int hour, int minute, int second, int millisecond) {
@@ -265,10 +268,10 @@ public class DateTime implements Serializable, Comparable {
       // verify day of the month
       final int[] days;
       if (calendar.isLeapYear(year)) {
-        days = new int[] { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        days = new int[] {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
       }
       else {
-        days = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        days = new int[] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
       }
       if ((day < 1) || (day > days[month - 1])) {
         throw new IllegalArgumentException("error.DayOutOfRange[i18n]: The day is out of range.");
@@ -798,7 +801,7 @@ public class DateTime implements Serializable, Comparable {
    * the U.S. locale. The given date and time are 2001-07-04 12:08:56 local time
    * in the U.S. Pacific Time time zone.
    * <blockquote>
-   * <table border=0 cellspacing=3 cellpadding=0 summary="Examples of date and time patterns interpreted in the U.S. locale">
+   * <table border=0 cellspacing=3 cellpadding=0 summary="Examples of date/time patterns interpreted in the US locale">
    *     <tr bgcolor="#ccccff">
    *         <th align=left>Date and Time Pattern
    *         <th align=left>Result
@@ -850,7 +853,7 @@ public class DateTime implements Serializable, Comparable {
    * the U.S. locale. The given date and time are 2001-07-04 12:08:56 local time
    * in the U.S. Pacific Time time zone.
    * <blockquote>
-   * <table border=0 cellspacing=3 cellpadding=0 summary="Examples of date and time patterns interpreted in the U.S. locale">
+   * <table border=0 cellspacing=3 cellpadding=0 summary="Examples of date/time patterns interpreted in the US locale">
    *     <tr bgcolor="#ccccff">
    *         <th align=left>Date and Time Pattern
    *         <th align=left>Result
@@ -902,7 +905,7 @@ public class DateTime implements Serializable, Comparable {
    * the U.S. locale. The given date and time are 2001-07-04 12:08:56 local time
    * in the U.S. Pacific Time time zone.
    * <blockquote>
-   * <table border=0 cellspacing=3 cellpadding=0 summary="Examples of date and time patterns interpreted in the U.S. locale">
+   * <table border=0 cellspacing=3 cellpadding=0 summary="Examples of date/time patterns interpreted in the US locale">
    *     <tr bgcolor="#ccccff">
    *         <th align=left>Date and Time Pattern
    *         <th align=left>Result
