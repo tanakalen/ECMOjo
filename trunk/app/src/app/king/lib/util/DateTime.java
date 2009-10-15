@@ -1,6 +1,7 @@
 package king.lib.util;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -790,6 +791,173 @@ public class DateTime implements Serializable, Comparable {
     return getTimestamp() > dateTime.getTimestamp();
   }
 
+  /**
+   * Outputs a formated date in UTC.
+   * <p>
+   * The following examples show how date and time patterns are interpreted in
+   * the U.S. locale. The given date and time are 2001-07-04 12:08:56 local time
+   * in the U.S. Pacific Time time zone.
+   * <blockquote>
+   * <table border=0 cellspacing=3 cellpadding=0 summary="Examples of date and time patterns interpreted in the U.S. locale">
+   *     <tr bgcolor="#ccccff">
+   *         <th align=left>Date and Time Pattern
+   *         <th align=left>Result
+   *     <tr>
+   *         <td><code>"yyyy.MM.dd G 'at' HH:mm:ss z"</code>
+   *         <td><code>2001.07.04 AD at 12:08:56 PDT</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"EEE, MMM d, ''yy"</code>
+   *         <td><code>Wed, Jul 4, '01</code>
+   *     <tr>
+   *         <td><code>"h:mm a"</code>
+   *         <td><code>12:08 PM</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"hh 'o''clock' a, zzzz"</code>
+   *         <td><code>12 o'clock PM, Pacific Daylight Time</code>
+   *     <tr>
+   *         <td><code>"K:mm a, z"</code>
+   *         <td><code>0:08 PM, PDT</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"yyyyy.MMMMM.dd GGG hh:mm aaa"</code>
+   *         <td><code>02001.July.04 AD 12:08 PM</code>
+   *     <tr>
+   *         <td><code>"EEE, d MMM yyyy HH:mm:ss Z"</code>
+   *         <td><code>Wed, 4 Jul 2001 12:08:56 -0700</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"yyMMddHHmmssZ"</code>
+   *         <td><code>010704120856-0700</code>
+   *     <tr>
+   *         <td><code>"yyyy-MM-dd'T'HH:mm:ss.SSSZ"</code>
+   *         <td><code>2001-07-04T12:08:56.235-0700</code>
+   * </table>
+   * </blockquote>
+   * <p>
+   * See SimpleDateFormat for more information about patterns.
+   * 
+   * @param pattern  The pattern for formatting.
+   * @return  The formated date and time.
+   */
+  public String formatUTC(String pattern) {
+    SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+    formatter.setTimeZone(calendar.getTimeZone());
+    return formatter.format(calendar.getTime());
+  }
+  
+  /**
+   * Outputs a formated date for the local time zone.
+   * <p>
+   * The following examples show how date and time patterns are interpreted in
+   * the U.S. locale. The given date and time are 2001-07-04 12:08:56 local time
+   * in the U.S. Pacific Time time zone.
+   * <blockquote>
+   * <table border=0 cellspacing=3 cellpadding=0 summary="Examples of date and time patterns interpreted in the U.S. locale">
+   *     <tr bgcolor="#ccccff">
+   *         <th align=left>Date and Time Pattern
+   *         <th align=left>Result
+   *     <tr>
+   *         <td><code>"yyyy.MM.dd G 'at' HH:mm:ss z"</code>
+   *         <td><code>2001.07.04 AD at 12:08:56 PDT</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"EEE, MMM d, ''yy"</code>
+   *         <td><code>Wed, Jul 4, '01</code>
+   *     <tr>
+   *         <td><code>"h:mm a"</code>
+   *         <td><code>12:08 PM</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"hh 'o''clock' a, zzzz"</code>
+   *         <td><code>12 o'clock PM, Pacific Daylight Time</code>
+   *     <tr>
+   *         <td><code>"K:mm a, z"</code>
+   *         <td><code>0:08 PM, PDT</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"yyyyy.MMMMM.dd GGG hh:mm aaa"</code>
+   *         <td><code>02001.July.04 AD 12:08 PM</code>
+   *     <tr>
+   *         <td><code>"EEE, d MMM yyyy HH:mm:ss Z"</code>
+   *         <td><code>Wed, 4 Jul 2001 12:08:56 -0700</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"yyMMddHHmmssZ"</code>
+   *         <td><code>010704120856-0700</code>
+   *     <tr>
+   *         <td><code>"yyyy-MM-dd'T'HH:mm:ss.SSSZ"</code>
+   *         <td><code>2001-07-04T12:08:56.235-0700</code>
+   * </table>
+   * </blockquote>
+   * <p>
+   * See SimpleDateFormat for more information about patterns.
+   * 
+   * @param pattern  The pattern for formatting.
+   * @return  The formated date and time.
+   */
+  public String formatLocal(String pattern) {
+    SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+    formatter.setTimeZone(new GregorianCalendar().getTimeZone());
+    return formatter.format(calendar.getTime());
+  }
+
+  /**
+   * Outputs a formated date for the inputed time zone.
+   * <p>
+   * The following examples show how date and time patterns are interpreted in
+   * the U.S. locale. The given date and time are 2001-07-04 12:08:56 local time
+   * in the U.S. Pacific Time time zone.
+   * <blockquote>
+   * <table border=0 cellspacing=3 cellpadding=0 summary="Examples of date and time patterns interpreted in the U.S. locale">
+   *     <tr bgcolor="#ccccff">
+   *         <th align=left>Date and Time Pattern
+   *         <th align=left>Result
+   *     <tr>
+   *         <td><code>"yyyy.MM.dd G 'at' HH:mm:ss z"</code>
+   *         <td><code>2001.07.04 AD at 12:08:56 PDT</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"EEE, MMM d, ''yy"</code>
+   *         <td><code>Wed, Jul 4, '01</code>
+   *     <tr>
+   *         <td><code>"h:mm a"</code>
+   *         <td><code>12:08 PM</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"hh 'o''clock' a, zzzz"</code>
+   *         <td><code>12 o'clock PM, Pacific Daylight Time</code>
+   *     <tr>
+   *         <td><code>"K:mm a, z"</code>
+   *         <td><code>0:08 PM, PDT</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"yyyyy.MMMMM.dd GGG hh:mm aaa"</code>
+   *         <td><code>02001.July.04 AD 12:08 PM</code>
+   *     <tr>
+   *         <td><code>"EEE, d MMM yyyy HH:mm:ss Z"</code>
+   *         <td><code>Wed, 4 Jul 2001 12:08:56 -0700</code>
+   *     <tr bgcolor="#eeeeff">
+   *         <td><code>"yyMMddHHmmssZ"</code>
+   *         <td><code>010704120856-0700</code>
+   *     <tr>
+   *         <td><code>"yyyy-MM-dd'T'HH:mm:ss.SSSZ"</code>
+   *         <td><code>2001-07-04T12:08:56.235-0700</code>
+   * </table>
+   * </blockquote>
+   * <p>
+   * See SimpleDateFormat for more information about patterns.
+   * 
+   * @param zone  The time zone.
+   * @param pattern  The pattern for formatting.
+   * @return  The formated date and time.
+   */
+  public String format(TimeZone zone, String pattern) {
+    SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+    formatter.setTimeZone(zone);
+    return formatter.format(calendar.getTime());
+  }
+
+  /**
+   * Returns the date time as text in UTC. See formatUTC(...) for details. 
+   * Pattern used: "yyyy.MM.dd G 'at' HH:mm:ss z".
+   * 
+   * @return  The formated date/time.
+   */
+  public String toString() {
+    return formatUTC("yyyy.MM.dd G 'at' HH:mm:ss z");
+  }
+  
   /**
    * Returns true, if this object equals the inputed object. 
    * 

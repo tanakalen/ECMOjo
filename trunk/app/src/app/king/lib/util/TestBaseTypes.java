@@ -93,6 +93,12 @@ public class TestBaseTypes {
     assertTrue("2008 is a leap year.", tYearSwitch.isUTCLeapYear());
     assertFalse("2100 is not leap year.", tYearSwitch365.isUTCLeapYear());
     
+    // test formatter
+    DateTime tFormat = DateTime.createUTC(2007, 11, 3, 13, 1, 56, 991);
+    assertEquals("UTC correctly formated.", "2007.11.03 AD at 13:01:56 UTC", tFormat.toString());
+    assertEquals("Local correctly formated.", "07.11.3 AD at 22:1:56", tFormat.formatLocal("yy.M.d G 'at' H:m:s"));
+    assertEquals("Zone correctly formated.", "07.11.3 AD at 22:1:56", tFormat.format(zone, "yy.M.d G 'at' H:m:ss"));
+    
     // try to add illegal dates
     DateTime.createUTC(2000, 12, 1, 0, 0, 0, 0); 
     try {
