@@ -17,7 +17,10 @@ import java.util.TimeZone;
  */
 public class DateTime implements Serializable, Comparable {
 
-  /** The underlying calendar object. */
+  /** The timestamp. */
+  private long timestamp;
+  
+  /** The underlying calendar object is only created when needed. */
   private GregorianCalendar calendar;
   
   
@@ -26,7 +29,7 @@ public class DateTime implements Serializable, Comparable {
    * converted internally to UTC.
    */
   public DateTime() {
-    calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+    this(System.currentTimeMillis());
   }
   
   /**
@@ -35,10 +38,20 @@ public class DateTime implements Serializable, Comparable {
    * @param timestamp  The timestamp in UTC milliseconds from the epoch.
    */
   public DateTime(long timestamp) {
-    this();
-    
-    // and set the timestamp
-    setTimestamp(timestamp);
+    this.timestamp = timestamp;
+  }
+  
+  /**
+   * Returns the calendar.
+   * 
+   * @return  The calendar object. 
+   */
+  private synchronized GregorianCalendar calendar() {
+    if (calendar == null) {
+      calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+      calendar.setTimeInMillis(timestamp);
+    }
+    return calendar;
   }
   
   /**
@@ -114,7 +127,10 @@ public class DateTime implements Serializable, Comparable {
    * @param timestamp  The timestamp in UTC milliseconds from the epoch.
    */
   public void setTimestamp(long timestamp) {
-    calendar.setTimeInMillis(timestamp);
+    this.timestamp = timestamp;
+    if (calendar != null) {
+      calendar.setTimeInMillis(timestamp);
+    }
   }
   
   /**
@@ -123,7 +139,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The timestamp in UTC milliseconds from the epoch.
    */
   public long getTimestamp() {
-    return calendar.getTimeInMillis();
+    return timestamp;
   }
   
   /**
@@ -142,6 +158,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public void setUTC(int year, int month, int day, int hour, int minute, int second, int millisecond) {
     validate(year, month, day, hour, minute, second, millisecond);
+    GregorianCalendar calendar = calendar();
     if (year > 0) {
       calendar.set(Calendar.ERA, GregorianCalendar.AD);
     }
@@ -151,6 +168,7 @@ public class DateTime implements Serializable, Comparable {
     }
     calendar.set(year, month - 1, day, hour, minute, second);
     calendar.set(Calendar.MILLISECOND, millisecond);
+    timestamp = calendar.getTimeInMillis();
   }
   
   /**
@@ -179,7 +197,8 @@ public class DateTime implements Serializable, Comparable {
     }
     calendar.set(year, month - 1, day, hour, minute, second);
     calendar.set(Calendar.MILLISECOND, millisecond);
-    this.calendar.setTimeInMillis(calendar.getTimeInMillis());
+    calendar().setTimeInMillis(calendar.getTimeInMillis());
+    timestamp = calendar.getTimeInMillis();
   }
   
   /**
@@ -209,7 +228,8 @@ public class DateTime implements Serializable, Comparable {
     }
     calendar.set(year, month - 1, day, hour, minute, second);
     calendar.set(Calendar.MILLISECOND, millisecond);
-    this.calendar.setTimeInMillis(calendar.getTimeInMillis());
+    calendar().setTimeInMillis(calendar.getTimeInMillis());
+    timestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -267,7 +287,7 @@ public class DateTime implements Serializable, Comparable {
     else {
       // verify day of the month
       final int[] days;
-      if (calendar.isLeapYear(year)) {
+      if (calendar().isLeapYear(year)) {
         days = new int[] {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
       }
       else {
@@ -308,6 +328,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The year [-1000000, 1000000] including year 0!
    */
   public int getUTCYear() {
+    GregorianCalendar calendar = calendar();
     if (calendar.get(Calendar.ERA) == GregorianCalendar.AD) {
       return calendar.get(Calendar.YEAR);
     }
@@ -323,7 +344,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getLocalYear() {
     GregorianCalendar calendar = new GregorianCalendar();
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     if (calendar.get(Calendar.ERA) == GregorianCalendar.AD) {
       return calendar.get(Calendar.YEAR);
     }
@@ -340,7 +361,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getYear(TimeZone zone) {
     GregorianCalendar calendar = new GregorianCalendar(zone);
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     if (calendar.get(Calendar.ERA) == GregorianCalendar.AD) {
       return calendar.get(Calendar.YEAR);
     }
@@ -355,7 +376,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The month [1, 12]. 1 = January, 2 = February etc. 
    */
   public int getUTCMonth() {
-    return calendar.get(Calendar.MONTH) + 1;
+    return calendar().get(Calendar.MONTH) + 1;
   }
   
   /**
@@ -365,7 +386,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getLocalMonth() {
     GregorianCalendar calendar = new GregorianCalendar();
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.MONTH) + 1;
   }
 
@@ -377,7 +398,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getMonth(TimeZone zone) {
     GregorianCalendar calendar = new GregorianCalendar(zone);
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.MONTH) + 1;
   }
 
@@ -387,7 +408,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The day of the month [1, 31].
    */
   public int getUTCDay() {
-    return calendar.get(Calendar.DAY_OF_MONTH);
+    return calendar().get(Calendar.DAY_OF_MONTH);
   }
   
   /**
@@ -397,7 +418,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getLocalDay() {
     GregorianCalendar calendar = new GregorianCalendar();
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.DAY_OF_MONTH);
   }
 
@@ -409,7 +430,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getDay(TimeZone zone) {
     GregorianCalendar calendar = new GregorianCalendar(zone);
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.DAY_OF_MONTH);
   }
 
@@ -419,7 +440,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The weekday [1, 7]. 1 = Monday, 2 = Tuesday, 3 = Wednesday etc.
    */
   public int getUTCWeekday() {
-    int day = calendar.get(Calendar.DAY_OF_WEEK);
+    int day = calendar().get(Calendar.DAY_OF_WEEK);
     switch (day) {
       case Calendar.MONDAY:
         return 1;
@@ -448,7 +469,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getLocalWeekday() {
     GregorianCalendar calendar = new GregorianCalendar();
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     int day = calendar.get(Calendar.DAY_OF_WEEK);
     switch (day) {
       case Calendar.MONDAY:
@@ -479,7 +500,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getWeekday(TimeZone zone) {
     GregorianCalendar calendar = new GregorianCalendar(zone);
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     int day = calendar.get(Calendar.DAY_OF_WEEK);
     switch (day) {
       case Calendar.MONDAY:
@@ -508,7 +529,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The day of the year [1, 365]. First day starting with 1.
    */
   public int getUTCDayOfYear() {
-    return calendar.get(Calendar.DAY_OF_YEAR);
+    return calendar().get(Calendar.DAY_OF_YEAR);
   }
   
   /**
@@ -518,7 +539,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getLocalDayOfYear() {
     GregorianCalendar calendar = new GregorianCalendar();
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.DAY_OF_YEAR);
   }
 
@@ -530,7 +551,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getDayOfYear(TimeZone zone) {
     GregorianCalendar calendar = new GregorianCalendar(zone);
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.DAY_OF_YEAR);
   }
   
@@ -542,7 +563,7 @@ public class DateTime implements Serializable, Comparable {
   public boolean isUTCLeapYear() {
     int year = getUTCYear();
     if (year > 0) {
-      return calendar.isLeapYear(year);
+      return calendar().isLeapYear(year);
     }
     else {
       // no leap years for BC
@@ -558,7 +579,7 @@ public class DateTime implements Serializable, Comparable {
   public boolean isLocalLeapYear() {
     int year = getLocalYear();
     if (year > 0) {
-      return calendar.isLeapYear(year);
+      return calendar().isLeapYear(year);
     }
     else {
       // no leap years for BC
@@ -575,7 +596,7 @@ public class DateTime implements Serializable, Comparable {
   public boolean isLeapYear(TimeZone zone) {
     int year = getYear(zone);
     if (year > 0) {
-      return calendar.isLeapYear(year);
+      return calendar().isLeapYear(year);
     }
     else {
       // no leap years for BC
@@ -589,7 +610,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The hour of the day in 24h format [0, 23].
    */
   public int getUTCHour() {
-    return calendar.get(Calendar.HOUR_OF_DAY);
+    return calendar().get(Calendar.HOUR_OF_DAY);
   }
   
   /**
@@ -599,7 +620,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getLocalHour() {
     GregorianCalendar calendar = new GregorianCalendar();
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.HOUR_OF_DAY);
   }
 
@@ -611,7 +632,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getHour(TimeZone zone) {
     GregorianCalendar calendar = new GregorianCalendar(zone);
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.HOUR_OF_DAY);
   }
 
@@ -621,7 +642,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The minute [0, 59].
    */
   public int getUTCMinute() {
-    return calendar.get(Calendar.MINUTE);
+    return calendar().get(Calendar.MINUTE);
   }
   
   /**
@@ -631,7 +652,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getLocalMinute() {
     GregorianCalendar calendar = new GregorianCalendar();
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.MINUTE);
   }
 
@@ -643,7 +664,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getMinute(TimeZone zone) {
     GregorianCalendar calendar = new GregorianCalendar(zone);
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.MINUTE);
   }
 
@@ -653,7 +674,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The second [0, 59].
    */
   public int getUTCSecond() {
-    return calendar.get(Calendar.SECOND);
+    return calendar().get(Calendar.SECOND);
   }
   
   /**
@@ -663,7 +684,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getLocalSecond() {
     GregorianCalendar calendar = new GregorianCalendar();
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.SECOND);
   }
 
@@ -675,7 +696,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getSecond(TimeZone zone) {
     GregorianCalendar calendar = new GregorianCalendar(zone);
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.SECOND);
   }
 
@@ -685,7 +706,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The millisecond [0, 999].
    */
   public int getUTCMillisecond() {
-    return calendar.get(Calendar.MILLISECOND);
+    return calendar().get(Calendar.MILLISECOND);
   }
 
   /**
@@ -695,7 +716,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getLocalMillisecond() {
     GregorianCalendar calendar = new GregorianCalendar();
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.MILLISECOND);
   }
 
@@ -707,7 +728,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public int getMillisecond(TimeZone zone) {
     GregorianCalendar calendar = new GregorianCalendar(zone);
-    calendar.setTimeInMillis(this.calendar.getTimeInMillis());
+    calendar.setTimeInMillis(calendar().getTimeInMillis());
     return calendar.get(Calendar.MILLISECOND);
   }
   
@@ -717,7 +738,9 @@ public class DateTime implements Serializable, Comparable {
    * @param years  The years to add. Negative numbers will set the time back.
    */
   public void addYears(int years) {
+    GregorianCalendar calendar = calendar();
     calendar.add(Calendar.YEAR, years);
+    timestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -726,7 +749,9 @@ public class DateTime implements Serializable, Comparable {
    * @param months  The months to add. Negative numbers will set the time back.
    */
   public void addMonths(int months) {
+    GregorianCalendar calendar = calendar();
     calendar.add(Calendar.MONTH, months);
+    timestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -735,7 +760,9 @@ public class DateTime implements Serializable, Comparable {
    * @param days  The days to add. Negative numbers will set the time back.
    */
   public void addDays(int days) {
+    GregorianCalendar calendar = calendar();
     calendar.add(Calendar.DAY_OF_MONTH, days);
+    timestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -744,7 +771,9 @@ public class DateTime implements Serializable, Comparable {
    * @param hours  The hours to add. Negative numbers will set the time back.
    */
   public void addHours(int hours) {
-    calendar.add(Calendar.HOUR, hours);
+    GregorianCalendar calendar = calendar();
+    calendar().add(Calendar.HOUR, hours);
+    timestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -753,7 +782,9 @@ public class DateTime implements Serializable, Comparable {
    * @param minutes  The minutes to add. Negative numbers will set the time back.
    */
   public void addMinutes(int minutes) {
+    GregorianCalendar calendar = calendar();
     calendar.add(Calendar.MINUTE, minutes);
+    timestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -762,7 +793,9 @@ public class DateTime implements Serializable, Comparable {
    * @param seconds  The seconds to add. Negative numbers will set the time back.
    */
   public void addSeconds(int seconds) {
+    GregorianCalendar calendar = calendar();
     calendar.add(Calendar.SECOND, seconds);
+    timestamp = calendar.getTimeInMillis();
   }
   
   /**
@@ -771,7 +804,9 @@ public class DateTime implements Serializable, Comparable {
    * @param milliseconds  The milliseconds to add. Negative numbers will set the time back.
    */
   public void addMilliseconds(int milliseconds) {
+    GregorianCalendar calendar = calendar();
     calendar.add(Calendar.MILLISECOND, milliseconds);
+    timestamp = calendar.getTimeInMillis();
   }
   
   /**
@@ -781,7 +816,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  True if this date/time is before the inputed date/time.
    */
   public boolean before(DateTime dateTime) {
-    return getTimestamp() < dateTime.getTimestamp();
+    return timestamp < dateTime.timestamp;
   }
   
   /**
@@ -791,7 +826,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  True if this date/time is after the inputed date/time.
    */
   public boolean after(DateTime dateTime) {
-    return getTimestamp() > dateTime.getTimestamp();
+    return timestamp > dateTime.timestamp;
   }
 
   /**
@@ -841,6 +876,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The formated date and time.
    */
   public String formatUTC(String pattern) {
+    GregorianCalendar calendar = calendar();
     SimpleDateFormat formatter = new SimpleDateFormat(pattern);
     formatter.setTimeZone(calendar.getTimeZone());
     return formatter.format(calendar.getTime());
@@ -893,6 +929,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The formated date and time.
    */
   public String formatLocal(String pattern) {
+    GregorianCalendar calendar = calendar();
     SimpleDateFormat formatter = new SimpleDateFormat(pattern);
     formatter.setTimeZone(new GregorianCalendar().getTimeZone());
     return formatter.format(calendar.getTime());
@@ -946,6 +983,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The formated date and time.
    */
   public String format(TimeZone zone, String pattern) {
+    GregorianCalendar calendar = calendar();
     SimpleDateFormat formatter = new SimpleDateFormat(pattern);
     formatter.setTimeZone(zone);
     return formatter.format(calendar.getTime());
@@ -962,6 +1000,15 @@ public class DateTime implements Serializable, Comparable {
   }
   
   /**
+   * Returns an exact clone of this object.
+   * 
+   * @return  An exact clone of this object.
+   */
+  public DateTime clone() {
+    return new DateTime(timestamp);
+  }
+  
+  /**
    * Returns true, if this object equals the inputed object. 
    * 
    * @param object  The other object to compare this object to.
@@ -970,7 +1017,7 @@ public class DateTime implements Serializable, Comparable {
   public boolean equals(Object object) {
     if (object != null) {
       if (object instanceof DateTime) {
-        return this.calendar.equals(((DateTime)object).calendar);
+        return timestamp == ((DateTime)object).timestamp;
       }
       else {
         return false;
@@ -987,7 +1034,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The hash code for this object.
    */
   public int hashCode() {
-    return this.calendar.hashCode();
+    return (int)(timestamp ^ (timestamp >>> 32));
   }
   
   /**
@@ -997,6 +1044,6 @@ public class DateTime implements Serializable, Comparable {
    * @return  The natural order. Returns one of -1, 0, or 1.
    */
   public int compareTo(Object object) {
-    return this.calendar.compareTo(((DateTime)object).calendar);
+    return Long.valueOf(timestamp).compareTo(Long.valueOf(((DateTime)object).timestamp));
   }
 }
