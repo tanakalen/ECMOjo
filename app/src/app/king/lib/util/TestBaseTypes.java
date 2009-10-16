@@ -47,7 +47,13 @@ public class TestBaseTypes {
     now4.setTimestamp(now.getTimestamp());
     assertEquals("We have the correct year.", now.getUTCYear(), now4.getUTCYear());
     assertEquals("We should have the same date and time (timestamp).", now.getTimestamp(), now4.getTimestamp());
-    
+    DateTime custom1 = DateTime.createLocal(-3034, 3, 21);
+    assertEquals("Year is -3034", -3034, custom1.getLocalYear());
+    assertEquals("Month is 3", 3, custom1.getLocalMonth());
+    assertEquals("Hour is 0", 0, custom1.getLocalHour());
+    assertEquals("Minute is 0", 0, custom1.getLocalMinute());
+    assertEquals("Millisecond is 0", 0, custom1.getLocalMillisecond());
+
     // create same date/time but different time zone
     int hour = 20;
     DateTime tUTC = DateTime.createUTC(2009, 10, 13, hour, 34, 56, 897);
@@ -121,11 +127,53 @@ public class TestBaseTypes {
     assertEquals("Year is -78350.", -78350, tAddSub.getUTCYear());
     tAddSub.addYears(79350);
     assertEquals("Year is 1000.", 1000, tAddSub.getUTCYear());
-    
+    DateTime addSubTest = DateTime.create(zone, 1899, 12, 1, 12, 0, 0, 600);
+    for (int i = 0; i < 365 * 200; i++) {
+      int month = addSubTest.getMonth(zone);
+      int day = addSubTest.getDay(zone);
+      addSubTest.addMinutes(24 * 60);
+      if (addSubTest.getDay(zone) > day) {
+        assertEquals("1 day advanced.", day + 1, addSubTest.getDay(zone));
+        assertEquals("Month the same.", month, addSubTest.getMonth(zone));
+      }
+      else {
+        assertEquals("Day set to 1.", 1, addSubTest.getDay(zone));
+        assertEquals("Month advanced.", (month % 12) + 1, addSubTest.getMonth(zone));
+      }
+    }
+    assertEquals("Hour did not change.", 12, addSubTest.getHour(zone));
+    assertEquals("Minute did not change.", 0, addSubTest.getMinute(zone));
+    assertEquals("Second did not change.", 0, addSubTest.getSecond(zone));
+    assertEquals("Millisecond did not change.", 600, addSubTest.getMillisecond(zone));
+
     // test leap year function
     assertTrue("2008 is a leap year.", tYearSwitch.isUTCLeapYear());
     assertFalse("2100 is not leap year.", tYearSwitch365.isUTCLeapYear());
     assertFalse("1187 is not leap year.", DateTime.createLocal(1187, 1, 1, 0, 0, 0, 0).isLocalLeapYear());
+    for (int i = -20000; i <= 20000; i++) {
+      DateTime leapTest = DateTime.createUTC(i, 2, 28);
+      if (leapTest.isUTCLeapYear()) {
+        leapTest.addHours(24);
+        assertEquals("We should have february (Leap Year " + i + ").", 2, leapTest.getUTCMonth());
+        assertEquals("We should have day 29 (Leap Year " + i + ").", 29, leapTest.getUTCDay());
+        leapTest.addHours(24);
+        assertEquals("We should have march (Leap Year " + i + ").", 3, leapTest.getUTCMonth());
+        assertEquals("We should have day 1 (Leap Year " + i + ").", 1, leapTest.getUTCDay());
+        DateTime.createUTC(i, 2, 29, 1, 0, 59, 973); 
+      }
+      else {
+        leapTest.addHours(24);
+        assertEquals("We should have march (Year " + i + ").", 3, leapTest.getUTCMonth());
+        assertEquals("We should have day 1 (Year " + i + ").", 1, leapTest.getUTCDay());
+        try {
+          DateTime.createUTC(i, 2, 29, 10, 13, 59, 973); 
+          fail("We should fail, it's not a leap year (Year " + i + ").");
+        }
+        catch (Exception e) {
+          // should come here
+        }
+      }
+    }
     
     // test formatter
     DateTime tFormat = DateTime.createUTC(2007, 11, 3, 13, 1, 56, 991);
