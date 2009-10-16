@@ -55,6 +55,55 @@ public class DateTime implements Serializable, Comparable {
   }
   
   /**
+   * Creator for date/time using the inputed time in UTC. 
+   * Hour, minute, second and millisecond will be set to 0.
+   * Throws an IllegalArgumentException if the input is invalid.
+   * <p>
+   * IMPORTANT: The inputed time has to be in UTC.
+   *
+   * @param year  The year [-1000000, 1000000] including year 0!
+   * @param month  The month [1, 12]. 1 = January, 2 = February etc. 
+   * @param day  The day of the month [1, 31].
+   * @return  The date time object created.
+   */
+  public static DateTime createUTC(int year, int month, int day) {
+    return createUTC(year, month, day, 0, 0, 0, 0);
+  }
+  
+  /**
+   * Creator for date/time using the inputed time in the local time zone. 
+   * Hour, minute, second and millisecond will be set to 0.
+   * Throws an IllegalArgumentException if the input is invalid.
+   * <p>
+   * IMPORTANT: The inputed time has to be in the local time zone.
+   *
+   * @param year  The year [-1000000, 1000000] including year 0!
+   * @param month  The month [1, 12]. 1 = January, 2 = February etc. 
+   * @param day  The day of the month [1, 31].
+   * @return  The date time object created.
+   */
+  public static DateTime createLocal(int year, int month, int day) {
+    return createLocal(year, month, day, 0, 0, 0, 0);
+  }
+
+  /**
+   * Creator for date/time using the inputed time in the inputed time zone.
+   * Hour, minute, second and millisecond will be set to 0.
+   * Throws an IllegalArgumentException if the input is invalid.
+   * <p>
+   * IMPORTANT: The inputed time has to be in the inputed time zone.
+   *
+   * @param zone  The time zone.
+   * @param year  The year [-1000000, 1000000] including year 0!
+   * @param month  The month [1, 12]. 1 = January, 2 = February etc. 
+   * @param day  The day of the month [1, 31].
+   * @return  The date time object created.
+   */
+  public static DateTime create(TimeZone zone, int year, int month, int day) {
+    return create(zone, year, month, day, 0, 0, 0, 0);
+  }
+
+  /**
    * Creator for date/time using the inputed time in UTC.
    * Throws an IllegalArgumentException if the input is invalid.
    * <p>
@@ -562,13 +611,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public boolean isUTCLeapYear() {
     int year = getUTCYear();
-    if (year > 0) {
-      return calendar().isLeapYear(year);
-    }
-    else {
-      // no leap years for BC
-      return false;
-    }
+    return calendar().isLeapYear(year);
   }
   
   /**
@@ -578,13 +621,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public boolean isLocalLeapYear() {
     int year = getLocalYear();
-    if (year > 0) {
-      return calendar().isLeapYear(year);
-    }
-    else {
-      // no leap years for BC
-      return false;
-    }
+    return calendar().isLeapYear(year);
   }
 
   /**
@@ -595,13 +632,7 @@ public class DateTime implements Serializable, Comparable {
    */
   public boolean isLeapYear(TimeZone zone) {
     int year = getYear(zone);
-    if (year > 0) {
-      return calendar().isLeapYear(year);
-    }
-    else {
-      // no leap years for BC
-      return false;
-    }
+    return calendar().isLeapYear(year);
   }
 
   /**
