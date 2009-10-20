@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
+import edu.hawaii.jabsom.tri.ecmo.app.ECMOAppRelease;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
@@ -23,10 +24,13 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel.ScenarioSelectionListener;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -362,5 +366,19 @@ public class MenuStatePanel extends JPanel {
     
     // draws the image as background
     g.drawImage(background, 0, 0, this);
+    
+    // set antialised text
+    Graphics2D g2 = (Graphics2D)g;
+    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    
+    // text properties
+    g.setFont(g.getFont().deriveFont(10f));
+    g.setColor(Color.DARK_GRAY);
+
+    // draw the release info
+    String release = "Release Version: " + ECMOAppRelease.getReleaseVersion() + " | " + ECMOAppRelease.getReleaseTime();
+    int width = g.getFontMetrics().stringWidth(release);
+    g.drawString(release, 800 - width - 5, 595);
   }
 }
