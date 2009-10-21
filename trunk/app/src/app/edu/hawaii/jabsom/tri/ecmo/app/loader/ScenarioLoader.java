@@ -321,6 +321,8 @@ public final class ScenarioLoader {
         tube.setBrokenCannula(Boolean.parseBoolean(parameters.get("tube-cannula-broken")), problem, place);      
         tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
         tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-cannula-venous-B")) == TubeFunction.OPEN);
+        tube.setPreMembranePressure(parseNum(parameters.get("tube-cannula-premembranepressure")));
+        tube.setPostMembranePressure(parseNum(parameters.get("tube-cannula-postmembranepressure")));
         
         // Begin of normal initial labs displayed on start
         //act
