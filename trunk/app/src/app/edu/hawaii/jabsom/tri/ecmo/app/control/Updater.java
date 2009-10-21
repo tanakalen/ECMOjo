@@ -363,22 +363,22 @@ public final class Updater {
         double post = tube.getPostMembranePressure();
         if (oxygenator.getOxyType().equals(OxygenatorComponent.OxyType.QUADROX_D)) {
           if (difference > 0) {
-//            tube.setPreMembranePressure((((difference * 1000) * 0.0001) + 1) * pre);
-//            tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);
+            tube.setPreMembranePressure((((difference * 1000) * 0.0001) + 1) * pre);
+            tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);
           }
           else {
-//            tube.setPreMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * pre);
-//            tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
+            tube.setPreMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * pre);
+            tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
           }
         }
         else if (oxygenator.getOxyType().equals(OxygenatorComponent.OxyType.SILICONE)) {
           if (difference > 0) {
-//            tube.setPreMembranePressure((((difference * 1000) * 0.00055) + 1) * pre);
-//            tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);            
+            tube.setPreMembranePressure((((difference * 1000) * 0.00055) + 1) * pre);
+            tube.setPostMembranePressure((((difference * 1000) * 0.0001) + 1) * post);            
           }
           else {
-//            tube.setPreMembranePressure((1 - (Math.abs(difference * 1000) * 0.00055)) * pre);
-//            tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
+            tube.setPreMembranePressure((1 - (Math.abs(difference * 1000) * 0.00055)) * pre);
+            tube.setPostMembranePressure((1 - (Math.abs(difference * 1000) * 0.0001)) * post);
           }
         }
         
