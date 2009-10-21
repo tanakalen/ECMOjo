@@ -321,8 +321,36 @@ public final class ScenarioLoader {
         tube.setBrokenCannula(Boolean.parseBoolean(parameters.get("tube-cannula-broken")), problem, place);      
         tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
         tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-cannula-venous-B")) == TubeFunction.OPEN);
-        tube.setPreMembranePressure(parseNum(parameters.get("tube-cannula-premembranepressure")));
-        tube.setPostMembranePressure(parseNum(parameters.get("tube-cannula-postmembranepressure")));
+        Double val = parseNum(parameters.get("tube-cannula-premembranepressure"));
+        if (val.isNaN()) {
+          if (oxy.getOxyType() == OxyType.QUADROX_D) {
+            tube.setPreMembranePressure(125);
+          }
+          else if (oxy.getOxyType() == OxyType.SILICONE) {
+            tube.setPreMembranePressure(140);            
+          }
+          else {
+            System.out.println("Error: No oxygenator selected");
+          }
+        }
+        else {
+          tube.setPreMembranePressure(val);
+        }
+        val = parseNum(parameters.get("tube-cannula-postmembranepressure"));
+        if (val.isNaN()) {
+          if (oxy.getOxyType() == OxyType.QUADROX_D) {
+            tube.setPreMembranePressure(120);
+          }
+          else if (oxy.getOxyType() == OxyType.SILICONE) {
+            tube.setPreMembranePressure(120);            
+          }
+          else {
+            System.out.println("Error: No oxygenator selected");
+          }
+        }
+        else {
+          tube.setPostMembranePressure(val);
+        }
         
         // Begin of normal initial labs displayed on start
         //act

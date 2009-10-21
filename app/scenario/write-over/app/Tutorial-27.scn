@@ -119,8 +119,8 @@ tube-cannula-status = Kink
 tube-cannula-problem-location = Arterial
 tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
-tube-cannula-premembranepressure =
-tube-cannula-postmembranepressure =
+tube-cannula-premembranepressure = 
+tube-cannula-postmembranepressure = 
 
 # ACT
 act-value = 

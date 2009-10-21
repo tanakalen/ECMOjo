@@ -98,8 +98,8 @@ tube-cannula-status =
 tube-cannula-problem-location = 
 tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
-tube-cannula-premembranepressure =
-tube-cannula-postmembranepressure =
+tube-cannula-premembranepressure = 
+tube-cannula-postmembranepressure = 
 
 # ACT
 act-value = 220
