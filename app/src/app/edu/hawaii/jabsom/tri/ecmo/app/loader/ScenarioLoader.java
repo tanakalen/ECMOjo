@@ -327,18 +327,18 @@ public final class ScenarioLoader {
             tube.setPreMembranePressure(125);
           }
           else if (oxy.getOxyType() == OxyType.SILICONE) {
-            tube.setPreMembranePressure(140);            
+            tube.setPreMembranePressure(140);
           }
-//          else {
-//            System.out.println("Error: No oxygenator selected");
-//          }
+          else {
+            tube.setPreMembranePressure(val);
+          }
         }
         else {
           tube.setPreMembranePressure(val);
         }
         val = parseNum(parameters.get("tube-cannula-postmembranepressure"));
         if (val.isNaN()) {
-          tube.setPreMembranePressure(120);
+          tube.setPostMembranePressure(120);
 //          if (oxy.getOxyType() == OxyType.QUADROX_D) {
 //            tube.setPreMembranePressure(120);
 //          }

@@ -308,17 +308,19 @@ public class MenuStatePanel extends JPanel {
 
           // init tube values depending on selection
 //          tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
-          if (oxy.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
-            // PMP
-//            tube.setPostMembranePressure(tube.getPreMembranePressure());
-            tube.setPreMembranePressure(125);
-            tube.setPostMembranePressure(120);
-          }
-          else { 
-            // Silicon
-//            tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
-            tube.setPreMembranePressure(140);
-            tube.setPostMembranePressure(120);
+          if ((((Double)tube.getPreMembranePressure()).isNaN()) || ((Double)tube.getPostMembranePressure()).isNaN()) {
+            if (oxy.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
+              // PMP
+              //            tube.setPostMembranePressure(tube.getPreMembranePressure());
+              tube.setPreMembranePressure(125);
+              tube.setPostMembranePressure(120);
+            }
+            else { 
+              // Silicon
+              //            tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
+              tube.setPreMembranePressure(140);
+              tube.setPostMembranePressure(120);
+            }
           }
           tube.setPostPCO2(35);
           tube.setPostPH(7.4);
