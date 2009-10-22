@@ -367,7 +367,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
         
         long seconds = (Long)value;
         int hours = (int)(seconds / 3600);
-        setText("Hours: " + hours);
+        setText("Time: " + hours + "h");
         return this;
       }
     };   
