@@ -1,20 +1,21 @@
 1
 
 # Scenario Information
-name = Coming off ECMO
-desc = Steps to emergently come off of ECLS support.
+name = Coming off centrifugal ECMO
+desc = Steps to emergently come off of ECLS support with centrifugal pump.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
 scenario-oxy-type = *
-scenario-pump-type = *
+scenario-pump-type = centrifugal
 scenario-vent-type = *
 
+Roller Pump: Clamp Venous, Unclamp Bridge, Clamp Arterial\n  
 # Goal Information
 goal = Tutorial
 tutorial-item1-text = ECMOism:  ECMO is 95% boredom, and 5% sheer terror.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = You are now one elite 5% that will experience the terror of ECMO.  If you can’t immediately see what’s causing all the alarms, what should you do?
+tutorial-item2-text = You are now one elite 5% that will experience the terror of ECMO.  If you can't immediately see what’s causing all the alarms, what should you do?
 tutorial-item2-trigger = N/A
 tutorial-item3-text = A circuit check.
 tutorial-item3-trigger = N/A
@@ -22,7 +23,7 @@ tutorial-item4-text = Call for HELP!
 tutorial-item4-trigger = N/A
 tutorial-item5-text = You find a catastrophic problem, and you must come off ECMO.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Clamp the circuit!\n  Roller Pump: Clamp Venous, Unclamp Bridge, Clamp Arterial\n  Centrifugal: Clamp Arterial, Unclamp Bridge, Clamp Venous
+tutorial-item6-text = Clamp the circuit!\n  Clamp Arterial, Unclamp Bridge, Clamp Venous
 tutorial-item6-trigger = Action:Tube:Clamped:true
 tutorial-item7-text = Increase the ventilator settings for additional support in respiratory cases. Click the [Emergency Vent] button. 
 tutorial-item7-trigger = Action:Ventilator:Emergency:on
