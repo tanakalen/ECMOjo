@@ -98,7 +98,7 @@ public class ACTDetailPanel extends DetailPanel implements LabTestListener {
       }
       public String getColumnName(int col) {
         if (col == 0) {
-          return "Time [seconds]";
+          return "#";
         }
         else if (col == 1){
           return "ACT"; 
@@ -112,7 +112,7 @@ public class ACTDetailPanel extends DetailPanel implements LabTestListener {
         if (row <= index) {
           switch (col) {
             case 0:
-              return ((ACT)component.getACTs().get(index - row)).getTime();
+              return index - row + 1;
             case 1:
               return Math.round(((ACT)component.getACTs().get(index - row)).getValue());
             default:
