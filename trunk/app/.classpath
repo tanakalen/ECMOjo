@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/project/swingx-0.9.4.jar"/>
 	<classpathentry kind="lib" path="lib/project/junit.jar"/>
 	<classpathentry kind="lib" path="lib/project/mail.jar"/>
+	<classpathentry kind="lib" path="lib/project/pnuts-1.2.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
