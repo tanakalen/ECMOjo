@@ -1,8 +1,8 @@
 1
 
 # Scenario Information
-name = Tutorial - Introduction
-desc = Run the tutorial for an introduction of ECMOjo. 
+name = Scenario 0 - Simulation
+desc = The never ending simulation...
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -11,35 +11,7 @@ scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
-goal = Tutorial
-tutorial-item1-text = Welcome to the introduction. Try to identify the ECMOjo components.
-tutorial-item1-trigger = N/A
-tutorial-item2-text = Task 1: Select the ACT component.
-tutorial-item2-trigger = Action:View:ACTComponent
-tutorial-item3-text = Task 2: Select the bubble detector.
-tutorial-item3-trigger = Action:View:BubbleDetectorComponent
-tutorial-item4-text = Task 3: Select the temperature controls, a.k.a. heater controls.
-tutorial-item4-trigger = Action:View:HeaterComponent
-tutorial-item5-text = Task 4: Select one of the intervention points displayed as syringes A-D.
-tutorial-item5-trigger = Action:View:InterventionComponent
-tutorial-item6-text = Task 5: Select one of the lab buttons at the bottom left corner of the screen.
-tutorial-item6-trigger = Action:View:LabComponent
-tutorial-item7-text = Task 6: Select the gas blender.
-tutorial-item7-trigger = Action:View:OxygenatorComponent
-tutorial-item8-text = Task 7: Click on the patient.
-tutorial-item8-trigger = Action:View:Patient
-tutorial-item9-text = Task 8: Select the pressure monitor at the top right corner of the screen.
-tutorial-item9-trigger = Action:View:PressureMonitorComponent
-tutorial-item10-text = Task 9: Select the pump controls at the bottom right corner of the screen.
-tutorial-item10-trigger = Action:View:PumpComponent
-tutorial-item11-text = Task 10: Select the ventilator on the left hand side just above the patient.
-tutorial-item11-trigger = Action:View:VentilatorComponent
-tutorial-item12-text = Task 11: Remove the clamp from the bridge (between arterial tube and venous tube).
-tutorial-item12-trigger = Action:Tube:-BRIDGE
-tutorial-item13-text = Task 12: Please note that hovering the mouse pointer over the patient picture will bring up the scenario description.
-tutorial-item13-trigger = N/A
-tutorial-item14-text = Congratulations, you successfully completed the introduction!
-tutorial-item14-trigger = N/A
+goal = Simulation
 
 # Baseline Values
 baseline-sedated = true
@@ -84,7 +56,7 @@ baseline-alarming = false
 patient-species = human
 patient-age = 1
 patient-weight = 5
-patient-lung-function = good
+patient-lung-function = bad
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
@@ -140,6 +112,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-none
-lab-img-us = us-none
-lab-img-echo = echo-none
+lab-img-xray = xr-nb-vv-mas,xr-nb-va-ards
+lab-img-us = us-nb-va-ivh
+lab-img-echo = echo-nb-va-normal,echo-nb-vv-normal

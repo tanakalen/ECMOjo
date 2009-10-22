@@ -1,8 +1,8 @@
 1
 
 # Scenario Information
-name = Scenario 3
-desc = ECMO hour 220 (d9) for 4 kg female with pertussis pneumonia. Improving pulmonary function. Worsening coagulation studies.
+name = Tutorial - Advanced
+desc = Run the tutorial for an advanced ECMOjo example. 
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -11,10 +11,33 @@ scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
-goal = Baseline
-time-init = 30
-time-limit = 300
-trigger = 
+goal = Tutorial
+tutorial-item1-text = Welcome to the advanced ECMOjo tutorial.
+tutorial-item1-trigger = N/A
+tutorial-item2-text = Let's have a look at the Lab and ACT values.
+tutorial-item2-trigger = N/A
+tutorial-item3-text = Task 1: Select the lab [ABG] button to view blood gas lab values.
+tutorial-item3-trigger = Action:View:LabTest:BloodGasLabTest
+tutorial-item4-text = Task 2: Click the [Lab] button to request new lab values.
+tutorial-item4-trigger = Action:LabRequest
+tutorial-item5-text = Task 3: Select the lab [CHEM] button to view chemistry lab values.
+tutorial-item5-trigger = Action:View:LabTest:ChemistryLabTest
+tutorial-item6-text = Task 4: Click the [Lab] button to request new lab values.
+tutorial-item6-trigger = Action:LabRequest
+tutorial-item7-text = Task 5: Select the lab [HEME] button to view hematology lab values.
+tutorial-item7-trigger = Action:View:LabTest:HematologyLabTest
+tutorial-item8-text = Task 6: Click the [Lab] button to request new lab values.
+tutorial-item8-trigger = Action:LabRequest
+tutorial-item9-text = Task 7: Select the lab [IMG] button to view imaging lab values.
+tutorial-item9-trigger = Action:View:LabTest:ImagingLabTest
+tutorial-item10-text = You can click on the highlighted box to view the images.
+tutorial-item10-trigger = N/A
+tutorial-item11-text = Task 8: Select the [ACT] button to view the ACT values.
+tutorial-item11-trigger = Action:View:ACTComponent
+tutorial-item12-text = Task 9: Click the [Lab] button to request new values.
+tutorial-item12-trigger = Action:ACTRequest
+tutorial-item13-text = Congratulations, you successfully completed the advanced tutorial!
+tutorial-item13-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -57,9 +80,9 @@ baseline-alarming = false
 
 # Patient Information
 patient-species = human
-patient-age = 3
-patient-weight = 4
-patient-lung-function = bad
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
@@ -102,19 +125,19 @@ tube-cannula-premembranepressure =
 tube-cannula-postmembranepressure = 
 
 # ACT
-act-value = 220
+act-value = 
 
 # Lab Component
 lab-component-abg-ph = 
 lab-component-abg-pco2 = 
 lab-component-abg-po2 = 
 #lab-component-chem
-lab-component-heme-fibrinogen = 90
-lab-component-heme-platelets = 50
+lab-component-heme-fibrinogen = 
+lab-component-heme-platelets = 
 lab-component-heme-pt = 
-lab-component-heme-ptt = 100
+lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-nb-vv-mas,xr-nb-va-normal
+lab-img-xray = xr-nb-vv-whiteout,xr-nb-va-whiteout
 lab-img-us = us-nb-vv-noivh
 lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal
