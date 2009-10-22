@@ -222,10 +222,10 @@ public final class Updater {
         tubeDo(tube, pump, pressureMonitor, oxygenator, physiologicMonitor, patient);
       }
       
-      if ((pump.isOn() && (pump.getFlow() > 0)) && ((!tube.isVenousAOpen()) || (!tube.isVenousBOpen())
-                                                 || (!tube.isArterialAOpen()) || (!tube.isArterialBOpen()))) {
-        pump.setOn(false);
-      }
+//      if ((pump.isOn() && (pump.getFlow() > 0)) && ((!tube.isVenousAOpen()) || (!tube.isVenousBOpen())
+//                                                 || (!tube.isArterialAOpen()) || (!tube.isArterialBOpen()))) {
+//        pump.setOn(false);
+//      }
       
       if ((tube.getVenousPressure() < -75) && (pump.isOn()) && (pump.getFlow() > 0)) { // Consider abstract 75 out
         tube.setVenousBubbles(true);
@@ -297,7 +297,7 @@ public final class Updater {
               pump.setFlow(0.0);
             }
             else {
-              // if cenrifugal pump then pump flow to 0. 
+              // if centrifugal pump then pump flow to 0. 
               if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
                 pump.setFlow(0.0);
               }
@@ -1019,6 +1019,7 @@ public final class Updater {
         patient.setPCO2(patient.getPCO2() + 0.01);
         patient.setHeartRate(patient.getHeartRate() - 0.1);
         patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
+        patient.setCentralVenousPressure(patient.getCentralVenousPressure() - 0.001);
         patient.setO2Saturation(patient.getO2Saturation() - 0.0001);
         patient.setPO2(patient.getPO2() - 0.01);
         double life = patient.getLife();
@@ -1037,6 +1038,7 @@ public final class Updater {
         patient.setPCO2(patient.getPCO2() + 0.01);
         patient.setHeartRate(patient.getHeartRate() - 0.01);
         patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
+        patient.setCentralVenousPressure(patient.getCentralVenousPressure() - 0.001);
         patient.setO2Saturation(patient.getO2Saturation() - 0.0001);
         patient.setPO2(patient.getPO2() - 0.01);
         double life = patient.getLife();
@@ -1052,6 +1054,7 @@ public final class Updater {
         patient.setPCO2(patient.getPCO2() + 0.1);
         patient.setHeartRate(patient.getHeartRate() - 0.1);
         patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.1);
+        patient.setCentralVenousPressure(patient.getCentralVenousPressure() - 0.001);
         patient.setO2Saturation(patient.getO2Saturation() - 0.001);
         patient.setPO2(patient.getPO2() - 0.1);
         double life = patient.getLife();
