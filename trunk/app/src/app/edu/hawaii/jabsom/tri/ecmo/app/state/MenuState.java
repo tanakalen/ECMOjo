@@ -34,20 +34,20 @@ public class MenuState extends State {
   }
   
   /**
-   * Returns a list of tutorials.
-   * 
-   * @return  The tutorials.
-   */
-  public List<Scenario> getTutorials() {
-    return scenarios("Tutorial");
-  }
-
-  /**
    * Returns a list of scenarios.
    * 
    * @return  The scenarios.
    */
   public List<Scenario> getScenarios() {
+    return scenarios("Tutorial");
+  }
+
+  /**
+   * Returns a list of simulations.
+   * 
+   * @return  The simulations.
+   */
+  public List<Scenario> getSimulations() {
     return scenarios("Scenario");
   }
  
