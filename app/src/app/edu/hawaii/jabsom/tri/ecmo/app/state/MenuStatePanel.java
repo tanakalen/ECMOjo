@@ -47,10 +47,10 @@ public class MenuStatePanel extends JPanel {
   /** The panel image. */
   private Image background = ImageLoader.getInstance().getImage("conf/image/interface/menu/Base.jpg");
 
-  /** The tutorial list panel. */
-  private ScenarioListPanel tutorialListPanel;
   /** The scenario list panel. */
   private ScenarioListPanel scenarioListPanel;
+  /** The simulation list panel. */
+  private ScenarioListPanel simulationListPanel;
   
   /** The vv radio button. */
   private ImageToggleButton vvRadio;
@@ -105,50 +105,40 @@ public class MenuStatePanel extends JPanel {
     // button group
     ButtonGroup buttonGroup = new ButtonGroup();
     
-    // add tutorial toogle button
-    Image tutorialNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Tutorial.png");
-    Image tutorialRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-TutorialRol.png");
-    Image tutorialSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-TutorialSel.png");
-    ImageToggleButton tutorialButton 
-      = new ImageToggleButton(tutorialNormalImage, tutorialRolloverImage, tutorialSelectedImage);
-    tutorialButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent arg0) {
-        // activate the correct panel
-        tutorialListPanel.setVisible(true);
-        scenarioListPanel.setVisible(false);
-      }
-    });
-    tutorialButton.setSize(96, 40);
-    tutorialButton.setLocation(79, 130);
-    add(tutorialButton);
-    buttonGroup.add(tutorialButton);
-
     // add scenario toogle button
     Image scenarioNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Scenario.png");
     Image scenarioRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-ScenarioRol.png");
-    Image scenarioSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-ScenarioSel.png");
     ImageToggleButton scenarioButton 
-      = new ImageToggleButton(scenarioNormalImage, scenarioRolloverImage, scenarioSelectedImage);
+        = new ImageToggleButton(scenarioNormalImage, scenarioRolloverImage, scenarioNormalImage);
     scenarioButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         // activate the correct panel
         scenarioListPanel.setVisible(true);
-        tutorialListPanel.setVisible(false);
+        simulationListPanel.setVisible(false);
       }
     });
     scenarioButton.setSize(96, 40);
-    scenarioButton.setLocation(176, 130);
+    scenarioButton.setLocation(79, 130);
     add(scenarioButton);
     buttonGroup.add(scenarioButton);
-    
-    // add tutorial list panel
-    tutorialListPanel = new ScenarioListPanel(state.getTutorials());
-    Image tutorialImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/tutorial-background.png");
-    tutorialListPanel.setBackgroundImage(tutorialImage);
-    tutorialListPanel.setSize(385, 460);
-    tutorialListPanel.setLocation(37, 110);
-    add(tutorialListPanel);
 
+    // add simulation toogle button
+    Image simulNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Simulation.png");
+    Image simulRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-SimulationRol.png");
+    ImageToggleButton simulButton 
+        = new ImageToggleButton(simulNormalImage, simulRolloverImage, simulNormalImage);
+    simulButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        // activate the correct panel
+        simulationListPanel.setVisible(true);
+        scenarioListPanel.setVisible(false);
+      }
+    });
+    simulButton.setSize(96, 40);
+    simulButton.setLocation(176, 130);
+    add(simulButton);
+    buttonGroup.add(simulButton);
+    
     // add scenario list panel
     scenarioListPanel = new ScenarioListPanel(state.getScenarios());
     Image scenarioImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/scenario-background.png");
@@ -156,6 +146,14 @@ public class MenuStatePanel extends JPanel {
     scenarioListPanel.setSize(385, 460);
     scenarioListPanel.setLocation(37, 110);
     add(scenarioListPanel);
+
+    // add simulation list panel
+    simulationListPanel = new ScenarioListPanel(state.getSimulations());
+    Image simulationImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/simulation-background.png");
+    simulationListPanel.setBackgroundImage(simulationImage);
+    simulationListPanel.setSize(385, 460);
+    simulationListPanel.setLocation(37, 110);
+    add(simulationListPanel);
     
     // add component selection panel
     JPanel componentSelectionPanel = new JPanel();
@@ -327,12 +325,12 @@ public class MenuStatePanel extends JPanel {
 
           // show dialog and ask for the username
           String user;
-          if (scenarioListPanel.isVisible()) {
-            // let's ask for a username to continue to the scenario
+          if (simulationListPanel.isVisible()) {
+            // let's ask for a username to continue to the simulation
             user = "TODO:DialogWindow";  // TODO: add a input dialog for username
           }
           else {
-            // Tutorial: we don't set a username
+            // Scenario: we don't set a username
             user = "N/A";
           }
           Configuration.getInstance().setSelectionScenarioTab(scenarioListPanel.isVisible());
@@ -346,15 +344,15 @@ public class MenuStatePanel extends JPanel {
         }
       }      
     };
-    tutorialListPanel.addScenarioSelectionListener(scenarioSelectionListener);
     scenarioListPanel.addScenarioSelectionListener(scenarioSelectionListener);
+    simulationListPanel.addScenarioSelectionListener(scenarioSelectionListener);
     
-    // enable tutorial
+    // enable scenario
     boolean scenarioSelection = Configuration.getInstance().isSelectionScenarioTab();
-    tutorialButton.setSelected(!scenarioSelection);
-    tutorialListPanel.setVisible(!scenarioSelection);
     scenarioButton.setSelected(scenarioSelection);
     scenarioListPanel.setVisible(scenarioSelection);
+    simulButton.setSelected(!scenarioSelection);
+    simulationListPanel.setVisible(!scenarioSelection);
   }
   
 
