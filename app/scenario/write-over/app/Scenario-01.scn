@@ -2,7 +2,7 @@
 
 # Scenario Information
 name = Scenario 1
-desc = ECMO hour 84 (d3.5) for 5 kg LGA infant with MAS. Improving pulmonary function. Muscle relaxation was discontinued soon after decannulation and infant is sedated with morphine sulfate infusion; however, he is easily agitated. Change of shift is occurring and the environmental noise has increased.
+desc = ECMO hour 84 (d3.5) for 5 kg LGA infant with MAS. Improving pulmonary function. Muscle relaxation was discontinued soon after cannulation and infant is sedated with morphine sulfate infusion; however, he is easily agitated. Change of shift is occurring and the environmental noise has increased.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
