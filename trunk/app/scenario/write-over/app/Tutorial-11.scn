@@ -10,7 +10,6 @@ scenario-oxy-type = *
 scenario-pump-type = centrifugal
 scenario-vent-type = *
 
-Roller Pump: Clamp Venous, Unclamp Bridge, Clamp Arterial\n  
 # Goal Information
 goal = Tutorial
 tutorial-item1-text = ECMOism:  ECMO is 95% boredom, and 5% sheer terror.
