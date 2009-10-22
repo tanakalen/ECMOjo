@@ -1,6 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view.lab;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -235,13 +236,14 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
         viewButton.setOpaque(false);        
         viewButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
-            // get the lab test
+            // get the lab test image
             ImagingLabTest labTest = (ImagingLabTest)getCellEditorValue();
             Image img = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
+
+            // shrink image as need
             int maxWidth = 700;
             int maxHeight = 500;
             if ((img.getWidth(null) > maxWidth) || (img.getHeight(null) > maxHeight)) {
-              // shrink image
               int width;
               int height;
               if ((((float)img.getWidth(null)) / maxWidth) > (((float)img.getHeight(null)) / maxHeight)) {
@@ -257,6 +259,20 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
               g.drawImage(img, 0, 0, null);
               img = smallImg;
             }
+            
+            // place a close button onto image and draw black rectangle around
+            int width = img.getWidth(null);
+            int height = img.getHeight(null);
+            Image closeableImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            Graphics g = closeableImg.getGraphics();
+            Image closeButton = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Close.gif");
+            g.drawImage(img, 0, 0, null);
+            g.setColor(Color.BLACK);
+            g.drawRect(0, 0, width - 1, height - 1);
+            g.drawImage(closeButton, width - closeButton.getWidth(null) - 5, 5, null);
+            img = closeableImg;
+            
+            // create image label to display image on dialog
             JLabel imageLabel = new JLabel(new ImageIcon(img));
             imageLabel.setSize(img.getWidth(null), img.getHeight(null));
             
