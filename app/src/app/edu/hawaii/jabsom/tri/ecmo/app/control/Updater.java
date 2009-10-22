@@ -117,6 +117,32 @@ public final class Updater {
       AlarmIndicatorComponent alarmIndicator = (AlarmIndicatorComponent)equipment
            .getComponent(AlarmIndicatorComponent.class);
       
+/* DO NOT TOUCH - WILL MOVE LATER (Christoph A.) - THANKS
+     // execute pnuts script (test)
+      String sourceCode = "System.out.println(\"pnuts script executed\");\n"
+                        + "thread = new Thread(new Runnable() {\n"
+                        + "  run() {\n"
+                        + "    System.out.println(\"thread!\");\n"
+                        + "  }\n"
+                        + "});\n"
+                        + "thread.start();\n";
+      try {
+        // parse script
+        Pnuts script = Pnuts.parse(sourceCode);
+        
+        // run script
+        pnuts.lang.Package pkg = new pnuts.lang.Package();
+        pkg.set("someVariable".intern(), "any java object");
+        pkg.setConstant("someConstant".intern(), "any java object");
+        Context context = new Context(pkg);
+        context.setImplementation(new SecurePnutsImpl(context.getImplementation()));
+        script.run(context);
+      }
+      catch (ParseException e) {
+        System.out.println(e);
+      }
+DO NOT TOUCH - WILL MOVE LATER (Christoph A.) - THANKS  */
+      
       // if we are running a baseline goal, check if the trigger has to be executed
       if (goal instanceof BaselineGoal) {
         long timeInit = ((BaselineGoal)goal).getTimeInit();
