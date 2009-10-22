@@ -39,7 +39,7 @@ public class MenuState extends State {
    * @return  The scenarios.
    */
   public List<Scenario> getScenarios() {
-    return scenarios("Tutorial");
+    return scenarios("Scenario");
   }
 
   /**
@@ -48,7 +48,7 @@ public class MenuState extends State {
    * @return  The simulations.
    */
   public List<Scenario> getSimulations() {
-    return scenarios("Scenario");
+    return scenarios("Simulation");
   }
  
   /**

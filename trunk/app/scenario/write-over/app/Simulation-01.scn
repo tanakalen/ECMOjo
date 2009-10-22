@@ -1,8 +1,8 @@
 1
 
 # Scenario Information
-name = Tutorial - Overview
-desc = Run the tutorial for an ECMOjo overview. 
+name = Scenario 1
+desc = ECMO hour 84 (d3.5) for 5 kg LGA infant with MAS. Improving pulmonary function. Muscle relaxation was discontinued soon after cannulation and infant is sedated with morphine sulfate infusion; however, he is easily agitated. Change of shift is occurring and the environmental noise has increased.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -11,21 +11,10 @@ scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
-goal = Tutorial
-tutorial-item1-text = Welcome to an overview of ECMOjo.
-tutorial-item1-trigger = N/A
-tutorial-item2-text = The patient that is connected to the ECMO circuit is shown in the bottom left corner.
-tutorial-item2-trigger = N/A
-tutorial-item3-text = Ventilator settings, Physiological Monitor and CDI Monitor are shown just above the baby.
-tutorial-item3-trigger = N/A
-tutorial-item4-text = The tubing connects the patient to the ECMO equipment on the right.
-tutorial-item4-trigger = N/A
-tutorial-item5-text = The main ECMO components are located on the right-hand side: oxygenator, heater, pump and gas flowmeters.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = The alarm indicator light on the right starts blinking when there is a problem.
-tutorial-item6-trigger = N/A
-tutorial-item7-text = Congratulations, you successfully completed the overview!
-tutorial-item7-trigger = N/A
+goal = Baseline
+time-init = 30
+time-limit = 300
+trigger = arterial-cannula-kink
 
 # Baseline Values
 baseline-sedated = true
@@ -40,7 +29,7 @@ baseline-min-pH = 7.35
 baseline-max-pH = 7.45
 baseline-min-pCO2 = 35
 baseline-max-pCO2 = 45
-baseline-min-ACT = 180
+baseline-min-ACT = 160
 baseline-max-ACT = 200
 baseline-min-temperature = 34
 baseline-max-temperature = 39
@@ -126,6 +115,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-none
-lab-img-us = us-none
-lab-img-echo = echo-none
+lab-img-xray = xr-nb-vv-kink,xr-nb-va-arthigh
+lab-img-us = us-nb-vv-noivh
+lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal
