@@ -3,11 +3,13 @@ package edu.hawaii.jabsom.tri.ecmo.app.view.lab;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
@@ -235,10 +237,28 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
           public void actionPerformed(ActionEvent event) {
             // get the lab test
             ImagingLabTest labTest = (ImagingLabTest)getCellEditorValue();
-            final Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" 
-                              + labTest.getImageName());
-            JLabel imageLabel = new JLabel(new ImageIcon(image));
-            imageLabel.setSize(image.getWidth(null), image.getHeight(null));
+            Image img = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
+            int maxWidth = 700;
+            int maxHeight = 500;
+            if ((img.getWidth(null) > maxWidth) || (img.getHeight(null) > maxHeight)) {
+              // shrink image
+              int width;
+              int height;
+              if ((((float)img.getWidth(null)) / maxWidth) > (((float)img.getHeight(null)) / maxHeight)) {
+                width = maxWidth;
+                height = img.getHeight(null) * maxWidth / img.getWidth(null);
+              }
+              else {
+                width = img.getWidth(null) * maxHeight / img.getHeight(null);
+                height = maxHeight;
+              }
+              Image smallImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+              Graphics g = smallImg.getGraphics();
+              g.drawImage(img, 0, 0, null);
+              img = smallImg;
+            }
+            JLabel imageLabel = new JLabel(new ImageIcon(img));
+            imageLabel.setSize(img.getWidth(null), img.getHeight(null));
             
             // open dialog           
             imageDialog = new AbstractDialog(ImagingLabTestPanel.this) {
