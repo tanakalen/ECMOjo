@@ -1,7 +1,7 @@
 1
 
 # Scenario Information
-name = Scenario 4
+name = Simulation 4
 desc = ECMO hour 220 (d9) for 4 kg female with severe sepsis. Improving pulmonary function. Worsening coagulation studies. After an intervention alarms sounding.
 
 # Scenario Parameters
