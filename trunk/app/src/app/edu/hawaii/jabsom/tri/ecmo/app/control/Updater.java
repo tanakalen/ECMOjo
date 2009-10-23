@@ -151,6 +151,9 @@ public final class Updater {
       
       // update equipment (tubing)
       double paO2 = ((99.663 * oxygenator.getFiO2()) - 6.17) * 7.5;  // see PaO2-FiO2.spv (SPSS)
+      if (oxygenator.getClotting() > 1) { // oxygenator not working as efficiently
+        paO2 = paO2 * 1 / oxygenator.getClotting();
+      }
       if (paO2 == 0) {
         paO2 = 0.001;
       }  
@@ -169,8 +172,7 @@ public final class Updater {
       }
       tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
       tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
-      // TODO: reconfirm if this is valid
-//      tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxygenator.getClotting() * 50));
+
       // change in venous pressure changes pump flow
       double diffVenousPressure = tube.getVenousPressure() - history.getVenousPressure();
       if (diffVenousPressure != 0) {
@@ -194,15 +196,21 @@ public final class Updater {
         tube.setPostPCO2(0);
       }
       else {
-        double sweepFactor = oxygenator.getTotalSweep() / pump.getFlow();
-        if (sweepFactor < 0.5) {
-          tube.setPostPCO2(80 - 30 / 0.5 * sweepFactor);
+        if (oxygenator.getClotting() < 1) {
+          double sweepFactor = oxygenator.getTotalSweep() / pump.getFlow();
+          if (sweepFactor < 0.5) {
+            tube.setPostPCO2(80 - 30 / 0.5 * sweepFactor);
+          }
+          else if (sweepFactor < 3) {
+            tube.setPostPCO2(60 - 10 / 0.5 * sweepFactor);
+          }
+          else {
+            tube.setPostPCO2(0);
+          }
         }
-        else if (sweepFactor < 3) {
-          tube.setPostPCO2(60 - 10 / 0.5 * sweepFactor);
-        }
-        else {
-          tube.setPostPCO2(0);
+        else { // oxygenator not as efficient
+          tube.setPostPCO2(60);
+//          tube.setPostPCO2(tube.getPrePCO2() * (1 + oxygenator.getClotting() / 100));
         }
       }
       
@@ -332,6 +340,10 @@ public final class Updater {
         }
       }
       
+      // update equipment (oxygenator)
+      oxygenator.getOxyType();
+//    tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxygenator.getClotting() * 50));
+
       
       // update equipment (bubble detector)
       bubbleDetector.setAlarm(tube.isArterialBubbles());
