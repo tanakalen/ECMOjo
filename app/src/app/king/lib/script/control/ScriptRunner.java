@@ -1,8 +1,11 @@
 package king.lib.script.control;
 
+import pnuts.lang.ParseException;
+import pnuts.lang.Pnuts;
 import king.lib.script.model.Compile;
 import king.lib.script.model.Context;
 import king.lib.script.model.Script;
+import king.lib.script.model.impl.pnuts.PnutsCompile;
 
 /**
  * A script executer.
@@ -57,36 +60,16 @@ public class ScriptRunner {
       return null;
     }
     else if (language.equalsIgnoreCase("pnuts")) {
-      // TODO: implement
-      return null;
-/*
-      // execute pnuts script (test)
-      String sourceCode = "System.out.println(\"pnuts script executed\");\n"
-                        + "thread = new Thread(new Runnable() {\n"
-                        + "  run() {\n"
-                        + "    System.out.println(\"thread!\");\n"
-                        + "  }\n"
-                        + "});\n"
-                        + "thread.start();\n";
       try {
         // parse script
-        Pnuts pnuts = Pnuts.parse(sourceCode);
+        Pnuts pnuts = Pnuts.parse(script.getCode());
         
-        // run script
-        pnuts.lang.Package pkg = new pnuts.lang.Package();
-        pkg.set("someVariable".intern(), "any java object");
-        Context context = new Context(pkg);
-        
-        // make it secure (no threads, file access, etc.)
-        context.setImplementation(new SecurePnutsImpl(context.getImplementation()));
-        
-        // run it...
-        pnuts.run(context);
+        // return the compile
+        return new PnutsCompile(pnuts);
       }
       catch (ParseException e) {
         throw new ScriptException(e.getMessage());
       }
-*/
     }
     else {
       throw new ScriptException("error.ScriptLanguageNotSupported[i18n]: The script language is not supported.");
