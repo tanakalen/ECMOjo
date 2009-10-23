@@ -118,17 +118,17 @@ tube-cannula-premembranepressure =
 tube-cannula-postmembranepressure = 
 
 # ACT
-act-value = 
+act-value = 200
 
 # Lab Component
 lab-component-abg-ph = 
 lab-component-abg-pco2 = 
 lab-component-abg-po2 = 
 #lab-component-chem
-lab-component-heme-fibrinogen = 
-lab-component-heme-platelets = 
-lab-component-heme-pt = 
-lab-component-heme-ptt = 
+lab-component-heme-fibrinogen = 80
+lab-component-heme-platelets = 80
+lab-component-heme-pt = 18
+lab-component-heme-ptt = 200
 
 # Imaging Component
 lab-img-xray = xr-none
