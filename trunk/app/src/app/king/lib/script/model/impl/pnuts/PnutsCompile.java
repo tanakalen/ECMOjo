@@ -10,6 +10,8 @@ import java.security.ProtectionDomain;
 import pnuts.lang.Jump;
 import pnuts.lang.Pnuts;
 import pnuts.security.SecurePnutsImpl;
+import king.lib.script.control.SandboxException;
+import king.lib.script.control.SandboxSecurity;
 import king.lib.script.control.ScriptException;
 import king.lib.script.model.Compile;
 import king.lib.script.model.Context;
@@ -84,14 +86,29 @@ public class PnutsCompile implements Compile {
     }
     
     // make the pnuts context secure (no threads, file access, etc.)
+context.setRestricted(false);
     if (context.isRestricted()) {
       CodeSource codeSource = pnuts.getClass().getProtectionDomain().getCodeSource();
       SecurePnutsImpl securePnutsImpl = new SecurePnutsImpl(pnutsContext.getImplementation(), codeSource);
       pnutsContext.setImplementation(securePnutsImpl);    
     }
-//    return pnuts.run(pnutsContext);
+    try {
+System.out.println("AAA");
+SandboxSecurity.install();
+      SandboxSecurity.sandbox();
+      Object result = pnuts.run(pnutsContext);
+      SandboxSecurity.unsandbox();
+SandboxSecurity.uninstall();
+      return result;
+    }
+    catch (Exception e) {
+    
+    }
+    return null;
+    
     
     // run it...
+    /*
     ProtectionDomain protectionDomain = pnuts.getClass().getProtectionDomain();
     AccessControlContext accessContext = new AccessControlContext(new ProtectionDomain[] {protectionDomain});
     final pnuts.lang.Context finalPnutsContext = pnutsContext;
@@ -105,5 +122,6 @@ public class PnutsCompile implements Compile {
     catch (PrivilegedActionException e) {
       throw new ScriptException(e);
     }   
+    */
   }
 }
