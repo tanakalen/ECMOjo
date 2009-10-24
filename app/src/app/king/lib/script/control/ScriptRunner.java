@@ -1,5 +1,7 @@
 package king.lib.script.control;
 
+import java.security.Permission;
+
 import pnuts.lang.ParseException;
 import pnuts.lang.Pnuts;
 import king.lib.script.model.Compile;
@@ -61,6 +63,14 @@ public class ScriptRunner {
     }
     else if (language.equalsIgnoreCase("pnuts")) {
       try {
+        if (System.getSecurityManager() == null) {
+          System.setSecurityManager(new SecurityManager() {
+            public void checkPermission(Permission perm) {
+              System.out.println("perm: " + perm);
+            }            
+          });
+        }
+
         // parse script
         Pnuts pnuts = Pnuts.parse(script.getCode());
         
