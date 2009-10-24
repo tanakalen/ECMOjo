@@ -1,14 +1,11 @@
 package king.lib.script.model.impl.pnuts;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.security.CodeSource;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.security.ProtectionDomain;
-import java.security.cert.Certificate;
 
 import pnuts.lang.Jump;
 import pnuts.lang.Pnuts;
@@ -26,7 +23,7 @@ import king.lib.script.model.Context;
 public class PnutsCompile implements Compile {
 
   /** Pnuts context with limited execution time. */
-  private static class MyContext extends pnuts.lang.Context {
+  private static final class MyContext extends pnuts.lang.Context {
     
     /** The end time. */
     long endTime;
@@ -37,7 +34,7 @@ public class PnutsCompile implements Compile {
      * @param context  The Pnuts context.
      * @param endTime  The end time.
      */
-    MyContext(pnuts.lang.Context context, long endTime) {
+    private MyContext(pnuts.lang.Context context, long endTime) {
       super(context);
       this.endTime = endTime;
     }
@@ -75,7 +72,7 @@ public class PnutsCompile implements Compile {
    * @return  The output.
    * @throws ScriptException  If there are errors executing the script.
    */
-  public Object execute(Context context, Object object) throws ScriptException {
+  public Object execute(Context context, Object object) throws ScriptException {   
     // create a context
     pnuts.lang.Package pnutsPackage = new pnuts.lang.Package();
     pnutsPackage.set("input".intern(), object);
@@ -88,18 +85,15 @@ public class PnutsCompile implements Compile {
     
     // make the pnuts context secure (no threads, file access, etc.)
     if (context.isRestricted()) {
-      try {
-        CodeSource codeSource = new CodeSource(new URL("http://www.noblemaster.com"), new Certificate[0]);
-        SecurePnutsImpl securePnutsImpl = new SecurePnutsImpl(pnutsContext.getImplementation(), codeSource);
-        pnutsContext.setImplementation(securePnutsImpl);    
-      }
-      catch (MalformedURLException e) {
-        throw new ScriptException(e);
-      }  
+      CodeSource codeSource = pnuts.getClass().getProtectionDomain().getCodeSource();
+      SecurePnutsImpl securePnutsImpl = new SecurePnutsImpl(pnutsContext.getImplementation(), codeSource);
+      pnutsContext.setImplementation(securePnutsImpl);    
     }
+//    return pnuts.run(pnutsContext);
     
     // run it...
-    AccessControlContext accessContext = new AccessControlContext(new ProtectionDomain[0]);
+    ProtectionDomain protectionDomain = pnuts.getClass().getProtectionDomain();
+    AccessControlContext accessContext = new AccessControlContext(new ProtectionDomain[] {protectionDomain});
     final pnuts.lang.Context finalPnutsContext = pnutsContext;
     try {
       return AccessController.doPrivileged(new PrivilegedExceptionAction() {
@@ -110,6 +104,6 @@ public class PnutsCompile implements Compile {
     }
     catch (PrivilegedActionException e) {
       throw new ScriptException(e);
-    }  
+    }   
   }
 }
