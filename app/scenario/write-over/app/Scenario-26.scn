@@ -138,6 +138,7 @@ lab-component-heme-fibrinogen =
 lab-component-heme-platelets = 
 lab-component-heme-pt = 
 lab-component-heme-ptt = 
+lab-component-heme-hgb = 12
 
 # Imaging Component
 lab-img-xray = xr-nb-vv-whiteout,xr-nb-va-whiteout

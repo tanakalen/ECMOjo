@@ -1,16 +1,16 @@
 package king.lib.script.model.impl.pnuts;
 
-import java.security.AccessControlContext;
-import java.security.AccessController;
+//import java.security.AccessControlContext;
+//import java.security.AccessController;
 import java.security.CodeSource;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
-import java.security.ProtectionDomain;
+//import java.security.PrivilegedActionException;
+//import java.security.PrivilegedExceptionAction;
+//import java.security.ProtectionDomain;
 
 import pnuts.lang.Jump;
 import pnuts.lang.Pnuts;
 import pnuts.security.SecurePnutsImpl;
-import king.lib.script.control.SandboxException;
+//import king.lib.script.control.SandboxException;
 import king.lib.script.control.SandboxSecurity;
 import king.lib.script.control.ScriptException;
 import king.lib.script.model.Compile;

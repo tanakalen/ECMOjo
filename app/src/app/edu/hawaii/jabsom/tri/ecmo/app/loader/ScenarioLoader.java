@@ -63,6 +63,9 @@ public final class ScenarioLoader {
   /** The current version. */
   private static final int CURRENT_VERSION = 1;
   
+  /** The map of scn file. */
+  private static Map<String, String> parameters;
+  
   /**
    * Private constructor to prevent instantiation.
    */
@@ -99,7 +102,7 @@ public final class ScenarioLoader {
       // determine scenario file version
       int version = Integer.parseInt(reader.readLine());
       if ((version >= 1) && (version <= CURRENT_VERSION)) {
-        Map<String, String> parameters = new HashMap<String, String>();
+        parameters = new HashMap<String, String>();
         String line = reader.readLine();
         while (line != null) {
           if ((line.length() == 0) || line.startsWith("#") || (line.startsWith(" "))) {
@@ -321,7 +324,7 @@ public final class ScenarioLoader {
         tube.setBrokenCannula(Boolean.parseBoolean(parameters.get("tube-cannula-broken")), problem, place);      
         tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
         tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-cannula-venous-B")) == TubeFunction.OPEN);
-        Double val = parseNum(parameters.get("tube-cannula-premembranepressure"));
+        Double val = parseNum("tube-cannula-premembranepressure");
         if (val.isNaN()) {
           if (oxy.getOxyType() == OxyType.QUADROX_D) {
             tube.setPreMembranePressure(125);
@@ -336,7 +339,7 @@ public final class ScenarioLoader {
         else {
           tube.setPreMembranePressure(val);
         }
-        val = parseNum(parameters.get("tube-cannula-postmembranepressure"));
+        val = parseNum("tube-cannula-postmembranepressure");
         if (val.isNaN()) {
           tube.setPostMembranePressure(120);
 //          if (oxy.getOxyType() == OxyType.QUADROX_D) {
@@ -416,14 +419,15 @@ public final class ScenarioLoader {
         // End of initial lab display
 
         // load scenario specific patient/lab values
-        patient.setAct(parseNum(parameters.get("act-value")));        
-        patient.setPH(parseNum(parameters.get("lab-component-abg-ph")));
-        patient.setPCO2(parseNum(parameters.get("lab-component-abg-pco2")));
-        patient.setPO2(parseNum(parameters.get("lab-component-abg-po2")));
-        patient.setFibrinogen(parseNum(parameters.get("lab-component-heme-fibrinogen")));
-        patient.setPlatelets(parseNum(parameters.get("lab-component-heme-platelets")));
-        patient.setPt(parseNum(parameters.get("lab-component-heme-pt")));
-        patient.setPtt(parseNum(parameters.get("lab-component-heme-ptt")));
+        patient.setAct(parseNum("act-value"));        
+        patient.setPH(parseNum("lab-component-abg-ph"));
+        patient.setPCO2(parseNum("lab-component-abg-pco2"));
+        patient.setPO2(parseNum("lab-component-abg-po2"));
+        patient.setFibrinogen(parseNum("lab-component-heme-fibrinogen"));
+        patient.setPlatelets(parseNum("lab-component-heme-platelets"));
+        patient.setPt(parseNum("lab-component-heme-pt"));
+        patient.setPtt(parseNum("lab-component-heme-ptt"));
+        patient.setHgb(parseNum("lab-component-heme-hgb"));
    
         // load the xray, ultrasound and echo images (comma-delimited list)
         LabComponent imagingComponent = null;
@@ -493,6 +497,8 @@ public final class ScenarioLoader {
         }
         imagingComponent.putScenarioImaging("Echo", echoMap);
         
+        parameters.clear();
+
         // and return the scenario
         return scenario;
       }
@@ -546,15 +552,15 @@ public final class ScenarioLoader {
   /**
    * Parses a number.
    * 
-   * @param value  String to process.
+   * @param key  Key to process.
    * @return double number or NaN if something goes wrong.
    */
-  private static double parseNum(String value) {
-    if (value.equals("") || value.equals(" ") || value == null) {
-      return Double.NaN;
+  private static double parseNum(String key) {
+    if (parameters.containsKey(key) && !parameters.get(key).isEmpty()) {
+      return Double.parseDouble(parameters.get(key));
     }
     else {
-      return Double.parseDouble(value);      
+      return Double.NaN;
     }
   }
 }
