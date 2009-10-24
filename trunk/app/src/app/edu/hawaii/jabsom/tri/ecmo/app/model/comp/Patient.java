@@ -550,7 +550,12 @@ public class Patient  extends Component {
    * @param hgb the Hgb to set
    */
   public void setHgb(double hgb) {
-    this.hgb = hgb;
+    if (Double.isNaN(hgb)) {
+      this.hgb = 15.0;
+    }
+    else {
+      this.hgb = hgb;
+    }
   }
   
   /**
