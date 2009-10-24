@@ -130,6 +130,7 @@ public final class SandboxSecurity extends SecurityManager {
   @Override
   public void checkPermission(Permission permission) {
     if (sandboxedThreads.contains(Thread.currentThread())) {
+System.out.println("X-X " + permission.getName() + " " + permission.getActions());
       throw new SecurityException("Permission not available for sandboxed thread: " + permission);
     }
     else {
