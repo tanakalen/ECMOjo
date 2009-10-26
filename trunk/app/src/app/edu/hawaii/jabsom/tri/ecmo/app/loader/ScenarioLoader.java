@@ -63,9 +63,6 @@ public final class ScenarioLoader {
   /** The current version. */
   private static final int CURRENT_VERSION = 1;
   
-  /** The map of scn file. */
-  private static Map<String, String> parameters;
-  
   /**
    * Private constructor to prevent instantiation.
    */
@@ -102,7 +99,7 @@ public final class ScenarioLoader {
       // determine scenario file version
       int version = Integer.parseInt(reader.readLine());
       if ((version >= 1) && (version <= CURRENT_VERSION)) {
-        parameters = new HashMap<String, String>();
+        Map<String, String> parameters = new HashMap<String, String>();
         String line = reader.readLine();
         while (line != null) {
           if ((line.length() == 0) || line.startsWith("#") || (line.startsWith(" "))) {
@@ -324,7 +321,7 @@ public final class ScenarioLoader {
         tube.setBrokenCannula(Boolean.parseBoolean(parameters.get("tube-cannula-broken")), problem, place);      
         tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
         tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-cannula-venous-B")) == TubeFunction.OPEN);
-        Double val = parseNum("tube-cannula-premembranepressure");
+        Double val = parseNum(parameters, "tube-cannula-premembranepressure");
         if (val.isNaN()) {
           if (oxy.getOxyType() == OxyType.QUADROX_D) {
             tube.setPreMembranePressure(125);
@@ -339,7 +336,7 @@ public final class ScenarioLoader {
         else {
           tube.setPreMembranePressure(val);
         }
-        val = parseNum("tube-cannula-postmembranepressure");
+        val = parseNum(parameters, "tube-cannula-postmembranepressure");
         if (val.isNaN()) {
           tube.setPostMembranePressure(120);
 //          if (oxy.getOxyType() == OxyType.QUADROX_D) {
@@ -419,15 +416,15 @@ public final class ScenarioLoader {
         // End of initial lab display
 
         // load scenario specific patient/lab values
-        patient.setAct(parseNum("act-value"));        
-        patient.setPH(parseNum("lab-component-abg-ph"));
-        patient.setPCO2(parseNum("lab-component-abg-pco2"));
-        patient.setPO2(parseNum("lab-component-abg-po2"));
-        patient.setFibrinogen(parseNum("lab-component-heme-fibrinogen"));
-        patient.setPlatelets(parseNum("lab-component-heme-platelets"));
-        patient.setPt(parseNum("lab-component-heme-pt"));
-        patient.setPtt(parseNum("lab-component-heme-ptt"));
-        patient.setHgb(parseNum("lab-component-heme-hgb"));
+        patient.setAct(parseNum(parameters, "act-value"));        
+        patient.setPH(parseNum(parameters, "lab-component-abg-ph"));
+        patient.setPCO2(parseNum(parameters, "lab-component-abg-pco2"));
+        patient.setPO2(parseNum(parameters, "lab-component-abg-po2"));
+        patient.setFibrinogen(parseNum(parameters, "lab-component-heme-fibrinogen"));
+        patient.setPlatelets(parseNum(parameters, "lab-component-heme-platelets"));
+        patient.setPt(parseNum(parameters, "lab-component-heme-pt"));
+        patient.setPtt(parseNum(parameters, "lab-component-heme-ptt"));
+        patient.setHgb(parseNum(parameters, "lab-component-heme-hgb"));
    
         // load the xray, ultrasound and echo images (comma-delimited list)
         LabComponent imagingComponent = null;
@@ -552,11 +549,12 @@ public final class ScenarioLoader {
   /**
    * Parses a number.
    * 
+   * @param parameters  The parameters list.
    * @param key  Key to process.
    * @return double number or NaN if something goes wrong.
    */
-  private static double parseNum(String key) {
-    if (parameters.containsKey(key) && !parameters.get(key).isEmpty()) {
+  private static double parseNum(Map<String, String> parameters, String key) {
+    if ((parameters.get(key) != null) && (parameters.get(key).length() > 0)) {
       return Double.parseDouble(parameters.get(key));
     }
     else {
