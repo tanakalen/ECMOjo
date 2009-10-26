@@ -183,6 +183,10 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
       // stop the alarm
       alarmFx.pause();
       fxOff = false;
+      if (fxOffButton.isVisible()) {
+        fxOffButton.setVisible(false);
+        fxOffLabel.setVisible(false);
+      }
     }
   }
   
