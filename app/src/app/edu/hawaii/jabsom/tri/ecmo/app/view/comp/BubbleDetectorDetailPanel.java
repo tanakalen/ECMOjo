@@ -65,12 +65,11 @@ public class BubbleDetectorDetailPanel extends DetailPanel implements Runnable {
     // set layout and look
     setLayout(null);
     setOpaque(false);
-    
+       
+    // add reset button 
     Image resetButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Reset.png");
     Image resetButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ResetRol.png");
     Image resetButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ResetSel.png");
-    
-    // add reset button 
     ImageButton resetButton = new ImageButton(resetButtonImage, resetButtonRolloverImage, resetButtonSelectedImage);
     resetButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
