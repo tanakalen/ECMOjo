@@ -1,14 +1,9 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view;
 
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.JRootPane;
 
 import king.lib.out.Error;
 
@@ -35,12 +30,12 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
   /** True for blink. */
   private boolean blink;
   
-  /** The glass pane. */
-  private Component glassPane;
-  /** The mouse listener. */
-  private MouseListener mouseListener;
-  /** The mouse motion listener. */
-  private MouseMotionListener mouseMotionListener;
+  /** The root pane. */
+  private JRootPane rootPane;
+  /** The original glass pane. */
+  private Component originalGlassPane;
+  /** The tutorial glass pane. */
+  private TutorialGlassPane tutorialGlassPane;
   /** True, if mouse click trapper is active. */
   private boolean mouseClickTrapperActive;
   
@@ -59,34 +54,6 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
     
     // no layout
     setLayout(null);
-
-    // the mouse click trapper
-    mouseListener = new MouseListener() {
-      public void mouseClicked(MouseEvent event) {        
-        redispatchMouseEvent(event);
-      }
-      public void mousePressed(MouseEvent event) {
-        redispatchMouseEvent(event);
-      }
-      public void mouseReleased(MouseEvent event) {
-        redispatchMouseEvent(event);
-      }
-      public void mouseEntered(MouseEvent event) {
-        // do nothing
-      }
-      public void mouseExited(MouseEvent event) {
-        // do nothing
-      }           
-    };
-    mouseMotionListener = new MouseMotionListener() {
-      public void mouseDragged(MouseEvent event) {
-        redispatchMouseEvent(event);
-      }
-      public void mouseMoved(MouseEvent event) {
-        redispatchMouseEvent(event);
-      }    
-    };
-    mouseClickTrapperActive = false;
  
     // add the tutorial box
     box = new TutorialBox();
@@ -102,27 +69,6 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
     box.setVisible(false);
   }
   
-  /**
-   * Re-dispatches a mouse event.
-   * 
-   * @param event  The original mouse event.
-   */
-  private void redispatchMouseEvent(MouseEvent event) {
-    // calculate container point
-    Point glassPanePoint = event.getPoint();
-    Container container = TutorialPanel.this;
-    Point containerPoint = SwingUtilities.convertPoint(glassPane, glassPanePoint, container);
-
-    // if we are over the next button etc., let's re-dispatch the event
-    if (containerPoint.y < 300) {
-      // Forward events over the check box.
-      Component component = SwingUtilities.getDeepestComponentAt(container, containerPoint.x, containerPoint.y);
-      Point componentPoint = SwingUtilities.convertPoint(glassPane, glassPanePoint, component);
-      component.dispatchEvent(new MouseEvent(component, event.getID(), event.getWhen(), event.getModifiers()
-                            , componentPoint.x, componentPoint.y, event.getClickCount(), event.isPopupTrigger()));
-    }
-  }
-
   /**
    * Called when the component got updated.
    */
@@ -146,7 +92,10 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
     thread.start();
     
     // add glass pane as needed
-    glassPane = getRootPane().getGlassPane();
+    rootPane = getRootPane();
+    originalGlassPane = rootPane.getGlassPane();
+    tutorialGlassPane = new TutorialGlassPane();
+    mouseClickTrapperActive = false;
     updateBox();
   }
   
@@ -156,9 +105,11 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
   @Override
   public void removeNotify() {
     // remove listeners from glass pane
-    glassPane.removeMouseListener(mouseListener);
-    glassPane.removeMouseMotionListener(mouseMotionListener);
-    glassPane.setVisible(false);
+    if (mouseClickTrapperActive) {
+      mouseClickTrapperActive = false;
+      rootPane.setGlassPane(originalGlassPane);
+      rootPane.getGlassPane().setVisible(false);
+    }
     
     // stop thread
     this.thread = null;
@@ -193,19 +144,25 @@ public class TutorialPanel extends JPanel implements TutorialListener, Runnable 
       // prevent mouse clicks to pass through as needed
       if (showNext) {
         if (!mouseClickTrapperActive) {
-          glassPane.addMouseListener(mouseListener);
-          glassPane.addMouseMotionListener(mouseMotionListener);
-          glassPane.setVisible(true);
+          rootPane.setGlassPane(tutorialGlassPane);
+          rootPane.getGlassPane().setVisible(true);
           mouseClickTrapperActive = true;
         }
       }
       else {
         if (mouseClickTrapperActive) {
           mouseClickTrapperActive = false;
-          glassPane.removeMouseListener(mouseListener);
-          glassPane.removeMouseMotionListener(mouseMotionListener);
-          glassPane.setVisible(false);
+          rootPane.setGlassPane(originalGlassPane);
+          rootPane.getGlassPane().setVisible(false);
         }
+      }
+    }
+    else {
+      // remove glass pane if set
+      if (mouseClickTrapperActive) {
+        mouseClickTrapperActive = false;
+        rootPane.setGlassPane(originalGlassPane);
+        rootPane.getGlassPane().setVisible(false);
       }
     }
   }
