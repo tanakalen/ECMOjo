@@ -2,15 +2,19 @@ package edu.hawaii.jabsom.tri.ecmo.app.view.comp;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 import king.lib.access.AudioPlayer;
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
 
+import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.AlarmIndicatorComponent;
-
 
 /**
  * The component panel. 
@@ -38,6 +42,13 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
   /** The alarm audio. */
   private AudioPlayer alarmFx;
   
+  /** The sound off button. */
+  private ImageButton fxOffButton;
+  /** The sound off label. */
+  private JLabel fxOffLabel;
+  /** True for turned off. */
+  private boolean fxOff;
+  
   
   /**
    * Constructor for panel.
@@ -50,13 +61,38 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
     
     // set size and location
     setLocation(734, 7);
-    setSize(64, 64);
+    setSize(64, 100);
     
     // set layout
     setLayout(null);
     
     // set the tooltip
     setToolTipText(component.getName());
+    
+    // add sound off button and icon
+    Image fxOffButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Reset.png");
+    Image fxOffButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ResetRol.png");
+    Image fxOffButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ResetSel.png");
+    fxOffButton = new ImageButton(fxOffButtonImage, fxOffButtonRolloverImage, fxOffButtonSelectedImage);
+    fxOffButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        alarmFx.pause();
+        fxOff = true;
+        fxOffButton.setVisible(false);
+        fxOffLabel.setVisible(false);
+      }
+    });
+    fxOffButton.setLocation(12, 45);
+    fxOffButton.setSize(32, 32);
+    add(fxOffButton);   
+    fxOffButton.setVisible(false);
+    Image soundOffImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Sound-Off.png");
+    fxOffLabel = new JLabel(new ImageIcon(soundOffImage));
+    fxOffLabel.setLocation(43, 53);
+    fxOffLabel.setSize(16, 16);
+    add(fxOffLabel);
+    fxOffLabel.setVisible(false);
+    fxOff = false;
     
     // the alarm audio player
     alarmFx = AudioPlayer.create("conf/sound/alarm.mp3");
@@ -134,7 +170,11 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
       }
       
       // play alarm
-      alarmFx.play();
+      if (!fxOff) {
+        alarmFx.play();
+        fxOffButton.setVisible(true);
+        fxOffLabel.setVisible(true);
+      }
     }
     else {
       // draw green light
@@ -142,6 +182,7 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
       
       // stop the alarm
       alarmFx.pause();
+      fxOff = false;
     }
   }
   
