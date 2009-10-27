@@ -22,26 +22,48 @@ public class SandboxClassLoader extends URLClassLoader {
   /**
    * The constructor.
    *
-   * @param url  The class file URL. For example: "file:///C:\\temp\\".
    * @param parent  The parent class loader.
    * @param legalClasses  A set of classes such as: { "java.lang.Math", "java.lang.String" }.
-   * @throws SandboxException  If there is a problem instantiating the class loader.
+   * @throws SandboxException  If there is a problem.
    */
-  public SandboxClassLoader(String url, ClassLoader parent, StringSet legalClasses) throws SandboxException {
+  public SandboxClassLoader(ClassLoader parent, StringSet legalClasses) throws SandboxException {
     super(new URL[0], parent);
    
-    // set the url
+    // the classes that can be legally used
+    this.legalClasses = legalClasses;
+  }
+
+  /**
+   * Adds an URL.
+   * 
+   * @param url  The class file URL. For example: "file:///C:\\temp\\".
+   * @throws SandboxException  If there is a problem.
+   */
+  public void addURL(String url) throws SandboxException {
     try {
       addURL(new URL(url));
     }
     catch (MalformedURLException e) {
       throw new SandboxException(e);
     }
-    
-    // the classes that can be legally used
-    this.legalClasses = legalClasses;
   }
-
+  
+  /**
+   * Adds a class.
+   * 
+   * @param name  The name, e.g. "com.company.SomeClass".
+   * @param b  The bytes.
+   * @throws SandboxException  If there is a problem.
+   */
+  public void addClass(String name, byte[] b) throws SandboxException {
+    if (!legalClasses.contains(name)) {
+      throw new SandboxException("Class name is not allowed: " + name);
+    }
+    else {
+      
+    }
+  }
+  
   /**
    * Loads the actual classes. Throws an IllegalArgumentException if a class is not allowed to be used.
    * 
