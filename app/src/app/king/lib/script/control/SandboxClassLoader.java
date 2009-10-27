@@ -65,11 +65,11 @@ public class SandboxClassLoader extends URLClassLoader {
    * @throws SandboxException  If there is a problem.
    */
   public void addClass(String name, byte[] b) throws SandboxException {
-    if (!legalClasses.contains(name)) {
-      throw new SandboxException("Class name is not allowed: " + name);
+    if (legalClasses.contains(name)) {
+      classData.put(name, defineClass(name, b, 0, b.length));
     }
     else {
-      classData.put(name, defineClass(name, b, 0, b.length));
+      throw new SandboxException("Class name is not allowed: " + name);
     }
   }
   
@@ -86,15 +86,17 @@ public class SandboxClassLoader extends URLClassLoader {
     if (legalClasses.contains(name)) {
       // it's a legal class, let's load it...
       try {
-        return super.loadClass(name, resolve); 
+        // 1. try to find in URL paths
+        return super.findClass(name);
       }
       catch (ClassNotFoundException e) {
-        // let's check if we have the class defined via byte array
+        // 2. let's check if we have the class defined via byte array
         if (classData.containsKey(name)) {
           return (Class)classData.get(name);
         }
         else {
-          throw e;
+          // 3. let's also check the standard class loader
+          return super.loadClass(name, resolve); 
         }
       }
     }

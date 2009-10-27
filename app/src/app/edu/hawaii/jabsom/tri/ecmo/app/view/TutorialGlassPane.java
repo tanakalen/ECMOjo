@@ -1,14 +1,8 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view;
 
 import java.awt.AWTEvent;
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 import java.awt.event.MouseEvent;
@@ -29,10 +23,6 @@ import javax.swing.SwingUtilities;
  * @since Januarty 12, 2009
  */
 public class TutorialGlassPane extends JPanel implements AWTEventListener {
-  
-  /** The point. */
-  private Point point = new Point();
-
   
   /**
    * The constructor.
@@ -66,38 +56,6 @@ public class TutorialGlassPane extends JPanel implements AWTEventListener {
     
     super.removeNotify();
   }
-  
-  /**
-   * Sets the point.
-   * 
-   * @param point  The point.
-   */
-  public void setPoint(Point point) {
-    this.point = point;
-  }
-
-  /**
-   * Paints the component.
-   * 
-   * @param g  Where to paint to.
-   */
-  protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    Point point = this.point;
-    if (point != null) {
-      // draw 'x'
-      Graphics2D g2 = (Graphics2D)g;
-      g2.setColor(Color.BLACK);
-      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-      int x = (int)point.getX();
-      int y = (int)point.getY();
-      int d = 5;
-      g2.setStroke(new BasicStroke(3.0f));
-      g2.drawLine(x - d, y - d, x + d, y + d);
-      g2.drawLine(x - d, y + d, x + d, y - d);
-    } 
-  }
 
   /**
    * Dispatches an event.
@@ -118,12 +76,11 @@ public class TutorialGlassPane extends JPanel implements AWTEventListener {
         if ((id == MouseEvent.MOUSE_CLICKED) || (id == MouseEvent.MOUSE_PRESSED) || (id == MouseEvent.MOUSE_RELEASED)) {
           mouseEvent.consume();
         }
-        this.point = point;
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
       }
       else {
-        this.point = null;
+        setCursor(Cursor.getDefaultCursor());
       }
-      repaint();
     }
   }
 

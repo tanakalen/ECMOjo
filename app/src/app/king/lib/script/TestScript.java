@@ -62,7 +62,7 @@ public class TestScript {
     sandboxClassLoader.addLegal("java.lang.StringBuffer"); 
     
     Executable executable = (Executable)(sandboxClassLoader.loadClass("king.lib.script.SampleClass")).newInstance();
-    System.out.println("Output: " + executable.execute("IN-1201"));
+    System.out.println("Output: " + executable.execute("bN-1201"));
   }
   
   /**

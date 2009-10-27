@@ -9,7 +9,7 @@ import king.lib.script.model.Executable;
  * @author noblemaster
  * @since October 26, 2009
  */
-public class SampleClass2 implements Executable {
+public class SampleClass implements Executable {
     
   /**
    * Executes something.
@@ -20,7 +20,7 @@ public class SampleClass2 implements Executable {
   public Object execute(Object object) {
     System.out.println("Output Input: " + object);
     System.out.println("Randx: " + Math.random());
-    System.out.println("T: " + Thread.currentThread());
+    System.out.println("Txxx: " + Thread.currentThread());
     try {
       System.out.println("ClassLoader " + getClass().getClassLoader().loadClass("java.io.File"));
     } 
