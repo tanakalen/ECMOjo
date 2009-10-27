@@ -11,9 +11,12 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import king.lib.script.control.SandboxSecurity;
+import king.lib.script.control.SandboxClassLoader;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Context;
+import king.lib.script.model.Executable;
 import king.lib.script.model.Script;
+import king.lib.util.StringSet;
 
 import org.junit.Test;
 
@@ -25,6 +28,45 @@ import org.junit.Test;
  */
 public class TestScript {
     
+  /**
+   * Test the sandboxing class loader.
+   *
+   * @throws Exception  When things go wrong.
+   */
+  @Test
+  public void testSandboxClassLoader() throws Exception {
+    StringSet legalClasses = new StringSet();
+    legalClasses.add("king.lib.script.SampleClass");
+    legalClasses.add("king.lib.script.model.Executable");
+    legalClasses.add("king.lib.out.Error");
+    legalClasses.add("java.lang.Object");
+    legalClasses.add("java.lang.Throwable");
+    legalClasses.add("java.lang.Exception");
+    legalClasses.add("java.lang.IllegalArgumentException");
+    legalClasses.add("java.lang.ClassNotFoundException");
+    legalClasses.add("java.lang.System");
+    legalClasses.add("java.io.PrintStream");
+    legalClasses.add("java.io.File");
+    legalClasses.add("java.lang.Class");
+    legalClasses.add("java.lang.ClassLoader");
+    legalClasses.add("java.lang.Thread");
+    legalClasses.add("java.lang.Math");
+    legalClasses.add("java.lang.Boolean");
+    legalClasses.add("java.lang.Byte");
+    legalClasses.add("java.lang.Short");
+    legalClasses.add("java.lang.Integer");
+    legalClasses.add("java.lang.Long");
+    legalClasses.add("java.lang.Float");
+    legalClasses.add("java.lang.Double");
+    legalClasses.add("java.lang.String");
+    legalClasses.add("java.lang.StringBuilder");
+    legalClasses.add("java.lang.StringBuffer"); 
+    ClassLoader classLoader = getClass().getClassLoader();
+    classLoader = new SandboxClassLoader("file:///C:\\_temp\\", classLoader, legalClasses);
+    Executable executable = (Executable)(classLoader.loadClass("king.lib.script.SampleClass")).newInstance();
+    System.out.println("Output: " + executable.execute("IN-1201"));
+  }
+  
   /**
    * Test the sandboxing system.
    *
