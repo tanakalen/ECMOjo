@@ -61,8 +61,8 @@ public class TestScript {
     legalClasses.add("java.lang.String");
     legalClasses.add("java.lang.StringBuilder");
     legalClasses.add("java.lang.StringBuffer"); 
-    ClassLoader classLoader = getClass().getClassLoader();
-    classLoader = new SandboxClassLoader("file:///C:\\_temp\\", classLoader, legalClasses);
+    SandboxClassLoader classLoader = new SandboxClassLoader(getClass().getClassLoader(), legalClasses);
+    classLoader.addURL("file:///C:\\_temp\\");
     Executable executable = (Executable)(classLoader.loadClass("king.lib.script.SampleClass")).newInstance();
     System.out.println("Output: " + executable.execute("IN-1201"));
   }
