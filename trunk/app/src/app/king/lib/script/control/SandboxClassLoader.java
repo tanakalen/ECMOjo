@@ -3,6 +3,8 @@ package king.lib.script.control;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.HashMap;
+import java.util.Map;
 
 import king.lib.util.StringSet;
 
@@ -16,23 +18,30 @@ import king.lib.util.StringSet;
 public class SandboxClassLoader extends URLClassLoader {
  
   /** The classes we have legal access to. */
-  private StringSet legalClasses;
+  private StringSet legalClasses = new StringSet();
+  
+  /** The class data if any. */
+  private Map classData = new HashMap();
   
   
   /**
    * The constructor.
    *
    * @param parent  The parent class loader.
-   * @param legalClasses  A set of classes such as: { "java.lang.Math", "java.lang.String" }.
-   * @throws SandboxException  If there is a problem.
    */
-  public SandboxClassLoader(ClassLoader parent, StringSet legalClasses) throws SandboxException {
+  public SandboxClassLoader(ClassLoader parent) {
     super(new URL[0], parent);
-   
-    // the classes that can be legally used
-    this.legalClasses = legalClasses;
   }
 
+  /**
+   * Adds a legal class.
+   * 
+   * @param name  The name, e.g. "java.lang.Math" or "java.lang.Object".
+   */
+  public void addLegal(String name) {
+    legalClasses.add(name);
+  }
+  
   /**
    * Adds an URL.
    * 
@@ -60,7 +69,7 @@ public class SandboxClassLoader extends URLClassLoader {
       throw new SandboxException("Class name is not allowed: " + name);
     }
     else {
-      
+      classData.put(name, defineClass(name, b, 0, b.length));
     }
   }
   
@@ -76,7 +85,18 @@ public class SandboxClassLoader extends URLClassLoader {
   protected synchronized Class loadClass(String name, boolean resolve) throws ClassNotFoundException {
     if (legalClasses.contains(name)) {
       // it's a legal class, let's load it...
-      return super.loadClass(name, resolve); 
+      try {
+        return super.loadClass(name, resolve); 
+      }
+      catch (ClassNotFoundException e) {
+        // let's check if we have the class defined via byte array
+        if (classData.containsKey(name)) {
+          return (Class)classData.get(name);
+        }
+        else {
+          throw e;
+        }
+      }
     }
     else {
       throw new IllegalArgumentException("No permission to load class: " + name);
