@@ -16,8 +16,6 @@ import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Context;
 import king.lib.script.model.Executable;
 import king.lib.script.model.Script;
-import king.lib.util.StringSet;
-
 import org.junit.Test;
 
 /**
@@ -35,35 +33,35 @@ public class TestScript {
    */
   @Test
   public void testSandboxClassLoader() throws Exception {
-    StringSet legalClasses = new StringSet();
-    legalClasses.add("king.lib.script.SampleClass");
-    legalClasses.add("king.lib.script.model.Executable");
-    legalClasses.add("king.lib.out.Error");
-    legalClasses.add("java.lang.Object");
-    legalClasses.add("java.lang.Throwable");
-    legalClasses.add("java.lang.Exception");
-    legalClasses.add("java.lang.IllegalArgumentException");
-    legalClasses.add("java.lang.ClassNotFoundException");
-    legalClasses.add("java.lang.System");
-    legalClasses.add("java.io.PrintStream");
-    legalClasses.add("java.io.File");
-    legalClasses.add("java.lang.Class");
-    legalClasses.add("java.lang.ClassLoader");
-    legalClasses.add("java.lang.Thread");
-    legalClasses.add("java.lang.Math");
-    legalClasses.add("java.lang.Boolean");
-    legalClasses.add("java.lang.Byte");
-    legalClasses.add("java.lang.Short");
-    legalClasses.add("java.lang.Integer");
-    legalClasses.add("java.lang.Long");
-    legalClasses.add("java.lang.Float");
-    legalClasses.add("java.lang.Double");
-    legalClasses.add("java.lang.String");
-    legalClasses.add("java.lang.StringBuilder");
-    legalClasses.add("java.lang.StringBuffer"); 
-    SandboxClassLoader classLoader = new SandboxClassLoader(getClass().getClassLoader(), legalClasses);
-    classLoader.addURL("file:///C:\\_temp\\");
-    Executable executable = (Executable)(classLoader.loadClass("king.lib.script.SampleClass")).newInstance();
+    SandboxClassLoader sandboxClassLoader = new SandboxClassLoader(getClass().getClassLoader());
+    sandboxClassLoader.addURL("file:///C:\\_temp\\");
+    sandboxClassLoader.addLegal("king.lib.script.SampleClass");
+    sandboxClassLoader.addLegal("king.lib.script.model.Executable");
+    sandboxClassLoader.addLegal("king.lib.out.Error");
+    sandboxClassLoader.addLegal("java.lang.Object");
+    sandboxClassLoader.addLegal("java.lang.Throwable");
+    sandboxClassLoader.addLegal("java.lang.Exception");
+    sandboxClassLoader.addLegal("java.lang.IllegalArgumentException");
+    sandboxClassLoader.addLegal("java.lang.ClassNotFoundException");
+    sandboxClassLoader.addLegal("java.lang.System");
+    sandboxClassLoader.addLegal("java.io.PrintStream");
+    sandboxClassLoader.addLegal("java.io.File");
+    sandboxClassLoader.addLegal("java.lang.Class");
+    sandboxClassLoader.addLegal("java.lang.ClassLoader");
+    sandboxClassLoader.addLegal("java.lang.Thread");
+    sandboxClassLoader.addLegal("java.lang.Math");
+    sandboxClassLoader.addLegal("java.lang.Boolean");
+    sandboxClassLoader.addLegal("java.lang.Byte");
+    sandboxClassLoader.addLegal("java.lang.Short");
+    sandboxClassLoader.addLegal("java.lang.Integer");
+    sandboxClassLoader.addLegal("java.lang.Long");
+    sandboxClassLoader.addLegal("java.lang.Float");
+    sandboxClassLoader.addLegal("java.lang.Double");
+    sandboxClassLoader.addLegal("java.lang.String");
+    sandboxClassLoader.addLegal("java.lang.StringBuilder");
+    sandboxClassLoader.addLegal("java.lang.StringBuffer"); 
+    
+    Executable executable = (Executable)(sandboxClassLoader.loadClass("king.lib.script.SampleClass")).newInstance();
     System.out.println("Output: " + executable.execute("IN-1201"));
   }
   
