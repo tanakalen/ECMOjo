@@ -101,8 +101,12 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
   /** The selection clamp button 5. */
   private AbstractButton selectionClampButton5;
 
+  /** The selection button. */
+  private AbstractButton selectionButton;
+
   /** The updater thread. */
   private Thread thread;
+
   
   /**
    * Constructor for panel.
@@ -211,6 +215,20 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     selectionClampButton5.setSize(32, 52);
     add(selectionClampButton5); 
     
+    // add toggle button
+    Image normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CircuitCheck.png");
+    Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CircuitCheckRol.png");
+    Image selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CircuitCheckSel.png");
+    selectionButton = new ImageToggleButton(normalImage, rolloverImage, selectedImage, selectedImage);
+    selectionButton.setToolTipText(component.getName());
+    selectionButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        notifyActivationListeners();
+      }
+    });
+    selectionButton.setLocation(220, 30);
+    selectionButton.setSize(150, 32);
+    add(selectionButton); 
   }
 
   /**
@@ -336,6 +354,6 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
    * @param group  The group.
    */
   public void assign(ButtonGroup group) {
-    // not used
+    group.add(selectionButton);
   }
 }
