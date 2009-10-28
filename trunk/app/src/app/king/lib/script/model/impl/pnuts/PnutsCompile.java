@@ -1,17 +1,13 @@
 package king.lib.script.model.impl.pnuts;
 
-//import java.security.AccessControlContext;
-//import java.security.AccessController;
-import java.security.CodeSource;
-//import java.security.PrivilegedActionException;
-//import java.security.PrivilegedExceptionAction;
-//import java.security.ProtectionDomain;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.List;
 
+import pnuts.ext.LimitedClassesConfiguration;
 import pnuts.lang.Jump;
 import pnuts.lang.Pnuts;
 import pnuts.security.SecurePnutsImpl;
-//import king.lib.script.control.SandboxException;
-import king.lib.script.control.SandboxSecurity;
 import king.lib.script.control.ScriptException;
 import king.lib.script.model.Compile;
 import king.lib.script.model.Context;
@@ -86,42 +82,39 @@ public class PnutsCompile implements Compile {
     }
     
     // make the pnuts context secure (no threads, file access, etc.)
-context.setRestricted(false);
+    System.out.println("sec0");
     if (context.isRestricted()) {
-      CodeSource codeSource = pnuts.getClass().getProtectionDomain().getCodeSource();
-      SecurePnutsImpl securePnutsImpl = new SecurePnutsImpl(pnutsContext.getImplementation(), codeSource);
+      SecurePnutsImpl securePnutsImpl = new SecurePnutsImpl(pnutsContext.getImplementation());
       pnutsContext.setImplementation(securePnutsImpl);    
-    }
-    try {
-System.out.println("AAA");
-SandboxSecurity.install();
-      SandboxSecurity.sandbox();
-      Object result = pnuts.run(pnutsContext);
-      SandboxSecurity.unsandbox();
-SandboxSecurity.uninstall();
-      return result;
-    }
-    catch (Exception e) {
-    
-    }
-    return null;
-    
-    
-    // run it...
-    /*
-    ProtectionDomain protectionDomain = pnuts.getClass().getProtectionDomain();
-    AccessControlContext accessContext = new AccessControlContext(new ProtectionDomain[] {protectionDomain});
-    final pnuts.lang.Context finalPnutsContext = pnutsContext;
-    try {
-      return AccessController.doPrivileged(new PrivilegedExceptionAction() {
-        public Object run() {
-          return pnuts.run(finalPnutsContext);
+      pnutsContext.setConfiguration(new LimitedClassesConfiguration() {
+        @Override
+        public Constructor[] getConstructors(Class cls) {
+          return new Constructor[0];
         }
-      }, accessContext);    
+        public Method[] getMethods(Class cls) {
+          return new Method[0];
+        }
+        protected String[] getDefaultImports() {
+          return new String[0];
+        }
+        protected ClassLoader getInitialClassLoader() {
+          return null;
+        }
+        public List createList() {
+          return null;
+        }
+         public Object callConstructor(pnuts.lang.Context context, Class c, Object[] args, Class[] types) {
+           System.out.println("c " + c);
+         throw new IllegalArgumentException("xxx");
+        }
+         public Object callMethod(pnuts.lang.Context context, Class c, String name, Object[] args, Class[] types,
+            Object target) {
+           System.out.println("c " + c);
+           throw new IllegalArgumentException("xxx");
+        }                   
+      });
+      System.out.println("sec1");
     }
-    catch (PrivilegedActionException e) {
-      throw new ScriptException(e);
-    }   
-    */
+    return pnuts.run(pnutsContext);
   }
 }
