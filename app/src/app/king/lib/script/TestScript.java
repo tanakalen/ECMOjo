@@ -402,6 +402,50 @@ public class TestScript {
     catch (Exception e) {
       // should come here
     }    
+    script.setCode(
+        "Thread.currentThread();\n"
+  );
+    try {
+      ScriptRunner.execute(script, restrictedContext, null);
+      fail("Potentially malicous script executed.");
+    }
+    catch (Exception e) {
+      // should come here
+    }    
+
+    // system access
+    script.setCode(
+          "System.out.println(\"sys out\");\n"
+    );
+    ScriptRunner.execute(script, unrestrictedContext, null);
+    try {
+      ScriptRunner.execute(script, restrictedContext, null);
+      fail("Potentially malicous script executed.");
+    }
+    catch (Exception e) {  
+      // should come here
+    }    
+    script.setCode(
+          "System.getProperty(\"user.home\");\n"
+    );
+    ScriptRunner.execute(script, unrestrictedContext, null);
+    try {
+      ScriptRunner.execute(script, restrictedContext, null);
+      fail("Potentially malicous script executed.");
+    }
+    catch (Exception e) {  
+      // should come here
+    }    
+    script.setCode(
+        "System.exit(0);\n"
+    );
+    try {
+      ScriptRunner.execute(script, restrictedContext, null);
+      fail("Potentially malicous script executed.");
+    }
+    catch (Exception e) {
+      // should come here
+    }    
 
     // file I/O execution
     script.setCode(
