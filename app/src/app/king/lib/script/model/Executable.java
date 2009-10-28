@@ -10,9 +10,9 @@ package king.lib.script.model;
 public interface Executable {
 
   /**
-   * Takes an input, executes it an optionally returns an output.
+   * Takes an input, executes it and optionally returns an output.
    * 
-   * @param object  The input.
+   * @param object  The input. The input can be modified by this function.
    * @return  The output or null for none.
    */
   Object execute(Object object);

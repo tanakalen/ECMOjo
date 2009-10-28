@@ -1,9 +1,10 @@
 package king.lib.script.control;
 
-import java.security.Permission;
+import java.io.File;
 
 import pnuts.lang.ParseException;
 import pnuts.lang.Pnuts;
+import pnuts.tools.PnutsCompiler;
 import king.lib.script.model.Compile;
 import king.lib.script.model.Context;
 import king.lib.script.model.Script;
@@ -63,16 +64,12 @@ public class ScriptRunner {
     }
     else if (language.equalsIgnoreCase("pnuts")) {
       try {
-        if (System.getSecurityManager() == null) {
-          System.setSecurityManager(new SecurityManager() {
-            public void checkPermission(Permission perm) {
-              System.out.println("perm: " + perm);
-            }            
-          });
-        }
-
         // parse script
         Pnuts pnuts = Pnuts.parse(script.getCode());
+        
+        // compile script
+        PnutsCompiler compiler = new PnutsCompiler();
+        compiler.compileToFile(pnuts, "king.lib.script.SampleClass", new File("C:\\_temp\\"));
         
         // return the compile
         return new PnutsCompile(pnuts);
@@ -80,6 +77,10 @@ public class ScriptRunner {
       catch (ParseException e) {
         throw new ScriptException(e.getMessage());
       }
+    }
+    else if (language.equalsIgnoreCase("rhino")) {
+      // TODO: implement
+      return null;
     }
     else {
       throw new ScriptException("error.ScriptLanguageNotSupported[i18n]: The script language is not supported.");
