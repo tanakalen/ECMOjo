@@ -3,6 +3,8 @@ package king.lib.script;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,14 +29,39 @@ import org.junit.Test;
 public class TestScript {
     
   /**
+   * Tests compiling and executing a Pnuts script.
+   *
+   * @throws Exception  When things go wrong.
+   */
+  @Test
+  public void testPnutsCompileAndExecute() throws Exception {
+    // context and script
+    Context context = new Context();
+    Script script = new Script();
+    script.setLang("pnuts");
+    
+    // thread execution
+    script.setCode(
+          "thread = new Thread(new Runnable() {\n"
+        + "  run() {\n"
+        + "    a = 1000000;\n"
+        + "    System.out.println(\"test\");\n"
+        + "  }\n"
+        + "});\n"
+        + "thread.start();\n"
+    );
+    ScriptRunner.execute(script, context, null);
+
+  }
+
+  /**
    * Test the sandboxing class loader.
    *
    * @throws Exception  When things go wrong.
    */
   @Test
-  public void testSandboxClassLoader() throws Exception {
+  public void testSandboxByteArrayClassLoader() throws Exception {
     SandboxClassLoader sandboxClassLoader = new SandboxClassLoader(getClass().getClassLoader());
-    sandboxClassLoader.addURL("file:///C:\\_temp\\");
     sandboxClassLoader.addLegal("king.lib.script.SampleClass");
     sandboxClassLoader.addLegal("king.lib.script.model.Executable");
     sandboxClassLoader.addLegal("king.lib.out.Error");
@@ -60,9 +87,105 @@ public class TestScript {
     sandboxClassLoader.addLegal("java.lang.String");
     sandboxClassLoader.addLegal("java.lang.StringBuilder");
     sandboxClassLoader.addLegal("java.lang.StringBuffer"); 
+    File file = new File("C:\\_temp\\king\\lib\\script\\SampleClass.class");
+    byte[] b = new byte[(int)file.length()];
+    InputStream in = new FileInputStream(file);
+    in.read(b, 0, b.length);
+    sandboxClassLoader.addClass("king.lib.script.SampleClass", b);
     
     Executable executable = (Executable)(sandboxClassLoader.loadClass("king.lib.script.SampleClass")).newInstance();
     System.out.println("Output: " + executable.execute("bN-1201"));
+  }
+
+  /**
+   * Test the sandboxing class loader.
+   *
+   * @throws Exception  When things go wrong.
+   */
+  @Test
+  public void testSandboxURLClassLoader() throws Exception {
+    SandboxClassLoader sandboxClassLoader = new SandboxClassLoader(getClass().getClassLoader());
+    sandboxClassLoader.addLegal("king.lib.script.SampleClass");
+    sandboxClassLoader.addLegal("king.lib.script.model.Executable");
+    sandboxClassLoader.addLegal("king.lib.out.Error");
+    sandboxClassLoader.addLegal("java.lang.Object");
+    sandboxClassLoader.addLegal("java.lang.Throwable");
+    sandboxClassLoader.addLegal("java.lang.Exception");
+    sandboxClassLoader.addLegal("java.lang.IllegalArgumentException");
+    sandboxClassLoader.addLegal("java.lang.ClassNotFoundException");
+    sandboxClassLoader.addLegal("java.lang.System");
+    sandboxClassLoader.addLegal("java.io.PrintStream");
+    sandboxClassLoader.addLegal("java.io.File");
+    sandboxClassLoader.addLegal("java.lang.Class");
+    sandboxClassLoader.addLegal("java.lang.ClassLoader");
+    sandboxClassLoader.addLegal("java.lang.Thread");
+    sandboxClassLoader.addLegal("java.lang.Math");
+    sandboxClassLoader.addLegal("java.lang.Boolean");
+    sandboxClassLoader.addLegal("java.lang.Byte");
+    sandboxClassLoader.addLegal("java.lang.Short");
+    sandboxClassLoader.addLegal("java.lang.Integer");
+    sandboxClassLoader.addLegal("java.lang.Long");
+    sandboxClassLoader.addLegal("java.lang.Float");
+    sandboxClassLoader.addLegal("java.lang.Double");
+    sandboxClassLoader.addLegal("java.lang.String");
+    sandboxClassLoader.addLegal("java.lang.StringBuilder");
+    sandboxClassLoader.addLegal("java.lang.StringBuffer"); 
+    sandboxClassLoader.addURL("file:///C:\\_temp\\");
+    
+    Executable executable = (Executable)(sandboxClassLoader.loadClass("king.lib.script.SampleClass")).newInstance();
+    System.out.println("Output: " + executable.execute("bN-1201"));
+  }
+  
+  /**
+   * Test stopping a Java thread.
+   * 
+   * @throws Exception  When things go wrong.
+   */
+  @Test
+  @SuppressWarnings("deprecation")
+  public void testThreadStopping() throws Exception {
+    // the thread to stop
+    final Object lock = new Object();
+    Thread thread = new Thread() {
+      public void run() {
+        // endless loop
+        synchronized(lock) {
+          int i = 0;
+          while (true) {
+            System.out.println(i++);            
+          }
+        }
+      }
+    };
+    
+    // thread running
+    thread.start();
+    assertTrue("Thread is running.", thread.isAlive());
+    
+    // wait 1 second
+    Thread.sleep(1000);
+    assertTrue("Thread is still running.", thread.isAlive());
+    
+    // stop thread
+    // ---------------------------------------------------------------------------------------------------------------
+    // IMPORTANT NOTE:
+    // The only way to stop the thread is with thread.stop(), which is deprecated for good reasons. 
+    // We execute thread.stop nonetheless with the following assumptions:
+    // 1. The thread execution must not create or mutate any state (i.e. Java objects, class variables,
+    //    external resources) that might be visible to other threads in the event that the thread is stopped. 
+    // 2. The thread execution must not use notify to any other thread during its normal execution.
+    // 3. The thread must not start or join other threads, or interact with then using stop, suspend or resume.
+    // ---------------------------------------------------------------------------------------------------------------
+    thread.stop();
+    
+    // wait 1 second
+    Thread.sleep(1000);
+    assertFalse("Thread is stopped.", thread.isAlive());
+
+    // make sure the lock is gone
+    synchronized(lock) {
+      System.out.println("Lock is gone.");
+    }
   }
   
   /**
