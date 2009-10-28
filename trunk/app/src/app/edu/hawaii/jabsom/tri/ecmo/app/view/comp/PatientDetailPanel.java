@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
 
-import edu.hawaii.jabsom.tri.ecmo.app.control.action.CircuitChangeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
@@ -252,30 +251,6 @@ public class PatientDetailPanel extends DetailPanel {
     checkSedationButton.setLocation(22, 188);
     checkSedationButton.setSize(192, 32);
     add(checkSedationButton);
-    
-    Image changeCircuitNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuit.png");
-    Image changeCircuitRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuitRol.png");
-    Image changeCircuitSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ChangeCircuitSel.png");
-    ImageButton changeCircuitButton 
-      = new ImageButton(changeCircuitNormalImage, changeCircuitRolloverImage, changeCircuitSelectedImage);
-    changeCircuitButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent event) {
-        // send the action
-        CircuitChangeAction action = new CircuitChangeAction();
-        notifyActionListeners(action);
-            
-        // output dialog
-        StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-            , "Circuit Changed"
-            , "The circuit has been changed.");
-      }
-    });
-    changeCircuitButton.setLocation(22, 220);
-    changeCircuitButton.setSize(192, 32);
-    add(changeCircuitButton);
   }
   
   /**
