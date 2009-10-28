@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import pnuts.ext.LimitedClassesConfiguration;
+import pnuts.lang.Callable;
 import pnuts.lang.Jump;
 import pnuts.lang.Pnuts;
 import pnuts.security.SecurePnutsImpl;
@@ -82,10 +83,8 @@ public class PnutsCompile implements Compile {
     }
     
     // make the pnuts context secure (no threads, file access, etc.)
-    System.out.println("sec0");
     if (context.isRestricted()) {
-      SecurePnutsImpl securePnutsImpl = new SecurePnutsImpl(pnutsContext.getImplementation());
-      pnutsContext.setImplementation(securePnutsImpl);    
+      pnutsContext.setImplementation(new SecurePnutsImpl(pnutsContext.getImplementation()));    
       pnutsContext.setConfiguration(new LimitedClassesConfiguration() {
         @Override
         public Constructor[] getConstructors(Class cls) {
@@ -103,18 +102,51 @@ public class PnutsCompile implements Compile {
         public List createList() {
           return null;
         }
-         public Object callConstructor(pnuts.lang.Context context, Class c, Object[] args, Class[] types) {
-           System.out.println("c " + c);
-         throw new IllegalArgumentException("xxx");
+        public Object callConstructor(pnuts.lang.Context context, Class c, Object[] args, Class[] types) {
+           System.out.println("c " + c.getName());
+           return super.callConstructor(context, c, args, types);
+//         throw new IllegalArgumentException("xxx");
         }
-         public Object callMethod(pnuts.lang.Context context, Class c, String name, Object[] args, Class[] types,
+        public Object callMethod(pnuts.lang.Context context, Class c, String name, Object[] args, Class[] types,
             Object target) {
-           System.out.println("c " + c);
-           throw new IllegalArgumentException("xxx");
-        }                   
+           System.out.println("a " + c.getName() + " " + name + " " + target);
+           return super.callMethod(context, c, name, args, types, target);
+//           throw new IllegalArgumentException("xxx");
+        }
+        @Override
+        public Object getStaticField(pnuts.lang.Context context, Class clazz, String name) {
+          System.out.println("b " + clazz);
+          return super.getStaticField(context, clazz, name);
+        }
+        @Override
+        public void putStaticField(pnuts.lang.Context context, Class clazz, String name, Object value) {
+          System.out.println("c " + clazz);
+          super.putStaticField(context, clazz, name, value);
+        }
+        @Override
+        public Callable toCallable(Object obj) {
+          System.out.println("d " + obj);
+          return super.toCallable(obj);
+        }
+        @Override
+        public void registerClass(Class cls) {
+          System.out.println("e " + cls);
+          super.registerClass(cls);
+        }
+        @Override
+        public Object handleUndefinedSymbol(String symbol, pnuts.lang.Context context) {
+          System.out.println("f " + symbol);
+          return super.handleUndefinedSymbol(symbol, context);
+        }
+        @Override
+        public void putField(pnuts.lang.Context context, Object target, String name, Object value) {
+          System.out.println("g " + target);
+          super.putField(context, target, name, value);
+        }      
       });
-      System.out.println("sec1");
     }
+    
+    // and run the script
     return pnuts.run(pnutsContext);
   }
 }

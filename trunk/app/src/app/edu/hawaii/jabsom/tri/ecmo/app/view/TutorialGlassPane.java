@@ -2,6 +2,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.view;
 
 import java.awt.AWTEvent;
 import java.awt.Cursor;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
@@ -9,6 +10,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import king.lib.access.ImageLoader;
 
 /**
  * The tutorial glass pane. It is transparent for MouseEvents, and respects
@@ -24,6 +27,10 @@ import javax.swing.SwingUtilities;
  */
 public class TutorialGlassPane extends JPanel implements AWTEventListener {
   
+  /** Our view cursor. */
+  private Cursor cursor;
+  
+  
   /**
    * The constructor.
    */
@@ -32,6 +39,10 @@ public class TutorialGlassPane extends JPanel implements AWTEventListener {
     
     // make transparent
     setOpaque(false);
+    
+    // load our view cursor
+    Image image = ImageLoader.getInstance().getImage("conf/cursor/view-cursor.gif");
+    cursor = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(13, 13), "View");  
   }
 
   /**
@@ -73,10 +84,10 @@ public class TutorialGlassPane extends JPanel implements AWTEventListener {
       int x = (int)point.getX();
       int y = (int)point.getY();
       if ((x < 293) || (x > 745) || (y < 2) || (y > 76)) {
+        setCursor(cursor);
         if ((id == MouseEvent.MOUSE_CLICKED) || (id == MouseEvent.MOUSE_PRESSED) || (id == MouseEvent.MOUSE_RELEASED)) {
           mouseEvent.consume();
         }
-        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
       }
       else {
         setCursor(Cursor.getDefaultCursor());
