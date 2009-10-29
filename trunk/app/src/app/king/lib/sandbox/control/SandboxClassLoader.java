@@ -1,4 +1,4 @@
-package king.lib.script.control;
+package king.lib.sandbox.control;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -6,7 +6,7 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
-import king.lib.util.StringSet;
+import king.lib.sandbox.model.Sandbox;
 
 /**
  * The sandbox class loader.
@@ -17,8 +17,8 @@ import king.lib.util.StringSet;
  */
 public class SandboxClassLoader extends URLClassLoader {
  
-  /** The classes we have legal access to. */
-  private StringSet legalClasses = new StringSet();
+  /** The sandbox. */
+  private Sandbox sandbox;
   
   /** The class data if any. */
   private Map classData = new HashMap();
@@ -27,21 +27,14 @@ public class SandboxClassLoader extends URLClassLoader {
   /**
    * The constructor.
    *
+   * @param sandbox  The sandbox.
    * @param parent  The parent class loader.
    */
-  public SandboxClassLoader(ClassLoader parent) {
+  public SandboxClassLoader(Sandbox sandbox, ClassLoader parent) {
     super(new URL[0], parent);
+    this.sandbox = sandbox;
   }
 
-  /**
-   * Adds a legal class.
-   * 
-   * @param name  The name, e.g. "java.lang.Math" or "java.lang.Object".
-   */
-  public void addLegal(String name) {
-    legalClasses.add(name);
-  }
-  
   /**
    * Adds an URL.
    * 
@@ -65,7 +58,7 @@ public class SandboxClassLoader extends URLClassLoader {
    * @throws SandboxException  If there is a problem.
    */
   public void addClass(String name, byte[] b) throws SandboxException {
-    if (legalClasses.contains(name)) {
+    if (sandbox.hasAccess(name)) {
       classData.put(name, defineClass(name, b, 0, b.length));
     }
     else {
@@ -83,7 +76,7 @@ public class SandboxClassLoader extends URLClassLoader {
    */
   @Override
   protected synchronized Class loadClass(String name, boolean resolve) throws ClassNotFoundException {
-    if (legalClasses.contains(name)) {
+    if (sandbox.hasAccess(name)) {
       // it's a legal class, let's load it...
       try {
         // 1. try to find in URL paths
