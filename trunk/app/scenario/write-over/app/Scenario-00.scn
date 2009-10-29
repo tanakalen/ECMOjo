@@ -24,7 +24,7 @@ tutorial-item5-text = The main ECMO components are located on the right-hand sid
 tutorial-item5-trigger = N/A
 tutorial-item6-text = The alarm indicator light on the right starts blinking when there is a problem.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Congratulations, you successfully completed the overview!
+tutorial-item7-text = Congratulations, you successfully completed the overview! Please note, you can exit any of the scenarios by pressing [Esc] on your keyboard.
 tutorial-item7-trigger = N/A
 
 # Baseline Values
