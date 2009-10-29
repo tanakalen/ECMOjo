@@ -25,7 +25,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
 public class TubeDetailPanel extends DetailPanel {
 
   /** The detail image. */
-  private Image detailImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Patient.png");
+  private Image detailImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Tube.png");
   
   
   /**
@@ -64,7 +64,7 @@ public class TubeDetailPanel extends DetailPanel {
             , "The circuit has been changed.");
       }
     });
-    changeCircuitButton.setLocation(22, 220);
+    changeCircuitButton.setLocation(18, 222);
     changeCircuitButton.setSize(192, 32);
     add(changeCircuitButton);
   }
