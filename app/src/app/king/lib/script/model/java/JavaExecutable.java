@@ -1,4 +1,4 @@
-package king.lib.script.model;
+package king.lib.script.model.java;
 
 /**
  * An executable.
@@ -7,7 +7,7 @@ package king.lib.script.model;
  * @since October 26, 2009
  * @access Public
  */
-public interface Executable {
+public interface JavaExecutable {
 
   /**
    * Takes an input, executes it and optionally returns an output.

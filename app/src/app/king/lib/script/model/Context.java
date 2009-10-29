@@ -1,5 +1,7 @@
 package king.lib.script.model;
 
+import king.lib.sandbox.model.Sandbox;
+
 /**
  * The context under which to execute.
  *
@@ -8,35 +10,28 @@ package king.lib.script.model;
  */
 public class Context {
 
-  /** True for a restricted context without access to threads, files etc. */
-  private boolean restricted;
+  /** The sandbox or null for unrestricted access. */
+  private Sandbox sandbox;
   /** The maximum execution time in milliseconds for execution. 0 for unlimited. */
   private long maxDuration;
   
-  
+
   /**
-   * The default constructor.
-   */
-  public Context() {
-    this.restricted = true;
-  }
-  
-  /**
-   * Returns true for restricted.
+   * Returns the sandbox.
    *
-   * @return  True for a restricted context without access to threads, files etc.
+   * @return  The sandbox or null for unrestricted access.
    */
-  public boolean isRestricted() {
-    return restricted;
+  public Sandbox getSandbox() {
+    return sandbox;
   }
 
   /**
-   * Set true for restricted.
+   * Sets the sandbox.
    *
-   * @param restricted  True for a restricted context without access to threads, files etc.
+   * @param sandbox  The sandbox or null for unrestricted access.
    */
-  public void setRestricted(boolean restricted) {
-    this.restricted = restricted;
+  public void setSandbox(Sandbox sandbox) {
+    this.sandbox = sandbox;
   }
 
   /**

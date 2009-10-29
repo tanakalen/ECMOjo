@@ -1,4 +1,4 @@
-package king.lib.script.control;
+package king.lib.sandbox.control;
 
 /**
  * The exception.
