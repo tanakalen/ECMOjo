@@ -9,6 +9,7 @@ import king.lib.sandbox.model.ClassSandbox;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Context;
 import king.lib.script.model.Script;
+import king.lib.util.StringSet;
 
 import org.junit.Test;
 
@@ -29,6 +30,9 @@ public class TestScriptPnuts {
   public void testPnutsParameterPassing() throws Exception {
     // context and script
     Context context = new Context();
+    StringSet accessibleClasses = new StringSet();
+    accessibleClasses.add("java.util.ArrayList");
+    context.setSandbox(new ClassSandbox(accessibleClasses));
     Script script = new Script();
     script.setLang("pnuts");
     
@@ -49,6 +53,41 @@ public class TestScriptPnuts {
     assertEquals("Item index 1.", -524, list.get(1));
     ScriptRunner.execute(script, context, list);
     assertEquals("Item index 1.", 3000000, list.get(1));
+    
+    // can modify custom input
+    script.setCode(
+          "sqrt = input.getSquareRoot(4.03);\n"
+        + "input.writeSomething(\"sqrt(4.03)=\" + sqrt);\n"
+        + "return sqrt;\n"
+    );
+    /** The test object. */
+    class MyObject extends Object {
+      /**
+       * Test method one.
+       * 
+       * @param x  Input.
+       * @return  Squared output.
+       */
+      public double getSquareRoot(double x) {
+        return Math.sqrt(x);
+      }
+      /**
+       * Writes out something.
+       * 
+       * @param text  The text to write.
+       */
+      public void writeSomething(String text) {
+        System.out.println(text);
+      }
+    }
+    MyObject myObject = new MyObject();
+    Context myContext = new Context();
+    StringSet myAccessibleClasses = new StringSet();
+    myAccessibleClasses.add(MyObject.class.getName());
+    myContext.setSandbox(new ClassSandbox(myAccessibleClasses));
+    Double doubleReturn = (Double)ScriptRunner.execute(script, myContext, myObject);    
+    assertEquals("Return value is the same.", myObject.getSquareRoot(4.03), doubleReturn);
+    myObject.writeSomething("sqrt(4.03)=" + myObject.getSquareRoot(4.03));
   }
 
   /**
@@ -62,6 +101,7 @@ public class TestScriptPnuts {
     Context restrictedContext = new Context();
     restrictedContext.setSandbox(new ClassSandbox());
     Context unrestrictedContext = new Context();
+    unrestrictedContext.setSandbox(null);
     Script script = new Script();
     script.setLang("pnuts");
     
@@ -139,6 +179,38 @@ public class TestScriptPnuts {
       ScriptRunner.execute(script, restrictedContext, null);
       fail("Potentially malicous script executed.");
     }
+    catch (Exception e) {
+      // should come here
+    }
+    
+    // class access
+    script.setCode(
+        "Class.forName(\"java.lang.String\");\n"
+    );
+    ScriptRunner.execute(script, unrestrictedContext, null);
+    try {
+      ScriptRunner.execute(script, restrictedContext, null);
+      fail("Potentially malicous script executed.");
+    }
+    catch (Exception e) {
+      // should come here
+    }   
+    
+    // can access custom input and classloader through it
+    script.setCode(
+          "clazz = input.getClass();\n"
+        + "loader = clazz.getClassLoader();\n"
+        + "object = loader.loadClass(\"java.lang.Object\");\n"
+    );
+    ScriptRunner.execute(script, unrestrictedContext, this);
+    try {
+      StringSet accessibleClasses = new StringSet();
+      accessibleClasses.add(getClass().getName());
+      Context myContext = new Context();
+      myContext.setSandbox(new ClassSandbox(accessibleClasses));
+      ScriptRunner.execute(script, myContext, this);
+      fail("Potentially malicous script executed.");
+    }  
     catch (Exception e) {
       // should come here
     }

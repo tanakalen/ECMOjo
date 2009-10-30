@@ -28,7 +28,7 @@ public class ScriptRunner {
   
   
   /**
-   * The default constructor.
+   * The default constructor which uses the default context in sandboxed mode.
    */
   public  ScriptRunner() {
     this(new Context());

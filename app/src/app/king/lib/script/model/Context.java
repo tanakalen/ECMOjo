@@ -1,5 +1,6 @@
 package king.lib.script.model;
 
+import king.lib.sandbox.model.ClassSandbox;
 import king.lib.sandbox.model.Sandbox;
 
 /**
@@ -15,6 +16,14 @@ public class Context {
   /** The maximum execution time in milliseconds for execution. 0 for unlimited. */
   private long maxDuration;
   
+  
+  /**
+   * The default constructor which sandboxes by default. Use setSandbox(null) to remove the sandbox.
+   */
+  public Context() {
+    sandbox = new ClassSandbox();
+    maxDuration = 0;
+  }
 
   /**
    * Returns the sandbox.
