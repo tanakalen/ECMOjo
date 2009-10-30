@@ -1,5 +1,6 @@
 package king.lib.script.model.java;
 
+import king.lib.sandbox.control.ExternalClassLoader;
 import king.lib.sandbox.control.SandboxClassLoader;
 import king.lib.script.control.ScriptException;
 import king.lib.script.model.Compile;
@@ -39,12 +40,12 @@ public class JavaCompile implements Compile {
    */
   public Object execute(Context context, Object object) throws ScriptException {   
     // obtain class loader
-    ClassLoader classLoader;
+    ExternalClassLoader classLoader;
     if (context.getSandbox() != null) {
       classLoader = new SandboxClassLoader(context.getSandbox(), getClass().getClassLoader());
     }
     else {
-      classLoader = getClass().getClassLoader();
+      classLoader = new ExternalClassLoader(getClass().getClassLoader());
     }
     
     // load the class

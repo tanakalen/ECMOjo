@@ -27,6 +27,13 @@ public class TubeDetailPanel extends DetailPanel {
   /** The detail image. */
   private Image detailImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Tube.png");
   
+  /** The normal bullet. */
+  private Image bul = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCircuitBullet.png");
+  /** The rollover bullet. */
+  private Image bulRol = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCircuitBulletRol.png");
+  /** The selected bullet. */
+  private Image bulSel = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCircuitBulletSel.png");
+  
   
   /**
    * Constructor for panel.
@@ -67,6 +74,36 @@ public class TubeDetailPanel extends DetailPanel {
     changeCircuitButton.setLocation(18, 222);
     changeCircuitButton.setSize(192, 32);
     add(changeCircuitButton);
+    
+    // add the bullets
+    ImageButton bullet;
+    ActionListener defaultBulletListener = new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        // output splash - nothing found
+        
+      }
+    };
+    
+    bullet = addBullet(33, 149);    
+    bullet.addActionListener(defaultBulletListener);
+    bullet = addBullet(63, 149);    
+    bullet.addActionListener(defaultBulletListener);
+
+  }
+  
+  /**
+   * Adds a new bullet button.
+   * 
+   * @param x  The x position (center).
+   * @param y  The y position (center).
+   * @return  The button added.
+   */
+  private ImageButton addBullet(int x, int y) {
+    ImageButton bulletButton = new ImageButton(bul, bulRol, bulSel);
+    bulletButton.setLocation(x - 12, y - 12);
+    bulletButton.setSize(24, 24);
+    add(bulletButton);
+    return bulletButton;
   }
   
   /**
