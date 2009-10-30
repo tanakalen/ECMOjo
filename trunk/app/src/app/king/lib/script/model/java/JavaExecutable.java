@@ -1,7 +1,7 @@
 package king.lib.script.model.java;
 
 /**
- * An executable.
+ * A script interface for java.
  *
  * @author noblemaster
  * @since October 26, 2009

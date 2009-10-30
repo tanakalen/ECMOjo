@@ -67,7 +67,7 @@ public class ScriptRunner {
       try {
         // write the file
         // TODO: needs rework (make sure another file does not exist already etc.)
-        String name = "ScriptJava";
+        String name = JavaCompile.SCRIPT_NAME;
         String path = System.getProperty("java.io.tmpdir") + "/" + name + ".java";
         DataOutputStream out = new DataOutputStream(new FileOutputStream(new File(path)));
         out.writeUTF(script.getCode());
