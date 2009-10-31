@@ -21,7 +21,9 @@ public class PnutsCompile implements Compile {
   private static final class MyContext extends pnuts.lang.Context {
     
     /** The end time. */
-    long endTime;
+    private long endTime;
+    /** True for expired. */
+    private boolean expired = false;
     
     /** 
      * The constructor.
@@ -41,6 +43,7 @@ public class PnutsCompile implements Compile {
      */
     protected void updateLine(int line) {
       if (System.currentTimeMillis() > endTime) {
+        expired = true;
         throw new Jump(null); 
       }
     }
@@ -241,8 +244,10 @@ public class PnutsCompile implements Compile {
     pnuts.lang.Context pnutsContext = new pnuts.lang.Context(pnutsPackage);
     
     // set time limit as needed    
+    MyContext timedContext = null;
     if (context.getMaxDuration() > 0) {
-      pnutsContext = new MyContext(pnutsContext, System.currentTimeMillis() + context.getMaxDuration());
+      timedContext = new MyContext(pnutsContext, System.currentTimeMillis() + context.getMaxDuration());
+      pnutsContext = timedContext;
     }
     
     // make the pnuts context secure (no threads, file access, etc.)
@@ -255,6 +260,12 @@ public class PnutsCompile implements Compile {
     }
     
     // and run the script
-    return pnuts.run(pnutsContext);
+    Object result = pnuts.run(pnutsContext);
+    if ((timedContext != null) && (timedContext.expired == true)) {
+      throw new ScriptException("Script took too long to execute.");
+    }
+    else {
+      return result;
+    }
   }
 }

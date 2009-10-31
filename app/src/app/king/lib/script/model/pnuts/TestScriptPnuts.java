@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import king.lib.sandbox.model.ClassSandbox;
+import king.lib.script.control.ScriptException;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Context;
 import king.lib.script.model.Script;
@@ -31,6 +32,7 @@ public class TestScriptPnuts {
     // context and script
     Context context = new Context();
     StringSet accessibleClasses = new StringSet();
+    accessibleClasses.add("java.land.Object");
     accessibleClasses.add("java.util.ArrayList");
     context.setSandbox(new ClassSandbox(accessibleClasses));
     Script script = new Script();
@@ -240,6 +242,12 @@ public class TestScriptPnuts {
 
     // should file due to timeout (unless we have a super fast computer)
     context.setMaxDuration(1);
-    assertNull("Script execution should fail due to time limit.", ScriptRunner.execute(script, context, null));
+    try {
+      ScriptRunner.execute(script, context, null);
+      fail("Excecution should have stopped due to time limit.");
+    }
+    catch (ScriptException e) {
+      // we should get an exception and come here due to the fact that the program took too long to execute
+    }
   }
 }
