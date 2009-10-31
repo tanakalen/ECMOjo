@@ -12,7 +12,7 @@
     <filter token="release.version" value="${release.version}"/>
     <filter token="release.time" value="${release.time}"/>  	
     <property name="specialdir" value="app-live"/>
-  	<property name="library.files" value="browsercode.jar,jgoodies-forms-1.0.4.jar,swingx-0.9.4.jar,jl1.0.jar,mp3spi1.9.2.jar,tritonus_share.jar,mail.jar,activation.jar,pnuts-1.2.1.jar"/>
+  	<property name="library.files" value="browsercode.jar,jgoodies-forms-1.0.4.jar,swingx-0.9.4.jar,jl1.0.jar,mp3spi1.9.2.jar,tritonus_share.jar,mail.jar,activation.jar,pnuts-1.2.1.jar,jsyntaxpane-0.9.5-b27.jar"/>
     <!-- Program Properties (leave as is if not needed) -->
     <property name="prg.memory" value="128"/>
     <property name="prg.classfile" value="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp"/>
