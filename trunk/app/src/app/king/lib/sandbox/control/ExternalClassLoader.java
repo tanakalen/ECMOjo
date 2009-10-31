@@ -48,9 +48,8 @@ public class ExternalClassLoader extends URLClassLoader {
    * 
    * @param name  The name, e.g. "com.company.SomeClass".
    * @param b  The bytes.
-   * @throws SandboxException  If there is a problem.
    */
-  public void addClass(String name, byte[] b) throws SandboxException {
+  public void addClass(String name, byte[] b) {
     classData.put(name, defineClass(name, b, 0, b.length));
   }
   

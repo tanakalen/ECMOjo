@@ -27,19 +27,19 @@ public class SandboxClassLoader extends ExternalClassLoader {
   }
 
   /**
-   * Adds a class.
+   * Adds a class. Throws an illegal argument exception if the class is not allowed due to 
+   * sandbox restrictions.
    * 
    * @param name  The name, e.g. "com.company.SomeClass".
    * @param b  The bytes.
-   * @throws SandboxException  If there is a problem.
    */
   @Override
-  public void addClass(String name, byte[] b) throws SandboxException {
+  public void addClass(String name, byte[] b) {
     if (sandbox.hasAccess(name)) {
       super.addClass(name, b);
     }
     else {
-      throw new SandboxException("Class name is not allowed: " + name);
+      throw new IllegalArgumentException("Class name is not allowed: " + name);
     }
   }
   

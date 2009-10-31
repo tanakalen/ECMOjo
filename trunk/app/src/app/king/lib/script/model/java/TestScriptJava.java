@@ -2,13 +2,14 @@ package king.lib.script.model.java;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import king.lib.sandbox.control.SandboxClassLoader;
 import king.lib.sandbox.model.ClassSandbox;
-import king.lib.sandbox.model.Sandbox;
+import king.lib.script.control.ScriptException;
+import king.lib.script.control.ScriptRunner;
+import king.lib.script.model.Context;
+import king.lib.script.model.Script;
 import king.lib.util.StringSet;
 
 import org.junit.Test;
@@ -21,26 +22,6 @@ import org.junit.Test;
  */
 public class TestScriptJava {
 
-/*
-package king.lib.script.model.java;
-import king.lib.out.Error;
-public class SampleClass implements JavaExecutable {
-  public Object execute(Object object) {
-    System.out.println("Output Input: " + object);
-    System.out.println("Randx: " + Math.random());
-    System.out.println("Txxx: " + Thread.currentThread());
-    try {
-      System.out.println("ClassLoader " + getClass().getClassLoader().loadClass("java.io.File"));
-    } 
-    catch (ClassNotFoundException e) {
-      System.out.println("Class not found 2 " + e);
-    }
-    Error.out("Test ERROR output");
-    return 3.1415;
-  }
-}
- */
-
   /**
    * Try to pass and modify some parameters.
    *
@@ -48,7 +29,44 @@ public class SampleClass implements JavaExecutable {
    */
   @Test
   public void testJavaParameterPassing() throws Exception {
-
+    // context and script
+    Context context = new Context();
+    StringSet accessibleClasses = new StringSet();
+    accessibleClasses.add("java.lang.Integer");
+    accessibleClasses.add("java.util.List");
+    context.setSandbox(new ClassSandbox(accessibleClasses));
+    Script script = new Script();
+    script.setLang("java");
+    
+    // returns y = 22 * x
+    script.setCode(
+          "public class Script {\n"
+        + "  public static Object execute(Object object) {\n"
+        + "    int input = ((Integer)object).intValue();\n"
+        + "    return input * 22;\n"
+        + "  }\n"
+        + "}\n"
+    );
+    assertEquals("We should obtain 88.", 88, ScriptRunner.execute(script, context, 4));
+    
+    // can modify input
+    script.setCode(
+          "import java.util.List;\n"
+        + "public class Script {\n"
+        + "  public static Object execute(Object object) {\n"
+        + "    List input = (List)object;\n"
+        + "    input.set(1, new Integer(383240));\n"
+        + "    return null;\n"
+        + "  }\n"
+        + "}\n"
+    );
+    List list = new ArrayList();
+    list.add(34);
+    list.add(-1222);
+    list.add(-6);
+    assertEquals("Item index 1.", -1222, list.get(1));
+    ScriptRunner.execute(script, context, list);
+    assertEquals("Item index 1.", 383240, list.get(1));
   }
   
   /**
@@ -58,44 +76,33 @@ public class SampleClass implements JavaExecutable {
    */
   @Test
   public void testJavaMaliciousExecution() throws Exception {
-    StringSet accessibleClasses = new StringSet();
-    accessibleClasses.add("king.lib.script.SampleClass");
-    accessibleClasses.add("king.lib.script.model.Executable");
-    accessibleClasses.add("king.lib.out.Error");
-    accessibleClasses.add("java.lang.Object");
-    accessibleClasses.add("java.lang.Throwable");
-    accessibleClasses.add("java.lang.Exception");
-    accessibleClasses.add("java.lang.IllegalArgumentException");
-    accessibleClasses.add("java.lang.ClassNotFoundException");
-    accessibleClasses.add("java.lang.System");
-    accessibleClasses.add("java.io.PrintStream");
-    accessibleClasses.add("java.io.File");
-    accessibleClasses.add("java.lang.Class");
-    accessibleClasses.add("java.lang.ClassLoader");
-    accessibleClasses.add("java.lang.Thread");
-    accessibleClasses.add("java.lang.Math");
-    accessibleClasses.add("java.lang.Boolean");
-    accessibleClasses.add("java.lang.Byte");
-    accessibleClasses.add("java.lang.Short");
-    accessibleClasses.add("java.lang.Integer");
-    accessibleClasses.add("java.lang.Long");
-    accessibleClasses.add("java.lang.Float");
-    accessibleClasses.add("java.lang.Double");
-    accessibleClasses.add("java.lang.String");
-    accessibleClasses.add("java.lang.StringBuilder");
-    accessibleClasses.add("java.lang.StringBuffer"); 
-
-    Sandbox sandbox = new ClassSandbox(accessibleClasses);
-    SandboxClassLoader sandboxClassLoader = new SandboxClassLoader(sandbox, getClass().getClassLoader());
-    File file = new File("C:\\_temp\\king\\lib\\script\\SampleClass.class");
-    byte[] b = new byte[(int)file.length()];
-    InputStream in = new FileInputStream(file);
-    in.read(b, 0, b.length);
-    sandboxClassLoader.addClass("king.lib.script.SampleClass", b);
+    // context and script
+    Context restrictedContext = new Context();
+    restrictedContext.setSandbox(new ClassSandbox());
+    Context unrestrictedContext = new Context();
+    unrestrictedContext.setSandbox(null);
+    Script script = new Script();
+    script.setLang("java");
     
-    JavaExecutable executable = (JavaExecutable)(sandboxClassLoader.loadClass("king.lib.script.SampleClass"))
-                                                                   .newInstance();
-    System.out.println("Output: " + executable.execute("bN-1201"));
+    // thread execution
+    script.setCode(
+          "public class Script {\n"
+        + "  public static Object execute(Object object) {\n"
+        + "    Thread.currentThread();\n"
+        + "    return null;\n"
+        + "  }\n"
+        + "}\n"
+    );
+    ScriptRunner.execute(script, unrestrictedContext, null);
+    try {
+      ScriptRunner.execute(script, restrictedContext, null);
+      fail("Potentially malicous script executed.");
+    }
+    catch (Exception e) {
+      // should come here
+    }    
+    
+    // TODO: add other tests (see Pnuts test script for details)
   }
   
   /**
@@ -104,49 +111,37 @@ public class SampleClass implements JavaExecutable {
    * @throws Exception  When things go wrong.
    */
   @Test
-  @SuppressWarnings("deprecation")
   public void testJavaExecutionMaxDuration() throws Exception {
-    // the thread to stop
-    final Object lock = new Object();
-    Thread thread = new Thread() {
-      public void run() {
-        // endless loop
-        synchronized(lock) {
-          int i = 0;
-          while (true) {
-            System.out.println(i++);            
-          }
-        }
-      }
-    };
+    // context and script
+    Context context = new Context();
+    StringSet accessibleClasses = new StringSet();
+    accessibleClasses.add("java.lang.Float");
+    context.setSandbox(new ClassSandbox(accessibleClasses));
+    Script script = new Script();
+    script.setLang("java");
+    script.setCode(
+          "public class Script {\n"
+        + "  public static Object execute(Object object) {\n"
+        + "    for (int i = 0; i < 100000000; i++) {\n"
+        + "      float a = 3.1415f;\n"
+        + "    }\n"
+        + "    return 3.1415f;\n"
+        + "  }\n"
+        + "}\n"
+    );
     
-    // thread running
-    thread.start();
-    assertTrue("Thread is running.", thread.isAlive());
-    
-    // wait 1 second
-    Thread.sleep(1000);
-    assertTrue("Thread is still running.", thread.isAlive());
-    
-    // stop thread
-    // ---------------------------------------------------------------------------------------------------------------
-    // IMPORTANT NOTE:
-    // The only way to stop the thread is with thread.stop(), which is deprecated for good reasons. 
-    // We execute thread.stop nonetheless with the following assumptions:
-    // 1. The thread execution must not create or mutate any state (i.e. Java objects, class variables,
-    //    external resources) that might be visible to other threads in the event that the thread is stopped. 
-    // 2. The thread execution must not use notify to any other thread during its normal execution.
-    // 3. The thread must not start or join other threads, or interact with then using stop, suspend or resume.
-    // ---------------------------------------------------------------------------------------------------------------
-    thread.stop();
-    
-    // wait 1 second
-    Thread.sleep(1000);
-    assertFalse("Thread is stopped.", thread.isAlive());
+    // should work
+    context.setMaxDuration(0);
+    assertEquals("We should obtain pi.", 3.1415, ScriptRunner.execute(script, context, null));
 
-    // make sure the lock is gone
-    synchronized(lock) {
-      System.out.println("Lock is gone.");
+    // should file due to timeout (unless we have a super fast computer)
+    context.setMaxDuration(1);
+    try {
+      ScriptRunner.execute(script, context, null);
+      fail("Excecution should have stopped due to time limit.");
+    }
+    catch (ScriptException e) {
+      // we should get an exception and come here due to the fact that the program took too long to execute
     }
   }
 }

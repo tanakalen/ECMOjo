@@ -1,11 +1,13 @@
 package king.lib.script.control;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import pnuts.lang.ParseException;
 import pnuts.lang.Pnuts;
@@ -56,6 +58,15 @@ public class ScriptRunner {
   
   /**
    * Parses and compiles a script.
+   * <p>
+   * Limitations: 
+   * <ul>
+   *   <li><b>Pnuts</b>: no problems
+   *   <li><b>Java</b>: can only compile with imports from the Java standard packages. Custom imports that
+   *       are not available in the standard packages cannot be found and will result in a compiler error. Also,
+   *       inner classes are not supported.
+   *   <li><b>Rhino</b>: not supported yet.
+   * </ul>
    * 
    * @param script  The script.
    * @return  The compiled script.
@@ -66,36 +77,61 @@ public class ScriptRunner {
     if (language.equalsIgnoreCase("java")) {
       try {
         // write the file
-        // TODO: needs rework (make sure another file does not exist already etc.)
-        // TODO: Java 6 can compile in memory :)
         String name = JavaCompile.SCRIPT_NAME;
-        String path = System.getProperty("java.io.tmpdir") + "/" + name + ".java";
+        String random = System.nanoTime() + "" + ((int)(Math.random() * 10000000));
+        String dir = System.getProperty("java.io.tmpdir") + "/Java/com.noblemaster.lib.script.Java/" + random + "/";
+        new File(dir).mkdirs();
+        String path = dir + name + ".java";
         DataOutputStream out = new DataOutputStream(new FileOutputStream(new File(path)));
-        out.writeUTF(script.getCode());
+        out.writeBytes(script.getCode());
         out.close();
-        
-        // compile Java
-        Process process = Runtime.getRuntime().exec("javac " + path);
+        out = null;
+  
+        // compile Java | NOTE/TODO: Java 6 can compile in memory :)
         try {
-          process.waitFor();
-        } 
-        catch(InterruptedException e) { 
-          System.out.println(e); 
+          Process process = Runtime.getRuntime().exec("javac \"" + path + "\"");
+          String error = "unknown error";
+          try {
+            // read err input
+            BufferedReader errIn = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            StringBuffer err = new StringBuffer("");
+            int ch;
+            while ((ch = errIn.read()) != -1) {
+              err.append((char)ch);
+            }
+            errIn.close();
+            if (err.length() > 0) {
+              error = err.toString();
+            }
+            
+            // wait for it to end
+            process.waitFor();
+          } 
+          catch(InterruptedException e) { 
+            System.out.println(e); 
+          }
+          int ret = process.exitValue();            
+          if (ret == 0) {
+            // load the class bytes
+            File file = new File(dir + name + ".class");
+            byte[] b = new byte[(int)file.length()];
+            InputStream in = new FileInputStream(file);
+            in.read(b, 0, b.length);
+            in.close();
+            in = null;
+            file.delete();
+            
+            // return the java compile
+            return new JavaCompile(b);
+          }
+          else {
+            throw new ScriptException(error);
+          }
         }
-        int ret = process.exitValue();
-        if (ret == 0) {
-          // load the class bytes
-          File file = new File(System.getProperty("java.io.tmpdir") + "/" + name + ".class");
-          byte[] b = new byte[(int)file.length()];
-          InputStream in = new FileInputStream(file);
-          in.read(b, 0, b.length);
-          in.close();
-          
-          // return the java compile
-          return new JavaCompile(b);
-        }
-        else {
-          throw new ScriptException("error.JavaCompileError[i18n]: The Java code could not be compiled.");
+        finally {
+          // cleanup temp directory
+          new File(path).delete();
+          new File(dir).delete();
         }
       }
       catch (IOException e) {
