@@ -251,6 +251,7 @@ public final class ScenarioLoader {
         patient.setHeartFunction(HeartFunction.parse(parameters.get("patient-heart-function")));
         patient.setSedated(Boolean.parseBoolean(parameters.get("patient-sedated")));
         patient.setBleeding(Boolean.parseBoolean(parameters.get("patient-bleeding")));
+        patient.setBloodVolume(parseNum(parameters, "patient-blood-volume"));
         patient.setTemperature(Double.parseDouble(parameters.get("patient-temperature")));
         
         // load the heater component

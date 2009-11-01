@@ -88,6 +88,7 @@ patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
+patient-blood-volume = 350
 patient-temperature = 37
 
 # Heater
