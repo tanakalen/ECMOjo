@@ -682,12 +682,15 @@ public final class Updater {
         }
         else {
           // patient bleeding but compensating
-          patient.setHeartRate(patient.getHeartRate() + 0.01);
+          if (patient.getHeartRate() < 200) {
+            patient.setHeartRate(patient.getHeartRate() + 0.01);
+          }
           if (patient.getCentralVenousPressure() > 2) {
             patient.setCentralVenousPressure(patient.getCentralVenousPressure() 
                 - 0.001);
           }
         }
+        patient.setBloodVolume(patient.getBloodVolume() - 0.001);
       }
       
       // update the patients life
