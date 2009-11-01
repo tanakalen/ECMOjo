@@ -126,6 +126,7 @@ tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
 tube-cannula-premembranepressure = 
 tube-cannula-postmembranepressure = 
+tube-cannula-venouspressure = -100
 
 # ACT
 act-value = 

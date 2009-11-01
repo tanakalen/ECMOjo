@@ -353,6 +353,7 @@ public final class ScenarioLoader {
         else {
           tube.setPostMembranePressure(val);
         }
+        tube.setVenousPressure(parseNum(parameters, "tube-cannula-venouspressure"));
         
         // Begin of normal initial labs displayed on start
         //act
