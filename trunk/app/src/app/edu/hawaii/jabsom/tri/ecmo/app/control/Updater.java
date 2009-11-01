@@ -672,8 +672,9 @@ public final class Updater {
         }
       }
       
-      // Update patient bleeding status
-      if (patient.isBleeding()) {
+      // Update patient bleeding status or hypovolemic
+      if (patient.isBleeding() 
+          || (patient.getBloodVolume() < (0.8 * patient.getMaxBloodVolume()))) {
         if (patient.getBloodVolume() < (0.5 * patient.getMaxBloodVolume())) {
           // patient bleeding but not compensating
           patient.setHeartRate(200);
@@ -690,7 +691,9 @@ public final class Updater {
                 - 0.001);
           }
         }
-        patient.setBloodVolume(patient.getBloodVolume() - 0.001);
+        if (patient.isBleeding()) {
+          patient.setBloodVolume(patient.getBloodVolume() - 0.001);
+        }
       }
       
       // update the patients life
