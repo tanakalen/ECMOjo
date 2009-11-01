@@ -87,6 +87,11 @@ public class InterventionAction extends Action {
       // update HCT
       patient.setHgb(0.5f + patient.getHgb());
       
+      // update blood volume
+      if (patient.getBloodVolume() < patient.getMaxBloodVolume()) {
+        patient.setBloodVolume(patient.getBloodVolume() + (10 * patient.getWeight()));
+      }
+      
        // update pressure
       TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
       tube.setVenousPressure(5.0f + tube.getVenousPressure());
@@ -98,6 +103,11 @@ public class InterventionAction extends Action {
       // affect blood pressure
       patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() + 5);
 
+      // update blood volume
+      if (patient.getBloodVolume() < patient.getMaxBloodVolume()) {
+        patient.setBloodVolume(patient.getBloodVolume() + (10 * patient.getWeight()));
+      }
+      
       // add clotting if entered at wrong location
       if ((location == InterventionLocation.BEFORE_OXYGENATOR)
        || (location == InterventionLocation.BEFORE_PUMP)) {
@@ -115,6 +125,12 @@ public class InterventionAction extends Action {
         patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 4.5f);   // 4.5 mmHg increase
       }
       patient.setFibrinogen(patient.getFibrinogen() * 1.1);
+
+      // update blood volume
+      if (patient.getBloodVolume() < patient.getMaxBloodVolume()) {
+        patient.setBloodVolume(patient.getBloodVolume() + (10 * patient.getWeight()));
+      }
+      
     }
     else if (intervention instanceof AlbuminIntervention) {
       // affect blood pressure
@@ -124,6 +140,12 @@ public class InterventionAction extends Action {
       else if (patient.getHeartFunction() == HeartFunction.BAD) {
         patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 4.5f);   // 4.5 mmHg increase
       }
+
+      // update blood volume
+      if (patient.getBloodVolume() < patient.getMaxBloodVolume()) {
+        patient.setBloodVolume(patient.getBloodVolume() + (10 * patient.getWeight()));
+      }
+      
     }
     else if (intervention instanceof CatecholamineIntervention) {
       // affect blood pressure and heart rate
