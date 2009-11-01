@@ -672,6 +672,24 @@ public final class Updater {
         }
       }
       
+      // Update patient bleeding status
+      if (patient.isBleeding()) {
+        if (patient.getBloodVolume() < (0.5 * patient.getMaxBloodVolume())) {
+          // patient bleeding but not compensating
+          patient.setHeartRate(200);
+          patient.setSystolicBloodPressure(40);
+          patient.setCentralVenousPressure(0);
+        }
+        else {
+          // patient bleeding but compensating
+          patient.setHeartRate(patient.getHeartRate() + 0.01);
+          if (patient.getCentralVenousPressure() > 2) {
+            patient.setCentralVenousPressure(patient.getCentralVenousPressure() 
+                - 0.001);
+          }
+        }
+      }
+      
       // update the patients life
       if (oxygenator.isBroken()) {
         tube.setPreMembranePressure(tube.getPreMembranePressure() + 0.1);
