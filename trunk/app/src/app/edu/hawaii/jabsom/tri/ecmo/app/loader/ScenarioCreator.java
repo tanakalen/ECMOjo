@@ -70,6 +70,7 @@ public final class ScenarioCreator {
     patient.setLungFunction(LungFunction.BAD);
     patient.setHeartFunction(HeartFunction.GOOD);
     patient.setSedated(true);
+    patient.setBloodVolume(Double.NaN);
     patient.setBleeding(false);
     patient.setHeartRate(140);
     patient.setO2Saturation(0.85);

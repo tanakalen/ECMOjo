@@ -163,6 +163,9 @@ public class Patient  extends Component {
   /** True for sedated. */
   private boolean sedated;
   
+  /** Patient's blood volume in mL. */
+  private double bloodVolume;
+  
   /** True if patient is bleeding. */
   private boolean bleeding;
   
@@ -520,6 +523,39 @@ public class Patient  extends Component {
    */
   public void setBleeding(boolean bleeding) {
     this.bleeding = bleeding;
+  }
+
+  /**
+   * Returns patient's maximum blood volume usually 90mL/kg.
+   *
+   * @return  Blood volume in mL.
+   */
+  public double getMaxBloodVolume() {
+    return 90 * weight;
+  }
+
+  /**
+   * Returns patient's blood volume.
+   *
+   * @return  Blood volume in mL.
+   */
+  public double getBloodVolume() {
+    return bloodVolume;
+  }
+
+  /**
+   * Set patient's blood volume. Defaults to 8% of body weight or about
+   * 90 mL/kg.
+   *
+   * @param volume  Volume of blood in patient in mL.
+   */
+  public void setBloodVolume(double volume) {
+    if (Double.isNaN(volume)) {
+      this.bloodVolume = getMaxBloodVolume();
+    }
+    else {
+      this.bloodVolume = volume;
+    }
   }
 
   /**
