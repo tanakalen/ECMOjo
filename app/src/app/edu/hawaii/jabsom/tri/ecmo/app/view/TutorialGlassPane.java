@@ -85,8 +85,12 @@ public class TutorialGlassPane extends JPanel implements AWTEventListener {
       int y = (int)point.getY();
       if ((x < 293) || (x > 745) || (y < 2) || (y > 76)) {
         setCursor(cursor);
-        if ((id == MouseEvent.MOUSE_CLICKED) || (id == MouseEvent.MOUSE_PRESSED) || (id == MouseEvent.MOUSE_RELEASED)) {
-          mouseEvent.consume();
+        if (((x < 364) || (x > 538) || (y < 370) || (y > 399))         // can still click dialog buttons
+            && ((x < 304) || (x > 584) || (y < 95) || (y > 343))) {   // can still click selected component
+          if ((id == MouseEvent.MOUSE_CLICKED) || (id == MouseEvent.MOUSE_PRESSED) 
+                                               || (id == MouseEvent.MOUSE_RELEASED)) {
+            mouseEvent.consume();
+          }
         }
       }
       else {
