@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import king.lib.script.control.ScriptException;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Script;
+import king.lib.util.Translator;
 
 /**
  * A script editor with syntax pane, console output.
@@ -41,17 +42,17 @@ public class ScriptEditorPanel extends JPanel {
     add(consolePanel);
     
     // add the compile button
-//    compileButton = new JButton(Translator.translate("action.Compile[i18n]: Compile"));
+    compileButton = new JButton(Translator.getString("action.Compile[i18n]: Compile"));
     compileButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         try {
-//          consolePanel.setOutput(Translator.translate("action.Compiling[i18n]: Compiling...") + "\n");
+          consolePanel.setOutput(Translator.getString("action.Compiling[i18n]: Compiling...") + "\n");
           ScriptRunner.compile(getScript());
-//          consolePanel.addOutput(Translator.translate("??????.CompiledOK[i18n]: Compiled. OK!") + "\n");
+          consolePanel.addOutput(Translator.getString("??????.CompiledOK[i18n]: Compiled. OK!") + "\n");
         }
         catch (ScriptException e) {
-//          consolePanel.addOutput(Translator.translate("error.CompilingErrors[i18n]: Compiling Errors:") + "\n");
-//          consolePanel.addOutput(Translator.translate.getMessage());
+          consolePanel.addOutput(Translator.getString("error.CompilingErrors[i18n]: Compiling Errors:") + "\n");
+          consolePanel.addOutput(Translator.getString(e.getMessage()));
         }
       }      
     });
