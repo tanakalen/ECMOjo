@@ -10,6 +10,7 @@ import king.lib.script.control.ScriptException;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Context;
 import king.lib.script.model.Script;
+import king.lib.script.model.ScriptType;
 import king.lib.util.StringSet;
 
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class TestScriptPnuts {
     accessibleClasses.add("java.util.ArrayList");
     context.setSandbox(new ClassSandbox(accessibleClasses));
     Script script = new Script();
-    script.setLang("pnuts");
+    script.setLang(ScriptType.PNUTS);
     
     // returns y = 22 * x
     script.setCode(
@@ -105,7 +106,7 @@ public class TestScriptPnuts {
     Context unrestrictedContext = new Context();
     unrestrictedContext.setSandbox(null);
     Script script = new Script();
-    script.setLang("pnuts");
+    script.setLang(ScriptType.PNUTS);
     
     // thread execution
     script.setCode(
@@ -216,6 +217,30 @@ public class TestScriptPnuts {
     catch (Exception e) {
       // should come here
     }
+    
+    // can access pnuts modules (they should not be available!)
+    script.setCode(
+          "use(\"pnuts.lib\");\n"
+        + "rsrc = getURL(\"http://www.noblemaster.com\");\n"
+    );
+    try {
+      ScriptRunner.execute(script, restrictedContext, null);
+      fail("Potentially malicous script executed.");
+    }
+    catch (Exception e) {
+      // should come here
+    }   
+    script.setCode(
+          "use(\"pnuts.lib\");\n"
+        + "testVector = vector();\n"
+    );
+    try {
+      ScriptRunner.execute(script, restrictedContext, null);
+      fail("Potentially malicous script executed.");
+    }
+    catch (Exception e) {
+      // should come here
+    }   
   }
   
   /**
@@ -228,7 +253,7 @@ public class TestScriptPnuts {
     // context and script
     Context context = new Context();
     Script script = new Script();
-    script.setLang("pnuts");
+    script.setLang(ScriptType.PNUTS);
     script.setCode(
           "for (i = 0; i < 1000000; i++) {\n"
         + "  a = 3.1415;\n"

@@ -1,5 +1,8 @@
 package king.lib.script.model.pnuts;
 
+import java.io.FileNotFoundException;
+import java.net.URL;
+
 import pnuts.ext.ConfigurationAdapter;
 import pnuts.lang.Jump;
 import pnuts.lang.Pnuts;
@@ -252,11 +255,24 @@ public class PnutsCompile implements Compile {
     
     // make the pnuts context secure (no threads, file access, etc.)
     if (context.getSandbox() != null) {
-      // there is probably no security manager set, so this might not actually do anything???
-      pnutsContext.setImplementation(new SecurePnutsImpl(pnutsContext.getImplementation())); 
+      // there is probably no security manager set, so this might not actually do much???
+      pnutsContext.setImplementation(new SecurePnutsImpl(pnutsContext.getImplementation()) {
+        public Object load(String file, pnuts.lang.Context arg1) throws FileNotFoundException {
+          throw new IllegalArgumentException("Access denied for: " + file);
+        }
+        public Object load(URL scriptURL, pnuts.lang.Context context) {
+          throw new IllegalArgumentException("Access denied for: " + scriptURL.toString());
+        }
+        public Object loadFile(String filename, pnuts.lang.Context arg1) throws FileNotFoundException {
+          throw new IllegalArgumentException("Access denied for: " + filename);
+        }    
+      }); 
       
       // we restrict access to classes with that beauty!
       pnutsContext.setConfiguration(new MyConfiguration(context.getSandbox()));
+      
+      // let's hope that helps too
+      pnutsContext.clearPackages();
     }
     
     // and run the script
