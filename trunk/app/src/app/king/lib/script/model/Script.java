@@ -12,7 +12,7 @@ public class Script {
   private long id;
   
   /** The language, such as Pnuts, Java, JavaScript etc. */
-  private String lang;
+  private ScriptType lang;
   /** The source code. */
   private String code;
   
@@ -40,7 +40,7 @@ public class Script {
    *
    * @return  The language, such as Pnuts, Java, JavaScript etc.
    */
-  public String getLang() {
+  public ScriptType getLang() {
     return lang;
   }
   
@@ -49,7 +49,7 @@ public class Script {
    *
    * @param lang  The language, such as Pnuts, Java, JavaScript etc.
    */
-  public void setLang(String lang) {
+  public void setLang(ScriptType lang) {
     this.lang = lang;
   }
   

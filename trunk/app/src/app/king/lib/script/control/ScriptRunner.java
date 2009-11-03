@@ -14,6 +14,7 @@ import pnuts.lang.Pnuts;
 import king.lib.script.model.Compile;
 import king.lib.script.model.Context;
 import king.lib.script.model.Script;
+import king.lib.script.model.ScriptType;
 import king.lib.script.model.java.JavaCompile;
 import king.lib.script.model.pnuts.PnutsCompile;
 
@@ -73,8 +74,8 @@ public class ScriptRunner {
    * @throws ScriptException  If there is a compiling problem.
    */
   public static Compile compile(Script script) throws ScriptException {
-    String language = script.getLang();
-    if (language.equalsIgnoreCase("java")) {
+    ScriptType language = script.getLang();
+    if (language == ScriptType.JAVA) {
       try {
         // write the file
         String name = JavaCompile.SCRIPT_NAME;
@@ -138,7 +139,7 @@ public class ScriptRunner {
         throw new ScriptException(e);
       }
     }
-    else if (language.equalsIgnoreCase("pnuts")) {
+    else if (language == ScriptType.PNUTS) {
       try {
         // parse script
         Pnuts pnuts = Pnuts.parse(script.getCode());
@@ -150,7 +151,7 @@ public class ScriptRunner {
         throw new ScriptException(e);
       }
     }
-    else if (language.equalsIgnoreCase("rhino")) {
+    else if (language == ScriptType.RHINO) {
       throw new ScriptException("error.RhinoNotSupported[i18n]: Rhino is not supported.");
     }
     else {
