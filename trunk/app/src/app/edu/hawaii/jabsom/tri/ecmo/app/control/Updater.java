@@ -341,9 +341,7 @@ public final class Updater {
       }
       
       // update equipment (oxygenator)
-      oxygenator.getOxyType();
-//    tube.setPreMembranePressure(tube.getPreMembranePressure() + (oxygenator.getClotting() * 50));
-
+      // currently handled in other tube component
       
       // update equipment (bubble detector)
       bubbleDetector.setAlarm(tube.isArterialBubbles());

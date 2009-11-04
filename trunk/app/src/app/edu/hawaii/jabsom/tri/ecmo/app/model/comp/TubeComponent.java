@@ -367,7 +367,12 @@ public class TubeComponent extends Component {
    * @param venousPressure  The venous pressure to set.
    */
   public void setVenousPressure(double venousPressure) {
-    this.venousPressure = venousPressure;
+    if (Double.isNaN(venousPressure)) {
+      this.venousPressure = -10;
+    }
+    else {
+      this.venousPressure = venousPressure;
+    }
     notifyUpdate();
   }
 
