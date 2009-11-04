@@ -1,6 +1,9 @@
 package king.lib.script.view;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import king.lib.script.model.Script;
@@ -20,16 +23,20 @@ public class ScriptSyntaxPanel extends JPanel {
   private ScriptType lang;
   
   /** The text. */
-  private JTextArea code;
+  private JTextArea codeArea;
   
   
   /**
    * The constructor.
    */
   public ScriptSyntaxPanel() {
-
-    // add the code area
+    // set the look
+    setOpaque(true);
+    setLayout(new BorderLayout());
     
+    // add the code area
+    codeArea = new JTextArea();
+    add(new JScrollPane(codeArea), BorderLayout.CENTER);
   }
   
   /**
@@ -41,7 +48,7 @@ public class ScriptSyntaxPanel extends JPanel {
     Script script = new Script();
     script.setId(id);
     script.setLang(lang);
-    script.setCode(code.getText());
+    script.setCode(codeArea.getText());
     return script;
   }
   
@@ -53,9 +60,19 @@ public class ScriptSyntaxPanel extends JPanel {
   public void setScript(Script script) {
     id = script.getId();
     lang = script.getLang();
-    code.setText(script.getCode());
-    
+    codeArea.setText(script.getCode());
+   
     // set the syntax panel settings
-    // TODO: set syntax style, e.g. "text/pnuts"???
+    // FIXME: set syntax style, e.g. "text/pnuts"???
+  }
+  
+  /**
+   * Selects the inputed line number.
+   * 
+   * @param line  The line number starting with 1.
+   */
+  public void select(long line) {
+    codeArea.select(1, 100);  
+    // FIXME: select the correct line number & scroll to it!!!
   }
 }

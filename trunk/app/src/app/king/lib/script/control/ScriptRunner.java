@@ -47,17 +47,6 @@ public class ScriptRunner {
   }
 
   /**
-   * Parses a script and makes sure it can be executed.
-   * 
-   * @param script  The script.
-   * @throws ScriptException  If the script couldn't be parsed.
-   */
-  public static void parse(Script script) throws ScriptException {
-    // let's try to compile it...
-    compile(script);
-  }
-  
-  /**
    * Parses and compiles a script.
    * <p>
    * Limitations: 
@@ -71,9 +60,9 @@ public class ScriptRunner {
    * 
    * @param script  The script.
    * @return  The compiled script.
-   * @throws ScriptException  If there is a compiling problem.
+   * @throws CompileException  If there is a compiling problem.
    */
-  public static Compile compile(Script script) throws ScriptException {
+  public static Compile compile(Script script) throws CompileException {
     ScriptType language = script.getLang();
     if (language == ScriptType.JAVA) {
       try {
@@ -126,7 +115,7 @@ public class ScriptRunner {
             return new JavaCompile(b);
           }
           else {
-            throw new ScriptException(error);
+            throw new CompileException(error);
           }
         }
         finally {
@@ -136,7 +125,7 @@ public class ScriptRunner {
         }
       }
       catch (IOException e) {
-        throw new ScriptException(e);
+        throw new CompileException(e);
       }
     }
     else if (language == ScriptType.PNUTS) {
@@ -148,14 +137,14 @@ public class ScriptRunner {
         return new PnutsCompile(pnuts);
       }
       catch (ParseException e) {
-        throw new ScriptException(e);
+        throw new CompileException(e.getMessage(), e.getErrorLine());
       }
     }
     else if (language == ScriptType.RHINO) {
-      throw new ScriptException("error.RhinoNotSupported[i18n]: Rhino is not supported.");
+      throw new CompileException("error.RhinoNotSupported[i18n]: Rhino is not supported.");
     }
     else {
-      throw new ScriptException("error.ScriptLanguageNotSupported[i18n]: The script language is not supported.");
+      throw new CompileException("error.ScriptLanguageNotSupported[i18n]: The script language is not supported.");
     }
   }
   
@@ -166,9 +155,10 @@ public class ScriptRunner {
    * @param script  The script.
    * @param object  The input.
    * @return  The return value if any.
+   * @throws CompileException  If there is a compiling problem.
    * @throws ScriptException  If there is a problem executing the script.
    */
-  public Object execute(Script script, Object object) throws ScriptException {
+  public Object execute(Script script, Object object) throws CompileException, ScriptException {
     return execute(script, context, object);
   }
   
@@ -180,9 +170,10 @@ public class ScriptRunner {
    * @param context  The context.
    * @param object  The input.
    * @return  The return value if any.
+   * @throws CompileException  If there is a compiling problem.
    * @throws ScriptException  If there is a problem executing the script.
    */
-  public static Object execute(Script script, Context context, Object object) throws ScriptException {
+  public static Object execute(Script script, Context context, Object object) throws CompileException, ScriptException {
     return execute(compile(script), context, object);
   }
   

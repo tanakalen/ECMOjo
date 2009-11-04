@@ -1,14 +1,17 @@
 package king.lib.script.view;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
-import king.lib.script.control.ScriptException;
+import king.lib.script.control.CompileException;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Script;
+import king.lib.util.DateTime;
 import king.lib.util.Translator;
 
 /**
@@ -19,6 +22,9 @@ import king.lib.util.Translator;
  */
 public class ScriptEditorPanel extends JPanel {
 
+  /** The split pane. */
+  private JSplitPane splitPane;
+  
   /** The syntax panel. */
   private ScriptSyntaxPanel syntaxPanel;
   /** The console panel. */
@@ -32,31 +38,48 @@ public class ScriptEditorPanel extends JPanel {
    * The constructor.
    */
   public ScriptEditorPanel() {
+    // set the look
+    setOpaque(true);
+    setLayout(new BorderLayout());
     
-    // add the syntax panel
+    // syntax panel
     syntaxPanel = new ScriptSyntaxPanel();
-    add(syntaxPanel);
     
-    // add the console panel
+    // console panel
     consolePanel = new ScriptConsolePanel();
-    add(consolePanel);
     
-    // add the compile button
+    // compile button
     compileButton = new JButton(Translator.getString("action.Compile[i18n]: Compile"));
     compileButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         try {
-          consolePanel.setOutput(Translator.getString("action.Compiling[i18n]: Compiling...") + "\n");
+          String timestamp = new DateTime().toString();
+          consolePanel.setOutput(timestamp + " | " + Translator.getString("text.Compiling[i18n]: Compiling...") + "\n");
           ScriptRunner.compile(getScript());
-          consolePanel.addOutput(Translator.getString("??????.CompiledOK[i18n]: Compiled. OK!") + "\n");
+          consolePanel.addOutput(Translator.getString("text.CompiledOK[i18n]: Compiled. OK!") + "\n");
         }
-        catch (ScriptException e) {
-          consolePanel.addOutput(Translator.getString("error.CompilingErrors[i18n]: Compiling Errors:") + "\n");
-          consolePanel.addOutput(Translator.getString(e.getMessage()));
+        catch (CompileException e) {
+          consolePanel.addError(Translator.getString("error.CompilingErrors[i18n]: Compiling Errors:") + "\n");
+          consolePanel.addError(Translator.getString(e.getMessage()));
+          
+          // select the line if any
+          if (e.getLine() > 0) {
+            syntaxPanel.select(e.getLine());
+          }
         }
       }      
     });
-    add(compileButton);    
+
+    // action panel
+    JPanel actionPanel = new JPanel();
+    actionPanel.setLayout(new BorderLayout());
+    actionPanel.add(consolePanel, BorderLayout.CENTER);
+    actionPanel.add(compileButton, BorderLayout.EAST);
+    
+    // add a split pane
+    splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, syntaxPanel, actionPanel);
+    splitPane.setResizeWeight(0.90);
+    add(splitPane, BorderLayout.CENTER);    
   }
   
   /**
