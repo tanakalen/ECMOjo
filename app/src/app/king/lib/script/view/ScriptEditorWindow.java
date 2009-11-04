@@ -14,7 +14,7 @@ import king.lib.script.model.ScriptType;
  * @author noblemaster
  * @since November 2, 2009
  */
-public class ScriptWindow extends JFrame {
+public class ScriptEditorWindow extends JFrame {
 
   /** The script editor panel. */
   private ScriptEditorPanel editorPanel;
@@ -23,9 +23,9 @@ public class ScriptWindow extends JFrame {
   /**
    * The constructor.
    */
-  public ScriptWindow() {
+  public ScriptEditorWindow() {
     // set title and close behavior
-    setTitle("Script Writer");
+    setTitle("Script Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // set layout
@@ -36,7 +36,6 @@ public class ScriptWindow extends JFrame {
     editorPanel = new ScriptEditorPanel();
     getContentPane().add(editorPanel, BorderLayout.CENTER);
   }
-  
   
   /**
    * Returns the script.
@@ -63,8 +62,8 @@ public class ScriptWindow extends JFrame {
    */
   public static void main(String[] args) {
     // create the window
-    ScriptWindow window = new ScriptWindow();
-    window.setSize(400, 400);
+    ScriptEditorWindow window = new ScriptEditorWindow();
+    window.setSize(600, 400);
     window.setLocationRelativeTo(null);
     
     // set the script
