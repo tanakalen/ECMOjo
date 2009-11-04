@@ -6,8 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import king.lib.script.model.Language;
 import king.lib.script.model.Script;
-import king.lib.script.model.ScriptType;
 
 /**
  * A syntax editor panel.
@@ -20,7 +20,7 @@ public class ScriptSyntaxPanel extends JPanel {
   /** The ID. */
   private long id;
   /** The language. */
-  private ScriptType lang;
+  private Language language;
   
   /** The text. */
   private JTextArea codeArea;
@@ -47,7 +47,7 @@ public class ScriptSyntaxPanel extends JPanel {
   public Script getScript() {
     Script script = new Script();
     script.setId(id);
-    script.setLang(lang);
+    script.setLang(language.getName());
     script.setCode(codeArea.getText());
     return script;
   }
@@ -59,7 +59,7 @@ public class ScriptSyntaxPanel extends JPanel {
    */
   public void setScript(Script script) {
     id = script.getId();
-    lang = script.getLang();
+    language = Language.find(script.getLang());
     codeArea.setText(script.getCode());
    
     // set the syntax panel settings

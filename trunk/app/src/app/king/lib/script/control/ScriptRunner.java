@@ -13,8 +13,8 @@ import pnuts.lang.ParseException;
 import pnuts.lang.Pnuts;
 import king.lib.script.model.Compile;
 import king.lib.script.model.Context;
+import king.lib.script.model.Language;
 import king.lib.script.model.Script;
-import king.lib.script.model.ScriptType;
 import king.lib.script.model.java.JavaCompile;
 import king.lib.script.model.pnuts.PnutsCompile;
 
@@ -63,8 +63,8 @@ public class ScriptRunner {
    * @throws CompileException  If there is a compiling problem.
    */
   public static Compile compile(Script script) throws CompileException {
-    ScriptType language = script.getLang();
-    if (language == ScriptType.JAVA) {
+    Language language = Language.find(script.getLang());
+    if (language == Language.JAVA) {
       try {
         // write the file
         String name = JavaCompile.SCRIPT_NAME;
@@ -128,7 +128,7 @@ public class ScriptRunner {
         throw new CompileException(e);
       }
     }
-    else if (language == ScriptType.PNUTS) {
+    else if (language == Language.PNUTS) {
       try {
         // parse script
         Pnuts pnuts = Pnuts.parse(script.getCode());
@@ -140,11 +140,14 @@ public class ScriptRunner {
         throw new CompileException(e.getMessage(), e.getErrorLine());
       }
     }
-    else if (language == ScriptType.RHINO) {
+    else if (language == Language.RHINO) {
       throw new CompileException("error.RhinoNotSupported[i18n]: Rhino is not supported.");
     }
+    else if (language == Language.BEANSHELL) {
+      throw new CompileException("error.BeanShellNotSupported[i18n]: BeanShell is not supported.");
+    }
     else {
-      throw new CompileException("error.ScriptLanguageNotSupported[i18n]: The script language is not supported.");
+      throw new CompileException("error.ScriptLanguageNotSupported[i18n]: The scripting language is not supported.");
     }
   }
   
