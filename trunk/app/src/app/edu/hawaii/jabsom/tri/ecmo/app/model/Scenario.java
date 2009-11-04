@@ -2,6 +2,8 @@ package edu.hawaii.jabsom.tri.ecmo.app.model;
 
 import java.io.Serializable;
 
+import king.lib.script.model.Script;
+
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
@@ -21,6 +23,8 @@ public class Scenario implements Serializable {
   
   /** The goal. */
   private Goal goal;
+  /** An optional script or null for none. */
+  private Script script;
   
   /** The baseline values. */
   private Baseline baseline;
@@ -83,6 +87,24 @@ public class Scenario implements Serializable {
    */
   public void setGoal(Goal goal) {
     this.goal = goal;
+  }
+
+  /**
+   * Returns the script.
+   *
+   * @return  The script or null for none.
+   */
+  public Script getScript() {
+    return script;
+  }
+
+  /**
+   * Sets the script.
+   *
+   * @param script  The script or null for none.
+   */
+  public void setScript(Script script) {
+    this.script = script;
   }
 
   /**
