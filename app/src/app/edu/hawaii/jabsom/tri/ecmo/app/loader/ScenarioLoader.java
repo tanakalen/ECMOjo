@@ -508,7 +508,7 @@ public final class ScenarioLoader {
         imagingComponent.putScenarioImaging("Echo", echoMap);
         
         parameters.clear();
-
+        
         // and return the scenario
         return scenario;
       }
@@ -567,6 +567,9 @@ public final class ScenarioLoader {
    * @return double number or NaN if something goes wrong.
    */
   private static double parseNum(Map<String, String> parameters, String key) {
+    if (!parameters.containsKey(key)) {
+      return Double.NaN;
+    }
     if ((parameters.get(key) != null) && (parameters.get(key).length() > 0)) {
       return Double.parseDouble(parameters.get(key));
     }
