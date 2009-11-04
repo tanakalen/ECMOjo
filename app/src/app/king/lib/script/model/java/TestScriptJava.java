@@ -9,8 +9,8 @@ import king.lib.sandbox.model.ClassSandbox;
 import king.lib.script.control.ScriptException;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Context;
+import king.lib.script.model.Language;
 import king.lib.script.model.Script;
-import king.lib.script.model.ScriptType;
 import king.lib.util.StringSet;
 
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class TestScriptJava {
     accessibleClasses.add("java.util.List");
     context.setSandbox(new ClassSandbox(accessibleClasses));
     Script script = new Script();
-    script.setLang(ScriptType.JAVA);
+    script.setLang(Language.JAVA.getName());
     
     // returns y = 22 * x
     script.setCode(
@@ -83,7 +83,7 @@ public class TestScriptJava {
     Context unrestrictedContext = new Context();
     unrestrictedContext.setSandbox(null);
     Script script = new Script();
-    script.setLang(ScriptType.JAVA);
+    script.setLang(Language.JAVA.getName());
     
     // thread execution
     script.setCode(
@@ -119,7 +119,7 @@ public class TestScriptJava {
     accessibleClasses.add("java.lang.Float");
     context.setSandbox(new ClassSandbox(accessibleClasses));
     Script script = new Script();
-    script.setLang(ScriptType.JAVA);
+    script.setLang(Language.JAVA.getName());
     script.setCode(
           "public class Script {\n"
         + "  public static Object execute(Object object) {\n"

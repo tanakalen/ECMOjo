@@ -49,8 +49,8 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
 
 import king.lib.out.Error;
+import king.lib.script.model.Language;
 import king.lib.script.model.Script;
-import king.lib.script.model.ScriptType;
 import king.lib.access.Hookup;
 import king.lib.access.LocalHookup;
 
@@ -208,7 +208,7 @@ public final class ScenarioLoader {
         String code = parameters.get("script");
         if (code != null) {
           Script script = new Script();
-          script.setLang(ScriptType.PNUTS);
+          script.setLang(Language.PNUTS.getName());
           script.setCode(code.replace("${linebreak}", "\n"));
           scenario.setScript(script);
         }

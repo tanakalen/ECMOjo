@@ -5,8 +5,8 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
+import king.lib.script.model.Language;
 import king.lib.script.model.Script;
-import king.lib.script.model.ScriptType;
 
 /**
  * A script window.
@@ -68,7 +68,7 @@ public class ScriptEditorWindow extends JFrame {
     
     // set the script
     Script script = new Script();
-    script.setLang(ScriptType.PNUTS);
+    script.setLang(Language.PNUTS.getName());
     window.setScript(script);
     
     // show the window...

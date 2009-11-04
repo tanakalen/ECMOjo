@@ -9,8 +9,8 @@ import king.lib.sandbox.model.ClassSandbox;
 import king.lib.script.control.ScriptException;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Context;
+import king.lib.script.model.Language;
 import king.lib.script.model.Script;
-import king.lib.script.model.ScriptType;
 import king.lib.util.StringSet;
 
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class TestScriptPnuts {
     accessibleClasses.add("java.util.ArrayList");
     context.setSandbox(new ClassSandbox(accessibleClasses));
     Script script = new Script();
-    script.setLang(ScriptType.PNUTS);
+    script.setLang(Language.PNUTS.getName());
     
     // returns y = 22 * x
     script.setCode(
@@ -106,7 +106,7 @@ public class TestScriptPnuts {
     Context unrestrictedContext = new Context();
     unrestrictedContext.setSandbox(null);
     Script script = new Script();
-    script.setLang(ScriptType.PNUTS);
+    script.setLang(Language.PNUTS.getName());
     
     // thread execution
     script.setCode(
@@ -253,7 +253,7 @@ public class TestScriptPnuts {
     // context and script
     Context context = new Context();
     Script script = new Script();
-    script.setLang(ScriptType.PNUTS);
+    script.setLang(Language.PNUTS.getName());
     script.setCode(
           "for (i = 0; i < 1000000; i++) {\n"
         + "  a = 3.1415;\n"
