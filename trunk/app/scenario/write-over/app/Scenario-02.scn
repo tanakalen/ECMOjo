@@ -50,11 +50,11 @@ tutorial-item18-text = Task 14: Check the patient's cannula site. Click on the [
 tutorial-item18-trigger = Action:Patient:CANNULA_SITE
 tutorial-item19-text = Task 15: Select the pressure monitor. 
 tutorial-item19-trigger = Action:View:PressureMonitorComponent
-tutorial-item20-text = Displays 1, 2 and 3 correspond to points 1, 2 and 3 in the circuit. 
+tutorial-item20-text = Displays "pre", "post" and "veno" correspond to points "pre", "post" and "veno" in the circuit. 
 tutorial-item20-trigger = N/A
 tutorial-item21-text = Pressures have a min and max value which sound the alarm if outside the range.
 tutorial-item21-trigger = N/A
-tutorial-item22-text = Task 16: Increase the venous pressure maximum value to larger than 20 (#1).
+tutorial-item22-text = Task 16: Increase the venous pressure maximum value to >20.
 tutorial-item22-trigger = Action:Pressure:venousmax:>20
 tutorial-item23-text = Task 17: Decrease the venous pressure minimum value less than -50.
 tutorial-item23-trigger = Action:Pressure:venousmin:<-50
@@ -62,8 +62,6 @@ tutorial-item24-text = Task 18: Turn on the emergency vent settings. Toggle the 
 tutorial-item24-trigger = Action:Ventilator:Emergency:on 
 tutorial-item25-text = Task 19: Turn off the emergency vent settings.
 tutorial-item25-trigger = Action:Ventilator:Emergency:off
-tutorial-item26-text = Congratulations, you successfully completed this tutorial!
-tutorial-item26-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
