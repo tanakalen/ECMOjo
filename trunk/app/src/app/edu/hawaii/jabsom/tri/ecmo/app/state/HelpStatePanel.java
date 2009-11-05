@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.AdvancedTextPane;
+import king.lib.out.InternetTextPane;
 
 /**
  * The result state panel. 
@@ -85,10 +86,10 @@ public class HelpStatePanel extends JPanel {
     add(textLabel);
     
     // add text panel
-    AdvancedTextPane infoArea = new AdvancedTextPane();
+    InternetTextPane infoArea = new InternetTextPane();
     infoArea.setDefaultSize(13);
     infoArea.setDefaultFont(AdvancedTextPane.FONT_TYPE_SERIF);
-    infoArea.addText(infoText, Color.BLACK, AdvancedTextPane.NO_DECORATION);
+    infoArea.addHTML(infoText);
     infoArea.addLink("http://ecmojo.sourceforge.net/", Color.BLUE, AdvancedTextPane.DECORATION_UNDERLINE);
     JScrollPane infoScroll = new JScrollPane(infoArea);
     infoScroll.setLocation(15, 95);

@@ -8,6 +8,6 @@
 	<classpathentry kind="lib" path="lib/project/junit.jar"/>
 	<classpathentry kind="lib" path="lib/project/mail.jar"/>
 	<classpathentry kind="lib" path="lib/project/pnuts-1.2.1.jar"/>
-	<classpathentry kind="lib" path="lib/project/jsyntaxpane-0.9.5.jar"/>
+	<classpathentry kind="lib" path="lib/project/jsyntaxpane-0.9.5-jre5-minimal.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

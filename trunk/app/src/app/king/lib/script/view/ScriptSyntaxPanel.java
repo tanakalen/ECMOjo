@@ -70,7 +70,7 @@ public class ScriptSyntaxPanel extends JPanel {
       codeArea.setContentType("text/java");
     }
     else if (language == Language.PNUTS) {
-      codeArea.setContentType("text/javascript");
+      codeArea.setContentType("text/java");
     }
     else if (language == Language.RHINO) {
       codeArea.setContentType("text/javascript");
