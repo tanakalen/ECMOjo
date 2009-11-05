@@ -14,7 +14,7 @@ scenario-vent-type = *
 goal = Tutorial
 tutorial-item1-text = Welcome to an overview of ECMOjo.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = The patient that is connected to the ECMO circuit is shown in the bottom left corner.
+tutorial-item2-text = The patient that is connected to the ECMO circuit is shown in the bottom left corner of the screen.
 tutorial-item2-trigger = N/A
 tutorial-item3-text = Ventilator settings, Physiological Monitor and CDI Monitor are shown just above the baby.
 tutorial-item3-trigger = N/A
@@ -24,7 +24,7 @@ tutorial-item5-text = The main ECMO components are located on the right-hand sid
 tutorial-item5-trigger = N/A
 tutorial-item6-text = There is an alarm indicator light to the right which starts blinking whenever there is a problem.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Congratulations, you successfully completed the overview! Please note, you can exit any of the scenarios by pressing [Esc] on your keyboard.
+tutorial-item7-text = Please note, you can exit any of the scenarios by pressing [Esc] on your keyboard.
 tutorial-item7-trigger = N/A
 
 # Baseline Values

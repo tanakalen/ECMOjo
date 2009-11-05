@@ -153,8 +153,8 @@ public class GameStatePanel extends JPanel implements ManagerListener, KeyEventD
         if (goal instanceof TutorialGoal) {
           // show completed dialog
           StandardDialog.showDialog(GameStatePanel.this, DialogType.SUCCESS, DialogOption.OK
-              , "Tutorial Completed"
-              , "You successfully completed the tutorial.");
+              , "Scenario Completed"
+              , "You successfully completed the scenario.");
 
           // and exit to menu
           state.menuState();

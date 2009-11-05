@@ -30,14 +30,12 @@ tutorial-item8-text = Task 6: Click the [Lab] button to request new lab values.
 tutorial-item8-trigger = Action:LabRequest
 tutorial-item9-text = Task 7: Select the lab [IMG] button to view imaging lab values.
 tutorial-item9-trigger = Action:View:LabTest:ImagingLabTest
-tutorial-item10-text = You can click on the highlighted box to view the images.
+tutorial-item10-text = Clicking on the image name "Echo" or "X-Ray" will bring up the actual image. Clicking on the image will remove it from the screen.
 tutorial-item10-trigger = N/A
 tutorial-item11-text = Task 8: Select the [ACT] button to view the ACT values.
 tutorial-item11-trigger = Action:View:ACTComponent
 tutorial-item12-text = Task 9: Click the [Lab] button to request new values.
 tutorial-item12-trigger = Action:ACTRequest
-tutorial-item13-text = Congratulations, you successfully completed the advanced tutorial!
-tutorial-item13-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
