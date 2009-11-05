@@ -34,7 +34,9 @@ public class ScriptConsolePanel extends JPanel {
     setLayout(new BorderLayout());
     
     // add the code area
-    consoleArea = new AdvancedTextPane(10);
+    consoleArea = new AdvancedTextPane();
+    consoleArea.setDefaultFont(AdvancedTextPane.FONT_TYPE_MONOSPACED);
+    consoleArea.setDefaultSize(12);
     add(new JScrollPane(consoleArea), BorderLayout.CENTER);
   }
   
@@ -54,7 +56,7 @@ public class ScriptConsolePanel extends JPanel {
    * @param message  The message.
    */
   public void addOutput(String message) {
-    consoleArea.addText(message, outputColor, AdvancedTextPane.NO_DECORATION, 10);
+    consoleArea.addText(message, outputColor);
   }
   
   /**
@@ -73,7 +75,7 @@ public class ScriptConsolePanel extends JPanel {
    * @param message  The message.
    */
   public void addError(String message) {
-    consoleArea.addText(message, errorColor, AdvancedTextPane.NO_DECORATION, 10);
+    consoleArea.addText(message, errorColor);
   }
 
   /**
