@@ -86,11 +86,10 @@ public class HelpStatePanel extends JPanel {
     
     // add text panel
     AdvancedTextPane infoArea = new AdvancedTextPane();
-    infoArea.addText(infoText, Color.BLACK, AdvancedTextPane.NO_DECORATION, 13);
-    infoArea.addLink("http://ecmojo.sourceforge.net/", Color.BLUE, AdvancedTextPane.DECORATION_UNDERLINE, 13);
-    infoArea.setOpaque(false);
-    infoArea.setEditable(false);
-    infoArea.setFont(textLabel.getFont().deriveFont(Font.PLAIN, 14f));
+    infoArea.setDefaultSize(13);
+    infoArea.setDefaultFont(AdvancedTextPane.FONT_TYPE_SERIF);
+    infoArea.addText(infoText, Color.BLACK, AdvancedTextPane.NO_DECORATION);
+    infoArea.addLink("http://ecmojo.sourceforge.net/", Color.BLUE, AdvancedTextPane.DECORATION_UNDERLINE);
     JScrollPane infoScroll = new JScrollPane(infoArea);
     infoScroll.setLocation(15, 95);
     infoScroll.setSize(770, 450);

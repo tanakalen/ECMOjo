@@ -2,9 +2,11 @@ package king.lib.script.view;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
+import jsyntaxpane.DefaultSyntaxKit;
 
 import king.lib.script.model.Language;
 import king.lib.script.model.Script;
@@ -23,7 +25,7 @@ public class ScriptSyntaxPanel extends JPanel {
   private Language language;
   
   /** The text. */
-  private JTextArea codeArea;
+  private JEditorPane codeArea;
   
   
   /**
@@ -33,9 +35,9 @@ public class ScriptSyntaxPanel extends JPanel {
     // set the look
     setOpaque(true);
     setLayout(new BorderLayout());
-    
+ 
     // add the code area
-    codeArea = new JTextArea();
+    codeArea = new JEditorPane();
     add(new JScrollPane(codeArea), BorderLayout.CENTER);
   }
   
@@ -63,7 +65,19 @@ public class ScriptSyntaxPanel extends JPanel {
     codeArea.setText(script.getCode());
    
     // set the syntax panel settings
-    // FIXME: set syntax style, e.g. "text/pnuts"???
+    DefaultSyntaxKit.initKit();
+    if (language == Language.JAVA) {
+      codeArea.setContentType("text/java");
+    }
+    else if (language == Language.PNUTS) {
+      codeArea.setContentType("text/javascript");
+    }
+    else if (language == Language.RHINO) {
+      codeArea.setContentType("text/javascript");
+    }
+    else if (language == Language.BEANSHELL) {
+      codeArea.setContentType("text/java");
+    }
   }
   
   /**
@@ -72,7 +86,6 @@ public class ScriptSyntaxPanel extends JPanel {
    * @param line  The line number starting with 1.
    */
   public void select(long line) {
-    codeArea.select(1, 100);  
-    // FIXME: select the correct line number & scroll to it!!!
+    // TODO: underline or mark the line and scroll to it as needed
   }
 }
