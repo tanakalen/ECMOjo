@@ -1,6 +1,7 @@
 package king.lib.out;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Stack;
@@ -10,6 +11,8 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.parser.ParserDelegator;
+
+import king.lib.util.ImageResolver;
 
 /**
  * Internet HTML text pane that outputs HTML text. 
@@ -207,6 +210,18 @@ public class InternetTextPane extends DocumentTextPane {
       if (tag == Tag.BR) {
         addText("\n", peekColor(), peekDecoration(), peekFont(), peekSize());
       }
+      else if (tag == Tag.IMG) {
+        String src = (String)att.getAttribute(HTML.Attribute.SRC);
+        Image image = resolver.resolve(src);
+        if (image != null) {
+          if (link != null) {
+            addImage(image, link);
+          }
+          else {
+            addImage(image);
+          }
+        }
+      }
     }    
     
     /**
@@ -381,13 +396,29 @@ public class InternetTextPane extends DocumentTextPane {
     }
   };
 
+  /** The image resolver. */
+  private ImageResolver resolver;
+  
+  
   /**
    * The constructor.
    */
   public InternetTextPane() {
-    setDefaultSize(13);
+    this(ImageResolver.getDefault());
   }
   
+  /**
+   * The constructor.
+   * 
+   * @param resolver  The image resolver. Responsible for retrieving images when they are used.
+   */
+  public InternetTextPane(ImageResolver resolver) {
+    this.resolver = resolver;
+    
+    // set the default font size
+    setDefaultSize(13);
+  }
+
   /**
    * Adds the inputed HTML text.
    * <p>
@@ -397,6 +428,7 @@ public class InternetTextPane extends DocumentTextPane {
    *   <li>&lt;br&gt; - Line break.
    *   <li>&lt;font color="#ff0000"&gt; - Set the color using a 6 digit HEX code.
    *   <li>&lt;a href="http://www.company.com"&gt;Company&lt;/a&gt; - A link.
+   *   <li>&lt;img src="file:///c:\image.gif"&gt; - An image.
    *   <li>&lt;b&gt; - Bolded text.
    *   <li>&lt;i&gt; - Italic text.
    *   <li>&lt;u&gt; - Underlined text.
@@ -427,6 +459,7 @@ public class InternetTextPane extends DocumentTextPane {
    *   <li>[size=+1] - Font size.
    *   <li>[url=http://www.company.com] - A link.
    *   <li>[mail=user@email.com] - An email link.
+   *   <li>[img] - An image.
    *   <li>[b] - Bolded text.
    *   <li>[i] - Italic text.
    *   <li>[u] - Underlined text.

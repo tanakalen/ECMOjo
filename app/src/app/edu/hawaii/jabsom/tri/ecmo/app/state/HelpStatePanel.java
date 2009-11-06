@@ -65,7 +65,9 @@ public class HelpStatePanel extends JPanel {
       + "Visit our website: "
       + "<a href=\"http://ecmojo.sourceforge.net\">http://ecmojo.sourceforge.net</a><br>"
       + "Contact us at: "
-      + "<a href=\"mailto:telemed@hawaii.edu\">telemed@hawaii.edu</a>";
+      + "<a href=\"mailto:telemed@hawaii.edu\">telemed@hawaii.edu</a><br>"
+      + "<a href=\"http://ecmojo.sourceforge.net\">"
+      + "<img src=\"http://ecmojo.sourceforge.net/image/interface/minilogo.png\"></a><br>";
 
     
   /**

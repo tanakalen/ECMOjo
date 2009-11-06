@@ -302,20 +302,32 @@ public class AdvancedTextPane extends JTextPane {
   }
   
   /**
-   * Adds a link.
-   *  
-   * @param url  The URL.
-   * @param image  The image.
+   * Adds an image to this text pane.
+   * 
+   * @param image  The image to add.
    */
-  public void addLink(String url, Image image) {
+  public void addImage(Image image) {
+    addImage(image, null);
+  }  
+  
+  /**
+   * Adds a linked image.
+   *  
+   * @param image  The image.
+   * @param url  The URL.
+   */
+  public void addImage(Image image, String url) {
     StyledDocument doc = getStyledDocument();
 
     // The image must first be wrapped in a style
     SimpleAttributeSet att = att(defaultColor, defaultDecoration, defaultFont, defaultSize
                                , defaultLineSpacing, defaultAlign);
     StyleConstants.setIcon(att, new ImageIcon(image));
-    att.addAttribute(linkAttribute, url);
-
+    if (url != null) {
+      // link the image if there is an URL (not null)
+      att.addAttribute(linkAttribute, url);
+    }
+    
     // Insert the image at the end of the text
     try {
       doc.setParagraphAttributes(doc.getLength(), 0, att, true);
@@ -326,29 +338,6 @@ public class AdvancedTextPane extends JTextPane {
     }
   }
 
-  /**
-   * Adds an image to this text pane.
-   * 
-   * @param image  The image to add.
-   */
-  public void addImage(Image image) {
-    StyledDocument doc = getStyledDocument();
-
-    // The image must first be wrapped in a style
-    SimpleAttributeSet att = att(defaultColor, defaultDecoration, defaultFont, defaultSize
-                               , defaultLineSpacing, defaultAlign);
-    StyleConstants.setIcon(att, new ImageIcon(image));
-
-    // Insert the image at the end of the text
-    try {
-      doc.setParagraphAttributes(doc.getLength(), 0, att, true);
-      doc.insertString(doc.getLength(), "[img-" + image.hashCode() + "]", att);
-    }
-    catch (BadLocationException e) {
-      Error.out(e);
-    }
-  }  
-  
   /**
    * Clears the text area.
    */
