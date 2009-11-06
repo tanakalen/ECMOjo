@@ -3,6 +3,7 @@ package king.lib.out;
 import javax.swing.JTextPane;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.text.Element;
+import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.Style;
 import javax.swing.text.StyleContext;
@@ -26,7 +27,9 @@ import king.lib.access.Access;
 
 /**
  * Advanced text pane with many many fancy-pantsy features. 
- *
+ * <p>
+ * NOTE: Serif type fonts appear to produce strange line breaks occasionally!? (CA)
+ * 
  * @author Christoph Aschwanden
  * @since February 27, 2008
  */
@@ -47,12 +50,21 @@ public class AdvancedTextPane extends JTextPane {
   /** The bold decoration. */ 
   public static final int DECORATION_STRIKETHROUGH = 0x20;
   
-  /** A Sans-Serif font: "Arial", if not found then the default. */
-  public static final String FONT_TYPE_SERIF = "${serif}";
   /** A Serif (or Roman) font: "Times", if not found then the default. */
+  public static final String FONT_TYPE_SERIF = "${serif}";
+  /** A Sans-Serif font: "Arial", if not found then the default. */
   public static final String FONT_TYPE_SANS_SERIF = "${sans-serif}";
   /** A Monospaced font: "Courier New", if not found then "Courier", then the default. */
   public static final String FONT_TYPE_MONOSPACED = "${monospaced}";
+  
+  /** Left alignment. */
+  public static final int ALIGN_LEFT = StyleConstants.ALIGN_LEFT;
+  /** Right alignment. */
+  public static final int ALIGN_RIGHT = StyleConstants.ALIGN_RIGHT;
+  /** Center alignment. */
+  public static final int ALIGN_CENTER = StyleConstants.ALIGN_CENTER;
+  /** Justified alignment. */
+  public static final int ALIGN_JUSTIFIED = StyleConstants.ALIGN_JUSTIFIED;
   
   /** The link attribute. */
   private final String linkAttribute = "linkAttribute";
@@ -60,11 +72,15 @@ public class AdvancedTextPane extends JTextPane {
   /** The default color. */
   private Color defaultColor = Color.BLACK;
   /** The default font. */
-  private String defaultFont = FONT_TYPE_SERIF;
+  private String defaultFont = FONT_TYPE_MONOSPACED;
   /** The default decoration. */
   private int defaultDecoration = NO_DECORATION;
   /** The default size. */
   private int defaultSize = 12;
+  /** The default line spacing. */
+  private float defaultLineSpacing = 0f;
+  /** The default alignment. */
+  private int defaultAlign = ALIGN_LEFT;
   
   
   /**
@@ -78,10 +94,11 @@ public class AdvancedTextPane extends JTextPane {
         
     // build default style
     Style defaultStyle = StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE);
-    StyleConstants.setLineSpacing(defaultStyle, 0f);
     StyleConstants.setSpaceAbove(defaultStyle, 0f);
     StyleConstants.setSpaceBelow(defaultStyle, 0f);
-    
+    StyledDocument doc = getStyledDocument();
+    doc.setParagraphAttributes(0, 0, defaultStyle, true);
+
     // add link listeners
     addMouseListener(new MouseAdapter() {
       public void mouseClicked(MouseEvent event) {
@@ -163,14 +180,28 @@ public class AdvancedTextPane extends JTextPane {
    * @param size  The text size.
    */
   public void addText(String text, Color color, int decoration, String font, int size) {
+    addText(text, color, decoration, font, size, defaultLineSpacing, defaultAlign);
+  }
+  
+  /**
+   * Adds text to this pane.
+   * 
+   * @param text  The text to add.
+   * @param color  The color of the text.
+   * @param decoration  The decoration. Combination of DECORATION_? constants (additive).
+   * @param font  The font. Either a font-family name (e.g. "Arial") or one of the FONT_TYPE_* constants.
+   * @param size  The text size.
+   * @param lineSpacing  The line spacing as a factor of size. 0=normal, -1=overlaps previous, 1=double-spacing.
+   * @param align  The alignment. Using one of the ALIGN_* constants.
+   */
+  public void addText(String text, Color color, int decoration, String font, int size, float lineSpacing, int align) {
     StyledDocument doc = getStyledDocument();
-    Style defaultStyle = StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE);
-    Style style = doc.addStyle("text-" + color.hashCode() + "-" + decoration, defaultStyle);  
-    updateStyle(style, color, decoration, font, size);
+    SimpleAttributeSet att = att(color, decoration, font, size, lineSpacing, align);
     
     // Load the text pane with styled text.
     try {
-      doc.insertString(doc.getLength(), text, style);
+      doc.setParagraphAttributes(doc.getLength(), 0, att, true);
+      doc.insertString(doc.getLength(), text, att);
     }
     catch (BadLocationException e) {
       Error.out(e);
@@ -216,6 +247,21 @@ public class AdvancedTextPane extends JTextPane {
   /**
    * Adds a link. Use DECORATION_UNDERLINE as needed.
    *  
+   * @param url  The URL. Will also be used as the text.
+   * @param color  The color.
+   * @param decoration  The decoration. Combination of DECORATION_? constants (additive).
+   * @param font  The font. Either a font-family name (e.g. "Arial") or one of the FONT_TYPE_* constants.
+   * @param size  The text size.
+   * @param lineSpacing  The line spacing as a factor of size. 0=normal, -1=overlaps previous, 1=double-spacing.
+   * @param align  The alignment. Using one of the ALIGN_* constants.
+   */
+  public void addLink(String url, Color color, int decoration, String font, int size, float lineSpacing, int align) {
+    addLink(url, url, color, decoration, font, size, lineSpacing, align);
+  }
+  
+  /**
+   * Adds a link. Use DECORATION_UNDERLINE as needed.
+   *  
    * @param url  The URL.
    * @param text  The text for the URL.
    * @param color  The color.
@@ -224,15 +270,31 @@ public class AdvancedTextPane extends JTextPane {
    * @param size  The text size.
    */
   public void addLink(String url, String text, Color color, int decoration, String font, int size) {
+    addLink(url, text, color, decoration, font, size, defaultLineSpacing, defaultAlign);
+  }
+  
+  /**
+   * Adds a link. Use DECORATION_UNDERLINE as needed.
+   *  
+   * @param url  The URL.
+   * @param text  The text for the URL.
+   * @param color  The color.
+   * @param decoration  The decoration. Combination of DECORATION_? constants (additive).
+   * @param font  The font. Either a font-family name (e.g. "Arial") or one of the FONT_TYPE_* constants.
+   * @param size  The text size.
+   * @param lineSpacing  The line spacing as a factor of size. 0=normal, -1=overlaps previous, 1=double-spacing.
+   * @param align  The alignment. Using one of the ALIGN_* constants.
+   */
+  public void addLink(String url, String text, Color color, int decoration, String font, int size
+                    , float lineSpacing, int align) {
     StyledDocument doc = getStyledDocument();
-    Style defaultStyle = StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE);
-    Style style = doc.addStyle("link-" + url + "-" + color.hashCode() + "-" + decoration, defaultStyle);  
-    updateStyle(style, color, decoration, font, size);
-    style.addAttribute(linkAttribute, url);
+    SimpleAttributeSet att = att(color, decoration, font, size, lineSpacing, align);
+    att.addAttribute(linkAttribute, url);
     
     // Load the text pane with styled text.
     try {
-      doc.insertString(doc.getLength(), text, style);
+      doc.setParagraphAttributes(doc.getLength(), 0, att, true);
+      doc.insertString(doc.getLength(), text, att);
     }
     catch (BadLocationException e) {
       Error.out(e);
@@ -249,13 +311,15 @@ public class AdvancedTextPane extends JTextPane {
     StyledDocument doc = getStyledDocument();
 
     // The image must first be wrapped in a style
-    Style style = doc.addStyle("image-" + url + "-" + image.hashCode(), null);
-    StyleConstants.setIcon(style, new ImageIcon(image));
-    style.addAttribute(linkAttribute, url);
+    SimpleAttributeSet att = att(defaultColor, defaultDecoration, defaultFont, defaultSize
+                               , defaultLineSpacing, defaultAlign);
+    StyleConstants.setIcon(att, new ImageIcon(image));
+    att.addAttribute(linkAttribute, url);
 
     // Insert the image at the end of the text
     try {
-      doc.insertString(doc.getLength(), "[img-" + image.hashCode() + "]", style);
+      doc.setParagraphAttributes(doc.getLength(), 0, att, true);
+      doc.insertString(doc.getLength(), "[img-" + image.hashCode() + "]", att);
     }
     catch (BadLocationException e) {
       Error.out(e);
@@ -271,12 +335,14 @@ public class AdvancedTextPane extends JTextPane {
     StyledDocument doc = getStyledDocument();
 
     // The image must first be wrapped in a style
-    Style style = doc.addStyle("image-" + image.hashCode(), null);
-    StyleConstants.setIcon(style, new ImageIcon(image));
+    SimpleAttributeSet att = att(defaultColor, defaultDecoration, defaultFont, defaultSize
+                               , defaultLineSpacing, defaultAlign);
+    StyleConstants.setIcon(att, new ImageIcon(image));
 
     // Insert the image at the end of the text
     try {
-      doc.insertString(doc.getLength(), "[img-" + image.hashCode() + "]", style);
+      doc.setParagraphAttributes(doc.getLength(), 0, att, true);
+      doc.insertString(doc.getLength(), "[img-" + image.hashCode() + "]", att);
     }
     catch (BadLocationException e) {
       Error.out(e);
@@ -367,26 +433,68 @@ public class AdvancedTextPane extends JTextPane {
   public void setDefaultSize(int defaultSize) {
     this.defaultSize = defaultSize;
   }
+  
+  /**
+   * Returns the default line spacing.
+   *
+   * @return  The default line spacing. 0=normal, -1=overlaps previous, 1=double-spacing, 0.5=1.5-spacing.
+   */
+  public float getDefaultLineSpacing() {
+    return defaultLineSpacing;
+  }
 
   /**
-   * Updates the style with given parameters.
+   * Sets the default line spacing.
+   *
+   * @param defaultLineSpacing  The default spacing. 0=normal, -1=overlaps previous, 1=double-spacing, 0.5=1.5-spacing.
+   */
+  public void setDefaultLineSpacing(float defaultLineSpacing) {
+    this.defaultLineSpacing = defaultLineSpacing;
+  }
+
+  /**
+   * Returns the default align.
+   *
+   * @return  The default align.
+   */
+  public int getDefaultAlign() {
+    return defaultAlign;
+  }
+
+  /**
+   * Sets the default align.
+   *
+   * @param defaultAlign  The default align.
+   */
+  public void setDefaultAlign(int defaultAlign) {
+    this.defaultAlign = defaultAlign;
+  }
+
+  /**
+   * Creates and returns the attribute set.
    *  
-   * @param style  The style.
    * @param color  The color.
    * @param decoration  The decoration. Combination of DECORATION_? constants (additive).
    * @param font  The font. Either a font-family name (e.g. "Arial") or one of the FONT_TYPE_* constants.
    * @param size  The text size.
+   * @param lineSpacing  The line spacing as a factor of size. 0=normal, -1=overlaps previous, 1=double-spacing.
+   * @param align  The alignment. Using one of the ALIGN_* constants.
+   * @return  The attribute set.
    */
-  private void updateStyle(Style style, Color color, int decoration, String font, int size) {
-    StyleConstants.setForeground(style, color);
-    StyleConstants.setFontSize(style, size);
-    StyleConstants.setFontFamily(style, matchingFont(font));
-    StyleConstants.setBold(style, (decoration & DECORATION_BOLD) > 0);
-    StyleConstants.setUnderline(style, (decoration & DECORATION_UNDERLINE) > 0);
-    StyleConstants.setItalic(style, (decoration & DECORATION_ITALIC) > 0);
-    StyleConstants.setSuperscript(style, (decoration & DECORATION_SUPERSCRIPT) > 0);
-    StyleConstants.setSubscript(style, (decoration & DECORATION_SUBSCRIPT) > 0);
-    StyleConstants.setStrikeThrough(style, (decoration & DECORATION_STRIKETHROUGH) > 0);
+  private SimpleAttributeSet att(Color color, int decoration, String font, int size, float lineSpacing, int align) {
+    SimpleAttributeSet att = new SimpleAttributeSet();
+    StyleConstants.setForeground(att, color);
+    StyleConstants.setFontSize(att, size);
+    StyleConstants.setFontFamily(att, matchingFont(font));
+    StyleConstants.setLineSpacing(att, lineSpacing);
+    StyleConstants.setAlignment(att, align);
+    StyleConstants.setBold(att, (decoration & DECORATION_BOLD) > 0);
+    StyleConstants.setUnderline(att, (decoration & DECORATION_UNDERLINE) > 0);
+    StyleConstants.setItalic(att, (decoration & DECORATION_ITALIC) > 0);
+    StyleConstants.setSuperscript(att, (decoration & DECORATION_SUPERSCRIPT) > 0);
+    StyleConstants.setSubscript(att, (decoration & DECORATION_SUBSCRIPT) > 0);
+    StyleConstants.setStrikeThrough(att, (decoration & DECORATION_STRIKETHROUGH) > 0);  
+    return att;
   }
   
   /**

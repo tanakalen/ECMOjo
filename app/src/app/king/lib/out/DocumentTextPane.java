@@ -21,7 +21,7 @@ public class DocumentTextPane extends AdvancedTextPane {
   private int paragraphDecoration = NO_DECORATION;
   
   /** The link color. */
-  private Color linkColor = paragraphColor.darker();
+  private Color linkColor = new Color(0x0000ff);
   /** The link decoration. */
   private int linkDecoration = DECORATION_UNDERLINE;
 
@@ -30,7 +30,7 @@ public class DocumentTextPane extends AdvancedTextPane {
    * The constructor.
    */
   public DocumentTextPane() {
-    setDefaultFont(FONT_TYPE_SERIF);
+    setDefaultFont(FONT_TYPE_SANS_SERIF);
   }
   
   /**
@@ -100,6 +100,16 @@ public class DocumentTextPane extends AdvancedTextPane {
     addParagraph("\n");
   }
   
+  /**
+   * Adds a line break.
+   * 
+   * @param height  The height of the break. 0=normal, -1=overlaps previous, 1=double-spacing, 0.5=1.5-spacing.
+   */
+  public void addLineBreak(float height) {
+    addText("\n", getDefaultColor(), getDefaultDecoration(), getDefaultFont(), getDefaultSize()
+                , height, getDefaultAlign());
+  }
+
   /**
    * Parses and outputs the message.
    * 
