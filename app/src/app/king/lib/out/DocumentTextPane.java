@@ -58,7 +58,8 @@ public class DocumentTextPane extends AdvancedTextPane {
   }
 
   /**
-   * Adds paragraph to this pane. The message is parsed for special codes.
+   * Adds paragraph to this pane. The message is parsed for links which will be automatically
+   * converted to clickable links.
    * 
    * @param paragraph  The paragraph to add.
    */
@@ -67,7 +68,8 @@ public class DocumentTextPane extends AdvancedTextPane {
   }
   
   /**
-   * Adds paragraph to this pane. The message is parsed for special codes.
+   * Adds paragraph to this pane. The message is parsed for links which will be automatically
+   * converted to clickable links.
    * 
    * @param paragraph  The paragraph to add.
    * @param color  The color.
@@ -78,7 +80,8 @@ public class DocumentTextPane extends AdvancedTextPane {
   }
 
   /**
-   * Adds paragraph to this pane. The message is parsed for special codes.
+   * Adds paragraph to this pane. The message is parsed for links which will be automatically
+   * converted to clickable links.
    * 
    * @param paragraph  The paragraph to add.
    * @param color  The color.
