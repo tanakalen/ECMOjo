@@ -1,9 +1,5 @@
 package edu.hawaii.jabsom.tri.ecmo.app.loader;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent;
@@ -179,45 +175,5 @@ public final class ScenarioCreator {
 
     // and return the scenario...
     return scenario;
-  }
-  
-  /**
-   * Clones a scenario. Uses the internal load/save methods to create a "quick"
-   * clone. This method is expected to be faster than "ObjectCloner.java".
-   * 
-   * @param scenario  The scenario to clone.
-   * @return  The cloned scenario or null if there was an error.
-   */
-  public static Scenario clone(Scenario scenario) {
-    ByteArrayOutputStream bos = null;
-    ByteArrayInputStream bin = null;
-    try {
-      // store in byte array
-      bos = new ByteArrayOutputStream();
-      ScenarioLoader.save(bos, scenario);
-      bos.flush();
-      bos.close();
-      
-      // load from byte array
-      bin = new ByteArrayInputStream(bos.toByteArray()); 
-      return ScenarioLoader.load(bin); 
-    } 
-    catch (IOException e) {
-      return null;
-    } 
-    finally {
-      try {
-        if (bos != null) {
-          bos.close();
-          bos = null;
-        }
-        
-        bin.close();
-        bin = null;
-      }
-      catch (IOException e) {
-        return null;
-      }
-    }
   }
 }

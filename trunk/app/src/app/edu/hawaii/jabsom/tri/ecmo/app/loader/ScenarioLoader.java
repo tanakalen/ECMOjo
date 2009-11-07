@@ -1,12 +1,12 @@
 package edu.hawaii.jabsom.tri.ecmo.app.loader;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.Map;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
+import edu.hawaii.jabsom.tri.ecmo.app.model.ScenarioFile;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.CannulaFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.PowerFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline.SuctionEttFunction;
@@ -209,7 +210,9 @@ public final class ScenarioLoader {
         if (code != null) {
           Script script = new Script();
           script.setLang(Language.PNUTS.getName());
-          script.setCode(code.replace("${linebreak}", "\n"));
+          code = code.replace("${linebreak}", "\n");
+          code = code.replace("${equals}", "=");
+          script.setCode(code);
           scenario.setScript(script);
         }
         
@@ -526,17 +529,46 @@ public final class ScenarioLoader {
   }
   
   /**
+   * Loads a scenario.
+   * 
+   * @param hookup  The location.
+   * @param path  The path.
+   * @return  The scenario.
+   * @throws IOException  If something goes wrong.
+   */
+  public static ScenarioFile loadFile(Hookup hookup, String path) throws IOException {
+    return loadFile(hookup.getInputStream(path));
+  }
+  
+  /**
+   * Loads a scenario.
+   * 
+   * @param inputStream  The input stream.
+   * @return  The scenario.
+   * @throws IOException  If something goes wrong.
+   */
+  public static ScenarioFile loadFile(InputStream inputStream) throws IOException {
+    DataInputStream in = new DataInputStream(inputStream);
+    ScenarioFile scenario = new ScenarioFile();
+    scenario.setParameters(in.readUTF());
+    String code = in.readUTF();
+    // TODO: do like above (add new converter to/fromScript functions)
+    in.close();
+    return scenario;
+  }
+  
+  /**
    * Saves a scenario.
    * 
    * @param hookup  The location.
    * @param path  The path.
-   * @param scenario  The the scenario.
+   * @param scenario  The scenario.
    * @throws IOException  If something goes wrong.
    */
-  public static void save(Hookup hookup, String path, Scenario scenario) throws IOException {
+  public static void saveFile(Hookup hookup, String path, ScenarioFile scenario) throws IOException {
     if (hookup instanceof LocalHookup) {
       LocalHookup localHookup = (LocalHookup)hookup;
-      save(localHookup.getOutputStream(path), scenario);
+      saveFile(localHookup.getOutputStream(path), scenario);
     }
   }
   
@@ -547,16 +579,14 @@ public final class ScenarioLoader {
    * @param scenario  The the scenario.
    * @throws IOException  If something goes wrong.
    */
-  public static void save(OutputStream outputStream, Scenario scenario) throws IOException {
-    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
-    
-    // write the version
-    writer.write(String.valueOf(CURRENT_VERSION));
-    writer.newLine();
-    
-    // write the scenario name
-    writer.write(scenario.getName());
-    writer.newLine();
+  public static void saveFile(OutputStream outputStream, ScenarioFile scenario) throws IOException {
+    DataOutputStream out = new DataOutputStream(outputStream);
+    out.writeUTF(scenario.getParameters());    
+    String code = scenario.getScript().getCode();
+    code = code.replace("\n", "${linebreak}");
+    code = code.replace("=", "${equals}");
+    out.writeUTF("script = " + code);
+    out.close();
   }
   
   /**
