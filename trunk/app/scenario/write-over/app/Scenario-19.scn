@@ -22,7 +22,7 @@ tutorial-item4-text = What changes do you see when the pump flow is increased?
 tutorial-item4-trigger = N/A
 tutorial-item5-text = Patient: Blood pressure and SaO2 increases. Mixed venous saturation increases.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Pressure Monitor: Venous pressure becomes more negative and  pre and post membrane pressure increase.
+tutorial-item6-text = Pressure Monitor: Venous pressure becomes more negative and pre and post membrane pressure increase.
 tutorial-item6-trigger = N/A
 
 # Baseline Values

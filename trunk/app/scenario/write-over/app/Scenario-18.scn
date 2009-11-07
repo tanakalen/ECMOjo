@@ -22,10 +22,12 @@ tutorial-item4-text = With significant hypothermia, note the impact on some of t
 tutorial-item4-trigger = N/A
 tutorial-item5-text = A DIC picture emerges.  The PT, PTT and ACT increases. Fibrinogen decreases.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = If you suspect a heater failure, check the water tube connections, power cord attachment and temperature set point. If everything checks out okay, the unit may have failed. Replace the unit.
-tutorial-item6-trigger = Action:Heater:replace
-tutorial-item7-text = You replaced the malfunctioning heater. Patient temperature values will return back to normal.
-tutorial-item7-trigger = N/A
+tutorial-item6-text = If you suspect a heater failure, check the water tube connections, power cord attachment and temperature set point. 
+tutorial-item6-trigger = N/A
+tutorial-item7-text = If everything checks out OK, the unit may have failed. Go ahead Replace the heater; click on the [Replace Heater] button.
+tutorial-item7-trigger = Action:Heater:replace
+tutorial-item8-text = You replaced the malfunctioning heater. Patient temperature values will return back to normal.
+tutorial-item8-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true

@@ -22,7 +22,7 @@ tutorial-item4-text = Increase the ventilator settings for additional support in
 tutorial-item4-trigger = Action:Ventilator:Emergency:on
 tutorial-item5-text = Resuscitate the patient as needed.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = 1.At the bedside, consider using the handcrank until the problem is solved.
+tutorial-item6-text = At the bedside, consider using the handcrank until the problem is solved.
 tutorial-item6-trigger = N/A
 
 # Baseline Values
