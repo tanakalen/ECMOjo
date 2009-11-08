@@ -222,6 +222,7 @@ public final class Updater {
         tube.setVenousPressure(-100);
       }
       
+      // TODO: Finish this lt!
       // Clamping behavior:
       /* End states: !AB!V, A!BV where ! indicates clamped
        *   !AB!V is clamped off circuit, see offCircuit()
@@ -231,13 +232,39 @@ public final class Updater {
        * Transition states are all other combinations of clamping, where if we are
        *   not in an end state by timer expiration bad things occur. 
        */
-      if (tube.isArterialAOpen() != history.isArterialAOpen() || tube.isArterialBOpen() != history.isArterialBOpen() 
-       || tube.isBridgeOpen() != history.isBridgeOpen()
-       || tube.isVenousAOpen() != history.isVenousAOpen() || tube.isVenousBOpen() != history.isVenousBOpen()) { 
-        // do interaction of clamping  
-        tubeUndo(tube, pump, pressureMonitor, oxygenator, physiologicMonitor, patient, history);
-        tubeDo(tube, pump, pressureMonitor, oxygenator, physiologicMonitor, patient);
+      if (!(onCircuit(tube) || offCircuit(tube))) {
+        long x = 3;
+        if (history.getStartClampTime() < 0) {
+          history.setStartClampTime(elapsedTime);
+        }
+        if ((elapsedTime - history.getStartClampTime()) > (x*1000)) {
+          doClampState(tube, pump, pressureMonitor, oxygenator, physiologicMonitor, patient);          
+        }
       }
+      else {
+        if (history.getStartClampTime() > 0) { // was in a transition state
+          if (oxygenator.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
+            // PMP
+            tube.setPreMembranePressure(125);
+            tube.setPostMembranePressure(120);
+          }
+          else { 
+            // Silicon
+            tube.setPreMembranePressure(140);
+            tube.setPostMembranePressure(120);
+          }
+        }
+        history.setStartClampTime(-1);
+      }
+      
+      // Old clamping routine:
+//      if (tube.isArterialAOpen() != history.isArterialAOpen() || tube.isArterialBOpen() != history.isArterialBOpen() 
+//       || tube.isBridgeOpen() != history.isBridgeOpen()
+//       || tube.isVenousAOpen() != history.isVenousAOpen() || tube.isVenousBOpen() != history.isVenousBOpen()) { 
+//        // do interaction of clamping
+//        tubeUndo(tube, pump, pressureMonitor, oxygenator, physiologicMonitor, patient, history);
+//        tubeDo(tube, pump, pressureMonitor, oxygenator, physiologicMonitor, patient);
+//      }
       
       if ((tube.getVenousPressure() < -75) && (pump.isOn()) && (pump.getFlow() > 0)) { // Consider abstract 75 out
         tube.setVenousBubbles(true);
@@ -1038,6 +1065,152 @@ public final class Updater {
   }
   
   /**
+   * Do the clamp effect for transition states if exceeds time limit.
+   * 
+   * @param tube  The tube.
+   * @param pump  The pump.
+   * @param pressureMonitor  The pressure monitor.
+   * @param oxigenator  The oxigenator.
+   * @param physiologicMonitor  The physiologic monitor.
+   * @param patient  The patient.
+   */
+  private static void doClampState(TubeComponent tube, PumpComponent pump, PressureMonitorComponent pressureMonitor, 
+      OxygenatorComponent oxigenator, PhysiologicMonitorComponent physiologicMonitor, Patient patient) {
+    // Arterial: Open, Venous: Open, Bridge: Open
+    if (tube.isArterialBOpen() && tube.isVenousBOpen() && tube.isBridgeOpen()) {
+      // heart rate increase 10%, 
+      patient.setHeartRate(patient.getHeartRate() * 1.10);
+      // systolic BP decrease by 15%,
+      patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * 0.85);
+      // central venous pressure decrease by 10%,
+      patient.setCentralVenousPressure(patient.getCentralVenousPressure() * 0.90);
+      // CDI pH equation, 
+      // CDI PCO2 equation, 
+      // CDI PO2 equation, 
+      // CDI bicarb change, 
+      // patient PaO2 decrease by 15%, 
+      patient.setPO2(patient.getPO2() * 0.85);
+      // no chanages in pre- or post-membrane pressures, 
+      // and flow ill not change in roller pump, 
+      // else if centrifugal will increase flow by 10%.
+      if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+        pump.setFlow(pump.getFlow() * 1.10);
+      }
+    }
+    // Arterial: Closed, Venous: Open, Bridge: Open
+    else if (!tube.isArterialBOpen() && tube.isVenousBOpen() && tube.isBridgeOpen()) {
+      // premembrane and postmembrane pressures drop by 10%. 
+      tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
+      tube.setPostMembranePressure(tube.getPostMembranePressure() * 0.90);
+      // Venous pressure increase by 1.
+      tube.setVenousPressure(tube.getVenousPressure() + 1.0);
+    }
+    // Arterial: Open, Venous: Closed, Bridge: Open
+    else if (tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen()) {
+      // premembrane pressure decreases by 10%. 
+      tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
+      // Venous pressure increases by 4.
+      tube.setVenousPressure(tube.getVenousPressure() + 4.0);
+    }
+    // Arterial: Closed, Venous: Closed, Bridge: Open
+      // Standard operation termed recirculation: no change; end state
+    
+    // Arterial: Open, Venous: Open, Bridge: Closed
+      // Standard operation: no change; end state
+
+    // Arterial: Closed, Venous: Open, Bridge: Closed
+    else if (!tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen()) {
+      if (pump.isOn() && (pump.getFlow() > 0.0)) {
+        tube.setPreMembranePressure(500.0);
+        tube.setPostMembranePressure(500.0);              
+
+        if (pump.getPumpType() == PumpType.ROLLER) {
+          oxigenator.setBroken(true);
+        }
+        
+        // If limits set appropriately,  
+        if (!pressureMonitor.isAlarm()) {
+          // premembrane pressure will equal postmembrane pressure up to 750.
+//          tube.setPreMembranePressure(tube.getPostMembranePressure());
+          // If roller then pressures will stay at 750, else it's centrifugal then it would stop and reset to 35. 
+          if (pump.getPumpType() == PumpType.ROLLER) {
+            // stay at 750???????
+            if (tube.getPreMembranePressure() > 750) {
+//              tube.setPreMembranePressure(750.0);
+//              tube.setPostMembranePressure(750.0);
+            }
+          }
+          if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+            // reset to 35 or decrease to 35???
+//            tube.setPreMembranePressure(35.0);
+          }
+        }
+        else {
+          // If limits not set appropriately then rupture for roller else centrifugal stop then reset to 35. 
+          if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+            // reset to 35 or decrease to 35???
+//            tube.setPreMembranePressure(35.0);
+          }
+          // The venous pressure increases by 2. Pump flow to 0. ??????
+          tube.setVenousPressure(pressureMonitor.getVenousPressure() + 2.0);
+          pump.setFlow(0.0); 
+          // If limits not set appropriately then for roller pump tubing will rupture, else flow is 0.
+          if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0))) {
+            // roller pump broken????
+            oxigenator.setBroken(true);
+          }
+        }
+      }
+    }
+    // Arterial: Open, Venous: Closed, Bridge: Closed
+    else if (tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {      
+      // If roller pump then premembrane = mean BP, else if centrifugal then premembrane decreases by 35. 
+      if (pump.getPumpType() == PumpType.ROLLER) {
+        tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
+      }
+      if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+        tube.setPreMembranePressure(tube.getPreMembranePressure() - 35.0);
+      } 
+      
+      // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2. 
+      if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SILICONE) {
+        tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
+        tube.setVenousPressure(tube.getVenousPressure() + 2.0);
+      }
+      
+      // If limits are appropriate then pump flow = 0, else limits not set properly then 
+      if (!pressureMonitor.isAlarm()) {
+        pump.setFlow(0.0);
+      }
+      else {
+        // if cenrifugal pump then pump flow to 0. 
+        if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+          pump.setFlow(0.0);
+        }
+        // Else if roller pump, air in venous line.
+        if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0.0))) {
+          tube.setVenousBubbles(true);
+        }   
+      }
+    }
+    // Arterial: Closed, Venous: Closed, Bridge: Closed
+    else if (!tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {
+      tube.setPreMembranePressure(750.0);
+      tube.setPostMembranePressure(750.0);              
+      // Massively bloody explosion with lots of alarms and noise. 
+      // If roller pump then "God of War" blood shower. 
+      if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0))) {
+        oxigenator.setBroken(true);
+      }
+      // If centrifugal then alarm, patient decompensates, pump stops.
+      if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+        pump.setAlarm(true);
+        pump.setOn(false);
+      }
+    }
+  }
+
+  /**
    * Patient dying process.
    * 
    * @param patient  The patient.
@@ -1113,7 +1286,7 @@ public final class Updater {
    */
   private static boolean onCircuit(TubeComponent tube) {
     // Are we on the circuit or clamped off? for clamping interaction
-    return !(!tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen());
+    return (tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen());
 
   }
 
