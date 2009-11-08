@@ -222,6 +222,15 @@ public final class Updater {
         tube.setVenousPressure(-100);
       }
       
+      // Clamping behavior:
+      /* End states: !AB!V, A!BV where ! indicates clamped
+       *   !AB!V is clamped off circuit, see offCircuit()
+       *   A!BV is on circuit, see onCircuit()
+       * Timer for detection when end states are not in effect. Thus, after x seconds
+       *   patient and circuit effects begin to happen.
+       * Transition states are all other combinations of clamping, where if we are
+       *   not in an end state by timer expiration bad things occur. 
+       */
       if (tube.isArterialAOpen() != history.isArterialAOpen() || tube.isArterialBOpen() != history.isArterialBOpen() 
        || tube.isBridgeOpen() != history.isBridgeOpen()
        || tube.isVenousAOpen() != history.isVenousAOpen() || tube.isVenousBOpen() != history.isVenousBOpen()) { 
@@ -229,11 +238,6 @@ public final class Updater {
         tubeUndo(tube, pump, pressureMonitor, oxygenator, physiologicMonitor, patient, history);
         tubeDo(tube, pump, pressureMonitor, oxygenator, physiologicMonitor, patient);
       }
-      
-//      if ((pump.isOn() && (pump.getFlow() > 0)) && ((!tube.isVenousAOpen()) || (!tube.isVenousBOpen())
-//                                                 || (!tube.isArterialAOpen()) || (!tube.isArterialBOpen()))) {
-//        pump.setOn(false);
-//      }
       
       if ((tube.getVenousPressure() < -75) && (pump.isOn()) && (pump.getFlow() > 0)) { // Consider abstract 75 out
         tube.setVenousBubbles(true);
@@ -453,7 +457,7 @@ public final class Updater {
       }
       
       /* update patient if on pump */
-      if (onPump(tube)) {
+      if (onCircuit(tube)) {
         double patientTemperature = patient.getTemperature();
         if (patientTemperature < heater.getTemperature()) {
           patient.setTemperature(patientTemperature + 0.001);
@@ -1102,15 +1106,27 @@ public final class Updater {
   }
 
   /**
-   * Private boolean whether we are on pump or not.
+   * Private boolean whether we are on circuit or not.
    * 
    * @param tube  The tube.
-   * @return boolean Whether patient is on pump or not.
+   * @return boolean Whether patient is on circuit or not.
    */
-  private static boolean onPump(TubeComponent tube) {
-    // Are we on pump? for clamping interaction
+  private static boolean onCircuit(TubeComponent tube) {
+    // Are we on the circuit or clamped off? for clamping interaction
     return !(!tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen());
 
   }
 
+  /**
+   * Private boolean whether we are off of the circuit or not.
+   * 
+   * @param tube  The tube.
+   * @return boolean Whether patient is off the circuit or not.
+   */
+  private static boolean offCircuit(TubeComponent tube) {
+    // Are we clamped off the circuit? for clamping interaction
+    return (!tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen());
+
+  }
+  
 }
