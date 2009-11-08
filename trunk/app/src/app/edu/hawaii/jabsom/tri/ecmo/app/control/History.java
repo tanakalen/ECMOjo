@@ -19,7 +19,7 @@ public class History {
   /** Holds prior venous pressure information. */
   private double venousPressure;
   /** Holds starting time that a clamp is applied. */
-  private double startClampTime = 0;
+  private long startClampTime = -1;
   /** Holds prior True if the bridge is open. */
   private boolean bridgeOpen;
   /** Holds prior True if arterial position A open. */
@@ -37,7 +37,7 @@ public class History {
    *
    * @return  The time when clamp is applied.
    */
-  public double getStartClampTime() {
+  public long getStartClampTime() {
     return startClampTime;
   }
 
@@ -47,7 +47,7 @@ public class History {
    *
    * @param time  The time when a clamp is applied not at end state.
    */
-  public void setStartClampTime(double time) {
+  public void setStartClampTime(long time) {
     this.startClampTime = time;
   }
 
