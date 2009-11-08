@@ -140,7 +140,7 @@ public final class Updater {
         ccPerKg = 0;
       }
       
-      // update equipment (physiologic monitor)
+      /* update equipment (physiologic monitor) */
       physiologicMonitor.setTemperature(Math.rint(patient.getTemperature()));
       physiologicMonitor.setHeartRate(patient.getHeartRate());
       physiologicMonitor.setRespiratoryRate(patient.getRespiratoryRate());
@@ -149,7 +149,7 @@ public final class Updater {
       physiologicMonitor.setSystolicBloodPressure(patient.getSystolicBloodPressure());
       physiologicMonitor.setCentralVenousPressure(patient.getCentralVenousPressure());
       
-      // update equipment (tubing)
+      /* update equipment (tubing) */
       double paO2 = ((99.663 * oxygenator.getFiO2()) - 6.17) * 7.5;  // see PaO2-FiO2.spv (SPSS)
       if (oxygenator.getClotting() > 1) { // oxygenator not working as efficiently
         paO2 = paO2 * 1 / oxygenator.getClotting();
@@ -340,13 +340,13 @@ public final class Updater {
         }
       }
       
-      // update equipment (oxygenator)
+      /* update equipment (oxygenator) */
       // currently handled in other tube component
       
-      // update equipment (bubble detector)
+      /* update equipment (bubble detector) */
       bubbleDetector.setAlarm(tube.isArterialBubbles());
 
-      // update equipment (CDI monitor) note CDI is in line post-oxygenator
+      /* update equipment (CDI monitor) note CDI is in line post-oxygenator */
       cdiMonitor.setSaO2(tube.getSaO2());      
       cdiMonitor.setSvO2(tube.getSvO2());
       cdiMonitor.setTemperature(heater.getTemperature());
@@ -359,7 +359,7 @@ public final class Updater {
       cdiMonitor.setPO2(paO2); // paO2 set in tubing update
       cdiMonitor.setPCO2(tube.getPostPCO2());
 
-      // update equipment (pump)
+      /* update equipment (pump) */
       if ((pump.getFlow() < (0.02f * patient.getWeight())) || (!pump.isOn())) {
         pump.setAlarm(true);
       }
@@ -404,12 +404,12 @@ public final class Updater {
         }
       }
       
-      // update equipment (pressure monitor)
+      /* update equipment (pressure monitor) */
       pressureMonitor.setPreMembranePressure(tube.getPreMembranePressure());
       pressureMonitor.setPostMembranePressure(tube.getPostMembranePressure());
       pressureMonitor.setVenousPressure(tube.getVenousPressure());
       
-      // update equipment (ventilator)
+      /* update equipment (ventilator) */
       // TODO: What happens when on emergency ventilator and on ECMO?
       if (ventilator.isEmergencyFuction()) {
         if (ventilator.getName().equals("High Frequency Ventilator")) {
@@ -432,7 +432,7 @@ public final class Updater {
         }
       }
 
-      // update equipment (alarm)
+      /* update equipment (alarm) */
       if (pressureMonitor.isAlarm()
           || physiologicMonitor.isAlarm()
           || bubbleDetector.isAlarm()
@@ -452,7 +452,7 @@ public final class Updater {
         alarmIndicator.setAlarm(false);
       }
       
-      // update patient if on pump
+      /* update patient if on pump */
       if (onPump(tube)) {
         double patientTemperature = patient.getTemperature();
         if (patientTemperature < heater.getTemperature()) {

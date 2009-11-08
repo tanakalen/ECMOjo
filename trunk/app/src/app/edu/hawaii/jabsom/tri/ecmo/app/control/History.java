@@ -18,6 +18,8 @@ public class History {
   private double sweep;
   /** Holds prior venous pressure information. */
   private double venousPressure;
+  /** Holds starting time that a clamp is applied. */
+  private double startClampTime = 0;
   /** Holds prior True if the bridge is open. */
   private boolean bridgeOpen;
   /** Holds prior True if arterial position A open. */
@@ -30,6 +32,25 @@ public class History {
   private boolean venousBOpen;
   
   
+  /**
+   * Returns the starting time a clamp is applied.
+   *
+   * @return  The time when clamp is applied.
+   */
+  public double getStartClampTime() {
+    return startClampTime;
+  }
+
+  /**
+   * Sets the counter to when a clamp has been applied. ECMO circuit is not in
+   * onPump state where A~BV and not in recirculating state where ~AB~V.
+   *
+   * @param time  The time when a clamp is applied not at end state.
+   */
+  public void setStartClampTime(double time) {
+    this.startClampTime = time;
+  }
+
   /**
    * Returns the bridgeOpen.
    *
