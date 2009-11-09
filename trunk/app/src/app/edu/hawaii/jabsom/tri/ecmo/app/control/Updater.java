@@ -918,7 +918,7 @@ public final class Updater {
       }
       else {
         // dies slower
-        patient.setPH(patient.getPH() > 0 ? patient.getPH() - 0.0001 : 0);
+        patient.setPH(patient.getPH() > 6 ? patient.getPH() - 0.0001 : 6);
         patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.01 : 120);
         patient.setHeartRate(patient.getHeartRate() > 0 ? patient.getHeartRate() - 0.1 : 0);
         patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() > 0 
@@ -940,7 +940,7 @@ public final class Updater {
       if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
           && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
         // dies slower
-        patient.setPH(patient.getPH() > 0 ? patient.getPH() - 0.0001 : 0);
+        patient.setPH(patient.getPH() > 6 ? patient.getPH() - 0.0001 : 6);
         patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.01 : 120);
         patient.setHeartRate(patient.getHeartRate() > 0 ? patient.getHeartRate() - 0.01 : 0);
         patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() > 0 
@@ -959,7 +959,7 @@ public final class Updater {
       }
       else {
         // dies faster
-        patient.setPH(patient.getPH() > 0 ? patient.getPH() - 0.001 : 0);
+        patient.setPH(patient.getPH() > 6 ? patient.getPH() - 0.001 : 6);
         patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.1 : 120);
         patient.setHeartRate(patient.getHeartRate() > 0 ? patient.getHeartRate() - 0.1 : 0);
         patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() > 0 
