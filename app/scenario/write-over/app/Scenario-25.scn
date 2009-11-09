@@ -20,14 +20,16 @@ tutorial-item3-text = Check downstream (forward toward patient) from monitoring 
 tutorial-item3-trigger = N/A
 tutorial-item4-text = Click pressure monitor.
 tutorial-item4-trigger = Action:View:PressureMonitorComponent
-tutorial-item5-text = Notice there is no change in the Post membrane pressure (P3).
+tutorial-item5-text = Notice there is no change in the Post membrane pressure (post).
 tutorial-item5-trigger = N/A
 tutorial-item6-text = Click patient, then the [Check Cannula Site] button.
 tutorial-item6-trigger = Action:Patient:CANNULA_SITE
-tutorial-item7-text = No problems with the arterial cannula noted.
+tutorial-item7-text = No problems with the arterial cannula was noted.
 tutorial-item7-trigger = N/A
 tutorial-item8-text = Isolated high pre-membrane pressure suggests a problem inside your oxygenator.
 tutorial-item8-trigger = N/A
+tutorial-item9-text = Consider changing the oxygenator.
+tutorial-item9-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
