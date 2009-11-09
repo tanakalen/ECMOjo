@@ -763,17 +763,15 @@ public final class Updater {
       // CDI pH equation, 
       // CDI PCO2 equation, 
       // CDI PO2 equation, 
-      // CDI bicarb change, 
+      // CDI bicarb change,
       // patient PaO2 decreases,
       patient.setPO2(patient.getPO2() > 30 ? patient.getPO2() - 0.001 : 30);
       // no changes in pre- or post-membrane pressures, 
       // and flow will not change in roller pump, 
-      // else if centrifugal will increase flow.
-      // Note: ECMOjo doesn't distinguish measured versus actual flow meaning
-      //   increasing pump flow will mean actual flow is increased.
-//      if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
-//        pump.setFlow(pump.getFlow() * 1.10);
-//      }
+      // else if centrifugal will increase flow
+      if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
+        pump.setFlow(0.6 * 1.10); // assume neonate with 600mL/min flow
+      }
     }
     // Arterial: Closed, Venous: Open, Bridge: Open
     // or
@@ -790,6 +788,9 @@ public final class Updater {
       tube.setVenousPressure(tube.getVenousPressure() < 20 
           ? tube.getVenousPressure() + 0.001 : 20);
       // Blood gas changes
+      patient.setPH(patient.getPH() > 7 ? patient.getPH() - 0.001 : 7);
+      patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.001 : 120);
+      patient.setPO2(patient.getPO2() > 30 ? patient.getPO2() - 0.001 : 30);
     }
     // Arterial: Closed, Venous: Closed, Bridge: Open
       // Standard operation termed recirculation: no change; end state
@@ -840,6 +841,10 @@ public final class Updater {
           }
         }
       }
+      // Blood gas changes
+      patient.setPH(patient.getPH() > 7 ? patient.getPH() - 0.001 : 7);
+      patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.001 : 120);
+      patient.setPO2(patient.getPO2() > 30 ? patient.getPO2() - 0.001 : 30);
     }
     // Arterial: Open, Venous: Closed, Bridge: Closed
     else if (tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {      
@@ -871,6 +876,10 @@ public final class Updater {
           tube.setVenousBubbles(true);
         }   
       }
+      // Blood gas changes
+      patient.setPH(patient.getPH() > 7 ? patient.getPH() - 0.001 : 7);
+      patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.001 : 120);
+      patient.setPO2(patient.getPO2() > 30 ? patient.getPO2() - 0.001 : 30);
     }
     // Arterial: Closed, Venous: Closed, Bridge: Closed
     else if (!tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {
@@ -886,6 +895,10 @@ public final class Updater {
         pump.setAlarm(true);
         pump.setOn(false);
       }
+      // Blood gas changes
+      patient.setPH(patient.getPH() > 7 ? patient.getPH() - 0.001 : 7);
+      patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.001 : 120);
+      patient.setPO2(patient.getPO2() > 30 ? patient.getPO2() - 0.001 : 30);
     }
   }
 
