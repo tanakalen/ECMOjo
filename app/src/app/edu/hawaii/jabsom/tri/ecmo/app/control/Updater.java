@@ -618,9 +618,6 @@ public final class Updater {
           // pump flow to patient PaO2
           try {
             double patientSaturation = Mediator.flowToSPO2(mode, ccPerKg, patient);
-            if (tube.isBridgeOpen()) {
-              patientSaturation -= patientSaturation * 0.3;
-            }
             if (ventilator.isEmergencyFuction()) {
               patientSaturation *= 1.25;
               if (patientSaturation > 1.0) {
@@ -900,6 +897,7 @@ public final class Updater {
       patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.001 : 120);
       patient.setPO2(patient.getPO2() > 30 ? patient.getPO2() - 0.001 : 30);
     }
+    patient.setO2Saturation(Mediator.calcOxygenSaturation(patient.getPO2()));
   }
 
   /**
