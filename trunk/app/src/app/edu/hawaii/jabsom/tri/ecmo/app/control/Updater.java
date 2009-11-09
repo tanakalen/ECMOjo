@@ -484,181 +484,157 @@ public final class Updater {
           patient.setTemperature(patientTemperature - 0.001);
         }
 
-        // update patient pH, pCO2, HCO3, base excess
-        try {
-          double patientPH = Mediator.flowToPH(mode, ccPerKg, patient);
-          patient.setPH(patientPH);
-        }
-        catch (Exception e) {
-          double patientPH = patient.getPH();
-          if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
-            // TODO BAD heart steady decline to death
-            Error.out("Using VV ECMO with poor heart function is not a good idea!");
-            patient.setPH(patientPH - 0.001); //Heading down 0.001unit per 20ms
+        if (onCircuit(tube)) {
+          // update patient pH, pCO2, HCO3, base excess
+
+          try {
+            double patientPH = Mediator.flowToPH(mode, ccPerKg, patient);
+            patient.setPH(patientPH);
           }
-          else if (e.getMessage().equals("Reached data limit")) {
-            double patientPCO2 = patient.getPCO2();
-            double newPH = 7;
-            if (lungFunction == LungFunction.GOOD) {
-              newPH = patientPH - (((cdiMonitor.getPCO2() * 1.11) - patientPCO2) * 0.008);
+          catch (Exception e) {
+            double patientPH = patient.getPH();
+            if ((mode == Mode.VV) && (heartFunction == HeartFunction.BAD)) {
+              // TODO BAD heart steady decline to death
+              Error.out("Using VV ECMO with poor heart function is not a good idea!");
+              patient.setPH(patientPH - 0.001); //Heading down 0.001unit per 20ms
             }
-            else {
-              if (heartFunction == HeartFunction.GOOD) {
-                newPH = patientPH - (((cdiMonitor.getPCO2() * 1.25) - patientPCO2) * 0.008);
+            else if (e.getMessage().equals("Reached data limit")) {
+              double patientPCO2 = patient.getPCO2();
+              double newPH = 7;
+              if (lungFunction == LungFunction.GOOD) {
+                newPH = patientPH - (((cdiMonitor.getPCO2() * 1.11) - patientPCO2) * 0.008);
               }
               else {
-                newPH = patientPH - (((cdiMonitor.getPCO2() * 1.35) - patientPCO2) * 0.008);
+                if (heartFunction == HeartFunction.GOOD) {
+                  newPH = patientPH - (((cdiMonitor.getPCO2() * 1.25) - patientPCO2) * 0.008);
+                }
+                else {
+                  newPH = patientPH - (((cdiMonitor.getPCO2() * 1.35) - patientPCO2) * 0.008);
+                }
               }
+              patient.setPH(newPH);
             }
-            patient.setPH(newPH);
+            else {
+              Error.out(e.getMessage());
+            }
+          }
+
+          // simplified version: interaction sweep to patient PCO2
+          // problems: does not take into account ventilation through the ventilator 
+          //   with good lungs, or CO2 removal with slower flow. Also issues with,
+          //   venous recirculation in VV mode where the pump CDI would not be 
+          //   reflective of the patient's values.
+          if (lungFunction == LungFunction.GOOD) {
+            patient.setPCO2(cdiMonitor.getPCO2() * 1.11);
           }
           else {
+            if (heartFunction == HeartFunction.GOOD) {
+              patient.setPCO2(cdiMonitor.getPCO2() * 1.25);
+            }
+            else {
+              patient.setPCO2(cdiMonitor.getPCO2() * 1.35);
+            }
+          }
+
+          // Link of flow to heart rate and blood pressure
+          if ((difference != 0) && (history.getFlow() != 0)) {
+            // SBP increase 10% if flow increase by 20mL/kg/min in VA AND bad heart
+            double hradjust = 0.5;
+            if ((mode == Mode.VA) && (heartFunction == HeartFunction.BAD)) {
+              double bpadjust = 10 / (20 * patient.getWeight()); // % change SBP for 1mL/min flow change
+              if (difference > 0) {
+                patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
+                patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate() * difference));
+              }
+              else {
+                patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate() * difference));
+                double newbp = patient.getSystolicBloodPressure() * (1 - bpadjust);
+                if (newbp < 50) {
+                  patient.setSystolicBloodPressure(50);
+                }
+                else {
+                  patient.setSystolicBloodPressure(newbp);
+                }
+              }
+            }
+            else if (mode == Mode.VV) {
+              // pump flow to patient heart rate & blood pressure however in VV
+              // NO blood pressure change
+              if (difference > 0) {
+                // flow higher then heart rate decreases
+                patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate() * difference));
+              }
+              else {
+                // flow lower then heart rate increases
+                patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate() * difference));
+              }
+            }
+            else {
+              double bpadjust = 0.007; // Constant to adjust bp (note: 5% change too big!!!)
+              // pump flow to patient heart rate & blood pressure
+              if (difference > 0) {
+                // flow higher then BP increases & heart rate decreases
+                patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
+                patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate() * difference));
+              }
+              else {
+                // flow lower then blood pressure drops & heart rate increases
+                patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate() * difference));
+                double newbp = patient.getSystolicBloodPressure() * (1 - bpadjust);
+                if (newbp < 50) {
+                  patient.setSystolicBloodPressure(50);
+                }
+                else {
+                  patient.setSystolicBloodPressure(newbp);
+                }
+              }            
+            }
+          }
+
+          // Link change in pre-membrane pressure to patient CVP
+          double venpresdiff = tube.getVenousPressure() - history.getVenousPressure();
+          if ((venpresdiff != 0) && (history.getVenousPressure() != 0)) {
+            // if pumptype is centrifugal
+            double pumpadj = 75;
+            // else
+            if (pump.getPumpType() == PumpType.ROLLER) {
+              pumpadj = 50;
+            }
+            double cvpadjust = Math.abs(venpresdiff / pumpadj);
+            if (venpresdiff > 0) {
+              double newcvp = patient.getCentralVenousPressure() * (1 + cvpadjust);
+              if (newcvp <= 50) {
+                patient.setCentralVenousPressure(newcvp);
+              }
+            }
+            else {
+              double newcvp = patient.getCentralVenousPressure() * (1 - cvpadjust);
+              if (newcvp >= 0) {
+                patient.setCentralVenousPressure(newcvp);
+              }
+            }
+          }
+
+          // pump flow to patient PaO2
+          try {
+            double patientSaturation = Mediator.flowToSPO2(mode, ccPerKg, patient);
+            if (tube.isBridgeOpen()) {
+              patientSaturation -= patientSaturation * 0.3;
+            }
+            if (ventilator.isEmergencyFuction()) {
+              patientSaturation *= 1.25;
+              if (patientSaturation > 1.0) {
+                patientSaturation = 1.0;
+              }
+            }
+            // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
+            double po2 = Mediator.calcPaO2(patientSaturation, tube.getMode());
+            patient.setO2Saturation(patientSaturation);
+            patient.setPO2(po2); // TODO: set from graph FiO2 with varying shunts?
+          }
+          catch (Exception e) {
             Error.out(e.getMessage());
           }
-        }
-
-        // simplified version: interaction sweep to patient PCO2
-        // problems: does not take into account ventilation through the ventilator 
-        //   with good lungs, or CO2 removal with slower flow. Also issues with,
-        //   venous recirculation in VV mode where the pump CDI would not be 
-        //   reflective of the patient's values.
-        if (lungFunction == LungFunction.GOOD) {
-          patient.setPCO2(cdiMonitor.getPCO2() * 1.11);
-        }
-        else {
-          if (heartFunction == HeartFunction.GOOD) {
-            patient.setPCO2(cdiMonitor.getPCO2() * 1.25);
-          }
-          else {
-            patient.setPCO2(cdiMonitor.getPCO2() * 1.35);
-          }
-        }
-
-        // temperature effect
-        if ((patient.getTemperature() < 36.0) || (patient.getTemperature() > 37.0)) {
-          if (patient.getTemperature() != history.getPatientTemperature()) {
-            double bpadjust = 0.0001;
-            double hradjust = 0.0001;
-            double actadjust = 0.1;
-            if (patient.getTemperature() > history.getPatientTemperature()) {
-              patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate()));
-              patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
-              if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
-                patient.setAct(patient.getAct() * (1 - actadjust));
-              }
-            }
-            else {
-              patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate()));
-              patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
-              if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
-                patient.setAct(patient.getAct() * (1 + actadjust));
-                patient.setFibrinogen(patient.getFibrinogen() * (1 - (2 * actadjust)));
-                patient.setPt(patient.getPt() * (1 + actadjust));
-                patient.setPtt(patient.getPtt() * (1 + actadjust));
-                patient.setPlatelets(patient.getPlatelets() * (1 - (2 * actadjust)));
-              }
-            }
-          }
-        }
-
-        // Link of flow to heart rate and blood pressure
-        if ((difference != 0) && (history.getFlow() != 0)) {
-          // SBP increase 10% if flow increase by 20mL/kg/min in VA AND bad heart
-          double hradjust = 0.5;
-          if ((mode == Mode.VA) && (heartFunction == HeartFunction.BAD)) {
-            double bpadjust = 10 / (20 * patient.getWeight()); // % change SBP for 1mL/min flow change
-            if (difference > 0) {
-              patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
-              patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate() * difference));
-            }
-            else {
-              patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate() * difference));
-              double newbp = patient.getSystolicBloodPressure() * (1 - bpadjust);
-              if (newbp < 50) {
-                patient.setSystolicBloodPressure(50);
-              }
-              else {
-                patient.setSystolicBloodPressure(newbp);
-              }
-            }
-          }
-          else if (mode == Mode.VV) {
-            // pump flow to patient heart rate & blood pressure however in VV
-            // NO blood pressure change
-            if (difference > 0) {
-              // flow higher then heart rate decreases
-              patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate() * difference));
-            }
-            else {
-              // flow lower then heart rate increases
-              patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate() * difference));
-            }
-          }
-          else {
-            double bpadjust = 0.007; // Constant to adjust bp (note: 5% change too big!!!)
-            // pump flow to patient heart rate & blood pressure
-            if (difference > 0) {
-              // flow higher then BP increases & heart rate decreases
-              patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
-              patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate() * difference));
-            }
-            else {
-              // flow lower then blood pressure drops & heart rate increases
-              patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate() * difference));
-              double newbp = patient.getSystolicBloodPressure() * (1 - bpadjust);
-              if (newbp < 50) {
-                patient.setSystolicBloodPressure(50);
-              }
-              else {
-                patient.setSystolicBloodPressure(newbp);
-              }
-            }            
-          }
-        }
-        
-        // Link change in pre-membrane pressure to patient CVP
-        double venpresdiff = tube.getVenousPressure() - history.getVenousPressure();
-        if ((venpresdiff != 0) && (history.getVenousPressure() != 0)) {
-          // if pumptype is centrifugal
-          double pumpadj = 75;
-          // else
-          if (pump.getPumpType() == PumpType.ROLLER) {
-            pumpadj = 50;
-          }
-          double cvpadjust = Math.abs(venpresdiff / pumpadj);
-          if (venpresdiff > 0) {
-            double newcvp = patient.getCentralVenousPressure() * (1 + cvpadjust);
-            if (newcvp <= 50) {
-              patient.setCentralVenousPressure(newcvp);
-            }
-          }
-          else {
-            double newcvp = patient.getCentralVenousPressure() * (1 - cvpadjust);
-            if (newcvp >= 0) {
-              patient.setCentralVenousPressure(newcvp);
-            }
-          }
-        }
-
-        // pump flow to patient PaO2
-        try {
-          double patientSaturation = Mediator.flowToSPO2(mode, ccPerKg, patient);
-          if (tube.isBridgeOpen()) {
-            patientSaturation -= patientSaturation * 0.3;
-          }
-          if (ventilator.isEmergencyFuction()) {
-            patientSaturation *= 1.25;
-            if (patientSaturation > 1.0) {
-              patientSaturation = 1.0;
-            }
-          }
-          // see (b) in "Oxyhemoglobin Dissociation Curve.xls"
-          double po2 = Mediator.calcPaO2(patientSaturation, tube.getMode());
-          patient.setO2Saturation(patientSaturation);
-          patient.setPO2(po2); // TODO: set from graph FiO2 with varying shunts?
-        }
-        catch (Exception e) {
-          Error.out(e.getMessage());
         }
       }
       else { 
@@ -669,6 +645,33 @@ public final class Updater {
             
       // TODO Patient bicarb and base excess calc? from Mark's table
       
+      // temperature effect
+      if ((patient.getTemperature() < 36.0) || (patient.getTemperature() > 37.0)) {
+        if (patient.getTemperature() != history.getPatientTemperature()) {
+          double bpadjust = 0.0001;
+          double hradjust = 0.0001;
+          double actadjust = 0.1;
+          if (patient.getTemperature() > history.getPatientTemperature()) {
+            patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate()));
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
+            if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
+              patient.setAct(patient.getAct() * (1 - actadjust));
+            }
+          }
+          else {
+            patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate()));
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
+            if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
+              patient.setAct(patient.getAct() * (1 + actadjust));
+              patient.setFibrinogen(patient.getFibrinogen() * (1 - (2 * actadjust)));
+              patient.setPt(patient.getPt() * (1 + actadjust));
+              patient.setPtt(patient.getPtt() * (1 + actadjust));
+              patient.setPlatelets(patient.getPlatelets() * (1 - (2 * actadjust)));
+            }
+          }
+        }
+      }
+
       // Update patient sedated status
       //   This is independent of on or off pump
       //   *adjust are constants to change rate of rise
@@ -741,27 +744,29 @@ public final class Updater {
    * @param tube  The tube.
    * @param pump  The pump.
    * @param pressureMonitor  The pressure monitor.
-   * @param oxigenator  The oxigenator.
+   * @param oxygenator  The oxygenator.
    * @param physiologicMonitor  The physiologic monitor.
    * @param patient  The patient.
    */
   private static void doClampState(TubeComponent tube, PumpComponent pump, PressureMonitorComponent pressureMonitor, 
-      OxygenatorComponent oxigenator, PhysiologicMonitorComponent physiologicMonitor, Patient patient) {
+      OxygenatorComponent oxygenator, PhysiologicMonitorComponent physiologicMonitor, Patient patient) {
     // Arterial: Open, Venous: Open, Bridge: Open
     if (tube.isArterialBOpen() && tube.isVenousBOpen() && tube.isBridgeOpen()) {
       // heart rate increases,
-      patient.setHeartRate(patient.getHeartRate() + 0.01);
+      patient.setHeartRate(patient.getHeartRate() < 180 ? patient.getHeartRate() + 0.01 : 180);
       // systolic BP decreases,
-      patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.001);
+      patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() > 50 
+          ? patient.getSystolicBloodPressure() - 0.001 : 50);
       // central venous pressure decreases,
-      patient.setCentralVenousPressure(patient.getCentralVenousPressure() - 0.001);
+      patient.setCentralVenousPressure(patient.getCentralVenousPressure() > 1 
+          ? patient.getCentralVenousPressure() - 0.001 : 1);
       // CDI pH equation, 
       // CDI PCO2 equation, 
       // CDI PO2 equation, 
       // CDI bicarb change, 
       // patient PaO2 decreases,
-      patient.setPO2(patient.getPO2() - 0.001);
-      // no chanages in pre- or post-membrane pressures, 
+      patient.setPO2(patient.getPO2() > 30 ? patient.getPO2() - 0.001 : 30);
+      // no changes in pre- or post-membrane pressures, 
       // and flow will not change in roller pump, 
       // else if centrifugal will increase flow.
       // Note: ECMOjo doesn't distinguish measured versus actual flow meaning
@@ -771,19 +776,20 @@ public final class Updater {
 //      }
     }
     // Arterial: Closed, Venous: Open, Bridge: Open
-    else if (!tube.isArterialBOpen() && tube.isVenousBOpen() && tube.isBridgeOpen()) {
-      // premembrane and postmembrane pressures drop. 
-      tube.setPreMembranePressure(tube.getPreMembranePressure() - 0.001);
-      tube.setPostMembranePressure(tube.getPostMembranePressure() - 0.001);
-      // Venous pressure increases.
-      tube.setVenousPressure(tube.getVenousPressure() + 0.001);
-    }
+    // or
     // Arterial: Open, Venous: Closed, Bridge: Open
-    else if (tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen()) {
-      // premembrane pressure decreases. 
-      tube.setPreMembranePressure(tube.getPreMembranePressure() - 0.001);
+    //   Blood recirculates through bridge
+    else if ((!tube.isArterialBOpen() && tube.isVenousBOpen() && tube.isBridgeOpen()) 
+      || (tube.isArterialBOpen() && !tube.isVenousBOpen() && tube.isBridgeOpen())) {
+      // premembrane and postmembrane pressures drop. 
+      tube.setPreMembranePressure(tube.getPreMembranePressure() > 90 
+          ? tube.getPreMembranePressure() - 0.001 : 90);
+      tube.setPostMembranePressure(tube.getPostMembranePressure() > 70 
+          ? tube.getPostMembranePressure() - 0.001 : 70);
       // Venous pressure increases.
-      tube.setVenousPressure(tube.getVenousPressure() + 0.002);
+      tube.setVenousPressure(tube.getVenousPressure() < 20 
+          ? tube.getVenousPressure() + 0.001 : 20);
+      // Blood gas changes
     }
     // Arterial: Closed, Venous: Closed, Bridge: Open
       // Standard operation termed recirculation: no change; end state
@@ -798,7 +804,7 @@ public final class Updater {
         tube.setPostMembranePressure(500.0);              
 
         if (pump.getPumpType() == PumpType.ROLLER) {
-          oxigenator.setBroken(true);
+          oxygenator.setBroken(true);
         }
         
         // If limits set appropriately,  
@@ -830,7 +836,7 @@ public final class Updater {
           // If limits not set appropriately then for roller pump tubing will rupture, else flow is 0.
           if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0))) {
             // roller pump broken????
-            oxigenator.setBroken(true);
+            oxygenator.setBroken(true);
           }
         }
       }
@@ -842,14 +848,11 @@ public final class Updater {
         tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
       }
       if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
-//        tube.setPreMembranePressure(tube.getPreMembranePressure() - 35.0);
         tube.setPreMembranePressure(115);
       } 
       
       // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2. 
-      if (pump.getPumpType() == PumpType.ROLLER && oxigenator.getOxyType() == OxyType.SILICONE) {
-//        tube.setPreMembranePressure(tube.getPreMembranePressure() * 0.90);
-//        tube.setVenousPressure(tube.getVenousPressure() + 2.0);
+      if (pump.getPumpType() == PumpType.ROLLER && oxygenator.getOxyType() == OxyType.SILICONE) {
         tube.setPreMembranePressure(115*0.9);
         tube.setVenousPressure(tube.getVenousPressure() + 0.001);
       }
@@ -876,7 +879,7 @@ public final class Updater {
       // Massively bloody explosion with lots of alarms and noise. 
       // If roller pump then "God of War" blood shower. 
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0))) {
-        oxigenator.setBroken(true);
+        oxygenator.setBroken(true);
       }
       // If centrifugal then alarm, patient decompensates, pump stops.
       if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
