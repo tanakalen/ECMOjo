@@ -276,7 +276,13 @@ public class PnutsCompile implements Compile {
     }
     
     // and run the script
-    Object result = pnuts.run(pnutsContext);
+    Object result = null;
+    try {
+      result = pnuts.run(pnutsContext);
+    }
+    catch (Exception e) {
+      throw new ScriptException(e.getMessage());
+    }
     if ((timedContext != null) && (timedContext.expired == true)) {
       throw new ScriptException("Script took too long to execute.");
     }

@@ -1,6 +1,10 @@
 package edu.hawaii.jabsom.tri.ecmo.app.control;
 
 import king.lib.out.Error;
+import king.lib.script.control.CompileException;
+import king.lib.script.control.ScriptException;
+import king.lib.script.control.ScriptRunner;
+import king.lib.script.model.Compile;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.AlarmIndicatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.BubbleDetectorComponent;
@@ -129,6 +133,22 @@ public final class Updater {
             patient.setBleeding(true);
           }
         }
+      }
+      
+      // execute script as needed
+      try {
+        Compile compile = game.getCompile();
+        if (compile != null) {
+          try {
+            ScriptRunner.getDefault().execute(compile);
+          }
+          catch (ScriptException e) {
+            Error.out(e);
+          }
+        }
+      }
+      catch (CompileException e) {
+        Error.out(e);
       }
       
       // load some local variables for Updater

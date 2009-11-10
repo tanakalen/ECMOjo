@@ -13,6 +13,9 @@ scenario-vent-type = *
 # Goal Information
 goal = Simulation
 
+# The script
+script = return 8.1;
+
 # Baseline Values
 baseline-sedated = true
 baseline-bleeding = false

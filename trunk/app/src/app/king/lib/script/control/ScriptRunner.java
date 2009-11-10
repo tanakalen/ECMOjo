@@ -26,6 +26,9 @@ import king.lib.script.model.pnuts.PnutsCompile;
  */
 public class ScriptRunner {
 
+  /** The default instance in sandboxed mode. */
+  private static ScriptRunner instance;
+  
   /** The context. */
   private Context context;
   
@@ -33,7 +36,7 @@ public class ScriptRunner {
   /**
    * The default constructor which uses the default context in sandboxed mode.
    */
-  public  ScriptRunner() {
+  public ScriptRunner() {
     this(new Context());
   }
 
@@ -42,10 +45,22 @@ public class ScriptRunner {
    * 
    * @param context  The context.
    */
-  public  ScriptRunner(Context context) {
+  public ScriptRunner(Context context) {
     this.context = context;
   }
 
+  /**
+   * Returns the default script runner.
+   * 
+   * @return  The default script runner in sandboxed mode.
+   */
+  public static ScriptRunner getDefault() {
+    if (instance == null) {
+      instance = new ScriptRunner();
+    }
+    return instance;
+  }
+  
   /**
    * Parses and compiles a script.
    * <p>
@@ -153,6 +168,19 @@ public class ScriptRunner {
   
   /**
    * Executes a script. Please execute a compile if a script is executed more than once to improve 
+   * performance. The input is assumed to be null.
+   * 
+   * @param script  The script.
+   * @return  The return value if any.
+   * @throws CompileException  If there is a compiling problem.
+   * @throws ScriptException  If there is a problem executing the script.
+   */
+  public Object execute(Script script) throws CompileException, ScriptException {
+    return execute(script, context, null);
+  }
+  
+  /**
+   * Executes a script. Please execute a compile if a script is executed more than once to improve 
    * performance.
    * 
    * @param script  The script.
@@ -178,6 +206,19 @@ public class ScriptRunner {
    */
   public static Object execute(Script script, Context context, Object object) throws CompileException, ScriptException {
     return execute(compile(script), context, object);
+  }
+  
+  /**
+   * Executes a compile. This is preferred over executing a script, if a script is going to be 
+   * executed more than once. Or execute the compile directly by calling its execute method. The 
+   * input is assumed to be null.
+   * 
+   * @param compile  The compile.
+   * @return  The return value if any.
+   * @throws ScriptException  If there is a problem executing the script.
+   */
+  public Object execute(Compile compile) throws ScriptException {
+    return execute(compile, context, null);
   }
   
   /**

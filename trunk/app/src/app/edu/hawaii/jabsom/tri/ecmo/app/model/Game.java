@@ -7,6 +7,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.Tracker;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
+import king.lib.script.control.CompileException;
+import king.lib.script.control.ScriptRunner;
+import king.lib.script.model.Compile;
+import king.lib.script.model.Script;
 import king.lib.util.ObjectCloner;
 
 /**
@@ -35,7 +39,10 @@ public class Game implements Serializable {
   /** The actions executed. */
   private ActionList actions;
   
-
+  /** A compiled script or null for none. */
+  private Compile compile;
+  
+  
   /**
    * Constructor for game.
    * 
@@ -99,6 +106,36 @@ public class Game implements Serializable {
    */
   public Baseline getBaseline() {
     return scenario.getBaseline();
+  }
+
+  /**
+   * Returns the script.
+   * 
+   * @return  The script or null for none.
+   */
+  public Script getScript() {
+    return scenario.getScript();
+  }
+  
+  /**
+   * Returns the compile (compiled script).
+   * 
+   * @return  The compile or null for none.
+   * @throws CompileException  If there was a problem retrieving/compiling the compiled script.
+   */
+  public Compile getCompile() throws CompileException {
+    if (compile == null) {
+      if (getScript() == null) {
+        return null;
+      }
+      else {
+        compile = ScriptRunner.compile(getScript());
+        return compile;
+      }
+    }
+    else {
+      return compile;
+    }
   }
 
   /**
