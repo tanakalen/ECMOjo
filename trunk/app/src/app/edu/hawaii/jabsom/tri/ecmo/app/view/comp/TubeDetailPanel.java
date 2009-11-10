@@ -78,7 +78,7 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
         // output dialog
         StandardDialog.showDialog(TubeDetailPanel.this, DialogType.PLAIN, DialogOption.OK
             , "Circuit Changed"
-            , "The circuit has been changed.");
+            , "The circuit has been changed. Please increase flow.");
       }
     });
     changeCircuitButton.setLocation(18, 222);

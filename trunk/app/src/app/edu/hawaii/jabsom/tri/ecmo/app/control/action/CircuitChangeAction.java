@@ -27,7 +27,7 @@ public class CircuitChangeAction extends Action {
     // change circuit <=> "reset the circuit"   
     Equipment equipment = game.getEquipment();
     
-    // reset the oxigenator
+    // reset the oxygenator
     OxygenatorComponent oxiComponent = (OxygenatorComponent)equipment
                                        .getComponent(OxygenatorComponent.class);
     oxiComponent.setClotting(0.0);
@@ -51,7 +51,7 @@ public class CircuitChangeAction extends Action {
     // reset the pump
     PumpComponent pumpComponent = (PumpComponent)equipment
                                   .getComponent(PumpComponent.class);
-    pumpComponent.setOn(false);
+//    pumpComponent.setOn(false);
     pumpComponent.setFlow(0.0);
     
     // reset alarms

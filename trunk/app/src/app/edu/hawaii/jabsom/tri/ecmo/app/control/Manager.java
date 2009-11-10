@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.CircuitChangeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
@@ -139,7 +140,14 @@ public class Manager implements Runnable {
         // execute actions (that the user inputted)
         synchronized(actions) {
           for (Action action: actions) {
-            action.execute(game); 
+            if (action.getClass() == CircuitChangeAction.class) {
+              history.setVenousPressure(0);
+              history.setFlow(0);
+              action.execute(game);
+            }
+            else {
+              action.execute(game);
+            }
             
             // store action
             game.getActions().add(action);
