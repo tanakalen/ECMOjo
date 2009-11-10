@@ -5,6 +5,11 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import king.lib.out.Error;
+import king.lib.script.control.CompileException;
+import king.lib.script.control.ScriptCompiler;
+import king.lib.script.model.Compile;
+
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.CircuitChangeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
@@ -120,6 +125,18 @@ public class Manager implements Runnable {
     long nextLoop = (System.nanoTime() / 1000000) + increment;
     History history = new History();
     
+    // the script
+    Compile compile = null;
+    if (game.getScript() != null) {
+      // we have a script, let compile it and use it in our updater
+      try {
+        compile = ScriptCompiler.compile(game.getScript()); 
+      }
+      catch(CompileException e) {
+        Error.out(e);
+      }
+    }
+    
     // initialize game views (See ScenarioLoader.java)
     ACTRequestAction actact = new ACTRequestAction();
     actact.execute(game);
@@ -159,7 +176,7 @@ public class Manager implements Runnable {
         }
 
         // update the game (equipment and patient)
-        if (Updater.execute(game, history, increment)) {
+        if (Updater.execute(game, history, compile, increment)) {
           play = false;
           notifyGoalReached();
         }

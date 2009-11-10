@@ -14,7 +14,7 @@ scenario-vent-type = *
 goal = Simulation
 
 # The script
-script = return 8.1;
+script = System.out.println("hello!");
 
 # Baseline Values
 baseline-sedated = true

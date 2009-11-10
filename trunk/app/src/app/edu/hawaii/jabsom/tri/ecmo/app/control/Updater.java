@@ -1,10 +1,14 @@
 package edu.hawaii.jabsom.tri.ecmo.app.control;
 
+import java.io.PrintStream;
+
 import king.lib.out.Error;
-import king.lib.script.control.CompileException;
+import king.lib.sandbox.model.ClassSandbox;
 import king.lib.script.control.ScriptException;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Compile;
+import king.lib.script.model.Context;
+import king.lib.util.StringSet;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.AlarmIndicatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.BubbleDetectorComponent;
@@ -35,6 +39,26 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
  */
 public final class Updater {
 
+  /** Our script runner. */
+  private static ScriptRunner scriptRunner;
+  
+  /** 
+   * Our static initializer.
+   */
+  static {
+    // setup script runner: uses always the same permissions.
+    Context context = new Context();
+    context.setMaxDuration(50);
+    StringSet accessibleClasses = new StringSet();
+    accessibleClasses.add(System.class.getName());
+    accessibleClasses.add(PrintStream.class.getName());
+    accessibleClasses.add(String.class.getName());
+    accessibleClasses.add(Math.class.getName());
+    accessibleClasses.add(Integer.class.getName());
+    context.setSandbox(new ClassSandbox(accessibleClasses));
+    scriptRunner = new ScriptRunner(context);
+  }
+  
   /**
    * Private constructor to prevent instantiation.
    */
@@ -87,10 +111,11 @@ public final class Updater {
    * 
    * @param game  The game.
    * @param history  The historical values.
+   * @param compile  A compiled script or null for none.
    * @param increment  The time increment in milliseconds.
    * @return  True, if goal is reached.
    */
-  public static boolean execute(Game game, History history, long increment) {
+  public static boolean execute(Game game, History history, Compile compile, long increment) {
     Goal goal = game.getGoal();
     if (!goal.isReached(game)) {
       // increment time
@@ -136,19 +161,13 @@ public final class Updater {
       }
       
       // execute script as needed
-      try {
-        Compile compile = game.getCompile();
-        if (compile != null) {
-          try {
-            ScriptRunner.getDefault().execute(compile);
-          }
-          catch (ScriptException e) {
-            Error.out(e);
-          }
+       if (compile != null) {
+        try {
+          scriptRunner.execute(compile);
         }
-      }
-      catch (CompileException e) {
-        Error.out(e);
+        catch (ScriptException e) {
+          Error.out(e);
+        }
       }
       
       // load some local variables for Updater
