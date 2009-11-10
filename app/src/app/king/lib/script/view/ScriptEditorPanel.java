@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import king.lib.script.control.CompileException;
-import king.lib.script.control.ScriptRunner;
+import king.lib.script.control.ScriptCompiler;
 import king.lib.script.model.Script;
 import king.lib.util.DateTime;
 import king.lib.util.Translator;
@@ -55,7 +55,7 @@ public class ScriptEditorPanel extends JPanel {
         try {
           String timestamp = new DateTime().toString();
           consolePanel.setOutput(timestamp + " | " + Translator.getString("text.Compiling[i18n]: Compiling...") + "\n");
-          ScriptRunner.compile(getScript());
+          ScriptCompiler.compile(getScript());
           consolePanel.addOutput(Translator.getString("text.CompiledOK[i18n]: Compiled. OK!") + "\n");
         }
         catch (CompileException e) {
