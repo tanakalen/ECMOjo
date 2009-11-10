@@ -210,9 +210,7 @@ public final class ScenarioLoader {
         if (code != null) {
           Script script = new Script();
           script.setLang(Language.PNUTS.getName());
-          code = code.replace("${linebreak}", "\n");
-          code = code.replace("${equals}", "=");
-          script.setCode(code);
+          script.setCode(decodeScript(code));
           scenario.setScript(script);
         }
         
@@ -552,7 +550,10 @@ public final class ScenarioLoader {
     ScenarioFile scenario = new ScenarioFile();
     scenario.setParameters(in.readUTF());
     String code = in.readUTF();
-    // TODO: do like above (add new converter to/fromScript functions)
+    Script script = new Script();
+    script.setLang(Language.PNUTS.getName());
+    script.setCode(decodeScript(code));
+    scenario.setScript(script);
     in.close();
     return scenario;
   }
@@ -583,9 +584,7 @@ public final class ScenarioLoader {
     DataOutputStream out = new DataOutputStream(outputStream);
     out.writeUTF(scenario.getParameters());    
     String code = scenario.getScript().getCode();
-    code = code.replace("\n", "${linebreak}");
-    code = code.replace("=", "${equals}");
-    out.writeUTF("script = " + code);
+    out.writeUTF("script = " + encodeScript(code));
     out.close();
   }
   
@@ -606,5 +605,29 @@ public final class ScenarioLoader {
     else {
       return Double.NaN;
     }
+  }
+  
+  /**
+   * Encodes a script.
+   * 
+   * @param code  The code to encode.
+   * @return  The encoded code.
+   */
+  private static String encodeScript(String code) {
+    code = code.replace("\n", "${linebreak}");
+    code = code.replace("=", "${equals}");
+    return code;
+  }
+  
+  /**
+   * Decodes a script.
+   * 
+   * @param code  The code to decode.
+   * @return  The decoded code.
+   */
+  private static String decodeScript(String code) {
+    code = code.replace("${linebreak}", "\n");
+    code = code.replace("${equals}", "=");
+    return code;
   }
 }
