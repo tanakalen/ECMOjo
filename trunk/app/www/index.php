@@ -32,13 +32,14 @@
 
 <h1>News & Updates</h1>
 <ul>
-  <li><strong>October 5, 2009</strong> - Version 2.2.2 available for download (Windows, Mac, Linux).<li>
-  <li><strong>September 25, 2009</strong> - New ECMOjo version uploaded and online.<li>
-  <li><strong>September 10, 2009</strong> - Updated the ECMOjo website.</li>
-  <li><strong>August 31, 2009</strong> - Usability evaluation completed.</li>
-  <li><strong>May 6, 2009</strong> - Added ECMOjo Tutorial 1 video.</li>
-  <li><strong>January 14, 2009</strong> - The ECMOjo website opens its doors to the public!</li>
-  <li><strong>October 6, 2008</strong> - Registered ECMOjo to Source Forge.</li>
+  <li><strong>November 11, 2009</strong> - Version 2.2.4 available for download (Windows, Mac, Linux).
+  <li><strong>October 5, 2009</strong> - Version 2.2.2 available for download (Windows, Mac, Linux).
+  <li><strong>September 25, 2009</strong> - New ECMOjo version uploaded and online.
+  <li><strong>September 10, 2009</strong> - Updated the ECMOjo website.
+  <li><strong>August 31, 2009</strong> - Usability evaluation completed.
+  <li><strong>May 6, 2009</strong> - Added ECMOjo Tutorial 1 video.
+  <li><strong>January 14, 2009</strong> - The ECMOjo website opens its doors to the public!
+  <li><strong>October 6, 2008</strong> - Registered ECMOjo to Source Forge.
 </ul>
 <br>
 <br>
