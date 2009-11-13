@@ -103,8 +103,6 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
       }
     };
     
-    bullet = addBullet(33, 149);    
-    bullet.addActionListener(defaultBulletListener);
     bullet = addBullet(63, 149);    
     bullet.addActionListener(defaultBulletListener);
     bullet = addBullet(100, 149);    
@@ -138,8 +136,6 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
     bullet = addBullet(100, 208);    
     bullet.addActionListener(defaultBulletListener);
     bullet = addBullet(63, 208);    
-    bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(33, 208);    
     bullet.addActionListener(defaultBulletListener);
   }
   
