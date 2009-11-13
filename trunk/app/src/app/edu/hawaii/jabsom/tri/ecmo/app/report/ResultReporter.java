@@ -24,18 +24,25 @@ public abstract class ResultReporter {
   public abstract void report(Game game) throws IOException;
   
   /**
-   * Returns an overview in text format.
+   * Returns an overview in HTML format.
    * 
    * @param game  The game.
-   * @return  The report in text format.
+   * @return  The report in HTML format.
    */
-  public static String getOverview(Game game) {
+  public static String getHTMLOverview(Game game) {
     StringBuilder builder = new StringBuilder();
-    String linebreak = "\n";
+    String linebreak = "<br>";
+    
+    // add introduction
+    builder.append("The following result where recorded while you were running "
+                 + "the ECMOjo scenario selected:").append(linebreak);
+    builder.append(linebreak);
     
     // add overview
-    builder.append("Scenario: ").append(game.getName()).append(linebreak);
-    builder.append("Result: ").append(game.getGoal().isWon(game) ? "Success" : "Failure").append(linebreak);
+    builder.append("<b>Scenario</b>: ").append(game.getName()).append(linebreak);
+    builder.append("<b>Result</b>: ").append(game.getGoal().isWon(game) ? "<font color=\"#00c000\">Success</font>" 
+                                                                        : "<font color=\"#f00000\">Failure</font>")
+                                                                        .append(linebreak);
     builder.append(linebreak);
     
     // add detail
@@ -45,6 +52,19 @@ public abstract class ResultReporter {
     
     // and return the overview ...
     return builder.toString();
+  }
+
+  /**
+   * Returns an overview in text format.
+   * 
+   * @param game  The game.
+   * @return  The report in text format.
+   */
+  public static String getOverview(Game game) {
+    String overview = getHTMLOverview(game);
+    overview = overview.replaceAll("<br>", "\n");
+    overview = overview.replaceAll("<.*?>", "");
+    return overview;
   }
   
   /**

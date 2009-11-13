@@ -3,7 +3,6 @@ package edu.hawaii.jabsom.tri.ecmo.app.state;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
@@ -17,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
+import king.lib.out.InternetTextPane;
 
 /**
  * The result state panel. 
@@ -59,11 +59,11 @@ public class ResultStatePanel extends JPanel {
     add(titleLabel);
     
     // add result overview
-    JTextArea infoArea = new JTextArea(ResultReporter.getOverview(game));
+    InternetTextPane infoArea = new InternetTextPane();
+    infoArea.setDefaultFont(InternetTextPane.FONT_TYPE_SANS_SERIF);
+    infoArea.addHTML(ResultReporter.getHTMLOverview(game));
     infoArea.setOpaque(false);
     infoArea.setEditable(false);
-    infoArea.setLineWrap(true);
-    infoArea.setWrapStyleWord(true);
     infoArea.setFont(titleLabel.getFont().deriveFont(Font.PLAIN, 14f));
     infoArea.setLocation(30, 160);
     infoArea.setSize(720, 360);
