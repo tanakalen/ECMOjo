@@ -14,6 +14,10 @@ import king.lib.script.model.Context;
 
 /**
  * A compiled Pnuts script.
+ * <p>
+ * Required JARs: pnuts-1.1.jar (Java 5 compatible)
+ * <p>
+ * Note: The newer pnuts-1.2.1.jar|pnuts-1.2+.jar are Java 6 compatible! Doesn't work if deployed for Java 5.
  *
  * @author  noblemaster
  * @since  October 22, 2009
