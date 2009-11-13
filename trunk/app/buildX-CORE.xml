@@ -318,7 +318,7 @@
   	<delete file="${build.obfuscate.dir}/${name}.jar"/> 	
   	<taskdef resource="proguard/ant/task.properties" classpath="${lib.ant.dir}/proguard.jar" />
   	<!-- Please note that [obfuscate="false"]: it's an open source project... -->
-  	<proguard printseeds="true" optimize="false" obfuscate="false"
+  	<proguard printseeds="true" optimize="false" obfuscate="false" ignorewarnings="true"
   	          printmapping="${resource.dir}/obfuscate/proguard-mapping-${name}-${release.version}-${release.time}.txt" 
   	          defaultpackage="cg">
   	  <!-- Specify the input jars, output jars, and library jars. -->
