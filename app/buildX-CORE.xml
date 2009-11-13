@@ -496,7 +496,7 @@
     </copy>
     <!-- Copy project jar files -->
     <copy todir="${build.webstart.dir}">
-      <fileset dir="${build.obfuscate.dir}"/>
+      <fileset dir="${build.library.dir}"/>
     </copy>
     <copy todir="${build.webstart.dir}">
       <fileset dir="${build.libconf.dir}"/>
