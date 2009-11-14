@@ -5,7 +5,7 @@ name = High Post-Membrane Pressure
 desc = Identifying the cause of a high post-membrane pressure.
 
 # Scenario Parameters
-scenario-ecmo-mode = *
+scenario-ecmo-mode = VA
 scenario-oxy-type = *
 scenario-pump-type = *
 scenario-vent-type = *
@@ -136,6 +136,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-nb-vv-whiteout,xr-nb-va-whiteout
+lab-img-xray = xr-nb-vv-kink,xr-nb-va-arthigh
 lab-img-us = us-nb-vv-noivh
 lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal
