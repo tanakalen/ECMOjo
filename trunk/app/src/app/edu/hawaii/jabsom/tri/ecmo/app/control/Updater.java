@@ -1046,7 +1046,7 @@ public final class Updater {
    * @return boolean Whether patient is connected to circuit or not.
    */
   private static boolean isConnected(TubeComponent tube) {
-    return (tube.isArterialBOpen() && tube.isVenousBOpen());
+    return (tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBrokenCannula());
   }
 
 }

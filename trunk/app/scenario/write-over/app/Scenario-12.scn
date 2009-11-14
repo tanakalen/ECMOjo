@@ -76,6 +76,7 @@ patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = true
+patient-blood-volume = 250
 patient-temperature = 37
 
 # Heater
@@ -106,9 +107,9 @@ tube-clamp-venous-B = open
 tube-clamp-bridge = closed
 tube-bubbles-arterial = false
 tube-bubbles-venous = false
-tube-cannula-broken = false
-tube-cannula-status = 
-tube-cannula-problem-location = 
+tube-cannula-broken = true
+tube-cannula-status = kink
+tube-cannula-problem-location = arterial
 tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
 tube-cannula-premembranepressure = 
