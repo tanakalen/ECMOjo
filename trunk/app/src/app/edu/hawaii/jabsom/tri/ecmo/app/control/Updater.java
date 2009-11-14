@@ -936,7 +936,7 @@ public final class Updater {
       patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.001 : 120);
       patient.setPO2(patient.getPO2() > 30 ? patient.getPO2() - 0.001 : 30);
     }
-    patient.setO2Saturation(Mediator.calcOxygenSaturation(patient.getPO2()));
+    patient.setO2Saturation(patient.getO2Saturation() > 0.65 ? patient.getO2Saturation() - 0.0001 : 0.65);
   }
 
   /**
