@@ -1,7 +1,7 @@
 1
 
 # Scenario Information
-name = Coming off centrifugal ECMO
+name = Coming off Centrifugal ECMO
 desc = Steps to emergently come off of ECLS support with centrifugal pump.
 
 # Scenario Parameters
