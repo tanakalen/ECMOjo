@@ -186,13 +186,15 @@ public class TutorialGoal extends Goal {
               if (items.length <= 4) {
                 // Action:View:LabTest:[LabTest]  viewing, where [LabTest] is "BloodGasLabTest", "ChemistryLabTest", ...
                 if (action instanceof ViewAction) {
-                  String requiredLabTest = items[3];
-                  LabComponent component = (LabComponent)((ViewAction)action).getComponent();
-                  String actualLabTest = component.getLabTest().getName();
-                  actualLabTest = actualLabTest.substring(actualLabTest.lastIndexOf(".") + 1);
-                  if (actualLabTest.equals(requiredLabTest)) {
-                    progress++;
-                    notifyUpdate();
+                  if (((ViewAction)action).getComponent() instanceof LabComponent) {
+                    String requiredLabTest = items[3];
+                    LabComponent component = (LabComponent)((ViewAction)action).getComponent();
+                    String actualLabTest = component.getLabTest().getName();
+                    actualLabTest = actualLabTest.substring(actualLabTest.lastIndexOf(".") + 1);
+                    if (actualLabTest.equals(requiredLabTest)) {
+                      progress++;
+                      notifyUpdate();
+                    }
                   }
                 }
               }
@@ -489,22 +491,22 @@ public class TutorialGoal extends Goal {
               // where [Pref] is "premin", "premax", "postmin", ...
               double actualTemperature = 0;
               if (items[2].equals("premin")) {
-                actualTemperature = ((PressureMonitorAction) action).getPreMembranePressureMin();
+                actualTemperature = ((PressureMonitorAction)action).getPreMembranePressureMin();
               }
               else if (items[2].equals("premax")) {
-                actualTemperature = ((PressureMonitorAction) action).getPreMembranePressureMax();
+                actualTemperature = ((PressureMonitorAction)action).getPreMembranePressureMax();
               }
               else if (items[2].equals("postmin")) {
-                actualTemperature = ((PressureMonitorAction) action).getPostMembranePressureMin();
+                actualTemperature = ((PressureMonitorAction)action).getPostMembranePressureMin();
               }
               else if (items[2].equals("postmax")) {
-                actualTemperature = ((PressureMonitorAction) action).getPostMembranePressureMax();
+                actualTemperature = ((PressureMonitorAction)action).getPostMembranePressureMax();
               }
               else if (items[2].equals("venousmin")) {
-                actualTemperature = ((PressureMonitorAction) action).getVenousPressureMin();
+                actualTemperature = ((PressureMonitorAction)action).getVenousPressureMin();
               }
               else if (items[2].equals("venousmax")) {
-                actualTemperature = ((PressureMonitorAction) action).getVenousPressureMax();
+                actualTemperature = ((PressureMonitorAction)action).getVenousPressureMax();
               }
               String operator = items[3].substring(0, 1);
               double triggerTemperature = Double.parseDouble(items[3].substring(1));
