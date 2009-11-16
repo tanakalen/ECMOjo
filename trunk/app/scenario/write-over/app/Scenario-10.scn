@@ -1,7 +1,7 @@
 1
 
 # Scenario Information
-name = Coming off roller ECMO
+name = Coming off Roller ECMO
 desc = Steps to emergently come off of ECLS support with roller pump.
 
 # Scenario Parameters
