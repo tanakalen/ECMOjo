@@ -3,6 +3,7 @@ package king.lib.script.model.pnuts;
 import java.io.FileNotFoundException;
 import java.net.URL;
 
+import pnuts.compiler.CompilerPnutsImpl;
 import pnuts.ext.ConfigurationAdapter;
 import pnuts.lang.Jump;
 import pnuts.lang.Pnuts;
@@ -249,6 +250,7 @@ public class PnutsCompile implements Compile {
     pnuts.lang.Package pnutsPackage = new pnuts.lang.Package();
     pnutsPackage.set("input".intern(), object);
     pnuts.lang.Context pnutsContext = new pnuts.lang.Context(pnutsPackage);
+    pnutsContext.setImplementation(new CompilerPnutsImpl());   // should make things fast as it uses compiled code!?
     
     // set time limit as needed    
     MyContext timedContext = null;
