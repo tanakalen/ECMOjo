@@ -256,7 +256,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
               }
               Image smallImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
               Graphics g = smallImg.getGraphics();
-              g.drawImage(img, 0, 0, null);
+              g.drawImage(img, 0, 0, width, height, null);
               img = smallImg;
             }
             
