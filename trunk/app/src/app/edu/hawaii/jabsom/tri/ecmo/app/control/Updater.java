@@ -958,16 +958,16 @@ public final class Updater {
       }
       else {
         // dies slower
-        patient.setPH(patient.getPH() > 6 ? patient.getPH() - 0.0001 : 6);
-        patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.01 : 120);
-        patient.setHeartRate(patient.getHeartRate() > 0 ? patient.getHeartRate() - 0.1 : 0);
+        patient.setPH(patient.getPH() > 6 ? patient.getPH() - 0.0005 : 6);
+        patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.05 : 120);
+        patient.setHeartRate(patient.getHeartRate() > 0 ? patient.getHeartRate() - 0.01 : 0);
         patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() > 0 
             ? patient.getSystolicBloodPressure()- 0.01 : 0);
         patient.setCentralVenousPressure(patient.getCentralVenousPressure() > 0
-            ? patient.getCentralVenousPressure() - 0.001 : 0);
+            ? patient.getCentralVenousPressure() - 0.005 : 0);
         patient.setO2Saturation(patient.getO2Saturation() > 0 ? patient.getO2Saturation() 
             - 0.0001 : 0);
-        patient.setPO2(patient.getPO2() > 0 ? patient.getPO2() - 0.01 : 0);
+        patient.setPO2(patient.getPO2() > 0 ? patient.getPO2() - 0.05 : 0);
         double life = patient.getLife();
         life -= increment / 60000.0;   // 1 minute to die...
         if (life < 0.0) {
@@ -980,16 +980,16 @@ public final class Updater {
       if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
           && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
         // dies slower
-        patient.setPH(patient.getPH() > 6 ? patient.getPH() - 0.0001 : 6);
-        patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.01 : 120);
+        patient.setPH(patient.getPH() > 6 ? patient.getPH() - 0.0005 : 6);
+        patient.setPCO2(patient.getPCO2() < 120 ? patient.getPCO2() + 0.05 : 120);
         patient.setHeartRate(patient.getHeartRate() > 0 ? patient.getHeartRate() - 0.01 : 0);
         patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() > 0 
             ? patient.getSystolicBloodPressure() - 0.01 : 0);
         patient.setCentralVenousPressure(patient.getCentralVenousPressure() > 0 
-            ? patient.getCentralVenousPressure() - 0.001: 0);
+            ? patient.getCentralVenousPressure() - 0.005: 0);
         patient.setO2Saturation(patient.getO2Saturation() > 0 ? patient.getO2Saturation() 
             - 0.0001 : 0);
-        patient.setPO2(patient.getPO2() > 0 ? patient.getPO2() - 0.01 : 0);
+        patient.setPO2(patient.getPO2() > 0 ? patient.getPO2() - 0.05 : 0);
         double life = patient.getLife();
         life -= increment / 60000.0;   // 1 minute to die...
         if (life < 0.0) {
