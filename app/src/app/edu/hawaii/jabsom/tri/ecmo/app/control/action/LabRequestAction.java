@@ -274,7 +274,7 @@ public class LabRequestAction extends Action {
       // Fibrinogen 125-300 range
       labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 70));
       // platelets 100-478 * 10(9) range
-      labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 50)); //373
+      labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 295)); //373
       // PT 13-18 range
       labTest.setPt(patient.getPt() + (Math.random() * 5));
       // PTT 80-100 range
