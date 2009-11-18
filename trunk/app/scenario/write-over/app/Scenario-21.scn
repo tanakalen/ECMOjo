@@ -28,8 +28,18 @@ tutorial-item7-text = Looks like the circuit is consuming blood products. What w
 tutorial-item7-trigger = N/A
 tutorial-item8-text = Consider changing the circuit. Select the [Circuit Check] button and and click on the [Change Circuit].
 tutorial-item8-trigger = Action:Tube:replace
-tutorial-item9-text = If your assessment was correct, the lab values will normalize.
-tutorial-item9-trigger = N/A
+tutorial-item9-text = Go ahead and increase the flow as directed to at least 600mL/min.
+tutorial-item9-trigger = Action:Pump:flow:>0.599
+tutorial-item10-text = If your assessment was correct, the lab values will normalize.
+tutorial-item10-trigger = N/A
+tutorial-item11-text = Let's re-review the HEME lab values. Click on the [HEME] lab button. Then the [Lab] button.
+tutorial-item11-trigger = Action:View:LabTest:HematologyLabTest
+tutorial-item12-text = Note the improvement in the platelets, fibrinogen, and PTT.
+tutorial-item12-trigger = N/A
+tutorial-item13-text = Let's re-review the ACT lab value. Click on the [ACT] lab button. Then the [Lab] button.
+tutorial-item13-trigger = Action:ACTRequest
+tutorial-item14-text = Note the improvement in the ACT.
+tutorial-item14-trigger = N/A
 
 
 # Baseline Values
@@ -126,7 +136,7 @@ lab-component-abg-pco2 =
 lab-component-abg-po2 = 
 #lab-component-chem
 lab-component-heme-fibrinogen = 80
-lab-component-heme-platelets = 80
+lab-component-heme-platelets = 50
 lab-component-heme-pt = 18
 lab-component-heme-ptt = 200
 

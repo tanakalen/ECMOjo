@@ -30,8 +30,10 @@ tutorial-item8-text = You strongly encourage an oxygenator change as soon as pos
 tutorial-item8-trigger = N/A
 tutorial-item9-text = Click on [Circuit Check] button, then the [Change Circuit] button.
 tutorial-item9-trigger = Action:Tube:replace
-tutorial-item10-text = You successfully changed the circuit and fixed the problem.
-tutorial-item10-trigger = N/A
+tutorial-item10-text = Go ahead and increase the flow as directed to at least 600mL/min.
+tutorial-item10-trigger = Action:Pump:flow:>0.59
+tutorial-item11-text = You successfully changed the circuit and fixed the problem.
+tutorial-item11-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -127,7 +129,7 @@ lab-component-abg-pco2 =
 lab-component-abg-po2 = 
 #lab-component-chem
 lab-component-heme-fibrinogen = 100
-lab-component-heme-platelets = 70
+lab-component-heme-platelets = 50
 lab-component-heme-pt = 18
 lab-component-heme-ptt = 100
 
