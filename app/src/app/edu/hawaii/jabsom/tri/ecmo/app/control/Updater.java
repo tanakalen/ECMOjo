@@ -514,7 +514,7 @@ public final class Updater {
       
       /* update patient */
       // patient is connected to circuit: A and V are open
-      if (isConnected(tube)) {
+      if (isConnected(tube) && pump.isOn()) {
         double patientTemperature = patient.getTemperature();
         if (patientTemperature < heater.getTemperature()) {
           patient.setTemperature(patientTemperature + 0.001);
@@ -523,7 +523,7 @@ public final class Updater {
           patient.setTemperature(patientTemperature - 0.001);
         }
 
-        if (onCircuit(tube)) {
+        if (onCircuit(tube) && pump.isOn()) {
           // update patient pH, pCO2, HCO3, base excess
 
           try {
