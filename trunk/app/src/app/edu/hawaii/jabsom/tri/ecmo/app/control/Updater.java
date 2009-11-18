@@ -743,15 +743,18 @@ public final class Updater {
         else {
           // patient bleeding but compensating
           if (patient.getHeartRate() < 200) {
-            patient.setHeartRate(patient.getHeartRate() + 0.01);
+            patient.setHeartRate(patient.getHeartRate() + 0.05);
+          }
+          if (patient.getSystolicBloodPressure() > 40) {
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
           }
           if (patient.getCentralVenousPressure() > 2) {
             patient.setCentralVenousPressure(patient.getCentralVenousPressure() 
-                - 0.001);
+                - 0.01);
           }
         }
         if (patient.isBleeding()) {
-          patient.setBloodVolume(patient.getBloodVolume() - 0.001);
+          patient.setBloodVolume(patient.getBloodVolume() - 0.01);
         }
       }
       
