@@ -755,6 +755,7 @@ public final class Updater {
         }
         if (patient.isBleeding()) {
           patient.setBloodVolume(patient.getBloodVolume() - 0.01);
+          patient.setHgb(patient.getHgb() > 7 ? patient.getHgb() - 0.001 : 7);
         }
       }
       
