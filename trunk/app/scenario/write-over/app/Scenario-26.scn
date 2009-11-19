@@ -38,7 +38,7 @@ tutorial-item12-text = If the patient is hypovolemic and has a low Hgb, you can 
 tutorial-item12-trigger = N/A
 tutorial-item13-text = Click on Intervention A, then select the [Blood Cells] button to inject blood cells.
 tutorial-item13-trigger = Action:Intervention:Blood
-tutorial-item14-text = Isolated high pre-membrane pressure suggests a problem upstream (back toward patient) from monitoring site.
+tutorial-item14-text = A very negative venous pressure suggests a problem upstream (back toward patient) from monitoring site.
 tutorial-item14-trigger = N/A
 
 # Baseline Values
