@@ -240,10 +240,10 @@ public final class ScenarioLoader {
         baseline.setCannula(CannulaFunction.parse(parameters.get("baseline-cannula")));
         baseline.setUrineOutput(UrineOutputFunction.parse(parameters.get("baseline-urine-output")));
         baseline.setSuctionEtt(SuctionEttFunction.parse(parameters.get("baseline-suction-ETT")));
-        baseline.setMinPreMembranePressure(Double.parseDouble(parameters.get("baseline-min-pre-membrane-pressure")));
-        baseline.setMaxPreMembranePressure(Double.parseDouble(parameters.get("baseline-max-pre-membrane-pressure")));
-        baseline.setMinPostMembranePressure(Double.parseDouble(parameters.get("baseline-min-post-membrance-pressure")));
-        baseline.setMaxPostMembranePressure(Double.parseDouble(parameters.get("baseline-max-post-membrance-pressure")));
+        baseline.setMinPreMembranePressure(Double.parseDouble(parameters.get("baseline-min-premembrane-pressure")));
+        baseline.setMaxPreMembranePressure(Double.parseDouble(parameters.get("baseline-max-premembrane-pressure")));
+        baseline.setMinPostMembranePressure(Double.parseDouble(parameters.get("baseline-min-postmembrane-pressure")));
+        baseline.setMaxPostMembranePressure(Double.parseDouble(parameters.get("baseline-max-postmembrane-pressure")));
         baseline.setMinVenousPressure(Double.parseDouble(parameters.get("baseline-min-venous-pressure")));
         baseline.setMaxVenousPressure(Double.parseDouble(parameters.get("baseline-max-venous-pressure")));
         baseline.setArterialBubbles(Boolean.parseBoolean(parameters.get("baseline-arterial-bubbles")));
@@ -334,7 +334,7 @@ public final class ScenarioLoader {
         tube.setBrokenCannula(Boolean.parseBoolean(parameters.get("tube-cannula-broken")), problem, place);      
         tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
         tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-cannula-venous-B")) == TubeFunction.OPEN);
-        Double val = parseNum(parameters, "tube-cannula-premembranepressure");
+        Double val = parseNum(parameters, "tube-cannula-premembrane-pressure");
         if (val.isNaN()) {
           if (oxy.getOxyType() == OxyType.QUADROX_D) {
             tube.setPreMembranePressure(125);
@@ -349,7 +349,7 @@ public final class ScenarioLoader {
         else {
           tube.setPreMembranePressure(val);
         }
-        val = parseNum(parameters, "tube-cannula-postmembranepressure");
+        val = parseNum(parameters, "tube-cannula-postmembrane-pressure");
         if (val.isNaN()) {
           tube.setPostMembranePressure(120);
 //          if (oxy.getOxyType() == OxyType.QUADROX_D) {
@@ -365,7 +365,7 @@ public final class ScenarioLoader {
         else {
           tube.setPostMembranePressure(val);
         }
-        tube.setVenousPressure(parseNum(parameters, "tube-cannula-venouspressure"));
+        tube.setVenousPressure(parseNum(parameters, "tube-cannula-venous-pressure"));
         
         // Begin of normal initial labs displayed on start
         //act
