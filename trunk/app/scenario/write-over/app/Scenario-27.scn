@@ -62,10 +62,10 @@ baseline-bridge = closed
 baseline-cannula = good
 baseline-urine-output = good
 baseline-suction-ETT = good
-baseline-min-pre-membrane-pressure = 0
-baseline-max-pre-membrane-pressure = 200
-baseline-min-post-membrance-pressure = 0
-baseline-max-post-membrance-pressure = 200
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 200
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 200
 baseline-min-venous-pressure = -20
 baseline-max-venous-pressure = 20
 baseline-arterial-bubbles = false
@@ -119,8 +119,8 @@ tube-cannula-status = Kink
 tube-cannula-problem-location = Arterial
 tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
-tube-cannula-premembranepressure = 135
-tube-cannula-postmembranepressure = 130
+tube-cannula-premembrane-pressure = 135
+tube-cannula-postmembrane-pressure = 130
 
 # ACT
 act-value = 
@@ -136,6 +136,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-nb-vv-kink,xr-nb-va-arthigh
-lab-img-us = us-nb-vv-noivh
-lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal
+lab-img-xray = xr-nb-va-arthigh
+lab-img-us = us-none
+lab-img-echo = echo-nb-va-normal

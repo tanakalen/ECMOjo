@@ -58,10 +58,10 @@ baseline-bridge = closed
 baseline-cannula = good
 baseline-urine-output = good
 baseline-suction-ETT = good
-baseline-min-pre-membrane-pressure = 0
-baseline-max-pre-membrane-pressure = 200
-baseline-min-post-membrance-pressure = 0
-baseline-max-post-membrance-pressure = 200
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 200
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 200
 baseline-min-venous-pressure = -20
 baseline-max-venous-pressure = 20
 baseline-arterial-bubbles = false
@@ -115,8 +115,8 @@ tube-cannula-status =
 tube-cannula-problem-location = 
 tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
-tube-cannula-premembranepressure = 
-tube-cannula-postmembranepressure = 
+tube-cannula-premembrane-pressure = 
+tube-cannula-postmembrane-pressure = 
 
 # ACT
 act-value = 
