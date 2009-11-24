@@ -252,6 +252,7 @@ public final class ScenarioLoader {
         baseline.setMaxFiO2(Double.parseDouble(parameters.get("baseline-max-fiO2")));
         baseline.setBroken(Boolean.parseBoolean(parameters.get("baseline-broken")));
         baseline.setPower(PowerFunction.parse(parameters.get("baseline-power")));
+        baseline.setFlow(parseNum(parameters, "baseline-flow"));
         baseline.setAlarming(Boolean.parseBoolean(parameters.get("baseline-alarming")));
         
         // the patient

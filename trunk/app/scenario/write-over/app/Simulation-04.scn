@@ -29,7 +29,7 @@ baseline-min-pH = 7.35
 baseline-max-pH = 7.45
 baseline-min-pCO2 = 35
 baseline-max-pCO2 = 45
-baseline-min-ACT = 180
+baseline-min-ACT = 160
 baseline-max-ACT = 200
 baseline-min-temperature = 34
 baseline-max-temperature = 39
@@ -59,7 +59,7 @@ baseline-alarming = false
 patient-species = human
 patient-age = 3
 patient-weight = 4
-patient-lung-function = bad
+patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
@@ -102,7 +102,7 @@ tube-cannula-premembrane-pressure =
 tube-cannula-postmembrane-pressure = 
 
 # ACT
-act-value = 220
+act-value = 170
 
 # Lab Component
 lab-component-abg-ph = 

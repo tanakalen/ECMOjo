@@ -29,7 +29,7 @@ baseline-min-pH = 7.35
 baseline-max-pH = 7.45
 baseline-min-pCO2 = 35
 baseline-max-pCO2 = 45
-baseline-min-ACT = 180
+baseline-min-ACT = 160
 baseline-max-ACT = 200
 baseline-min-temperature = 34
 baseline-max-temperature = 39
@@ -53,6 +53,7 @@ baseline-min-fiO2 = 0.3
 baseline-max-fiO2 = 0.6
 baseline-broken = false
 baseline-power = on
+baseline-flow = 0.6
 baseline-alarming = false
 
 # Patient Information
