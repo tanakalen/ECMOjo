@@ -322,7 +322,10 @@ public class Baseline {
   };  
   
   /** Baseline value for power. */
-  private PowerFunction power; 
+  private PowerFunction power;
+  
+  /** Baseline value for flow. */
+  private double flow;
   
   /** Baseline value for bubble detector alarming. */
   private boolean alarming;
@@ -343,7 +346,7 @@ public class Baseline {
       = (BubbleDetectorComponent)game.getEquipment().getComponent(BubbleDetectorComponent.class);
     
     // patient
-    return (patient.isAlive())
+    return ((patient.isAlive())
         && (sedated == patient.isSedated())
         && (bleeding == patient.isBleeding())
         && (patient.getHeartRate() >= minHeartRate) 
@@ -394,8 +397,9 @@ public class Baseline {
         && (broken == oxigenator.isBroken())
         // pump
         && ((power == PowerFunction.ON) == pump.isOn())
+        && (flow <= pump.getFlow())
         // bubbleDetector 
-        &&((alarming == bubbleDetector.isAlarm()));
+        && (alarming == bubbleDetector.isAlarm()));
   }
   
   /**
@@ -991,6 +995,29 @@ public class Baseline {
    */
   public void setPower(PowerFunction power) {
     this.power = power;
+  }
+  
+  /**
+   * Gets the baseline goal flow.
+   * 
+   * @return The goal flow.
+   */
+  public double getFlow() {
+    return flow;
+  }
+  
+  /**
+   * Sets the baseline goal flow.
+   * 
+   * @param flowrate The flow goal.
+   */
+  public void setFlow(double flowrate) {
+    if (Double.isNaN(flowrate)) {
+      this.flow = 0;
+    }
+    else {
+      this.flow = flowrate;
+    }
   }
 
   /**
