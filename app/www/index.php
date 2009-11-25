@@ -32,6 +32,7 @@
 
 <h1>News & Updates</h1>
 <ul>
+  <li><strong>November 25, 2009</strong> - Version 2.2.6 available for download (Windows, Mac, Linux).
   <li><strong>November 16, 2009</strong> - Version 2.2.5 available for download (Windows, Mac, Linux).
   <li><strong>November 11, 2009</strong> - Version 2.2.4 available for download (Windows, Mac, Linux).
   <li><strong>October 5, 2009</strong> - Version 2.2.2 available for download (Windows, Mac, Linux).
