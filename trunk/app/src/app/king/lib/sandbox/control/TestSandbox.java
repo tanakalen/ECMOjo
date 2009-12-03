@@ -61,11 +61,11 @@ public class TestSandbox {
 
     // file access
     File file = new File("testfile.txt");
-    file.canExecute();
+    file.canRead();
     SandboxSecurity.sandbox();
     try {
       file = new File("testfile.txt");
-      file.canExecute();
+      file.canRead();
       fail("We should get a security exception.");
     }
     catch (SecurityException e) {

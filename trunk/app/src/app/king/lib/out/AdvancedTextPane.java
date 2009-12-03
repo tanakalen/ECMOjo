@@ -496,7 +496,7 @@ public class AdvancedTextPane extends JTextPane {
     if (font.equals(FONT_TYPE_SERIF)) {
       Font match = Font.decode("Times");
       if (match == null) {
-        return Font.SERIF;
+        return getDefaultFont();
       }
       else {
         return match.getFamily();
@@ -505,7 +505,7 @@ public class AdvancedTextPane extends JTextPane {
     else if (font.equals(FONT_TYPE_SANS_SERIF)) {
       Font match = Font.decode("Arial");
       if (match == null) {
-        return Font.SANS_SERIF;
+        return getDefaultFont();
       }
       else {
         return match.getFamily();
@@ -516,7 +516,7 @@ public class AdvancedTextPane extends JTextPane {
       if (match == null) {
         match = Font.decode("Courier");
         if (match == null) {
-          return Font.SANS_SERIF;
+          return getDefaultFont();
         }
         else {
           return match.getFamily();
