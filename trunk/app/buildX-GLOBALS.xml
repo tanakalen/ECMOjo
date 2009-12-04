@@ -2,7 +2,7 @@
   <!-- *********************************************************************** -->
   <target name="globals">  
   	<!-- Globals for projects -->
-    <property name="global.release.version" value="2.2.6"/>
+    <property name="global.release.version" value="2.2.7"/>
   </target>	
   <!-- *********************************************************************** -->
 </project>
