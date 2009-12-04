@@ -3,6 +3,8 @@
 # Scenario Information
 name = Simulation 3
 desc = ECMO hour 220 (d9) for 4 kg female with pertussis pneumonia. Improving pulmonary function. Worsening coagulation studies.
+info-success = a
+info-failure = a
 
 # Scenario Parameters
 scenario-ecmo-mode = *
