@@ -105,7 +105,7 @@ public class PatientDetailPanel extends DetailPanel {
           // fixed
           StandardDialog.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
-              , "Good catch! The cannula site was broken and has been fixed.");
+              , "Good catch! The cannula site was kinked and has been fixed.");
         }
         else {
           // no problem = nothing done

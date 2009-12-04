@@ -1,15 +1,15 @@
 1
 
 # Scenario Information
-name = Simulation 4
-desc = ECMO hour 220 (d9) for 4 kg female with severe sepsis. Improving pulmonary function. Worsening coagulation studies. After an intervention alarms sounding.
+name = Simulation 4 (Roller & Silicone)
+desc = ECMO hour 220 (d9) for 4 kg female with severe sepsis. Improving pulmonary function. Worsening coagulation studies. The circuit was changed and you are in the process of reinitiating flow. The alarms begin to sound.
 info-success = This was a simulation of a clamp not being in the correct position after a circuit change.  Rapid discovery and intervention is required to reduce damage to the oxygenator.\n\nCongratulations.  With your expert training skills you easily detected the problem.\n\nRemember the ECMOism, "Everybody loves everybody, but nobody trusts anybody."  Always check the circuit yourself.
 info-failure = This was a simulation of a clamp not being in the correct position after a circuit change.  Rapid discovery and intervention is required to reduce damage to the oxygenator.\n\nThis was a simulation of a 5% sheer terror moment.  The clamp was left on the arterial line, and someone overrode the post membrane pressure alarm, allowing the roller head pump to continue to pump against a high pressure may cause a membrane rupture.\n\nRemember the ECMOism, "Everybody loves everybody, but nobody trusts anybody."  Always check the circuit yourself.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
-scenario-oxy-type = *
-scenario-pump-type = *
+scenario-oxy-type = silicone
+scenario-pump-type = roller
 scenario-vent-type = *
 
 # Goal Information
