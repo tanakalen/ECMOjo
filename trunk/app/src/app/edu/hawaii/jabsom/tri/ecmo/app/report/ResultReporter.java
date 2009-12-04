@@ -34,8 +34,8 @@ public abstract class ResultReporter {
     String linebreak = "<br>";
     
     // add introduction
-    builder.append("The following result where recorded while you were running "
-                 + "the ECMOjo scenario selected:").append(linebreak);
+    builder.append("<u>The following result where recorded while you were running "
+                 + "the ECMOjo scenario selected</u>:").append(linebreak);
     builder.append(linebreak);
     
     // add overview
