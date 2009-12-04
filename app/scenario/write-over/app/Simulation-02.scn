@@ -2,9 +2,9 @@
 
 # Scenario Information
 name = Simulation 2
-desc = ECMO hour 52 (d2) for 5 kg LGA infant with persistent pulmonary hypertension. No change in pulmonary function, remaining poor. Cardiac function is normal.  Infant is awake and responsive, but well sedated. The baby received a platelet transfusion and a post transfusion lasix dose two hours ago. Morning labs were just sent.
-info-success = a
-info-failure = a
+desc = ECMO hour 52 (d2) for 5 kg LGA infant with persistent pulmonary hypertension. No change in pulmonary function, remaining poor. Cardiac function is normal. Infant is awake and responsive, but well sedated. The baby received a platelet transfusion and a post transfusion lasix dose two hours ago. Morning labs were just sent.
+info-success = This was a simulation of bleeding at a surgical site. Parameters suggesting a volume related problem include lower CVP, lower BP, and higher HR.\n\nCongratulations. You have detected the source of the problem.  Identifying the bleeding and applying personal point pressure is the right first step.  Due to the blood loss and hemodynamic changes, volume replacement is necessary to correct the hypotension.  If necessary, calling the the surgeon is also recommended.
+info-failure = This was a simulation of bleeding at a surgical site. Parameters suggesting a volume related problem include lower CVP, lower BP, and higher HR.\n\nIdentifying the source of the bleeding and applying personal point pressure is the correct first step.  Due to the blood loss and hemodynamic changes, volume replacement is also necessary to correct the hypovolemia.  In the ICU, calling the surgeon would also be recommended.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
+import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.report.ResultReporter;
 
 import java.awt.Font;
@@ -36,7 +37,8 @@ public class ResultStatePanel extends JPanel {
    */
   public ResultStatePanel(final ResultState state) {
     Game game = state.getGame();
-    
+    boolean success = game.getGoal().isWon(game);
+
     // set look
     setOpaque(true);
     
@@ -61,16 +63,25 @@ public class ResultStatePanel extends JPanel {
     // add result overview
     InternetTextPane infoArea = new InternetTextPane();
     infoArea.setDefaultFont(InternetTextPane.FONT_TYPE_SANS_SERIF);
-    infoArea.addHTML(ResultReporter.getHTMLOverview(game));
+    String html = ResultReporter.getHTMLOverview(game);
+    if (game.getGoal() instanceof BaselineGoal) {
+      BaselineGoal goal = (BaselineGoal)game.getGoal();
+      if (success) {
+        html = goal.getInfoSuccess().replace("\\n", "<br>") + "<br><br><br>" + html;
+      }
+      else {
+        html = goal.getInfoFailure().replace("\\n", "<br>") + "<br><br><br>" + html;
+      }
+    }
+    infoArea.addHTML(html);
     infoArea.setOpaque(false);
     infoArea.setEditable(false);
     infoArea.setFont(titleLabel.getFont().deriveFont(Font.PLAIN, 14f));
     infoArea.setLocation(30, 160);
-    infoArea.setSize(720, 360);
+    infoArea.setSize(580, 360);
     add(infoArea);
     
     // output overall result
-    boolean success = game.getGoal().isWon(game);
     Image result = success ? ImageLoader.getInstance().getImage("conf/image/interface/result/success.png") 
                            : ImageLoader.getInstance().getImage("conf/image/interface/result/failure.png");
     JLabel resultLabel = new JLabel();
