@@ -16,6 +16,11 @@ public class BaselineGoal extends Goal {
   /** The time limit for the goal, i.e. when the goal is not reached. */
   private long timeLimit = Long.MAX_VALUE;
   
+  /** The info text for success. */
+  private String infoSuccess;
+  /** The info text for failure. */
+  private String infoFailure;
+  
   /** The trigger. */
   private String trigger;
   
@@ -56,6 +61,42 @@ public class BaselineGoal extends Goal {
     this.timeLimit = timeLimit;
   }
   
+  /**
+   * Returns the info for success.
+   *
+   * @return  The info for success.
+   */
+  public String getInfoSuccess() {
+    return infoSuccess;
+  }
+
+  /**
+   * Sets the info for success.
+   *
+   * @param infoSuccess  The info for success.
+   */
+  public void setInfoSuccess(String infoSuccess) {
+    this.infoSuccess = infoSuccess;
+  }
+
+  /**
+   * Returns the info for failure.
+   *
+   * @return  The info for failure.
+   */
+  public String getInfoFailure() {
+    return infoFailure;
+  }
+
+  /**
+   * Sets the info for failure.
+   *
+   * @param infoFailure  The info for failure.
+   */
+  public void setInfoFailure(String infoFailure) {
+    this.infoFailure = infoFailure;
+  }
+
   /**
    * Returns the trigger.
    *

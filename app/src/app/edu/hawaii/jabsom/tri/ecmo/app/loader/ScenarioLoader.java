@@ -173,6 +173,8 @@ public final class ScenarioLoader {
             BaselineGoal goal = new BaselineGoal();
             goal.setTimeInit(Long.parseLong(parameters.get("time-init")) * 1000);       // time-init in seconds...
             goal.setTimeLimit(Long.parseLong(parameters.get("time-limit")) * 1000);      // time-limit in seconds...
+            goal.setInfoSuccess(parameters.get("info-success"));
+            goal.setInfoFailure(parameters.get("info-failure"));
             goal.setTrigger(parameters.get("trigger"));
             scenario.setGoal(goal);            
           }
@@ -206,6 +208,9 @@ public final class ScenarioLoader {
         }
         
         // the script
+        // ------------------------------------------
+        // # The script
+        // script = System.out.println("hello!");
         String code = parameters.get("script");
         if (code != null) {
           Script script = new Script();

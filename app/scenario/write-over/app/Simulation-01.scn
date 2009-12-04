@@ -3,6 +3,8 @@
 # Scenario Information
 name = Simulation 1
 desc = ECMO hour 84 (d3.5) for 5 kg LGA infant with MAS. Improving pulmonary function. Muscle relaxation was discontinued soon after cannulation and infant is sedated with morphine sulfate infusion; however, he is easily agitated. Change of shift is occurring and the environmental noise has increased.
+info-success = This was a simulation of an arterial cannula kink. Both pre and post membrane pressures were rising. The baby's physiologic variables were also declining because of the loss in arterial flow, hence, oxygen delivery was impacted.\n\nCongratulations. You have detected the source of the problem.
+info-failure = This was a simulation of an arterial cannula kink. Both pre and post membrane pressures were rising. The baby's physiologic variables were also declining because of the loss in arterial flow, hence, oxygen delivery was impacted.\n\nThe key intervention would have been to evaluate circuit and cannula and focus on the area beyond the oxygenator since both pre and post pressures were rising.
 
 # Scenario Parameters
 scenario-ecmo-mode = *

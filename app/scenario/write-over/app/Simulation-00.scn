@@ -13,9 +13,6 @@ scenario-vent-type = *
 # Goal Information
 goal = Simulation
 
-# The script
-script = System.out.println("hello!");
-
 # Baseline Values
 baseline-sedated = true
 baseline-bleeding = false
