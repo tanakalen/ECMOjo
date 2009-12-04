@@ -19,12 +19,8 @@
 <p>To run ECMOjo, you need at least <a href="http://www.java.com/getjava/" target="_blank">Java 1.5 or higher</a> installed on your system.<br>
 <p>
   <ul>
-    <li>
-      <a href="webstart/ECMOjo.jnlp">Online Demo</a> (Java Webstart): <i>Run ECMOjo directly with a single click from the link.</i>
-    </li>
-    <li>
-      <a href="demo.php">Applet Page</a> (Applet): <i>Run ECMOjo inside a browser window.</i>
-    </li>
+    <li><a href="webstart/ECMOjo.jnlp">Online Demo</a> (Java Webstart): <i>Run ECMOjo directly with a single click from the link.</i></li>
+	<!-- <li><a href="demo.php">Applet Page</a> (Applet): <i>Run ECMOjo inside a browser window.</i></li> -->
   </ul>
 </p>
 <br>

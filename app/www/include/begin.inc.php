@@ -58,7 +58,7 @@
     <div class="contentmenutitle">Navigation</div>
     <ul>
       <li><a href="index.php" class="home">home &there4;</a>
-      <li><a href="demo.php" class="play">Applet</a>
+      <!-- <li><a href="demo.php" class="play">Applet</a> -->
       <li><a href="screenshot.php">Screenshots</a>
       <li><a href="video.php">Media</a>
       <li><a href="download.php" class="download">Download</a>
