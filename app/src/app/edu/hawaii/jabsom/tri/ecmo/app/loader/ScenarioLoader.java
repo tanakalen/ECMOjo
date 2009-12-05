@@ -346,9 +346,11 @@ public final class ScenarioLoader {
             tube.setPreMembranePressure(125);
           }
           else if (oxy.getOxyType() == OxyType.SILICONE) {
-            tube.setPreMembranePressure(140);
+            tube.setPreMembranePressure(240);
           }
           else {
+            //Error here if oxygenator not selected in scn file, however
+            //  tube is expecting a value to be set, so set to NaN.
             tube.setPreMembranePressure(val);
           }
         }
@@ -357,16 +359,17 @@ public final class ScenarioLoader {
         }
         val = parseNum(parameters, "tube-cannula-postmembrane-pressure");
         if (val.isNaN()) {
-          tube.setPostMembranePressure(120);
-//          if (oxy.getOxyType() == OxyType.QUADROX_D) {
-//            tube.setPreMembranePressure(120);
-//          }
-//          else if (oxy.getOxyType() == OxyType.SILICONE) {
-//            tube.setPreMembranePressure(120);            
-//          }
-//          else {
-//            System.out.println("Error: No oxygenator selected");
-//          }
+          if (oxy.getOxyType() == OxyType.QUADROX_D) {
+            tube.setPreMembranePressure(120);
+          }
+          else if (oxy.getOxyType() == OxyType.SILICONE) {
+            tube.setPreMembranePressure(220);            
+          }
+          else {
+            //Error here if oxygenator not selected in scn file, however
+            //  tube is expecting a value to be set, so set to NaN.
+            tube.setPreMembranePressure(val);
+          }
         }
         else {
           tube.setPostMembranePressure(val);

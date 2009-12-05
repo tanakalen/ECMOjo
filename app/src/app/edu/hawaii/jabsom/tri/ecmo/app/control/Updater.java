@@ -851,25 +851,25 @@ public final class Updater {
         // If limits set appropriately,  
         if (!pressureMonitor.isAlarm()) {
           // premembrane pressure will equal postmembrane pressure up to 750.
-//          tube.setPreMembranePressure(tube.getPostMembranePressure());
+          tube.setPreMembranePressure(tube.getPostMembranePressure());
           // If roller then pressures will stay at 750, else it's centrifugal then it would stop and reset to 35. 
           if (pump.getPumpType() == PumpType.ROLLER) {
             // stay at 750???????
             if (tube.getPreMembranePressure() > 750) {
-//              tube.setPreMembranePressure(750.0);
-//              tube.setPostMembranePressure(750.0);
+              tube.setPreMembranePressure(750.0);
+              tube.setPostMembranePressure(750.0);
             }
           }
           if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
             // reset to 35 or decrease to 35???
-//            tube.setPreMembranePressure(35.0);
+            tube.setPreMembranePressure(35.0);
           }
         }
         else {
           // If limits not set appropriately then rupture for roller else centrifugal stop then reset to 35. 
           if (pump.getPumpType() == PumpType.CENTRIFUGAL) {
             // reset to 35 or decrease to 35???
-//            tube.setPreMembranePressure(35.0);
+            tube.setPreMembranePressure(35.0);
           }
           // The venous pressure increases. Pump flow to 0. ??????
           tube.setVenousPressure(pressureMonitor.getVenousPressure() + 0.002);
