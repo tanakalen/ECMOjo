@@ -200,17 +200,12 @@ public final class Updater {
       tubeSaO2 = Mediator.calcOxygenSaturation(paO2);
       tube.setSaO2(tubeSaO2);
       
-      try{ 
-        double tubeSvO2 = Mediator.flowToSvO2(mode, ccPerKg, patient);
-        tube.setSvO2(tubeSvO2); 
+      // Pre-membrane tubing variables (come from patient)
+      if (!(isConnected(tube) && pump.isOn())) {
+        tube.setSvO2(tube.getSvO2() > 0 ? patient.getO2Saturation() - 0.20 : 0);
       }
-      catch (Exception e) {
-        // something wrong
-        tube.setSvO2(0.0);
-        Error.out(e.getMessage());
-      }
-      tube.setPrePH(patient.getPH());  // TODO: Reconfirm if this is trully patient
-      tube.setPrePCO2(patient.getPCO2());  // TODO: Reconfirm if this is trully patient
+      tube.setPrePH(patient.getPH());
+      tube.setPrePCO2(patient.getPCO2());
 
       // change in venous pressure changes pump flow
       double diffVenousPressure = tube.getVenousPressure() - history.getVenousPressure();
@@ -288,8 +283,8 @@ public final class Updater {
           }
           else { 
             // Silicon
-            tube.setPreMembranePressure(140);
-            tube.setPostMembranePressure(120);
+            tube.setPreMembranePressure(240);
+            tube.setPostMembranePressure(220);
           }
         }
         history.setStartClampTime(-1);
@@ -654,6 +649,17 @@ public final class Updater {
             }
           }
 
+          // pump flow to patient and tube SvO2
+          try{ 
+            double tubeSvO2 = Mediator.flowToSvO2(mode, ccPerKg, patient);
+            tube.setSvO2(tubeSvO2); 
+          }
+          catch (Exception e) {
+            // something wrong
+            tube.setSvO2(0.0);
+            Error.out(e.getMessage());
+          }
+
           // pump flow to patient PaO2
           try {
             double patientSaturation = Mediator.flowToSPO2(mode, ccPerKg, patient);
@@ -671,8 +677,8 @@ public final class Updater {
           catch (Exception e) {
             Error.out(e.getMessage());
           }
-        }
-      }
+        } // onCircuit
+      } // isConnected
       else { 
         // patient is not on the pump
         patientDies(patient, ventilator, increment);
