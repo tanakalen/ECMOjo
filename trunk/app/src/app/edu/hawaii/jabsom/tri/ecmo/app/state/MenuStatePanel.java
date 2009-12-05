@@ -316,8 +316,8 @@ public class MenuStatePanel extends JPanel {
             else { 
               // Silicon
               //            tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
-              tube.setPreMembranePressure(140);
-              tube.setPostMembranePressure(120);
+              tube.setPreMembranePressure(240);
+              tube.setPostMembranePressure(220);
             }
           }
           tube.setPostPCO2(35);
