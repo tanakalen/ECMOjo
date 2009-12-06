@@ -92,6 +92,7 @@ public final class Updater {
     }
     // store the temperature
     history.setPatientTemperature(patient.getTemperature());
+    history.setPatientCVP(patient.getCentralVenousPressure());
     // Set last updated flow to check pump flow, for membrane pressure interaction
     history.setFlow(pump.getFlow());
     // Set last updated sweep rate, for CDI update interaction
@@ -508,7 +509,91 @@ public final class Updater {
       }
       
       /* update patient */
-      // patient is connected to circuit: A and V are open
+      // Following "effects" are independent of the circuit
+      
+      // TODO Patient bicarb and base excess calc? from Mark's table
+      
+      // temperature effect
+      if ((patient.getTemperature() < 36.0) || (patient.getTemperature() > 37.0)) {
+        if (patient.getTemperature() != history.getPatientTemperature()) {
+          double bpadjust = 0.0001;
+          double hradjust = 0.0001;
+          double actadjust = 0.1;
+          if (patient.getTemperature() > history.getPatientTemperature()) {
+            patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate()));
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
+            if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
+              patient.setAct(patient.getAct() * (1 - actadjust));
+            }
+          }
+          else {
+            patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate()));
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
+            if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
+              patient.setAct(patient.getAct() * (1 + actadjust));
+              patient.setFibrinogen(patient.getFibrinogen() * (1 - (2 * actadjust)));
+              patient.setPt(patient.getPt() * (1 + actadjust));
+              patient.setPtt(patient.getPtt() * (1 + actadjust));
+              patient.setPlatelets(patient.getPlatelets() * (1 - (2 * actadjust)));
+            }
+          }
+        }
+      }
+
+      // Update patient sedated status
+      //   This is independent of on or off pump
+      //   *adjust are constants to change rate of rise
+      //   limits are if HR >180 or SBP >120 then no change
+      if (!patient.isSedated()) {
+        double bpadjust = 0.0001;
+        double hradjust = 0.0001;
+        if (patient.getHeartRate() < 180) {
+          patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate()));
+        }
+        if (patient.getSystolicBloodPressure() < 120) {
+          patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
+        }
+      }
+      else {
+        // Arbitrary run out of sedation in 3000 cycles (1min)
+        if (history.getPatientSedatedTime() >= 3000) {
+          // CA: let's take that out for now - the patient will stay sedated and does not wake up
+          //     -> we can use it later
+          //patient.setSedated(false);
+        }
+      }
+      
+      // Update patient bleeding status or hypovolemic
+      if (patient.isBleeding() 
+          || (patient.getBloodVolume() < (0.8 * patient.getMaxBloodVolume()))) {
+        if (patient.getBloodVolume() < (0.5 * patient.getMaxBloodVolume())) {
+          // patient bleeding but not compensating
+          patient.setHeartRate(patient.getHeartRate() > 30 
+              ? patient.getHeartRate() - 0.05 : 30);
+          patient.setSystolicBloodPressure(40);
+          patient.setCentralVenousPressure(0);
+        }
+        else {
+          // patient bleeding but compensating
+          if (patient.getHeartRate() < 200) {
+            patient.setHeartRate(patient.getHeartRate() + 0.05);
+          }
+          if (patient.getSystolicBloodPressure() > 40) {
+            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
+          }
+          if (patient.getCentralVenousPressure() > 2) {
+            patient.setCentralVenousPressure(patient.getCentralVenousPressure() 
+                - 0.01);
+          }
+        }
+        if (patient.isBleeding()) {
+          patient.setBloodVolume(patient.getBloodVolume() > 0 
+              ? patient.getBloodVolume() - 0.2 : 0);
+          patient.setHgb(patient.getHgb() > 7 ? patient.getHgb() - 0.005 : 7);
+        }
+      }
+      
+      // Patient is connected to circuit: A and V are open
       if (isConnected(tube) && pump.isOn()) {
         double patientTemperature = patient.getTemperature();
         if (patientTemperature < heater.getTemperature()) {
@@ -626,6 +711,7 @@ public final class Updater {
           }
 
           // Link change in pre-membrane pressure to patient CVP
+          // First, venous pressure -> CVP
           double venpresdiff = tube.getVenousPressure() - history.getVenousPressure();
           if ((venpresdiff != 0) && (history.getVenousPressure() != 0)) {
             // if pumptype is centrifugal
@@ -646,6 +732,25 @@ public final class Updater {
               if (newcvp >= 0) {
                 patient.setCentralVenousPressure(newcvp);
               }
+            }
+          }
+          // Next, CVP -> venous pressure
+          double cvpdiff = patient.getCentralVenousPressure() - history.getPatientCVP();
+          if ((cvpdiff != 0) && (history.getPatientCVP() != 0)) {
+            // if pumptype is centrifugal
+            double pumpadj = 1;
+            // else Roller doesn't get affected by patient CVP
+            if (pump.getPumpType() == PumpType.ROLLER) {
+              cvpdiff = 0;
+            }
+            double p3adjust = Math.abs(cvpdiff / pumpadj);
+            if (cvpdiff > 0) {
+              tube.setVenousPressure(tube.getVenousPressure() < 20 
+                  ? tube.getVenousPressure() + p3adjust : 20);
+            }
+            else {
+              tube.setVenousPressure(tube.getVenousPressure() >= -30 
+                  ? tube.getVenousPressure() - p3adjust : -30);
             }
           }
 
@@ -685,86 +790,6 @@ public final class Updater {
         
       }
             
-      // TODO Patient bicarb and base excess calc? from Mark's table
-      
-      // temperature effect
-      if ((patient.getTemperature() < 36.0) || (patient.getTemperature() > 37.0)) {
-        if (patient.getTemperature() != history.getPatientTemperature()) {
-          double bpadjust = 0.0001;
-          double hradjust = 0.0001;
-          double actadjust = 0.1;
-          if (patient.getTemperature() > history.getPatientTemperature()) {
-            patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate()));
-            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
-            if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
-              patient.setAct(patient.getAct() * (1 - actadjust));
-            }
-          }
-          else {
-            patient.setHeartRate(patient.getHeartRate() - (hradjust * patient.getHeartRate()));
-            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 - bpadjust));
-            if (Math.rint(patient.getTemperature()) != Math.rint(history.getPatientTemperature())) {
-              patient.setAct(patient.getAct() * (1 + actadjust));
-              patient.setFibrinogen(patient.getFibrinogen() * (1 - (2 * actadjust)));
-              patient.setPt(patient.getPt() * (1 + actadjust));
-              patient.setPtt(patient.getPtt() * (1 + actadjust));
-              patient.setPlatelets(patient.getPlatelets() * (1 - (2 * actadjust)));
-            }
-          }
-        }
-      }
-
-      // Update patient sedated status
-      //   This is independent of on or off pump
-      //   *adjust are constants to change rate of rise
-      //   limits are if HR >180 or SBP >120 then no change
-      if (!patient.isSedated()) {
-        double bpadjust = 0.0001;
-        double hradjust = 0.0001;
-        if (patient.getHeartRate() < 180) {
-          patient.setHeartRate(patient.getHeartRate() + (hradjust * patient.getHeartRate()));
-        }
-        if (patient.getSystolicBloodPressure() < 120) {
-          patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() * (1 + bpadjust));
-        }
-      }
-      else {
-        // Arbitrary run out of sedation in 3000 cycles (1min)
-        if (history.getPatientSedatedTime() >= 3000) {
-          // CA: let's take that out for now - the patient will stay sedated and does not wake up
-          //     -> we can use it later
-          //patient.setSedated(false);
-        }
-      }
-      
-      // Update patient bleeding status or hypovolemic
-      if (patient.isBleeding() 
-          || (patient.getBloodVolume() < (0.8 * patient.getMaxBloodVolume()))) {
-        if (patient.getBloodVolume() < (0.5 * patient.getMaxBloodVolume())) {
-          // patient bleeding but not compensating
-          patient.setHeartRate(200);
-          patient.setSystolicBloodPressure(40);
-          patient.setCentralVenousPressure(0);
-        }
-        else {
-          // patient bleeding but compensating
-          if (patient.getHeartRate() < 200) {
-            patient.setHeartRate(patient.getHeartRate() + 0.05);
-          }
-          if (patient.getSystolicBloodPressure() > 40) {
-            patient.setSystolicBloodPressure(patient.getSystolicBloodPressure() - 0.01);
-          }
-          if (patient.getCentralVenousPressure() > 2) {
-            patient.setCentralVenousPressure(patient.getCentralVenousPressure() 
-                - 0.01);
-          }
-        }
-        if (patient.isBleeding()) {
-          patient.setBloodVolume(patient.getBloodVolume() - 0.01);
-          patient.setHgb(patient.getHgb() > 7 ? patient.getHgb() - 0.001 : 7);
-        }
-      }
-      
       // update the patients life
       if (oxygenator.isBroken()) {
         tube.setPreMembranePressure(tube.getPreMembranePressure() + 0.1);
