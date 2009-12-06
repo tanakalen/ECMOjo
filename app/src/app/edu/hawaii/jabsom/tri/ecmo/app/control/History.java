@@ -12,6 +12,8 @@ public class History {
   private double patientSedatedTime = 0;
   /** Holds prior patient temperature information. */
   private double patientTemperature;
+  /** Holds prior patient CVP. */
+  private double patientCVP;
   /** Holds prior flow rate information. */
   private double flow;
   /** Holds prior sweep rate information. */
@@ -175,6 +177,24 @@ public class History {
    */
   public void setPatientTemperature(double patientTemperature) {
     this.patientTemperature = patientTemperature;
+  }
+
+  /**
+   * Returns the patient's previous central venous pressure.
+   *
+   * @return  The patient's central venous pressure.
+   */
+  public double getPatientCVP() {
+    return patientCVP;
+  }
+  
+  /**
+   * Sets the patient's central venous pressure.
+   *
+   * @param cvp  The patient's central venous pressure.
+   */
+  public void setPatientCVP(double cvp) {
+    this.patientCVP = cvp;
   }
 
   /**
