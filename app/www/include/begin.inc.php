@@ -72,7 +72,8 @@
     <div class="contentmenutitle">Development</div>
     <ul>
       <li><a href="http://sourceforge.net/projects/ecmojo/" class="target" style="color: #505050; font-weight: normal;">Source Forge</a>
-      <li><a href="http://sourceforge.net/projects/ecmojo/support" class="support" style="color: #505050; font-weight: normal;">Support</a>
+      <li><a href="https://sourceforge.net/projects/ecmojo/forums/forum/874361" class="support" style="color: #505050; font-weight: normal;">Open Discussions</a>
+      <li><a href="https://sourceforge.net/tracker/?func=browse&group_id=241657&atid=1116905" class="support" style="color: #505050; font-weight: normal;">Bug Tracker</a>
     </ul>
   </div>
 </div>

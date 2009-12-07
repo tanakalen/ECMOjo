@@ -49,6 +49,15 @@
 <h2>Source Code</h2>
 <p>Download the source code via <a href="http://sourceforge.net/project/showfiles.php?group_id=241657" target="_blank">SourceForge.net</a>.</p>    
 <br>
+
+<h2>Support &amp; Development</h2>
+<p>Please visit our discussion forum and bug tracker for support and development.</p>
+<ul>
+  <li><a href="https://sourceforge.net/projects/ecmojo/forums/forum/874361">Open Discussions</a>
+  <li><a href="https://sourceforge.net/tracker/?func=browse&group_id=241657&atid=1116905">Bug Tracker</a>
+</ul>
+<br>
+
 <?php
   include($root.'include/end.inc.'.$phpEx);
 ?>
