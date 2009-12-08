@@ -55,6 +55,8 @@ public final class Updater {
     accessibleClasses.add(String.class.getName());
     accessibleClasses.add(Math.class.getName());
     accessibleClasses.add(Integer.class.getName());
+    accessibleClasses.add(Recorder.class.getName());
+    accessibleClasses.add(Game.class.getName());
     context.setSandbox(new ClassSandbox(accessibleClasses));
     scriptRunner = new ScriptRunner(context);
   }
@@ -164,7 +166,8 @@ public final class Updater {
       // execute script as needed
        if (compile != null) {
         try {
-          scriptRunner.execute(compile);
+          Recorder recorder = new Recorder(game);
+          scriptRunner.execute(compile, recorder);
         }
         catch (ScriptException e) {
           Error.out(e);
