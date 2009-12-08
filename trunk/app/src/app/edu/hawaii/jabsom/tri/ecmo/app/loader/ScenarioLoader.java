@@ -210,7 +210,7 @@ public final class ScenarioLoader {
         // the script
         // ------------------------------------------
         // # The script
-        // script = System.out.println("hello!");
+        // script = System.out.println("Scenario: " + input.getGame().getName());
         String code = parameters.get("script");
         if (code != null) {
           Script script = new Script();
