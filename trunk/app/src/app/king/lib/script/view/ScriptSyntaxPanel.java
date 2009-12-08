@@ -13,7 +13,12 @@ import king.lib.script.model.Script;
 
 /**
  * A syntax editor panel.
- *
+ * <p>
+ * Required JAR files:
+ * <ul>
+ *   <li>jsyntaxpane-0.9.5-jre5-minimal.jar
+ * </ul>
+ * 
  * @author noblemaster
  * @since November 2, 2009
  */

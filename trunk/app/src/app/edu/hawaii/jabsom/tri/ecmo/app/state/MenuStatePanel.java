@@ -21,6 +21,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
+import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioEditorWindow;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel.ScenarioSelectionListener;
 
@@ -34,6 +35,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import king.lib.access.Access;
 import king.lib.access.ImageLoader;
 
 /**
@@ -347,6 +349,40 @@ public class MenuStatePanel extends JPanel {
     scenarioListPanel.addScenarioSelectionListener(scenarioSelectionListener);
     simulationListPanel.addScenarioSelectionListener(scenarioSelectionListener);
     
+    // add "New Scenario" button
+    ImageButton scenarioNewButton = new ImageButton(
+          ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioNew.png")
+        , ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioNewRol.png")
+        , ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioNewSel.png"));
+    scenarioNewButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        String path = Access.getInstance().getScenarioDir() + "/Simulation-00.scn";
+        
+        // create the window
+        ScenarioEditorWindow window = new ScenarioEditorWindow(path);
+        window.setSize(600, 400);
+        window.setLocationRelativeTo(null);
+        window.setVisible(true); 
+      }
+    });
+    scenarioNewButton.setLocation(65, 565);
+    scenarioNewButton.setSize(150, 32);
+    add(scenarioNewButton); 
+
+    // add "Edit Scenario" button
+    ImageButton scenarioEditButton = new ImageButton(
+          ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioEdit.png")
+        , ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioEditRol.png")
+        , ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioEditSel.png"));
+    scenarioEditButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        
+      }
+    });
+    scenarioEditButton.setLocation(225, 565);
+    scenarioEditButton.setSize(150, 32);
+    add(scenarioEditButton); 
+
     // enable scenario
     boolean scenarioSelection = Configuration.getInstance().isSelectionScenarioTab();
     scenarioButton.setSelected(scenarioSelection);
