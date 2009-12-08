@@ -2,11 +2,11 @@ package edu.hawaii.jabsom.tri.ecmo.app.loader;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -102,6 +102,7 @@ public final class ScenarioLoader {
       // determine scenario file version
       int version = Integer.parseInt(reader.readLine());
       if ((version >= 1) && (version <= CURRENT_VERSION)) {
+//        Map<String, String> parameters = readParameters(reader);
         Map<String, String> parameters = new HashMap<String, String>();
         String line = reader.readLine();
         while (line != null) {
@@ -590,10 +591,10 @@ public final class ScenarioLoader {
    * @throws IOException  If something goes wrong.
    */
   public static void saveFile(OutputStream outputStream, ScenarioFile scenario) throws IOException {
-    DataOutputStream out = new DataOutputStream(outputStream);
-    out.writeUTF(scenario.getParameters());    
+    PrintWriter out = new PrintWriter(outputStream);
+    out.println(scenario.getParameters());    
     String code = scenario.getScript().getCode();
-    out.writeUTF("script = " + encodeScript(code));
+    out.println("script = " + encodeScript(code));
     out.close();
   }
   
