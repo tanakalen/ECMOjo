@@ -17,7 +17,9 @@ import king.lib.out.AdvancedTextPane;
 public class ScriptConsolePanel extends JPanel {
 
   /** The output color. */
-  private Color outputColor = new Color(0xff009700);
+  private Color outputColor = new Color(0xff000000);
+  /** The output color. */
+  private Color successColor = new Color(0xff009700);
   /** The error color. */
   private Color errorColor = new Color(0xffc70000);
   
@@ -60,6 +62,25 @@ public class ScriptConsolePanel extends JPanel {
   }
   
   /**
+   * Sets a success message.
+   * 
+   * @param message  The message.
+   */
+  public void setSuccess(String message) {
+    consoleArea.clear();
+    addSuccess(message);
+  }
+
+  /**
+   * Adds a success message.
+   * 
+   * @param message  The message.
+   */
+  public void addSuccess(String message) {
+    consoleArea.addText(message, successColor);
+  }
+
+  /**
    * Sets an error message.
    * 
    * @param message  The message.
@@ -94,6 +115,24 @@ public class ScriptConsolePanel extends JPanel {
    */
   public void setOutputColor(Color outputColor) {
     this.outputColor = outputColor;
+  }
+  
+  /**
+   * Returns the success color.
+   *
+   * @return  The success color.
+   */
+  public Color getSuccessColor() {
+    return successColor;
+  }
+
+  /**
+   * Sets the success color.
+   *
+   * @param successColor  The success color.
+   */
+  public void setSuccessColor(Color successColor) {
+    this.successColor = successColor;
   }
 
   /**

@@ -146,7 +146,7 @@ public final class ECMOApp extends JApplet {
     
     // window
     JFrame window = new JFrame();
-    window.setTitle("ECMOjo");
+    window.setTitle("ECMOjo Simulator");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setIconImage(ImageLoader.getInstance().getImage("conf/logo/window-icon.gif"));
     

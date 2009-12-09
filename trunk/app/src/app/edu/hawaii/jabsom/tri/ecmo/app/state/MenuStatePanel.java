@@ -360,7 +360,7 @@ public class MenuStatePanel extends JPanel {
         
         // create the window
         ScenarioEditorWindow window = new ScenarioEditorWindow(path);
-        window.setSize(600, 400);
+        window.setSize(750, 550);
         window.setLocationRelativeTo(null);
         window.setVisible(true); 
       }
