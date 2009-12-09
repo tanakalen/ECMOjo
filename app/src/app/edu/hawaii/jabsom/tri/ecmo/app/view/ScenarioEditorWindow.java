@@ -3,10 +3,12 @@ package edu.hawaii.jabsom.tri.ecmo.app.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,17 +21,19 @@ import jsyntaxpane.DefaultSyntaxKit;
 
 import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioLoader;
 import edu.hawaii.jabsom.tri.ecmo.app.model.ScenarioFile;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
 
 import king.lib.access.Access;
 import king.lib.access.ImageLoader;
 import king.lib.access.LocalHookup;
 import king.lib.script.control.CompileException;
 import king.lib.script.control.ScriptCompiler;
-import king.lib.script.model.Language;
-import king.lib.script.model.Script;
 import king.lib.script.view.ScriptConsolePanel;
 import king.lib.script.view.ScriptSyntaxPanel;
 import king.lib.util.DateTime;
+import king.lib.util.SimpleFileFilter;
 import king.lib.util.Translator;
 
 /**
@@ -41,7 +45,7 @@ import king.lib.util.Translator;
 public class ScenarioEditorWindow extends JFrame {
 
   /** The file path. */
-  private String path;
+  private String path = null;
   
   /** The open button. */
   private JButton openButton;
@@ -66,31 +70,9 @@ public class ScenarioEditorWindow extends JFrame {
    * The constructor.
    */
   public ScenarioEditorWindow() {
-    String path = Access.getInstance().getScenarioDir() + "/Simulation-00.scn";
-
-    this.path = path;
-    
     // set title and close behavior
     setTitle("ECMOjo Editor");
     setIconImage(ImageLoader.getInstance().getImage("conf/logo/window-icon.gif"));
-    
-    // load the scenario
-    ScenarioFile scenario;
-    try{
-      scenario = ScenarioLoader.loadFile(LocalHookup.getInstance(), path);
-    }
-    catch (IOException e) {
-      // set error information
-      scenario = new ScenarioFile();
-      scenario.setParameters("Error loading scenario file: " + e.getMessage());
-      Script script = new Script();
-      script.setLang(Language.PNUTS.getName());
-      script.setCode("Error loading scenario file: " + e.getMessage());
-      scenario.setScript(script);
-      
-      // reset path
-      path = null;
-    }
     
     // set layout
     getContentPane().setBackground(Color.LIGHT_GRAY);
@@ -112,7 +94,38 @@ public class ScenarioEditorWindow extends JFrame {
     openButton = new JButton(Translator.getString("action.Open[i18n]: Open..."));
     openButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        
+        // chose a file
+        SimpleFileFilter filter = new SimpleFileFilter(new String[]{"scn"}, "ECMOjo Scenario");
+        JFileChooser chooser = new JFileChooser(Access.getInstance().getScenarioDir());
+        chooser.addChoosableFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(ScenarioEditorWindow.this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+          // obtain the file
+          File file = chooser.getSelectedFile();
+          if (file.exists()) {
+            // load the scenario
+            try{
+              path = file.getAbsolutePath();   
+              ScenarioFile scenario = ScenarioLoader.loadFile(LocalHookup.getInstance(), path);
+              
+              // populate the GUI components with scenario values
+              parametersPanel.setText(scenario.getParameters());
+              parametersPanel.setCaretPosition(0);
+              scriptPanel.setScript(scenario.getScript());       
+              saveButton.setEnabled(true);
+            }
+            catch (IOException e) {
+              // output the error message
+              StandardDialog.showDialog(ScenarioEditorWindow.this, DialogType.ERROR, DialogOption.OK
+                  , "Error Encountered"
+                  , e.getMessage());
+              
+              // reset path
+              path = null;
+              saveButton.setEnabled(false);
+            }
+          }
+        }
       }      
     });
     menuPanel.add(openButton, cc.xy(2, 2));   
@@ -124,7 +137,8 @@ public class ScenarioEditorWindow extends JFrame {
       }      
     });
     menuPanel.add(saveButton, cc.xy(4, 2));   
-
+    saveButton.setEnabled(false);
+    
     saveAsButton = new JButton(Translator.getString("action.SaveAs[i18n]: Save As..."));
     saveAsButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
@@ -169,13 +183,10 @@ public class ScenarioEditorWindow extends JFrame {
     getContentPane().add(new JScrollPane(parametersPanel), cc.xy(1, 3));
     DefaultSyntaxKit.initKit();
     parametersPanel.setContentType("text/properties");
-    parametersPanel.setText(scenario.getParameters());
-    parametersPanel.setCaretPosition(0);
     
     // add the script panel
     getContentPane().add(new JLabel("Scenario Script (Optional)"), cc.xy(1, 4));
     scriptPanel = new ScriptSyntaxPanel();
-    scriptPanel.setScript(scenario.getScript());
     getContentPane().add(scriptPanel, cc.xy(1, 5));
     
     // add the console panel
