@@ -94,7 +94,7 @@ public class ScenarioEditorWindow extends JFrame {
     openButton = new JButton(Translator.getString("action.Open[i18n]: Open..."));
     openButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        // chose a file
+        // choose a file
         SimpleFileFilter filter = new SimpleFileFilter(new String[]{"scn"}, "ECMOjo Scenario");
         JFileChooser chooser = new JFileChooser(Access.getInstance().getScenarioDir());
         chooser.addChoosableFileFilter(filter);
@@ -104,26 +104,7 @@ public class ScenarioEditorWindow extends JFrame {
           File file = chooser.getSelectedFile();
           if (file.exists()) {
             // load the scenario
-            try{
-              path = file.getAbsolutePath();   
-              ScenarioFile scenario = ScenarioLoader.loadFile(LocalHookup.getInstance(), path);
-              
-              // populate the GUI components with scenario values
-              parametersPanel.setText(scenario.getParameters());
-              parametersPanel.setCaretPosition(0);
-              scriptPanel.setScript(scenario.getScript());       
-              saveButton.setEnabled(true);
-            }
-            catch (IOException e) {
-              // output the error message
-              StandardDialog.showDialog(ScenarioEditorWindow.this, DialogType.ERROR, DialogOption.OK
-                  , "Error Encountered"
-                  , e.getMessage());
-              
-              // reset path
-              path = null;
-              saveButton.setEnabled(false);
-            }
+            load(file.getAbsolutePath());
           }
         }
       }      
@@ -133,7 +114,8 @@ public class ScenarioEditorWindow extends JFrame {
     saveButton = new JButton(Translator.getString("action.Save[i18n]: Save"));
     saveButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        
+        // save the scenario
+        save(path);
       }      
     });
     menuPanel.add(saveButton, cc.xy(4, 2));   
@@ -142,7 +124,16 @@ public class ScenarioEditorWindow extends JFrame {
     saveAsButton = new JButton(Translator.getString("action.SaveAs[i18n]: Save As..."));
     saveAsButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        
+        // choose a file
+        SimpleFileFilter filter = new SimpleFileFilter(new String[]{"scn"}, "ECMOjo Scenario");
+        JFileChooser chooser = new JFileChooser();
+        chooser.addChoosableFileFilter(filter);
+        chooser.setSelectedFile(new File(path));
+        int returnVal = chooser.showSaveDialog(ScenarioEditorWindow.this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+          // save the file
+          save(chooser.getSelectedFile().getAbsolutePath());
+        }
       }      
     });
     menuPanel.add(saveAsButton, cc.xy(6, 2));   
@@ -193,5 +184,54 @@ public class ScenarioEditorWindow extends JFrame {
     getContentPane().add(new JLabel("Console Output"), cc.xy(1, 6));
     consolePanel = new ScriptConsolePanel();
     getContentPane().add(consolePanel, cc.xy(1, 7));   
+  }
+  
+  /**
+   * Loads the scenario.
+   * 
+   * @param path  The path.
+   */
+  private void load(String path) {
+    try{
+      ScenarioFile scenario = ScenarioLoader.loadFile(LocalHookup.getInstance(), path);
+      
+      // populate the GUI components with scenario values
+      parametersPanel.setText(scenario.getParameters());
+      parametersPanel.setCaretPosition(0);
+      scriptPanel.setScript(scenario.getScript());       
+      saveButton.setEnabled(true);
+      
+      // save the path
+      this.path = path;
+    }
+    catch (IOException e) {
+      // output the error message
+      StandardDialog.showDialog(ScenarioEditorWindow.this, DialogType.ERROR, DialogOption.OK
+          , "Error Encountered"
+          , e.getMessage());
+    }
+  }
+  
+  /**
+   * Saves the scenario.
+   * 
+   * @param path  The path.
+   */
+  private void save(String path) {
+    try{
+      // the file
+      ScenarioFile scenario = new ScenarioFile();
+      scenario.setParameters(parametersPanel.getText());
+      scenario.setScript(scriptPanel.getScript());
+      
+      // and save it
+      ScenarioLoader.saveFile(LocalHookup.getInstance(), path, scenario);
+    }
+    catch (IOException e) {
+      // output the error message
+      StandardDialog.showDialog(ScenarioEditorWindow.this, DialogType.ERROR, DialogOption.OK
+          , "Error Encountered"
+          , e.getMessage());
+    }
   }
 }
