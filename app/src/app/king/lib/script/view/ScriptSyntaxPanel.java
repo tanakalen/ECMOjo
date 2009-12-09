@@ -65,11 +65,9 @@ public class ScriptSyntaxPanel extends JPanel {
    * @param script  The script.
    */
   public void setScript(Script script) {
+    // set the syntax panel settings
     id = script.getId();
     language = Language.find(script.getLang());
-    codeArea.setText(script.getCode());
-   
-    // set the syntax panel settings
     DefaultSyntaxKit.initKit();
     if (language == Language.JAVA) {
       codeArea.setContentType("text/java");
@@ -83,6 +81,9 @@ public class ScriptSyntaxPanel extends JPanel {
     else if (language == Language.BEANSHELL) {
       codeArea.setContentType("text/java");
     }
+    
+    // set the code
+    codeArea.setText(script.getCode());
   }
   
   /**

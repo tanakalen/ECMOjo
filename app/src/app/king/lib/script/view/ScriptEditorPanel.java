@@ -54,9 +54,9 @@ public class ScriptEditorPanel extends JPanel {
       public void actionPerformed(ActionEvent event) {
         try {
           String timestamp = new DateTime().toString();
-          consolePanel.setOutput(timestamp + " | " + Translator.getString("text.Compiling[i18n]: Compiling...") + "\n");
+          consolePanel.setSuccess(timestamp + " | " + Translator.getString("text.Compiling[i18n]: Compiling...") +"\n");
           ScriptCompiler.compile(getScript());
-          consolePanel.addOutput(Translator.getString("text.CompiledOK[i18n]: Compiled. OK!") + "\n");
+          consolePanel.addSuccess(Translator.getString("text.CompiledOK[i18n]: Compiled. OK!") + "\n");
         }
         catch (CompileException e) {
           consolePanel.addError(Translator.getString("error.CompilingErrors[i18n]: Compiling Errors:") + "\n");
@@ -79,6 +79,7 @@ public class ScriptEditorPanel extends JPanel {
     // add a split pane
     splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, syntaxPanel, actionPanel);
     splitPane.setResizeWeight(0.90);
+    splitPane.setBorder(null);
     add(splitPane, BorderLayout.CENTER);    
   }
   

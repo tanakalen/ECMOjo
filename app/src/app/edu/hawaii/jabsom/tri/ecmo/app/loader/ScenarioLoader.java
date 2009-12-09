@@ -1,7 +1,6 @@
 package edu.hawaii.jabsom.tri.ecmo.app.loader;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -546,15 +545,29 @@ public final class ScenarioLoader {
    * @throws IOException  If something goes wrong.
    */
   public static ScenarioFile loadFile(InputStream inputStream) throws IOException {
-    DataInputStream in = new DataInputStream(inputStream);
+    // read the data
+    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+    StringBuilder parameters = new StringBuilder();
+    String code = "";
+    String line = reader.readLine();
+    while (line != null) {
+      if (line.startsWith("script=") || (line.startsWith("script ="))) {
+        code = line.substring(line.indexOf("=") + 1).trim();
+      }
+      else {
+        parameters.append(line).append("\n");
+      }
+      line = reader.readLine();
+    }
+    reader.close();
+    
+    // create and return the scenario
     ScenarioFile scenario = new ScenarioFile();
-    scenario.setParameters(in.readUTF());
-    String code = in.readUTF();
+    scenario.setParameters(parameters.toString());
     Script script = new Script();
     script.setLang(Language.PNUTS.getName());
     script.setCode(decodeScript(code));
     scenario.setScript(script);
-    in.close();
     return scenario;
   }
   
