@@ -20,6 +20,7 @@ import jsyntaxpane.DefaultSyntaxKit;
 import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioLoader;
 import edu.hawaii.jabsom.tri.ecmo.app.model.ScenarioFile;
 
+import king.lib.access.Access;
 import king.lib.access.ImageLoader;
 import king.lib.access.LocalHookup;
 import king.lib.script.control.CompileException;
@@ -63,10 +64,10 @@ public class ScenarioEditorWindow extends JFrame {
   
   /**
    * The constructor.
-   *
-   * @param path  The file path.
    */
-  public ScenarioEditorWindow(String path) {
+  public ScenarioEditorWindow() {
+    String path = Access.getInstance().getScenarioDir() + "/Simulation-00.scn";
+
     this.path = path;
     
     // set title and close behavior
@@ -169,6 +170,7 @@ public class ScenarioEditorWindow extends JFrame {
     DefaultSyntaxKit.initKit();
     parametersPanel.setContentType("text/properties");
     parametersPanel.setText(scenario.getParameters());
+    parametersPanel.setCaretPosition(0);
     
     // add the script panel
     getContentPane().add(new JLabel("Scenario Script (Optional)"), cc.xy(1, 4));

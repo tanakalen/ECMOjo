@@ -31,11 +31,13 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
-import king.lib.access.Access;
 import king.lib.access.ImageLoader;
 
 /**
@@ -44,7 +46,7 @@ import king.lib.access.ImageLoader;
  * @author   Christoph Aschwanden
  * @since    August 13, 2008
  */
-public class MenuStatePanel extends JPanel {
+public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
 
   /** The panel image. */
   private Image background = ImageLoader.getInstance().getImage("conf/image/interface/menu/Base.jpg");
@@ -348,40 +350,6 @@ public class MenuStatePanel extends JPanel {
     };
     scenarioListPanel.addScenarioSelectionListener(scenarioSelectionListener);
     simulationListPanel.addScenarioSelectionListener(scenarioSelectionListener);
-    
-    // add "New Scenario" button
-    ImageButton scenarioNewButton = new ImageButton(
-          ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioNew.png")
-        , ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioNewRol.png")
-        , ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioNewSel.png"));
-    scenarioNewButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent event) {
-        String path = Access.getInstance().getScenarioDir() + "/Simulation-00.scn";
-        
-        // create the window
-        ScenarioEditorWindow window = new ScenarioEditorWindow(path);
-        window.setSize(750, 550);
-        window.setLocationRelativeTo(null);
-        window.setVisible(true); 
-      }
-    });
-    scenarioNewButton.setLocation(65, 565);
-    scenarioNewButton.setSize(150, 32);
-    add(scenarioNewButton); 
-
-    // add "Edit Scenario" button
-    ImageButton scenarioEditButton = new ImageButton(
-          ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioEdit.png")
-        , ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioEditRol.png")
-        , ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ScenarioEditSel.png"));
-    scenarioEditButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent event) {
-        
-      }
-    });
-    scenarioEditButton.setLocation(225, 565);
-    scenarioEditButton.setSize(150, 32);
-    add(scenarioEditButton); 
 
     // enable scenario
     boolean scenarioSelection = Configuration.getInstance().isSelectionScenarioTab();
@@ -391,6 +359,50 @@ public class MenuStatePanel extends JPanel {
     simulationListPanel.setVisible(!scenarioSelection);
   }
   
+  /**
+   * Called when panel is added.
+   */
+  @Override
+  public void addNotify() {
+    super.addNotify();
+    
+    // listen to key presses
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this);
+  }
+  
+  /**
+   * Called when panel is removed.
+   */
+  @Override
+  public void removeNotify() {  
+    // remove key listener
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(this);
+    
+    super.removeNotify();
+  }
+
+  /** 
+   * Listen to key events. 
+   * 
+   * @param event  The event.
+   * @return  True, if the event was handled.
+   */
+  public boolean dispatchKeyEvent(KeyEvent event) {
+    // handle key event
+    if (event.getID() == KeyEvent.KEY_RELEASED) {
+      char ch = event.getKeyChar();
+      if ((ch == 'e') || (ch == 'E')) {
+        // create the scenario editor window
+        ScenarioEditorWindow window = new ScenarioEditorWindow();
+        window.setSize(750, 550);
+        window.setLocationRelativeTo(null);
+        window.setVisible(true); 
+      }
+    }
+    
+    // if the key should not be dispatched to the focused component, set discard event to true
+    return false;
+  }
 
   /**
    * Paints this component.
@@ -412,6 +424,10 @@ public class MenuStatePanel extends JPanel {
     g.setFont(g.getFont().deriveFont(10f));
     g.setColor(Color.DARK_GRAY);
 
+    // draw editor info
+    String editor = "Press 'E' to open the scenario editor.";
+    g.drawString(editor, 5, 595);
+    
     // draw the release info
     String release = "Release Version: " + ECMOAppRelease.getReleaseVersion() + " | " + ECMOAppRelease.getReleaseTime();
     int width = g.getFontMetrics().stringWidth(release);
