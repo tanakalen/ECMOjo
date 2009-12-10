@@ -2,8 +2,6 @@ package edu.hawaii.jabsom.tri.ecmo.app.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -154,6 +152,7 @@ public class ScenarioEditPanel extends JPanel {
         if(returnVal == JFileChooser.APPROVE_OPTION) {
           // save the file
           save(chooser.getSelectedFile().getAbsolutePath());
+          path = chooser.getSelectedFile().getAbsolutePath();
         }
       }      
     });
@@ -185,16 +184,11 @@ public class ScenarioEditPanel extends JPanel {
     runButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         try {
-          // obtain the scenario
-          ScenarioFile scenarioFile = new ScenarioFile();
-          scenarioFile.setParameters(parametersPanel.getText());
-          scenarioFile.setScript(scriptPanel.getScript());
-          ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-          ScenarioLoader.saveFile(outputStream, scenarioFile);
-          outputStream.close();
-          ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-          Scenario scenario = ScenarioLoader.load(inputStream);
-          inputStream.close();
+          // save the scenario first
+          save(path);
+          
+          // load the scenario
+          Scenario scenario = ScenarioLoader.load(LocalHookup.getInstance(), path);
           
           // run it...
           for (ScenarioEditListener listener: listeners) {
@@ -255,6 +249,7 @@ public class ScenarioEditPanel extends JPanel {
       parametersPanel.setText(scenario.getParameters());
       parametersPanel.setCaretPosition(0);
       scriptPanel.setScript(scenario.getScript());       
+      scriptPanel.setCaretPosition(0);
       saveButton.setEnabled(true);
       
       // save the path

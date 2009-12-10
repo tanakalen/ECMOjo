@@ -152,4 +152,17 @@ public class ScriptConsolePanel extends JPanel {
   public void setErrorColor(Color errorColor) {
     this.errorColor = errorColor;
   }
+  
+  
+  /**
+   * Sets the position of the text insertion caret for the TextComponent. Note that the 
+   * caret tracks change, so this may move if the underlying text of the component is 
+   * changed. If the document is null, does nothing. The position must be between 0 
+   * and the length of the component's text or else an exception is thrown. 
+   * 
+   * @param position  The position.
+   */
+  public void setCaretPosition(int position) {
+    consoleArea.setCaretPosition(position);
+  }
 }

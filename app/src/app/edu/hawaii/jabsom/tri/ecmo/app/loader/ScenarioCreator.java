@@ -1,5 +1,6 @@
 package edu.hawaii.jabsom.tri.ecmo.app.loader;
 
+import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Baseline;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent;
@@ -17,8 +18,11 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PressureMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.InterventionLocation;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
@@ -175,5 +179,57 @@ public final class ScenarioCreator {
 
     // and return the scenario...
     return scenario;
+  }
+  
+  /**
+   * Setup of scenario. Fills in the missing pieces.
+   * 
+   * @param scenario  The scenario.
+   */
+  public static void setup(Scenario scenario) {
+    // add selected components
+    Equipment equipment = scenario.getEquipment();
+    
+    // update tubing
+    TubeComponent tube = (TubeComponent)equipment.getComponent(TubeComponent.class);
+    if (tube.getMode() == null) {
+      tube.setMode(Mode.VV);
+    }
+
+    // update oxigenator
+    OxygenatorComponent oxy = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
+    if (oxy.getOxyType() == null) {
+      oxy.setOxyType(OxyType.SILICONE);
+    }
+    
+    // update pump
+    PumpComponent pump = (PumpComponent)equipment.getComponent(PumpComponent.class);
+    if (pump.getPumpType() == null) {
+      pump.setPumpType(PumpType.ROLLER);
+    }
+    
+    // update ventilator
+    VentilatorComponent ventilator = (VentilatorComponent)equipment.getComponent(VentilatorComponent.class);
+    ventilator.setSubtype(new VentilatorComponent.ConventionalSubtype());
+    Configuration.getInstance().setSelectionConventionalVentilator(true);
+
+    // init tube values depending on selection
+//    tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
+    if ((((Double)tube.getPreMembranePressure()).isNaN()) || ((Double)tube.getPostMembranePressure()).isNaN()) {
+      if (oxy.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
+        // PMP
+        //            tube.setPostMembranePressure(tube.getPreMembranePressure());
+        tube.setPreMembranePressure(125);
+        tube.setPostMembranePressure(120);
+      }
+      else { 
+        // Silicon
+        //            tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
+        tube.setPreMembranePressure(240);
+        tube.setPostMembranePressure(220);
+      }
+    }
+    tube.setPostPCO2(35);
+    tube.setPostPH(7.4);
   }
 }

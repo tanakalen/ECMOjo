@@ -4,10 +4,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
+import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioCreator;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioEditPanel;
 
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import king.lib.access.ImageLoader;
 
 /**
  * The edit state panel. 
@@ -17,6 +22,9 @@ import java.awt.Font;
  */
 public class EditStatePanel extends JPanel {
     
+  /** The panel image. */
+  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/help/Base.jpg");
+
   /**
    * Constructor for panel. 
    * 
@@ -44,11 +52,24 @@ public class EditStatePanel extends JPanel {
         state.menuState();
       }
       public void handleRun(Scenario scenario) {
+        ScenarioCreator.setup(scenario);
         state.gameState(scenario);
       }
     });
     scenarioEditPanel.setLocation(15, 95);
     scenarioEditPanel.setSize(770, 490);
     add(scenarioEditPanel);
+  }
+  
+  /**
+   * Paints this component.
+   * 
+   * @param g  Where to draw to.
+   */
+  public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    
+    // draws the image as background
+    g.drawImage(background, 0, 0, this);
   }
 }

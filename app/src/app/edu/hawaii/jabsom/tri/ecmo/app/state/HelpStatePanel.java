@@ -25,7 +25,7 @@ import king.lib.out.InternetTextPane;
 public class HelpStatePanel extends JPanel {
 
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/result/Base.jpg");
+  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/help/Base.jpg");
     
   /** The info text. */
   private final String infoText = 
