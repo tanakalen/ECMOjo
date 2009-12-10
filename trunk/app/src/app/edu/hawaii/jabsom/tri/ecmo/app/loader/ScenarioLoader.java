@@ -627,6 +627,7 @@ public final class ScenarioLoader {
    * @return  The encoded code.
    */
   private static String encodeScript(String code) {
+    code = code.replace("\r\n", "${linebreak}");
     code = code.replace("\n", "${linebreak}");
     code = code.replace("=", "${equals}");
     return code;

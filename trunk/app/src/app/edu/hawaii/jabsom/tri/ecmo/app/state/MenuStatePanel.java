@@ -11,13 +11,13 @@ import edu.hawaii.jabsom.tri.ecmo.app.ECMOAppRelease;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
+import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioCreator;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
@@ -306,31 +306,10 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
             }
             Configuration.getInstance().setSelectionRollerPump(rollerRadio.isSelected());
           }
+
+          // finalize scenario setup
+          ScenarioCreator.setup(scenario);
           
-          // update ventilator
-          VentilatorComponent ventilator = (VentilatorComponent)equipment.getComponent(VentilatorComponent.class);
-          ventilator.setSubtype(new VentilatorComponent.ConventionalSubtype());
-          Configuration.getInstance().setSelectionConventionalVentilator(true);
-
-          // init tube values depending on selection
-//          tube.setPreMembranePressure((pump.getFlow() * 400) + (oxi.getClotting() * 50));
-          if ((((Double)tube.getPreMembranePressure()).isNaN()) || ((Double)tube.getPostMembranePressure()).isNaN()) {
-            if (oxy.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
-              // PMP
-              //            tube.setPostMembranePressure(tube.getPreMembranePressure());
-              tube.setPreMembranePressure(125);
-              tube.setPostMembranePressure(120);
-            }
-            else { 
-              // Silicon
-              //            tube.setPostMembranePressure(tube.getPreMembranePressure() / 1.23);
-              tube.setPreMembranePressure(240);
-              tube.setPostMembranePressure(220);
-            }
-          }
-          tube.setPostPCO2(35);
-          tube.setPostPH(7.4);
-
           // show dialog and ask for the username
           String user;
           if (simulationListPanel.isVisible()) {

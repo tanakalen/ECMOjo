@@ -92,6 +92,36 @@ public class ScriptSyntaxPanel extends JPanel {
    * @param line  The line number starting with 1.
    */
   public void select(long line) {
-    // TODO: underline or mark the line and scroll to it as needed
+    String text = codeArea.getText();
+    int position = 0;
+    int index = 1;
+    while (index < line) {
+      position = text.indexOf('\n', position);
+      if (position < 0) {
+        // error: the line number is invalid
+        return;
+      }
+      index++;
+      position++;  // skip '\n'
+    }
+    codeArea.setCaretPosition(position);
+    codeArea.getCaret().setSelectionVisible(true);
+    int endPosition = text.indexOf('\n', position);
+    if (endPosition < 0) {
+      endPosition = text.length();
+    }
+    codeArea.moveCaretPosition(endPosition);
+  }
+  
+  /**
+   * Sets the position of the text insertion caret for the TextComponent. Note that the 
+   * caret tracks change, so this may move if the underlying text of the component is 
+   * changed. If the document is null, does nothing. The position must be between 0 
+   * and the length of the component's text or else an exception is thrown. 
+   * 
+   * @param position  The position.
+   */
+  public void setCaretPosition(int position) {
+    codeArea.setCaretPosition(position);
   }
 }
