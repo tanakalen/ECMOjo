@@ -154,7 +154,7 @@ public class Manager implements Runnable {
         // store previous values
         Updater.store(game, history);
         
-        // execute actions (that the user inputted)
+        // execute actions (that the user inputed)
         synchronized(actions) {
           for (Action action: actions) {
             if (action.getClass() == CircuitChangeAction.class) {
@@ -176,7 +176,7 @@ public class Manager implements Runnable {
         }
 
         // update the game (equipment and patient)
-        if (Updater.execute(game, history, compile, increment)) {
+        if (Updater.execute(game, history, increment, compile, null, null)) {
           play = false;
           notifyGoalReached();
         }
