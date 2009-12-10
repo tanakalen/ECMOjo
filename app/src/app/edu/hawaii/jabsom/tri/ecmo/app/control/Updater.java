@@ -7,8 +7,13 @@ import king.lib.sandbox.model.ClassSandbox;
 import king.lib.script.control.ScriptException;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Compile;
-import king.lib.script.model.Context;
 import king.lib.util.StringSet;
+import edu.hawaii.jabsom.tri.ecmo.app.control.script.Console;
+import edu.hawaii.jabsom.tri.ecmo.app.control.script.Context;
+import edu.hawaii.jabsom.tri.ecmo.app.control.script.ContextImpl;
+import edu.hawaii.jabsom.tri.ecmo.app.control.script.Notepad;
+import edu.hawaii.jabsom.tri.ecmo.app.control.script.Progress;
+import edu.hawaii.jabsom.tri.ecmo.app.control.script.Recorder;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.AlarmIndicatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.BubbleDetectorComponent;
@@ -47,7 +52,7 @@ public final class Updater {
    */
   static {
     // setup script runner: uses always the same permissions.
-    Context context = new Context();
+    king.lib.script.model.Context context = new king.lib.script.model.Context();
     context.setMaxDuration(50);
     StringSet accessibleClasses = new StringSet();
     accessibleClasses.add(System.class.getName());
@@ -114,11 +119,14 @@ public final class Updater {
    * 
    * @param game  The game.
    * @param history  The historical values.
-   * @param compile  A compiled script or null for none.
    * @param increment  The time increment in milliseconds.
+   * @param compile  A compiled script or null for none.
+   * @param console  For console output.
+   * @param notepad  For noting during script execution.
    * @return  True, if goal is reached.
    */
-  public static boolean execute(Game game, History history, Compile compile, long increment) {
+  public static boolean execute(Game game, History history, long increment
+                              , Compile compile, Console console, Notepad notepad) {
     Goal goal = game.getGoal();
     if (!goal.isReached(game)) {
       // increment time
@@ -166,11 +174,11 @@ public final class Updater {
       // execute script as needed
        if (compile != null) {
         try {
-          Recorder recorder = new Recorder(game);
-          scriptRunner.execute(compile, recorder);
+          Context context = new ContextImpl(game, Progress.VIEW, console, notepad, null);
+          scriptRunner.execute(compile, context);
         }
         catch (ScriptException e) {
-          Error.out(e);
+          console.output(e.getMessage());
         }
       }
       

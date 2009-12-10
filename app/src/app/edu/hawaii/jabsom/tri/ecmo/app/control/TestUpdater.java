@@ -76,7 +76,7 @@ public class TestUpdater {
       game.setElapsedTime(0);
       History history = new History();
       Updater.store(game, history);
-      Updater.execute(game, history, null, 20); // sets oldFlow to 0.6
+      Updater.execute(game, history, 20, null, null, null); // sets oldFlow to 0.6
     }
     catch (IOException e) {
       Error.out(e);
@@ -111,7 +111,7 @@ public class TestUpdater {
     pump.setFlow(0.7); // increased by 20 mL/kg/min
     double expected = 58.0 * 1.1; // increase SBP by 10%
     Updater.store(game, history);
-    Updater.execute(game, history, null, 20);
+    Updater.execute(game, history, 20, null, null, null);
     patient = game.getPatient();
     assertEquals(expected, patient.getSystolicBloodPressure());
     
@@ -119,7 +119,7 @@ public class TestUpdater {
     pump.setFlow(0.6); // decrease by 20 mL/kg/min
     expected = expected * 0.9; // increase SBP by 10%
     Updater.store(game, history);
-    Updater.execute(game, history, null, 20);
+    Updater.execute(game, history, 20, null, null, null);
     patient = game.getPatient();
     assertEquals(expected, patient.getSystolicBloodPressure());    
   }
