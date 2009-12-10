@@ -123,5 +123,4 @@ public class TestUpdater {
     patient = game.getPatient();
     assertEquals(expected, patient.getSystolicBloodPressure());    
   }
-
 }

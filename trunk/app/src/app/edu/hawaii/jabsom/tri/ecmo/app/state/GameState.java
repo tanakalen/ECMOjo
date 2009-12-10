@@ -12,9 +12,21 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
  */
 public class GameState extends State {
 
+  /** The scenario. */
+  protected Scenario scenario;
+  /** The user. */
+  protected String user;
+  
   /** The manager. */
   private Manager manager;
   
+  
+  /** 
+   * Constructor for game state.
+   */
+  protected GameState() {
+    this(null, null);
+  }
   
   /** 
    * Constructor for game state.
@@ -23,31 +35,20 @@ public class GameState extends State {
    * @param user  The user that is executing the game.
    */
   public GameState(Scenario scenario, String user) {
-    this(scenario, user, false);
-  }
-  
-  /** 
-   * Constructor for game state.
-   * 
-   * @param scenario  The scenario selected.
-   * @param user  The user that is executing the game.
-   * @param monitor  True to monitor simulation.
-   */
-  public GameState(Scenario scenario, String user, boolean monitor) {
-    // create the actual game
-    Game game = new Game(scenario, user);
-    
-    // create the game manager
-    manager = new Manager(game);
+    this.scenario = scenario;
+    this.user = user;
   }
   
   /** 
    * Called during state init.
    */
   void init() {
-    manager.start();
+    // create the actual game
+    Game game = new Game(scenario, user);
     
-    // make it play
+    // create and start the game manager
+    manager = new Manager(game);
+    manager.start();
     manager.play();
   }
   

@@ -219,7 +219,7 @@ public class PnutsCompile implements Compile {
      */
     private void verifyAccess(String clazz) {
       if (!sandbox.hasAccess(clazz)) {
-        throw new IllegalArgumentException("Access denied for: " + clazz);
+        throw new IllegalArgumentException("Access Denied: " + clazz);
       }
     }
   }
@@ -264,13 +264,13 @@ public class PnutsCompile implements Compile {
       // there is probably no security manager set, so this might not actually do much???
       pnutsContext.setImplementation(new SecurePnutsImpl(pnutsContext.getImplementation()) {
         public Object load(String file, pnuts.lang.Context arg1) throws FileNotFoundException {
-          throw new IllegalArgumentException("Access denied for: " + file);
+          throw new IllegalArgumentException("Access Denied: " + file);
         }
         public Object load(URL scriptURL, pnuts.lang.Context context) {
-          throw new IllegalArgumentException("Access denied for: " + scriptURL.toString());
+          throw new IllegalArgumentException("Access Denied: " + scriptURL.toString());
         }
         public Object loadFile(String filename, pnuts.lang.Context arg1) throws FileNotFoundException {
-          throw new IllegalArgumentException("Access denied for: " + filename);
+          throw new IllegalArgumentException("Access Denied: " + filename);
         }    
       }); 
       

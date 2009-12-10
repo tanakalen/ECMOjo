@@ -13,6 +13,8 @@ import king.lib.script.model.Compile;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.CircuitChangeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.script.Console;
+import edu.hawaii.jabsom.tri.ecmo.app.control.script.Notepad;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
@@ -137,6 +139,16 @@ public class Manager implements Runnable {
       }
     }
     
+    // the console
+    Console console = new Console() {
+      public void output(String message) {
+        System.out.println(message);
+      }      
+    };
+    
+    // the notepad
+    Notepad notepad = new Notepad();
+    
     // initialize game views (See ScenarioLoader.java)
     ACTRequestAction actact = new ACTRequestAction();
     actact.execute(game);
@@ -176,7 +188,7 @@ public class Manager implements Runnable {
         }
 
         // update the game (equipment and patient)
-        if (Updater.execute(game, history, increment, compile, null, null)) {
+        if (Updater.execute(game, history, increment, compile, console, notepad)) {
           play = false;
           notifyGoalReached();
         }
