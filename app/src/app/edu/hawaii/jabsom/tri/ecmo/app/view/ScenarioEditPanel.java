@@ -20,7 +20,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import jsyntaxpane.DefaultSyntaxKit;
 
 import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioLoader;
-import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.model.ScenarioFile;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
@@ -52,9 +51,9 @@ public class ScenarioEditPanel extends JPanel {
     /**
      * Called when "Run" got selected.
      * 
-     * @param scenario  The selected scenario.
+     * @param path  The path selected.
      */
-    void handleRun(Scenario scenario);
+    void handleRun(String path);
     
     /**
      * Called when "Exit" got selected.
@@ -183,21 +182,12 @@ public class ScenarioEditPanel extends JPanel {
     runButton = new JButton(Translator.getString("action.Run[i18n]: Run..."));
     runButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        try {
-          // save the scenario first
-          save(path);
-          
-          // load the scenario
-          Scenario scenario = ScenarioLoader.load(LocalHookup.getInstance(), path);
-          
-          // run it...
-          for (ScenarioEditListener listener: listeners) {
-            listener.handleRun(scenario);
-          }
-        }
-        catch (IOException e) {
-          // that shouldn't happen (we do simple memory I/O)
-          throw new RuntimeException(e);
+        // save the scenario first
+        save(path);
+        
+        // run it...
+        for (ScenarioEditListener listener: listeners) {
+          listener.handleRun(path);
         }
       }      
     });

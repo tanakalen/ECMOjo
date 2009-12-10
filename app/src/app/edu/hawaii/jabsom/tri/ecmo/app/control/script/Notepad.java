@@ -1,26 +1,37 @@
 package edu.hawaii.jabsom.tri.ecmo.app.control.script;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * The notepad for scripting. 
+ * The notepad implementation for scripting. 
  *
  * @author noblemaster
  * @since December 10, 2009
  */
-public interface Notepad {
+public class Notepad {
 
+  /** The hash map. */
+  private Map<String, String> notes = new HashMap<String, String>();
+  
+  
   /**
    * Returns the value for the 'null' key.
    * 
    * @return  The value or null if not set.
    */
-  String get();
+  public String get() {
+    return get(null);
+  }
   
   /**
    * Sets the value for the 'null' key.
    * 
    * @param value  The value or null.
    */
-  void set(String value);
+  public void set(String value) {
+    set(null, value);
+  }
   
   /**
    * Returns the value for a key.
@@ -28,7 +39,9 @@ public interface Notepad {
    * @param key  The key.
    * @return  The value or null if not found.
    */
-  String get(String key);
+  public String get(String key) {
+    return notes.get(key);
+  }
   
   /**
    * Sets a value for a key.
@@ -36,5 +49,12 @@ public interface Notepad {
    * @param key  The key.
    * @param value  The value or null to remove the key.
    */
-  void set(String key, String value);
+  public void set(String key, String value) {
+    if (value == null) {
+      notes.remove(key);
+    }
+    else {
+      notes.put(key, value);
+    }
+  }
 }

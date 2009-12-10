@@ -20,6 +20,8 @@ import edu.hawaii.jabsom.tri.ecmo.app.state.StateMachine;
 import edu.hawaii.jabsom.tri.ecmo.app.state.State;
 import edu.hawaii.jabsom.tri.ecmo.app.state.GameState;
 import edu.hawaii.jabsom.tri.ecmo.app.state.GameStatePanel;
+import edu.hawaii.jabsom.tri.ecmo.app.state.EvalState;
+import edu.hawaii.jabsom.tri.ecmo.app.state.EvalStatePanel;
 import edu.hawaii.jabsom.tri.ecmo.app.state.StateMachine.StateMachineListener;
 
 /**
@@ -79,6 +81,9 @@ public class ECMOPanel extends TransitionPanel implements StateMachineListener {
     }
     else if (state instanceof EditState) {
       component = new EditStatePanel((EditState)stateMachine.currentState());
+    }
+    else if (state instanceof EvalState) {
+      component = new EvalStatePanel((EvalState)stateMachine.currentState());
     }
     else if (state instanceof HelpState) {
       component = new HelpStatePanel((HelpState)stateMachine.currentState());

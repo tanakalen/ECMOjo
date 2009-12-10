@@ -1,7 +1,5 @@
 package edu.hawaii.jabsom.tri.ecmo.app.state;
 
-import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
-
 /**
  * The edit state. 
  *
@@ -10,6 +8,44 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
  */
 public class EditState extends State {
 
+  /** The path. */
+  private String path;
+  
+  
+  /**
+   * The constructor.
+   */
+  public EditState() {
+    this(null);
+  }
+  
+  /**
+   * The constructor.
+   * 
+   * @param path  The path.
+   */
+  public EditState(String path) {
+    this.path = path;
+  }
+
+  /**
+   * The path.
+   * 
+   * @return  The path or null for none.
+   */
+  public String getPath() {
+    return path;
+  }
+  
+  /**
+   * Sets the path or null for none.
+   * 
+   * @param path  The path.
+   */
+  public void setPath(String path) {
+    this.path = path;
+  }
+  
   /** 
    * Called during state init.
    */
@@ -25,12 +61,12 @@ public class EditState extends State {
   }
     
   /**
-   * Proceeds to the game state.
+   * Proceeds to the test state.
    *
-   * @param scenario  The scenario selected.
+   * @param path  The path of the scenario to test.
    */
-  public void gameState(Scenario scenario) {
-    transition(new GameState(scenario, "N/A", true));
+  public void evalState(String path) {
+    transition(new EvalState(path));
   }
   
   /**

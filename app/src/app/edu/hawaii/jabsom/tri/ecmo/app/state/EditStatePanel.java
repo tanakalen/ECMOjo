@@ -4,8 +4,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
-import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioCreator;
-import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioEditPanel;
 
 import java.awt.Font;
@@ -25,6 +23,7 @@ public class EditStatePanel extends JPanel {
   /** The panel image. */
   private Image background = ImageLoader.getInstance().getImage("conf/image/interface/help/Base.jpg");
 
+  
   /**
    * Constructor for panel. 
    * 
@@ -51,9 +50,8 @@ public class EditStatePanel extends JPanel {
       public void handleExit() {
         state.menuState();
       }
-      public void handleRun(Scenario scenario) {
-        ScenarioCreator.setup(scenario);
-        state.gameState(scenario);
+      public void handleRun(String path) {
+        state.evalState(path);
       }
     });
     scenarioEditPanel.setLocation(15, 95);

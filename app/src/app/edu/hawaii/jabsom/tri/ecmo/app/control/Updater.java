@@ -10,7 +10,6 @@ import king.lib.script.model.Compile;
 import king.lib.util.StringSet;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Console;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Context;
-import edu.hawaii.jabsom.tri.ecmo.app.control.script.ContextImpl;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Notepad;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Progress;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Recorder;
@@ -174,7 +173,7 @@ public final class Updater {
       // execute script as needed
        if (compile != null) {
         try {
-          Context context = new ContextImpl(game, Progress.VIEW, console, notepad, null);
+          Context context = new Context(game, Progress.VIEW, console, notepad, null);
           scriptRunner.execute(compile, context);
         }
         catch (ScriptException e) {
