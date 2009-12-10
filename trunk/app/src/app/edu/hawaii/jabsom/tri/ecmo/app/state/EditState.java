@@ -1,12 +1,14 @@
 package edu.hawaii.jabsom.tri.ecmo.app.state;
 
+import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
+
 /**
- * The help state. 
+ * The edit state. 
  *
  * @author Christoph Aschwanden
- * @since August 19, 2008
+ * @since December 9, 2009
  */
-public class HelpState extends State {
+public class EditState extends State {
 
   /** 
    * Called during state init.
@@ -20,6 +22,15 @@ public class HelpState extends State {
    */
   void deinit() {
     // not used
+  }
+    
+  /**
+   * Proceeds to the game state.
+   *
+   * @param scenario  The scenario selected.
+   */
+  public void gameState(Scenario scenario) {
+    transition(new GameState(scenario, "N/A", true));
   }
   
   /**

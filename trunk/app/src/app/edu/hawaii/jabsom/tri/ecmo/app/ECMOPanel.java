@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import king.lib.out.Error;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.transition.RandomTransition;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.transition.TransitionPanel;
+import edu.hawaii.jabsom.tri.ecmo.app.state.EditState;
+import edu.hawaii.jabsom.tri.ecmo.app.state.EditStatePanel;
 import edu.hawaii.jabsom.tri.ecmo.app.state.HelpState;
 import edu.hawaii.jabsom.tri.ecmo.app.state.HelpStatePanel;
 import edu.hawaii.jabsom.tri.ecmo.app.state.LoadState;
@@ -74,6 +76,9 @@ public class ECMOPanel extends TransitionPanel implements StateMachineListener {
     }
     else if (state instanceof ResultState) {
       component = new ResultStatePanel((ResultState)stateMachine.currentState());
+    }
+    else if (state instanceof EditState) {
+      component = new EditStatePanel((EditState)stateMachine.currentState());
     }
     else if (state instanceof HelpState) {
       component = new HelpStatePanel((HelpState)stateMachine.currentState());

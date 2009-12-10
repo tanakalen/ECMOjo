@@ -17,7 +17,7 @@ import king.lib.access.ImageLoader;
 import king.lib.out.InternetTextPane;
 
 /**
- * The result state panel. 
+ * The help state panel. 
  *
  * @author   Christoph Aschwanden
  * @since    August 19, 2008
@@ -83,7 +83,7 @@ public class HelpStatePanel extends JPanel {
     setLayout(null);
     
     // add text label
-    TextLabel textLabel = new TextLabel("ECMO Help");
+    TextLabel textLabel = new TextLabel("ECMOjo Help");
     textLabel.setHorizontalAlignment(JLabel.CENTER);
     textLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 36f)); 
     textLabel.setLocation(100, 16);
