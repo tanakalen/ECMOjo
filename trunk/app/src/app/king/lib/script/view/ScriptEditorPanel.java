@@ -54,7 +54,7 @@ public class ScriptEditorPanel extends JPanel {
       public void actionPerformed(ActionEvent event) {
         try {
           String timestamp = new DateTime().toString();
-          consolePanel.setSuccess(timestamp + " | " + Translator.getString("text.Compiling[i18n]: Compiling...") +"\n");
+          consolePanel.setOutput(timestamp + " | " + Translator.getString("text.Compiling[i18n]: Compiling...") +"\n");
           ScriptCompiler.compile(getScript());
           consolePanel.addSuccess(Translator.getString("text.CompiledOK[i18n]: Compiled. OK!") + "\n");
         }

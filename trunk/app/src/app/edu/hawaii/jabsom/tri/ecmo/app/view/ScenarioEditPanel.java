@@ -163,7 +163,7 @@ public class ScenarioEditPanel extends JPanel {
       public void actionPerformed(ActionEvent event) {
         try {
           String timestamp = new DateTime().toString();
-          consolePanel.setSuccess(timestamp + " | " + Translator.getString("text.Compiling[i18n]: Compiling...") +"\n");
+          consolePanel.setOutput(timestamp + " | " + Translator.getString("text.Compiling[i18n]: Compiling...") +"\n");
           ScriptCompiler.compile(scriptPanel.getScript());
           consolePanel.addSuccess(Translator.getString("text.CompiledOK[i18n]: Compiled. OK!") + "\n");
         }
