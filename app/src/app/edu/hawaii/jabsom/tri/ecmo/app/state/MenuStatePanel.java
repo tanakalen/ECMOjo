@@ -21,7 +21,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
-import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioEditorWindow;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel.ScenarioSelectionListener;
 
@@ -51,6 +50,9 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
   /** The panel image. */
   private Image background = ImageLoader.getInstance().getImage("conf/image/interface/menu/Base.jpg");
 
+  /** The state. */
+  private MenuState state;
+  
   /** The scenario list panel. */
   private ScenarioListPanel scenarioListPanel;
   /** The simulation list panel. */
@@ -76,6 +78,8 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
    * @param state  The state for this panel.
    */
   public MenuStatePanel(final MenuState state) {
+    this.state = state;
+    
     // set look
     setOpaque(true);
     
@@ -392,11 +396,8 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     if (event.getID() == KeyEvent.KEY_RELEASED) {
       char ch = event.getKeyChar();
       if ((ch == 'e') || (ch == 'E')) {
-        // create the scenario editor window
-        ScenarioEditorWindow window = new ScenarioEditorWindow();
-        window.setSize(750, 550);
-        window.setLocationRelativeTo(null);
-        window.setVisible(true); 
+        // go to edit state
+        state.editState();
       }
     }
     

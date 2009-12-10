@@ -1,15 +1,17 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,16 +22,18 @@ import com.jgoodies.forms.layout.FormLayout;
 import jsyntaxpane.DefaultSyntaxKit;
 
 import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioLoader;
+import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.model.ScenarioFile;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
 
 import king.lib.access.Access;
-import king.lib.access.ImageLoader;
 import king.lib.access.LocalHookup;
 import king.lib.script.control.CompileException;
 import king.lib.script.control.ScriptCompiler;
+import king.lib.script.model.Language;
+import king.lib.script.model.Script;
 import king.lib.script.view.ScriptConsolePanel;
 import king.lib.script.view.ScriptSyntaxPanel;
 import king.lib.util.DateTime;
@@ -42,7 +46,26 @@ import king.lib.util.Translator;
  * @author noblemaster
  * @since December 8, 2009
  */
-public class ScenarioEditorWindow extends JFrame {
+public class ScenarioEditPanel extends JPanel {
+
+  /** Listener for selections. */
+  public static interface ScenarioEditListener {
+    
+    /**
+     * Called when "Run" got selected.
+     * 
+     * @param scenario  The selected scenario.
+     */
+    void handleRun(Scenario scenario);
+    
+    /**
+     * Called when "Exit" got selected.
+     */
+    void handleExit();
+  };
+  
+  /** Listeners for changes. */
+  private List<ScenarioEditListener> listeners = new ArrayList<ScenarioEditListener>();
 
   /** The file path. */
   private String path = null;
@@ -57,6 +80,8 @@ public class ScenarioEditorWindow extends JFrame {
   private JButton compileButton;
   /** The run button. */
   private JButton runButton;
+  /** The exit button. */
+  private JButton exitButton;
 
   /** The parameters panel. */
   private JEditorPane parametersPanel;
@@ -69,14 +94,10 @@ public class ScenarioEditorWindow extends JFrame {
   /**
    * The constructor.
    */
-  public ScenarioEditorWindow() {
-    // set title and close behavior
-    setTitle("ECMOjo Editor");
-    setIconImage(ImageLoader.getInstance().getImage("conf/logo/window-icon.gif"));
-    
+  public ScenarioEditPanel() {  
     // set layout
-    getContentPane().setBackground(Color.LIGHT_GRAY);
-    getContentPane().setLayout(new FormLayout(
+    setOpaque(false);
+    setLayout(new FormLayout(
           "fill:1px:grow"
         , "pref, pref, fill:3px:grow, pref, fill:2px:grow, pref, fill:60px"
     ));
@@ -85,11 +106,11 @@ public class ScenarioEditorWindow extends JFrame {
     // add the menu panel
     JPanel menuPanel = new JPanel();
     menuPanel.setLayout(new FormLayout(
-        "2px, 100px, 2px, 100px, 2px, 100px, 2px, 100px, 2px, 100px, 2px"
-      , "2px, pref, 2px"
+        "0px, 100px, 2px, 100px, 2px, 100px, 2px, 100px, 2px, 100px, 2px, 100px, 0px"
+      , "2px, pref, 5px"
     ));
     menuPanel.setOpaque(false);
-    getContentPane().add(menuPanel, cc.xy(1, 1));
+    add(menuPanel, cc.xy(1, 1));
     
     openButton = new JButton(Translator.getString("action.Open[i18n]: Open..."));
     openButton.addActionListener(new ActionListener() {
@@ -98,7 +119,7 @@ public class ScenarioEditorWindow extends JFrame {
         SimpleFileFilter filter = new SimpleFileFilter(new String[]{"scn"}, "ECMOjo Scenario");
         JFileChooser chooser = new JFileChooser(Access.getInstance().getScenarioDir());
         chooser.addChoosableFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(ScenarioEditorWindow.this);
+        int returnVal = chooser.showOpenDialog(ScenarioEditPanel.this);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
           // obtain the file
           File file = chooser.getSelectedFile();
@@ -129,7 +150,7 @@ public class ScenarioEditorWindow extends JFrame {
         JFileChooser chooser = new JFileChooser();
         chooser.addChoosableFileFilter(filter);
         chooser.setSelectedFile(new File(path));
-        int returnVal = chooser.showSaveDialog(ScenarioEditorWindow.this);
+        int returnVal = chooser.showSaveDialog(ScenarioEditPanel.this);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
           // save the file
           save(chooser.getSelectedFile().getAbsolutePath());
@@ -163,29 +184,64 @@ public class ScenarioEditorWindow extends JFrame {
     runButton = new JButton(Translator.getString("action.Run[i18n]: Run..."));
     runButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        
+        try {
+          // obtain the scenario
+          ScenarioFile scenarioFile = new ScenarioFile();
+          scenarioFile.setParameters(parametersPanel.getText());
+          scenarioFile.setScript(scriptPanel.getScript());
+          ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+          ScenarioLoader.saveFile(outputStream, scenarioFile);
+          outputStream.close();
+          ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+          Scenario scenario = ScenarioLoader.load(inputStream);
+          inputStream.close();
+          
+          // run it...
+          for (ScenarioEditListener listener: listeners) {
+            listener.handleRun(scenario);
+          }
+        }
+        catch (IOException e) {
+          // that shouldn't happen (we do simple memory I/O)
+          throw new RuntimeException(e);
+        }
       }      
     });
     menuPanel.add(runButton, cc.xy(10, 2));   
 
+    exitButton = new JButton(Translator.getString("action.Exit[i18n]: Exit"));
+    exitButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        // exit the editor
+        for (ScenarioEditListener listener: listeners) {
+          listener.handleExit();
+        }
+      }      
+    });
+    menuPanel.add(exitButton, cc.xy(12, 2));   
+
     // add the parameters panel
-    getContentPane().add(new JLabel("Scenario Parameters"), cc.xy(1, 2));
+    add(new JLabel("Scenario Parameters"), cc.xy(1, 2));
     parametersPanel = new JEditorPane();
-    getContentPane().add(new JScrollPane(parametersPanel), cc.xy(1, 3));
+    add(new JScrollPane(parametersPanel), cc.xy(1, 3));
     DefaultSyntaxKit.initKit();
     parametersPanel.setContentType("text/properties");
     
     // add the script panel
-    getContentPane().add(new JLabel("Scenario Script (Optional)"), cc.xy(1, 4));
+    add(new JLabel("Scenario Script (Optional)"), cc.xy(1, 4));
     scriptPanel = new ScriptSyntaxPanel();
-    getContentPane().add(scriptPanel, cc.xy(1, 5));
+    add(scriptPanel, cc.xy(1, 5));
+    Script script = new Script();
+    script.setLang(Language.PNUTS.getName());
+    script.setCode("");
+    scriptPanel.setScript(script);
     
     // add the console panel
-    getContentPane().add(new JLabel("Console Output"), cc.xy(1, 6));
+    add(new JLabel("Console Output"), cc.xy(1, 6));
     consolePanel = new ScriptConsolePanel();
-    getContentPane().add(consolePanel, cc.xy(1, 7));   
+    add(consolePanel, cc.xy(1, 7));   
   }
-  
+    
   /**
    * Loads the scenario.
    * 
@@ -206,7 +262,7 @@ public class ScenarioEditorWindow extends JFrame {
     }
     catch (IOException e) {
       // output the error message
-      StandardDialog.showDialog(ScenarioEditorWindow.this, DialogType.ERROR, DialogOption.OK
+      StandardDialog.showDialog(ScenarioEditPanel.this, DialogType.ERROR, DialogOption.OK
           , "Error Encountered"
           , e.getMessage());
     }
@@ -229,9 +285,27 @@ public class ScenarioEditorWindow extends JFrame {
     }
     catch (IOException e) {
       // output the error message
-      StandardDialog.showDialog(ScenarioEditorWindow.this, DialogType.ERROR, DialogOption.OK
+      StandardDialog.showDialog(ScenarioEditPanel.this, DialogType.ERROR, DialogOption.OK
           , "Error Encountered"
           , e.getMessage());
     }
+  }
+  
+  /**
+   * Adds a listener.
+   * 
+   * @param listener  The listener to add.
+   */
+  public void addScenarioEditListener(ScenarioEditListener listener) {
+    listeners.add(listener);
+  }
+  
+  /**
+   * Removes a listener.
+   * 
+   * @param listener  The listener to add.
+   */
+  public void removeScenarioEditListener(ScenarioEditListener listener) {
+    listeners.remove(listener);
   }
 }

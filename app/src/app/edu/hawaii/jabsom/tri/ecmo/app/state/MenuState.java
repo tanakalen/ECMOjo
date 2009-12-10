@@ -93,6 +93,13 @@ public class MenuState extends State {
   }
   
   /**
+   * Proceeds to the editor state.
+   */
+  public void editState() {
+    transition(new EditState());
+  }
+
+  /**
    * Proceeds to the game state.
    */
   public void helpState() {
