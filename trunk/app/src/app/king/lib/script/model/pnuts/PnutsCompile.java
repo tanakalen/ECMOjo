@@ -7,6 +7,7 @@ import pnuts.compiler.CompilerPnutsImpl;
 import pnuts.ext.ConfigurationAdapter;
 import pnuts.lang.Jump;
 import pnuts.lang.Pnuts;
+import pnuts.lang.PnutsException;
 import pnuts.security.SecurePnutsImpl;
 import king.lib.sandbox.model.Sandbox;
 import king.lib.script.control.ScriptException;
@@ -54,6 +55,7 @@ public class PnutsCompile implements Compile {
         expired = true;
         throw new Jump(null); 
       }
+      super.updateLine(line);
     }
   }
   
@@ -287,7 +289,12 @@ public class PnutsCompile implements Compile {
       result = pnuts.run(pnutsContext);
     }
     catch (Exception e) {
-      throw new ScriptException(e.getMessage());
+      String message = e.getMessage();
+      if (e instanceof PnutsException) {
+        PnutsException pnutsException = (PnutsException)e;
+        message += " {line: " + pnutsException.getLine() + ", column: " + pnutsException.getColumn() + "}";
+      }
+      throw new ScriptException(message);
     }
     if ((timedContext != null) && (timedContext.expired == true)) {
       throw new ScriptException("Script took too long to execute.");

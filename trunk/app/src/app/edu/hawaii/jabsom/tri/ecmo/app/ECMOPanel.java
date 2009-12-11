@@ -73,17 +73,17 @@ public class ECMOPanel extends TransitionPanel implements StateMachineListener {
     else if (state instanceof MenuState) {
       component = new MenuStatePanel((MenuState)stateMachine.currentState());
     }
-    else if (state instanceof GameState) {
-      component = new GameStatePanel((GameState)stateMachine.currentState());
-    }
-    else if (state instanceof ResultState) {
-      component = new ResultStatePanel((ResultState)stateMachine.currentState());
-    }
     else if (state instanceof EditState) {
       component = new EditStatePanel((EditState)stateMachine.currentState());
     }
     else if (state instanceof EvalState) {
       component = new EvalStatePanel((EvalState)stateMachine.currentState());
+    }
+    else if (state instanceof GameState) {
+      component = new GameStatePanel((GameState)stateMachine.currentState());
+    }
+    else if (state instanceof ResultState) {
+      component = new ResultStatePanel((ResultState)stateMachine.currentState());
     }
     else if (state instanceof HelpState) {
       component = new HelpStatePanel((HelpState)stateMachine.currentState());

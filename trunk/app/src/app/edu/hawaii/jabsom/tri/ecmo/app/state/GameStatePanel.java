@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Manager.ManagerListener;
+import edu.hawaii.jabsom.tri.ecmo.app.control.script.Output;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.Goal;
@@ -169,5 +170,19 @@ public class GameStatePanel extends JPanel implements ManagerListener, KeyEventD
         }
       }
     });
+  }
+  
+  /**
+   * Called when console output is available.
+   * 
+   * @param output  The output.
+   */
+  public void handleOutput(Output output) {
+    if (output.isError()) {
+      System.err.println(output.getMessage());
+    }
+    else {
+      System.out.println(output.getMessage());
+    }
   }
 }
