@@ -59,6 +59,10 @@ public final class Updater {
     accessibleClasses.add(String.class.getName());
     accessibleClasses.add(Math.class.getName());
     accessibleClasses.add(Integer.class.getName());
+    accessibleClasses.add(Context.class.getName());
+    accessibleClasses.add(Progress.class.getName());
+    accessibleClasses.add(Console.class.getName());
+    accessibleClasses.add(Notepad.class.getName());
     accessibleClasses.add(Recorder.class.getName());
     accessibleClasses.add(Game.class.getName());
     context.setSandbox(new ClassSandbox(accessibleClasses));
@@ -177,9 +181,9 @@ public final class Updater {
           scriptRunner.execute(compile, context);
         }
         catch (ScriptException e) {
-          console.output(e.getMessage());
+          console.out(e.getMessage());
         }
-      }
+      } 
       
       // load some local variables for Updater
       Mode mode = tube.getMode();

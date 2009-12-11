@@ -139,14 +139,8 @@ public class Manager implements Runnable {
       }
     }
     
-    // the console
-    Console console = new Console() {
-      public void output(String message) {
-        System.out.println(message);
-      }      
-    };
-    
-    // the notepad
+    // the console and notepad
+    Console console = new Console();
     Notepad notepad = new Notepad();
     
     // initialize game views (See ScenarioLoader.java)
@@ -191,6 +185,12 @@ public class Manager implements Runnable {
         if (Updater.execute(game, history, increment, compile, console, notepad)) {
           play = false;
           notifyGoalReached();
+        }
+        
+        // output console
+        String message;
+        while ((message = console.poll()) != null) {
+          System.out.println(message);
         }
       }
       

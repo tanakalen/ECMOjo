@@ -62,10 +62,8 @@ public class EditState extends State {
     
   /**
    * Proceeds to the test state.
-   *
-   * @param path  The path of the scenario to test.
    */
-  public void evalState(String path) {
+  public void evalState() {
     transition(new EvalState(path));
   }
   
