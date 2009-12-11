@@ -27,6 +27,8 @@ import java.io.IOException;
 import king.lib.access.Access;
 import king.lib.access.ImageLoader;
 import king.lib.access.LocalHookup;
+import king.lib.script.model.Language;
+import king.lib.script.model.Script;
 import king.lib.util.SimpleFileFilter;
 import king.lib.util.Translator;
 
@@ -178,6 +180,26 @@ public class EditStatePanel extends JPanel {
     load(state.getPath());
   }
   
+  /**
+   * Creates a new scenario.
+   * 
+   * @return  The scenario.
+   */
+  private ScenarioFile create() {
+    ScenarioFile scenario = new ScenarioFile();
+    
+    // set default parameters
+    scenario.setParameters("");
+    
+    // set initial script
+    Script script = new Script();
+    script.setLang(Language.PNUTS.getName());
+    script.setCode("");
+    scenario.setScript(script);
+    
+    // and return the scenario
+    return scenario;
+  }
   
   /**
    * Loads the scenario.
@@ -185,21 +207,30 @@ public class EditStatePanel extends JPanel {
    * @param path  The path.
    */
   private void load(String path) {
+    // try to load (or create if none exists) a new scenario
+    ScenarioFile scenario;
     if (path != null) {
       try{
-        ScenarioFile scenario = ScenarioLoader.loadFile(LocalHookup.getInstance(), path);
-        
-        // populate the GUI components with scenario values
-        scenarioEditPanel.setScenario(scenario);
-        saveButton.setEnabled(true);
+        scenario = ScenarioLoader.loadFile(LocalHookup.getInstance(), path);
       }
       catch (IOException e) {
         // output the error message
         StandardDialog.showDialog(EditStatePanel.this, DialogType.ERROR, DialogOption.OK
             , "Error Encountered"
             , e.getMessage());
+        
+        // create default
+        scenario = create();
       }
     }
+    else {
+      // create default
+      scenario = create();
+    }
+    
+    // populate the GUI components with scenario values
+    scenarioEditPanel.setScenario(scenario);
+    saveButton.setEnabled(true);
   }
   
   /**
