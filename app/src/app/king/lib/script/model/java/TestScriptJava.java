@@ -42,8 +42,8 @@ public class TestScriptJava {
     // returns y = 22 * x
     script.setCode(
           "public class Script {\n"
-        + "  public static Object execute(Object object) {\n"
-        + "    int input = ((Integer)object).intValue();\n"
+        + "  public static Object execute(Object context) {\n"
+        + "    int input = ((Integer)context).intValue();\n"
         + "    return input * 22;\n"
         + "  }\n"
         + "}\n"
@@ -54,8 +54,8 @@ public class TestScriptJava {
     script.setCode(
           "import java.util.List;\n"
         + "public class Script {\n"
-        + "  public static Object execute(Object object) {\n"
-        + "    List input = (List)object;\n"
+        + "  public static Object execute(Object context) {\n"
+        + "    List input = (List)context;\n"
         + "    input.set(1, new Integer(383240));\n"
         + "    return null;\n"
         + "  }\n"
@@ -88,7 +88,7 @@ public class TestScriptJava {
     // thread execution
     script.setCode(
           "public class Script {\n"
-        + "  public static Object execute(Object object) {\n"
+        + "  public static Object execute(Object context) {\n"
         + "    Thread.currentThread();\n"
         + "    return null;\n"
         + "  }\n"
@@ -122,7 +122,7 @@ public class TestScriptJava {
     script.setLang(Language.JAVA.getName());
     script.setCode(
           "public class Script {\n"
-        + "  public static Object execute(Object object) {\n"
+        + "  public static Object execute(Object context) {\n"
         + "    for (int i = 0; i < 100000000; i++) {\n"
         + "      float a = 3.1415f;\n"
         + "    }\n"

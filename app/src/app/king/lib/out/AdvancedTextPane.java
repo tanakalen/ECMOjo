@@ -11,10 +11,7 @@ import javax.swing.text.StyleConstants;
 
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 
 import javax.swing.ImageIcon;
 import java.awt.Color;
@@ -529,17 +526,5 @@ public class AdvancedTextPane extends JTextPane {
     else {
       return font;
     }
-  }
-  
-  /**
-   * Writes antialiased text.
-   * 
-   * @param g  Where to write the text to.
-   */ 
-  public void paintComponent(Graphics g) {
-    Graphics2D g2 = (Graphics2D) g;
-    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-    super.paintComponent(g);
   }
 }
