@@ -35,6 +35,13 @@ public class Manager implements Runnable {
      * Called when the game is finished.
      */
     void goalReached();
+    
+    /**
+     * Called when console output is available.
+     * 
+     * @param output  The output.
+     */
+    void handleOutput(Output output);
   };
   
   /** Listeners for changes. */
@@ -191,12 +198,7 @@ public class Manager implements Runnable {
         // output console
         Output output;
         while ((output = console.poll()) != null) {
-          if (output.isError()) {
-            System.err.println(output.getMessage());
-          }
-          else {
-            System.out.println(output.getMessage());
-          }
+          notifyOutputAvailable(output);
         }
       }
       
@@ -240,6 +242,21 @@ public class Manager implements Runnable {
       public void run() {
         for (ManagerListener listener: listeners) {
           listener.goalReached();
+        }
+      }
+    });
+  }
+  
+  /**
+   * Called when output is available.
+   * 
+   * @param output  The output.
+   */
+  private void notifyOutputAvailable(final Output output) {
+    SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
+        for (ManagerListener listener: listeners) {
+          listener.handleOutput(output);
         }
       }
     });
