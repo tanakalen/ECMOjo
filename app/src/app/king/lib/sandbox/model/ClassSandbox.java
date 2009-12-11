@@ -24,6 +24,16 @@ public class ClassSandbox implements Sandbox {
   /**
    * The constructor.
    *
+   * @param accessibleClass  The class that shall be accessible. E.g. "java.lang.Math" or "java.lang.Object".
+   */
+  public ClassSandbox(String accessibleClass) {
+    this.accessibleClasses = new StringSet();
+    this.accessibleClasses.add(accessibleClass);
+  }
+
+  /**
+   * The constructor.
+   *
    * @param accessibleClasses  The classes that shall be accessible. E.g. "java.lang.Math" or "java.lang.Object".
    */
   public ClassSandbox(StringSet accessibleClasses) {

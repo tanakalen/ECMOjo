@@ -1,9 +1,10 @@
 package edu.hawaii.jabsom.tri.ecmo.app.control;
 
-import java.io.PrintStream;
-
 import king.lib.out.Error;
 import king.lib.sandbox.model.ClassSandbox;
+import king.lib.sandbox.model.CompositeSandbox;
+import king.lib.sandbox.model.PackageSandbox;
+import king.lib.sandbox.model.SandboxList;
 import king.lib.script.control.ScriptException;
 import king.lib.script.control.ScriptRunner;
 import king.lib.script.model.Compile;
@@ -12,7 +13,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.script.Console;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Context;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Notepad;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Progress;
-import edu.hawaii.jabsom.tri.ecmo.app.control.script.Recorder;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.AlarmIndicatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.BubbleDetectorComponent;
@@ -54,18 +54,13 @@ public final class Updater {
     king.lib.script.model.Context context = new king.lib.script.model.Context();
     context.setMaxDuration(50);
     StringSet accessibleClasses = new StringSet();
-    accessibleClasses.add(System.class.getName());
-    accessibleClasses.add(PrintStream.class.getName());
     accessibleClasses.add(String.class.getName());
     accessibleClasses.add(Math.class.getName());
     accessibleClasses.add(Integer.class.getName());
-    accessibleClasses.add(Context.class.getName());
-    accessibleClasses.add(Progress.class.getName());
-    accessibleClasses.add(Console.class.getName());
-    accessibleClasses.add(Notepad.class.getName());
-    accessibleClasses.add(Recorder.class.getName());
-    accessibleClasses.add(Game.class.getName());
-    context.setSandbox(new ClassSandbox(accessibleClasses));
+    SandboxList sandboxes = new SandboxList();
+    sandboxes.add(new PackageSandbox("edu.hawaii.jabsom.tri.ecmo"));
+    sandboxes.add(new ClassSandbox(accessibleClasses));
+    context.setSandbox(new CompositeSandbox(sandboxes));
     scriptRunner = new ScriptRunner(context);
   }
   
@@ -159,7 +154,7 @@ public final class Updater {
            .getComponent(PressureMonitorComponent.class);
       AlarmIndicatorComponent alarmIndicator = (AlarmIndicatorComponent)equipment
            .getComponent(AlarmIndicatorComponent.class);
-      
+
       // if we are running a baseline goal, check if the trigger has to be executed
       if (goal instanceof BaselineGoal) {
         long timeInit = ((BaselineGoal)goal).getTimeInit();
