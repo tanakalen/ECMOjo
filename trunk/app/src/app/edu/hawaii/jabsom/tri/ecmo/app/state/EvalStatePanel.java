@@ -15,5 +15,8 @@ public class EvalStatePanel extends GameStatePanel {
    */
   public EvalStatePanel(EvalState state) {
     super(state);
+    
+    // display console
+    
   }
 }
