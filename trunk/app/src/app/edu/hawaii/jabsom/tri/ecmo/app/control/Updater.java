@@ -181,7 +181,7 @@ public final class Updater {
           scriptRunner.execute(compile, context);
         }
         catch (ScriptException e) {
-          console.out(e.getMessage());
+          console.err(e.getMessage());
         }
       } 
       

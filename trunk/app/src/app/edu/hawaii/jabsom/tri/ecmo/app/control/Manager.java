@@ -15,6 +15,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.CircuitChangeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Console;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Notepad;
+import edu.hawaii.jabsom.tri.ecmo.app.control.script.Output;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
@@ -188,9 +189,14 @@ public class Manager implements Runnable {
         }
         
         // output console
-        String message;
-        while ((message = console.poll()) != null) {
-          System.out.println(message);
+        Output output;
+        while ((output = console.poll()) != null) {
+          if (output.isError()) {
+            System.err.println(output.getMessage());
+          }
+          else {
+            System.out.println(output.getMessage());
+          }
         }
       }
       

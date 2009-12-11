@@ -41,13 +41,13 @@ public class TestScriptPnuts {
     
     // returns y = 22 * x
     script.setCode(
-        "return input * 22;\n"
+        "return context * 22;\n"
     );
     assertEquals("We should obtain 88.", 88, ScriptRunner.execute(script, context, 4));
 
     // can modify input
     script.setCode(
-        "input.set(1, 3000000);\n"
+        "context.set(1, 3000000);\n"
     );
     List list = new ArrayList();
     list.add(1322);
@@ -59,8 +59,8 @@ public class TestScriptPnuts {
     
     // can modify custom input
     script.setCode(
-          "sqrt = input.getSquareRoot(4.03);\n"
-        + "input.writeSomething(\"sqrt(4.03)=\" + sqrt);\n"
+          "sqrt = context.getSquareRoot(4.03);\n"
+        + "context.writeSomething(\"sqrt(4.03)=\" + sqrt);\n"
         + "return sqrt;\n"
     );
     /** The test object. */
@@ -201,7 +201,7 @@ public class TestScriptPnuts {
     
     // can access custom input and classloader through it
     script.setCode(
-          "clazz = input.getClass();\n"
+          "clazz = context.getClass();\n"
         + "loader = clazz.getClassLoader();\n"
         + "object = loader.loadClass(\"java.lang.Object\");\n"
     );

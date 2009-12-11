@@ -10,43 +10,52 @@ import java.util.LinkedList;
  */
 public class Console {
 
-  /** The messages. */
-  private LinkedList<String> messages = new LinkedList<String>();
+  /** The outputs. */
+  private LinkedList<Output> outputs = new LinkedList<Output>();
   
   
   /**
-   * Outputs a message.
+   * Outputs a standard message.
    * 
    * @param message  The message to output.
    */
   public void out(String message) {
-    messages.add(message);
+    outputs.add(new Output(message, false));
   }
 
   /**
-   * Returns but does not remove the next message.
+   * Outputs an error message.
+   * 
+   * @param message  The message to output.
+   */
+  public void err(String message) {
+    outputs.add(new Output(message, true));
+  }
+
+  /**
+   * Returns but does not remove the next output.
    * 
    * @return  The message or null for none.
    */
-  public String peek() {
-    return messages.peek();
+  public Output peek() {
+    return outputs.peek();
   }
   
   /**
-   * Returns and removes the next message.
+   * Returns and removes the next output.
    * 
    * @return  The message or null for none.
    */
-  public String poll() {
-    return messages.poll();
+  public Output poll() {
+    return outputs.poll();
   }
   
   /**
-   * Returns the number of messages.
+   * Returns the number of outputs.
    * 
-   * @return  The number of messages.
+   * @return  The number of outputs.
    */
   public int size() {
-    return messages.size();
+    return outputs.size();
   }
 }

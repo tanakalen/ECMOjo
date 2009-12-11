@@ -248,7 +248,7 @@ public class PnutsCompile implements Compile {
   public Object execute(Context context, Object object) throws ScriptException {   
     // create a Pnuts context
     pnuts.lang.Package pnutsPackage = new pnuts.lang.Package();
-    pnutsPackage.set("input".intern(), object);
+    pnutsPackage.set("context".intern(), object);
     pnuts.lang.Context pnutsContext = new pnuts.lang.Context(pnutsPackage);
     pnutsContext.setImplementation(new CompilerPnutsImpl());   // should make things fast as it uses compiled code!?
     
