@@ -292,7 +292,7 @@ public class PnutsCompile implements Compile {
       String message = e.getMessage();
       if (e instanceof PnutsException) {
         PnutsException pnutsException = (PnutsException)e;
-        message += " {line: " + pnutsException.getLine() + ", column: " + pnutsException.getColumn() + "}";
+        message += " {at line " + pnutsException.getLine() + " column: " + pnutsException.getColumn() + "}";
       }
       throw new ScriptException(message);
     }
