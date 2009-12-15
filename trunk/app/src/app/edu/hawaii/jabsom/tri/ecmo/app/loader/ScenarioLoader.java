@@ -137,7 +137,8 @@ public final class ScenarioLoader {
       if (oxyType.equalsIgnoreCase("quadrox")) {
         oxy.setOxyType(OxyType.QUADROX_D);
       }
-      else if (oxyType.equalsIgnoreCase("silicone")) {
+      else if (oxyType.equalsIgnoreCase("silicone") 
+          || oxyType.equalsIgnoreCase("silicon")) {
         oxy.setOxyType(OxyType.SILICONE);
       }
       
