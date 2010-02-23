@@ -59,15 +59,7 @@ public class AboutStatePanel extends JPanel {
       + "<br>"
       + "<h1>Acknowledgement</h1>"
       + "This project has been supported by grant No. W81XWH-06-2-0061 awarded by Department of Defense (DoD), "
-      + "United States of America.<br>"
-      + "<br>"
-      + "<h1>Website &amp; Contact</h1>"
-      + "Visit our website: "
-      + "<a href=\"http://ecmojo.sourceforge.net\">http://ecmojo.sourceforge.net</a><br>"
-      + "Contact us at: "
-      + "<a href=\"mailto:telemed@hawaii.edu\">telemed@hawaii.edu</a><br>"
-      + "<a href=\"http://ecmojo.sourceforge.net\">"
-      + "<img src=\"http://ecmojo.sourceforge.net/image/interface/minilogo.png\"></a><br>";
+      + "United States of America.<br>";
 
     
   /**
