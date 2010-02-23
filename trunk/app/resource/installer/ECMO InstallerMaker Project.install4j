@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <install4j version="4.0.6" transformSequenceNumber="1">
   <directoryPresets config="." />
-  <application name="ECMOjo" distributionSourceDir="" applicationId="1507-1871-9700-2939" mediaDir="." mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}" compression="6" lzmaCompression="false" pack200Compression="false" excludeSignedFromPacking="true" keepModificationTimes="false" shortName="ecmojo" publisher="ECMOjo on SourceForge.net" publisherWeb="http://ecmojo.sourceforge.net" version="2.2.8" allPathsRelative="true" backupOnSave="false" autoSave="false" convertDotsToUnderscores="true" macSignature="????" javaMinVersion="1.5" javaMaxVersion="" allowBetaVM="false">
+  <application name="ECMOjo" distributionSourceDir="" applicationId="1507-1871-9700-2939" mediaDir="." mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}" compression="6" lzmaCompression="false" pack200Compression="false" excludeSignedFromPacking="true" keepModificationTimes="false" shortName="ecmojo" publisher="ECMOjo on SourceForge.net" publisherWeb="http://ecmojo.sourceforge.net" version="2.2.9" allPathsRelative="true" backupOnSave="false" autoSave="false" convertDotsToUnderscores="true" macSignature="????" javaMinVersion="1.5" javaMaxVersion="" allowBetaVM="false">
     <languages skipLanguageSelection="false">
       <principalLanguage id="en" customLocalizationFile="" />
       <additionalLanguages />
