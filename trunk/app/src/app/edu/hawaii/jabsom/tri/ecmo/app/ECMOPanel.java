@@ -6,10 +6,12 @@ import java.awt.Dimension;
 import king.lib.out.Error;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.transition.RandomTransition;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.transition.TransitionPanel;
+import edu.hawaii.jabsom.tri.ecmo.app.state.ContactState;
+import edu.hawaii.jabsom.tri.ecmo.app.state.ContactStatePanel;
 import edu.hawaii.jabsom.tri.ecmo.app.state.EditState;
 import edu.hawaii.jabsom.tri.ecmo.app.state.EditStatePanel;
-import edu.hawaii.jabsom.tri.ecmo.app.state.HelpState;
-import edu.hawaii.jabsom.tri.ecmo.app.state.HelpStatePanel;
+import edu.hawaii.jabsom.tri.ecmo.app.state.AboutState;
+import edu.hawaii.jabsom.tri.ecmo.app.state.AboutStatePanel;
 import edu.hawaii.jabsom.tri.ecmo.app.state.LoadState;
 import edu.hawaii.jabsom.tri.ecmo.app.state.LoadStatePanel;
 import edu.hawaii.jabsom.tri.ecmo.app.state.MenuState;
@@ -85,8 +87,11 @@ public class ECMOPanel extends TransitionPanel implements StateMachineListener {
     else if (state instanceof ResultState) {
       component = new ResultStatePanel((ResultState)stateMachine.currentState());
     }
-    else if (state instanceof HelpState) {
-      component = new HelpStatePanel((HelpState)stateMachine.currentState());
+    else if (state instanceof AboutState) {
+      component = new AboutStatePanel((AboutState)stateMachine.currentState());
+    }
+    else if (state instanceof ContactState) {
+      component = new ContactStatePanel((ContactState)stateMachine.currentState());
     }
     else {
       Error.out("State not supported: " + state);

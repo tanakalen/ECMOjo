@@ -17,15 +17,15 @@ import king.lib.access.ImageLoader;
 import king.lib.out.InternetTextPane;
 
 /**
- * The help state panel. 
+ * The about state panel. 
  *
- * @author   Christoph Aschwanden
- * @since    August 19, 2008
+ * @author Christoph Aschwanden
+ * @since August 19, 2008
  */
-public class HelpStatePanel extends JPanel {
+public class AboutStatePanel extends JPanel {
 
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/help/Base.jpg");
+  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/about/Base.jpg");
     
   /** The info text. */
   private final String infoText = 
@@ -75,7 +75,7 @@ public class HelpStatePanel extends JPanel {
    * 
    * @param state  The state for this panel.
    */
-  public HelpStatePanel(final HelpState state) {
+  public AboutStatePanel(final AboutState state) {
     // set look
     setOpaque(true);
     
@@ -83,7 +83,7 @@ public class HelpStatePanel extends JPanel {
     setLayout(null);
     
     // add text label
-    TextLabel textLabel = new TextLabel("ECMOjo Help");
+    TextLabel textLabel = new TextLabel("About ECMOjo");
     textLabel.setHorizontalAlignment(JLabel.CENTER);
     textLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 36f)); 
     textLabel.setLocation(100, 16);

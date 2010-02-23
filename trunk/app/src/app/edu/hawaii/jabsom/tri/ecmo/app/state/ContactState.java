@@ -1,12 +1,12 @@
 package edu.hawaii.jabsom.tri.ecmo.app.state;
 
 /**
- * The help state. 
+ * The contact state. 
  *
  * @author Christoph Aschwanden
- * @since August 19, 2008
+ * @since February 22, 2010
  */
-public class HelpState extends State {
+public class ContactState extends State {
 
   /** 
    * Called during state init.

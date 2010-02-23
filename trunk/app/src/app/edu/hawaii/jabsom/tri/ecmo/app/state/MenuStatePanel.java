@@ -88,27 +88,41 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     
     // add text label
     TextLabel textLabel = new TextLabel("Welcome to ECMOjo");
-    textLabel.setHorizontalAlignment(JLabel.CENTER);
+    textLabel.setHorizontalAlignment(JLabel.LEFT);
     textLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 36f)); 
     textLabel.setLocation(100, 16);
     textLabel.setSize(600, 45);
     add(textLabel);
     
-    // add help button
-    Image helpNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Help.png");
-    Image helpRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-HelpRol.png");
-    Image helpSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-HelpSel.png");
-    ImageButton helpButton 
-      = new ImageButton(helpNormalImage, helpRolloverImage, helpSelectedImage);
-    helpButton.addActionListener(new ActionListener() {
+    // add about button
+    Image aboutNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-About.png");
+    Image aboutRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-AboutRol.png");
+    Image aboutSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-AboutSel.png");
+    ImageButton aboutButton = new ImageButton(aboutNormalImage, aboutRolloverImage, aboutSelectedImage);
+    aboutButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         // and help
-        state.helpState();
+        state.aboutState();
       }      
     });
-    helpButton.setLocation(680, 18);
-    helpButton.setSize(120, 48);
-    add(helpButton);    
+    aboutButton.setLocation(570, 18);
+    aboutButton.setSize(120, 48);
+    add(aboutButton);    
+
+    // add contact button
+    Image contactNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Contact.png");
+    Image contactRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-ContactRol.png");
+    Image contactSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-ContactSel.png");
+    ImageButton contactButton = new ImageButton(contactNormalImage, contactRolloverImage, contactSelectedImage);
+    contactButton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        // and help
+        state.contactState();
+      }      
+    });
+    contactButton.setLocation(680, 18);
+    contactButton.setSize(120, 48);
+    add(contactButton);    
     
     // button group
     ButtonGroup buttonGroup = new ButtonGroup();

@@ -100,9 +100,16 @@ public class MenuState extends State {
   }
 
   /**
-   * Proceeds to the game state.
+   * Proceeds to the about state.
    */
-  public void helpState() {
-    transition(new HelpState());
+  public void aboutState() {
+    transition(new AboutState());
+  }
+
+  /**
+   * Proceeds to the contact state.
+   */
+  public void contactState() {
+    transition(new ContactState());
   }
 }
