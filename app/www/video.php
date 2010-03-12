@@ -13,7 +13,7 @@
 <table>
   <tr>
     <td width="277" style="padding-right: 5px">
-      <strong>ECMOjo Tutorial 1</strong> - Version 1.0.0 (May 1, 2009)<br>
+      <strong>ECMOjo Tutorial 1</strong> - May 1, 2009<br>
       <br>
       This video is also available on <a href="http://www.youtube.com/watch?v=J7FDPmfSEtU">YouTube</a>. Please rate and comment. Thanks.
     </td>
@@ -23,6 +23,24 @@
 				<param name="allowFullScreen" value="true"></param>
 				<param name="allowscriptaccess" value="always"></param>
 				<embed src=http://www.youtube.com/v/J7FDPmfSEtU&hl=en&fs=1 type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed>
+			</object> 
+    </td>
+  </tr>
+</table>
+<div class="hr"/>
+<table style="margin-top: 5px;">
+  <tr>
+    <td width="277" style="padding-right: 5px">
+      <strong>ECMOjo Demonstration</strong> - Mar 11, 2010<br>
+      <br>
+      This video is also available on <a href="http://www.youtube.com/watch?v=d_7yiCyZatE">YouTube</a>. Please rate and comment. Thanks.
+    </td>
+    <td width="425">
+			<object width="425" height="344">
+				<param name="movie" value="http://www.youtube.com/v/d_7yiCyZatE&hl=en&fs=1"></param>
+				<param name="allowFullScreen" value="true"></param>
+				<param name="allowscriptaccess" value="always"></param>
+				<embed src=http://www.youtube.com/v/d_7yiCyZatE&hl=en&fs=1 type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed>
 			</object> 
     </td>
   </tr>
