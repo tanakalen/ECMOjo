@@ -125,6 +125,7 @@ tube-cannula-venous-B = open
 tube-cannula-premembrane-pressure = 
 tube-cannula-postmembrane-pressure = 
 tube-cannula-venous-pressure = -40
+tube-coagulopathy = false
 
 # ACT
 act-value = 

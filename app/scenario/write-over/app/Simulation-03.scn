@@ -71,7 +71,7 @@ heater-temperature = 37
 heater-broken = false
 
 # Oxygenator
-oxygenator-total-sweep = 1.2
+oxygenator-total-sweep = 1.6
 oxygenator-fio2 = 0.8
 oxygenator-broken = false
 oxygenator-clotting = 2.0
@@ -101,6 +101,7 @@ tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
 tube-cannula-premembrane-pressure = 
 tube-cannula-postmembrane-pressure = 
+tube-coagulopathy = true
 
 # ACT
 act-value = 220

@@ -83,6 +83,8 @@ public class TubeComponent extends Component {
   
   /** True if cannula site is broken. */
   private boolean brokenCannula;
+  /** True if coagulopathy present, enables status message ONLY. */
+  private boolean coagulopathy;
   /** The kind of brokeness. */
   private Status problem;
   /** The place that is broken. */
@@ -232,6 +234,24 @@ public class TubeComponent extends Component {
     notifyUpdate();
   }
   
+  /**
+   * Returns true for circuit coagulopathy.
+   *
+   * @return  True for circuit coagulopathy.
+   */
+  public boolean isCoagulopathy() {
+    return coagulopathy;
+  }
+
+  /**
+   * Sets true for circuit coagulopathy.
+   *
+   * @param dic  True for circuit coagulopathy.
+   */
+  public void setCoagulopathy(boolean dic) {
+    this.coagulopathy = dic;
+  }
+
   /**
    * Returns true for broken cannula.
    *

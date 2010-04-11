@@ -367,6 +367,7 @@ public final class ScenarioLoader {
         tube.setPostMembranePressure(val);
       }
       tube.setVenousPressure(parseNum(parameters, "tube-cannula-venous-pressure"));
+      tube.setCoagulopathy(Boolean.parseBoolean(parameters.get("tube-coagulopathy")));      
       
       // Begin of normal initial labs displayed on start
       //act
