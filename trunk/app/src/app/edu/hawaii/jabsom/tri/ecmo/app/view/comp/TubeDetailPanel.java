@@ -15,6 +15,7 @@ import king.lib.access.ImageLoader;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.CircuitChangeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
@@ -49,8 +50,9 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
    * Constructor for panel.
    * 
    * @param component  The component.
+   * @param oxygenator The oxygenator obtain status.
    */
-  protected TubeDetailPanel(final TubeComponent component) {
+  protected TubeDetailPanel(final TubeComponent component, final OxygenatorComponent oxygenator) {
     super(component);
     
     // set size and location
@@ -100,6 +102,16 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
       public void actionPerformed(ActionEvent event) {
         // output splash - nothing found
         infoLabel.setForeground(Color.RED);
+        infoLabel.setText("Location OK!");
+      }
+    };
+    ActionListener oxygenatorBulletListener = new ActionListener() {
+      public void actionPerformed(ActionEvent event) {
+        // output splash - nothing found
+        infoLabel.setForeground(Color.RED);
+        if (oxygenator.getClotting() > 1) {
+          infoLabel.setText("Clots!");
+        }
       }
     };
     
@@ -112,15 +124,15 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
     bullet = addBullet(185, 109); // intervention pt D 
     bullet.addActionListener(defaultBulletListener);
     bullet = addBullet(215, 79); // oxygenator 
-    bullet.addActionListener(defaultBulletListener);
+    bullet.addActionListener(oxygenatorBulletListener);
     bullet = addBullet(235, 59); // oxygenator
-    bullet.addActionListener(defaultBulletListener);
+    bullet.addActionListener(oxygenatorBulletListener);
     bullet = addBullet(262, 50); // oxygenator
-    bullet.addActionListener(defaultBulletListener);
+    bullet.addActionListener(oxygenatorBulletListener);
     bullet = addBullet(250, 79); // oxygenator
-    bullet.addActionListener(defaultBulletListener);
+    bullet.addActionListener(oxygenatorBulletListener);
     bullet = addBullet(223, 108); // oxygenator
-    bullet.addActionListener(defaultBulletListener);
+    bullet.addActionListener(oxygenatorBulletListener);
     bullet = addBullet(203, 149); // intervention pt C
     bullet.addActionListener(defaultBulletListener);
     bullet = addBullet(222, 171); // pump
