@@ -75,7 +75,8 @@ public abstract class DetailPanel extends JPanel implements UpdateListener {
       return new PumpDetailPanel((PumpComponent)component);
     }
     else if (component instanceof TubeComponent) {
-      return new TubeDetailPanel((TubeComponent)component);
+      OxygenatorComponent oxygenator = (OxygenatorComponent)game.getEquipment().getComponent(OxygenatorComponent.class);
+      return new TubeDetailPanel((TubeComponent)component, oxygenator);
     }
     else if (component instanceof OxygenatorComponent) {
       return new OxyDetailPanel((OxygenatorComponent)component);
