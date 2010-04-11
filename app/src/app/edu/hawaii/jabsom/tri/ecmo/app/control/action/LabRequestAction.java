@@ -97,7 +97,7 @@ public class LabRequestAction extends Action {
       }
       EchoLabTest labTest = new EchoLabTest();
       labTest.setDescription("Echo");
-      if (imagingComponent.isScenarioEmpty() || imagingComponent.getScenarioImaging("Echo").isEmpty()) {
+      if (imagingComponent.isScenarioEmpty() || (imagingComponent.getScenarioImaging("Echo").size() == 0)) {
         // Create image name depending on the patient
         String name = "echo-nb-";
         name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va-" : "vv-");
@@ -132,7 +132,7 @@ public class LabRequestAction extends Action {
       }
       XRayLabTest labTest = new XRayLabTest();
       labTest.setDescription("X-Ray");
-      if (imagingComponent.isScenarioEmpty() || imagingComponent.getScenarioImaging("X-Ray").isEmpty()) {
+      if (imagingComponent.isScenarioEmpty() || (imagingComponent.getScenarioImaging("X-Ray").size() == 0)) {
         // Create image name depending on the patient
         String name = "xr-nb-";
         name = name + ((tube.getMode() == TubeComponent.Mode.VA) ? "va" : "vv");

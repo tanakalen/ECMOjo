@@ -240,8 +240,8 @@ public final class Updater {
         tube.setPostPCO2(0);
       }
       else {
+        double sweepFactor = oxygenator.getTotalSweep() / pump.getFlow();
         if (oxygenator.getClotting() < 1) {
-          double sweepFactor = oxygenator.getTotalSweep() / pump.getFlow();
           if (sweepFactor < 0.5) {
             tube.setPostPCO2(80 - 30 / 0.5 * sweepFactor);
           }
@@ -253,8 +253,15 @@ public final class Updater {
           }
         }
         else { // oxygenator not as efficient
-          tube.setPostPCO2(60);
-//          tube.setPostPCO2(tube.getPrePCO2() * (1 + oxygenator.getClotting() / 100));
+          if (sweepFactor < 0.5) {
+            tube.setPostPCO2(100 - 30 / 0.8 * sweepFactor);
+          }
+          else if (sweepFactor < 5) {
+            tube.setPostPCO2(70 - 10 / 0.8 * sweepFactor);
+          }
+          else {
+            tube.setPostPCO2(0);
+          }
         }
       }
       

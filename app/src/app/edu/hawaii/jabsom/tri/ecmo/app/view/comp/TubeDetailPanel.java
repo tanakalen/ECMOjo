@@ -103,39 +103,39 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
       }
     };
     
-    bullet = addBullet(63, 149);    
+    bullet = addBullet(63, 149); // art bridge connector
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(100, 149);    
+    bullet = addBullet(100, 149); // art tube
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(144, 144);    
+    bullet = addBullet(144, 144); // bubble detector
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(185, 109);    
+    bullet = addBullet(185, 109); // intervention pt D 
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(215, 79);    
+    bullet = addBullet(215, 79); // oxygenator 
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(235, 59);    
+    bullet = addBullet(235, 59); // oxygenator
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(262, 50);    
+    bullet = addBullet(262, 50); // oxygenator
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(250, 79);    
+    bullet = addBullet(250, 79); // oxygenator
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(223, 108);    
+    bullet = addBullet(223, 108); // oxygenator
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(203, 149);    
+    bullet = addBullet(203, 149); // intervention pt C
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(222, 171);    
+    bullet = addBullet(222, 171); // pump
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(248, 197);    
+    bullet = addBullet(248, 197); // pump
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(215, 208);    
+    bullet = addBullet(215, 208); // pump
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(183, 208);    
+    bullet = addBullet(183, 208); // intervention pt B
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(141, 208);    
+    bullet = addBullet(141, 208); // venous tube
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(100, 208);    
+    bullet = addBullet(100, 208); // venous tube
     bullet.addActionListener(defaultBulletListener);
-    bullet = addBullet(63, 208);    
+    bullet = addBullet(63, 208); //ven bridge connector
     bullet.addActionListener(defaultBulletListener);
   }
   

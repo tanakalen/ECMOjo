@@ -71,10 +71,10 @@ heater-temperature = 37
 heater-broken = false
 
 # Oxygenator
-oxygenator-total-sweep = 0.6
-oxygenator-fio2 = 0.5
+oxygenator-total-sweep = 1.2
+oxygenator-fio2 = 0.8
 oxygenator-broken = false
-oxygenator-clotting = 0.0
+oxygenator-clotting = 2.0
 
 # Pump
 pump-on = true
