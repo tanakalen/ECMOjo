@@ -109,6 +109,7 @@ tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
 tube-cannula-premembrane-pressure = 160
 tube-cannula-postmembrane-pressure = 
+tube-coagulopathy = false
 
 # ACT
 act-value = 

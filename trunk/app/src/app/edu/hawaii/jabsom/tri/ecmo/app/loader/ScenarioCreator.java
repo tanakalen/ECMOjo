@@ -95,6 +95,7 @@ public final class ScenarioCreator {
     tubeComponent.setVenousPressure(-10);
     tubeComponent.setArterialBubbles(false);
     tubeComponent.setVenousBubbles(false);
+    tubeComponent.setCoagulopathy(false);
     equipment.add(tubeComponent);
     
     OxygenatorComponent oxiComponent = new OxygenatorComponent();

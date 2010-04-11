@@ -103,12 +103,18 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
         // output splash - nothing found
         infoLabel.setForeground(Color.RED);
         infoLabel.setText("Location OK!");
+        // something wrong with circuit
+        if (component.isCoagulopathy()) {
+          infoLabel.setText("Fibrin!");
+        }
       }
     };
     ActionListener oxygenatorBulletListener = new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         // output splash - nothing found
         infoLabel.setForeground(Color.RED);
+        infoLabel.setText("Location OK!");
+        // oxygenator having issues
         if (oxygenator.getClotting() > 1) {
           infoLabel.setText("Clots!");
         }

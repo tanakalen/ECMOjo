@@ -257,7 +257,7 @@ public final class Updater {
             tube.setPostPCO2(100 - 30 / 0.8 * sweepFactor);
           }
           else if (sweepFactor < 5) {
-            tube.setPostPCO2(70 - 10 / 0.8 * sweepFactor);
+            tube.setPostPCO2(80 - 10 / 0.8 * sweepFactor);
           }
           else {
             tube.setPostPCO2(0);

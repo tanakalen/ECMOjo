@@ -36,6 +36,7 @@ public class CircuitChangeAction extends Action {
     // reset the tubing
     TubeComponent tubeComponent = (TubeComponent)equipment
                                   .getComponent(TubeComponent.class);
+    tubeComponent.setCoagulopathy(false);
     tubeComponent.setVenousPressure(0);
     if (oxiComponent.getOxyType() == OxygenatorComponent.OxyType.QUADROX_D) { 
       // PMP
