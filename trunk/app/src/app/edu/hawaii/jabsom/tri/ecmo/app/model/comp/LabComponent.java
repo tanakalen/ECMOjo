@@ -95,6 +95,7 @@ public class LabComponent extends Component {
    * @return  True if scenario has no imaging.
    */
   public boolean isScenarioEmpty() {
-    return scnMap.isEmpty();
+//    return scnMap.isEmpty();
+    return scnMap.size() == 0;
   }
 }
