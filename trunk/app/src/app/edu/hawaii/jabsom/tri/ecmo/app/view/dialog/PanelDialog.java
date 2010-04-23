@@ -1,4 +1,4 @@
-package edu.hawaii.jabsom.tri.ecmo.app.view.dialog2;
+package edu.hawaii.jabsom.tri.ecmo.app.view.dialog;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -82,9 +82,9 @@ public abstract class PanelDialog {
         
         // draw dark overlay if modal
         if (PanelDialog.this.modal) {
-          g2.setColor(new Color(0xff000000));
+          g2.setColor(Color.BLACK);
           Composite oldComp = g2.getComposite();
-          Composite alphaComp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.35f);
+          Composite alphaComp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.25f);
           g2.setComposite(alphaComp);
           g2.fillRect(0, 0, dialogPanel.getWidth(), dialogPanel.getHeight());
           g2.setComposite(oldComp);
@@ -122,22 +122,12 @@ public abstract class PanelDialog {
     dialogPanel.removeAll();
     if (panel != null) {
       dialogPanel.add(panel);
-      JLayeredPane layeredPane = owner.getRootPane().getLayeredPane();
-      int width = layeredPane.getWidth();
-      int height = layeredPane.getHeight();
-      
+
       // center
-      int w = panel.getWidth();
-      int h = panel.getHeight();
-      if ((w == 0) || (h == 0)) {
-        w = panel.getPreferredSize().width;
-        h = panel.getPreferredSize().height;
-        panel.setSize(w, h);
-      }
-      panel.setLocation((width - w) / 2, (height - h) / 2);
+      center();
     }
   }
-
+  
   /**
    * Shows or hides this dialog.
    * 
@@ -146,6 +136,9 @@ public abstract class PanelDialog {
   public void setVisible(boolean visible) {
     if (visible) {
       final JLayeredPane layeredPane = owner.getRootPane().getLayeredPane();
+  
+      // center
+      center();
 
       // intercept mouse clicks if modal
       if (modal) {
@@ -165,6 +158,10 @@ public abstract class PanelDialog {
       };
       layeredPane.addComponentListener(componentListener);
       dialogPanel.setSize(layeredPane.getSize());
+      
+      // and update
+      layeredPane.revalidate();
+      layeredPane.repaint();
     }
     else {
       JLayeredPane layeredPane = owner.getRootPane().getLayeredPane();
@@ -181,6 +178,31 @@ public abstract class PanelDialog {
         dialogPanel.removeMouseListener(mouseListener);
         mouseListener = null;
       }
+      
+      // and update
+      layeredPane.revalidate();
+      layeredPane.repaint();
+    }
+  }  
+
+  /** 
+   * Center the panel.
+   */
+  public void center() {
+    Component panel = getPanel();
+    if (panel != null) {
+      JLayeredPane layeredPane = owner.getRootPane().getLayeredPane();
+      int width = layeredPane.getWidth();
+      int height = layeredPane.getHeight();
+  
+      int w = panel.getWidth();
+      int h = panel.getHeight();
+      if ((w == 0) || (h == 0)) {
+        w = panel.getPreferredSize().width;
+        h = panel.getPreferredSize().height;
+        panel.setSize(w, h);
+      }
+      panel.setLocation((width - w) / 2, (height - h) / 2);
     }
   }
 }

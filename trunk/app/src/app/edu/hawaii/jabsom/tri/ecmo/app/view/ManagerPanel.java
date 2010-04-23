@@ -141,8 +141,6 @@ public class ManagerPanel extends JPanel {
    * @param g  Where to draw to.
    */
   public void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    
     // draws the image as background
     g.drawImage(background, 0, 0, this);    
   }

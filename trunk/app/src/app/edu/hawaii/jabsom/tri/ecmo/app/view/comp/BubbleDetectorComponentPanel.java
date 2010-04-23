@@ -130,8 +130,6 @@ public class BubbleDetectorComponentPanel extends ComponentPanel implements Runn
    */
   @Override
   public void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    
     if (component.isAlarm()){
       // draw blinking red light
       if ((((System.nanoTime()) / 500000000) % 2) == 0) {

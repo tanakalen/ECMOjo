@@ -12,6 +12,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JToolTip;
 import javax.swing.JComponent;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -30,6 +31,14 @@ public class GameToolTipUI extends MetalToolTipUI {
 
   /** The singleton instance for increased performance. */
   private static GameToolTipUI instance = new GameToolTipUI();
+  
+  /**
+   * Static initializer.
+   */
+  static {
+    // yep, we need lightweight to make this work...
+    ToolTipManager.sharedInstance().setLightWeightPopupEnabled(true); 
+  }
   
   /** The ancestor listener. */
   private static AncestorListener ancestorListener = new AncestorListener() {

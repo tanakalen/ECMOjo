@@ -1,13 +1,19 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view.dialog;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -26,10 +32,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 /**
  * The standard dialog. 
  *
- * @author   king
- * @since    October 30, 2008
+ * @author noblemaster
+ * @since April 23, 2010
  */
-public class StandardDialog extends DefaultDialog {
+public class DialogBase extends PanelDialog {
 
   /** The dialog types available. */
   public enum DialogType { PLAIN, INFORMATION, SUCCESS, QUESTION, WARNING, ERROR };
@@ -41,7 +47,54 @@ public class StandardDialog extends DefaultDialog {
   /** The result or null for none. */
   private DialogResult result;
   
+  /** The listener. */
+  public static interface DialogListener {
+    
+    /**
+     * Called result.
+     * 
+     * @param result  The result or null for none.
+     */
+    void handleResult(DialogResult result);
+  }
+  
+  /** Listeners. */
+  private List<DialogListener> listeners = new ArrayList<DialogListener>();
 
+  
+  /**
+   * Creates a dialog.
+   * 
+   * @param parent  The parent component of the dialog.
+   * @param title  The dialog title.
+   */
+  public DialogBase(Component parent, final String title) {
+    super(parent, true);
+    
+    // set content pane
+    final Image backgroundImage = ImageLoader.getInstance().getImage("conf/gui/dialog-wshadow.png");
+    JPanel contentPane = new JPanel() {
+      @Override
+      protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
+        // set antialiased text
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                            RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        
+        // draw background
+        g.drawImage(backgroundImage, 0, 0, null);
+        
+        // draw title
+        g.setFont(g.getFont().deriveFont(Font.BOLD, 20f));
+        g.setColor(new Color(0x404040));
+        g.drawString(title, 35, 38);
+      }
+    };
+    contentPane.setOpaque(false);
+    setPanel(contentPane);
+  }
   
   /**
    * Creates a dialog.
@@ -52,14 +105,14 @@ public class StandardDialog extends DefaultDialog {
    * @param title  The dialog title.
    * @param message  The dialog message.
    */
-  public StandardDialog(Component parent, DialogType dialogType, DialogOption dialogOption
+  public DialogBase(Component parent, DialogType dialogType, DialogOption dialogOption
                                         , String title, String message) {
-    super(parent, title);
+    this(parent, title);
     
     // set look
-    Container contentPane = getContentPane();
-    contentPane.setLayout(new FormLayout("4px, 16px, 16px, 4px, fill:402px, 20px"
-                                       , "4px, 32px, 4px, fill:250px, 4px, 46px, 4px"));
+    Container contentPane = (Container)getPanel();
+    contentPane.setLayout(new FormLayout("14px, 16px, 16px, 4px, fill:402px, 30px"
+                                       , "14px, 32px, 4px, fill:250px, 4px, 46px, 14px"));
     CellConstraints cc = new CellConstraints();
     
     // add icon
@@ -113,6 +166,7 @@ public class StandardDialog extends DefaultDialog {
         public void actionPerformed(ActionEvent e) {
           result = DialogResult.OK;
           setVisible(false);
+          notifyResult(result);
         }
       });
       buttonPanel.add(button);
@@ -128,6 +182,7 @@ public class StandardDialog extends DefaultDialog {
         public void actionPerformed(ActionEvent e) {
           result = DialogResult.YES;
           setVisible(false);
+          notifyResult(result);
         }
       });
       buttonPanel.add(button);
@@ -143,6 +198,7 @@ public class StandardDialog extends DefaultDialog {
         public void actionPerformed(ActionEvent e) {
           result = DialogResult.NO;
           setVisible(false);
+          notifyResult(result);
         }
       });
       buttonPanel.add(button);
@@ -158,14 +214,14 @@ public class StandardDialog extends DefaultDialog {
         public void actionPerformed(ActionEvent e) {
           result = DialogResult.CANCEL;
           setVisible(false);
+          notifyResult(result);
         }
       });
       buttonPanel.add(button);
     }
     
-    // fix up size and location
-    pack();
-    setLocationRelativeTo(parent);
+    // update the size
+    contentPane.setSize(contentPane.getPreferredSize());
   }
   
   /**
@@ -188,7 +244,54 @@ public class StandardDialog extends DefaultDialog {
    */
   public static void showDialog(Component parent, DialogType dialogType, DialogOption dialogOption
                               , String title, String message) {
-    StandardDialog dialog = new StandardDialog(parent, dialogType, dialogOption, title, message);
+    showDialog(parent, dialogType, dialogOption, title, message, null);
+  }
+  
+  /**
+   * Shows a dialog.
+   * 
+   * @param parent  The parent component of the dialog.
+   * @param dialogType  The dialog type.
+   * @param dialogOption  The dialog option, i.e. buttons.
+   * @param title  The dialog title.
+   * @param message  The dialog message.
+   * @param listener  The listener.
+   */
+  public static void showDialog(Component parent, DialogType dialogType, DialogOption dialogOption
+                              , String title, String message, DialogListener listener) {
+    DialogBase dialog = new DialogBase(parent, dialogType, dialogOption, title, message);
+    if (listener != null) {  
+      dialog.addDialogListener(listener);
+    }
     dialog.setVisible(true);
+  }
+
+  /**
+   * Adds a listener.
+   * 
+   * @param listener  The listener to add.
+   */
+  public void addDialogListener(DialogListener listener) {
+    listeners.add(listener);
+  }
+  
+  /**
+   * Removes a listener.
+   * 
+   * @param listener  The listener to add.
+   */
+  public void removeDialogListener(DialogListener listener) {
+    listeners.remove(listener);
+  }
+  
+  /**
+   * Notify about result.
+   * 
+   * @param result  The result.
+   */
+  private void notifyResult(DialogResult result) {
+    for (int i = 0; i < listeners.size(); i++) {
+      listeners.get(i).handleResult(result);
+    }
   }
 }
