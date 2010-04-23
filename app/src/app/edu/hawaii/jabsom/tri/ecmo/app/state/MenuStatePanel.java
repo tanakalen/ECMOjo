@@ -23,7 +23,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.ScenarioListPanel.ScenarioSelectionListener;
-import edu.hawaii.jabsom.tri.ecmo.app.view.dialog2.PanelDialog;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -102,10 +101,6 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     final ImageButton aboutButton = new ImageButton(aboutNormalImage, aboutRolloverImage, aboutSelectedImage);
     aboutButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
-PanelDialog dialog = new PanelDialog(MenuStatePanel.this, true) { };
-dialog.setPanel(aboutButton);
-//dialog.setVisible(true);
-        
         // and help
         state.aboutState();
       }      

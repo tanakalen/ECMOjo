@@ -68,7 +68,8 @@ public class PressureMonitorComponentPanel extends ComponentPanel implements Run
     
     // set layout
     setLayout(null);
-
+    setOpaque(false);
+    
     // add toggle button
     selectionButton = new ImageToggleButton(null, rolloverImage, selectedImage, selectedImage);
     selectionButton.setToolTipText(component.getName());
@@ -139,8 +140,6 @@ public class PressureMonitorComponentPanel extends ComponentPanel implements Run
    */
   @Override
   public void paintComponent(Graphics g) {
-    super.paintComponent(g);
-
     // set antialised text
     Graphics2D g2 = (Graphics2D)g;
     g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,

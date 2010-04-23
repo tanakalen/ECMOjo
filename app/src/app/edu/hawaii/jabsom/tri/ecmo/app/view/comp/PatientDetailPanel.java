@@ -13,9 +13,9 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
-import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
-import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase.DialogOption;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase.DialogType;
 
 /**
  * The detail panel. 
@@ -67,13 +67,13 @@ public class PatientDetailPanel extends DetailPanel {
         // output dialog
         if (problem) {
           // fixed
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
               , "Good catch! The ETT suction was broken and has been fixed.");
         }
         else {
           // no problem = nothing done
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
               , "No Problem Detected"
               , "No problem has been detected.");
         }
@@ -103,13 +103,13 @@ public class PatientDetailPanel extends DetailPanel {
         // output dialog
         if (problem) {
           // fixed
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
               , "Good catch! The cannula site was kinked and has been fixed.");
         }
         else {
           // no problem = nothing done
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
               , "No Problem Detected"
               , "No problem has been detected.");
         }
@@ -139,13 +139,13 @@ public class PatientDetailPanel extends DetailPanel {
         // output dialog
         if (problem) {
           // fixed
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
               , "Good catch! The bleeding has been stopped.");
         }
         else {
           // no problem = nothing done
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
               , "No Problem Detected"
               , "No problem has been detected.");
         }
@@ -175,13 +175,13 @@ public class PatientDetailPanel extends DetailPanel {
         // output dialog
         if (problem) {
           // fixed
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
               , "Good catch! The urine output has been fixed.");
         }
         else {
           // no problem = nothing done
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
               , "No Problem Detected"
               , "No problem has been detected.");
         }
@@ -207,7 +207,7 @@ public class PatientDetailPanel extends DetailPanel {
         notifyActionListeners(action);
             
         // output dialog
-        StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+        DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
             , "Strange Smell"
             , "A unpleasant odor has been detected.");
       }
@@ -236,13 +236,13 @@ public class PatientDetailPanel extends DetailPanel {
         // output dialog
         if (!sedated) {
           // not sedated!
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.WARNING, DialogOption.OK
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.WARNING, DialogOption.OK
               , "Not Sedated"
               , "The patient is moving, wiggling and breathing.");
         }
         else {
           // the patient is sleeping
-          StandardDialog.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
               , "Sedated"
               , "The patient is fully sedated.");
         }

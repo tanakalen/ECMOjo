@@ -6,6 +6,7 @@ import king.lib.access.ImageLoader;
 
 import java.awt.Color;
 import javax.swing.JApplet;
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -95,7 +96,6 @@ public final class ECMOApp extends JApplet {
     // tooltip shows faster and longer
     ToolTipManager.sharedInstance().setInitialDelay(100);
     ToolTipManager.sharedInstance().setDismissDelay(60000);
-    ToolTipManager.sharedInstance().setLightWeightPopupEnabled(true); 
     
     // load configuration
     Configuration.init();   
@@ -132,36 +132,41 @@ public final class ECMOApp extends JApplet {
   /**
    * Main method.
    * 
-   * @param args  The arguments
+   * @param args  The arguments.
+   * @throws Exception  For errors.
    */
-  public static void main(String[] args) {
-    try {
-     Access.init();
-    }
-    catch (AccessException e) {
-      Error.out(e);
-    }
-    
-    // init
-    initialize(args);
-    
-    // window
-    JFrame window = new JFrame();
-    window.setTitle("ECMOjo Simulator");
-    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    window.setIconImage(ImageLoader.getInstance().getImage("conf/logo/window-icon.gif"));
-    
-    // set layout
-    window.getContentPane().setBackground(Color.BLACK);
-    window.getContentPane().setLayout(new BorderLayout());
-    
-    // add panel
-    window.getContentPane().add(panel, BorderLayout.CENTER);
-    
-    // and show
-    window.setResizable(false);
-    window.pack();
-    window.setLocationRelativeTo(null);
-    window.setVisible(true);
+  public static void main(final String[] args) throws Exception {
+    SwingUtilities.invokeAndWait(new Runnable() {
+      public void run() {
+        try {
+          Access.init();
+         }
+         catch (AccessException e) {
+           Error.out(e);
+         }
+         
+         // init
+         initialize(args);
+         
+         // window
+         JFrame window = new JFrame();
+         window.setTitle("ECMOjo Simulator");
+         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         window.setIconImage(ImageLoader.getInstance().getImage("conf/logo/window-icon.gif"));
+         
+         // set layout
+         window.getContentPane().setBackground(Color.BLACK);
+         window.getContentPane().setLayout(new BorderLayout());
+         
+         // add panel
+         window.getContentPane().add(panel, BorderLayout.CENTER);
+         
+         // and show
+         window.setResizable(false);
+         window.pack();
+         window.setLocationRelativeTo(null);
+         window.setVisible(true);
+      }
+    });
   }
 }

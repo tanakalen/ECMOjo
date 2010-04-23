@@ -69,8 +69,6 @@ public class CDIMonitorComponentPanel extends ComponentPanel {
    */
   @Override
   public void paintComponent(Graphics g) {
-    super.paintComponent(g);
-
     // draws the image
     g.drawImage(image, 0, 0, this);
     

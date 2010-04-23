@@ -411,14 +411,14 @@ public final class Updater {
           //TODO: cannula malposition; how to make ECMOjo chatter?; normal -> do nothing
         }
       }
-      
-      /* update equipment (oxygenator) */
+     
+      // update equipment (oxygenator)
       // currently handled in other tube component
       
-      /* update equipment (bubble detector) */
+      // update equipment (bubble detector)
       bubbleDetector.setAlarm(tube.isArterialBubbles());
 
-      /* update equipment (CDI monitor) note CDI is in line post-oxygenator */
+      // update equipment (CDI monitor) note CDI is in line post-oxygenator
       cdiMonitor.setSaO2(tube.getSaO2());      
       cdiMonitor.setSvO2(tube.getSvO2());
       cdiMonitor.setTemperature(heater.getTemperature());
@@ -431,7 +431,7 @@ public final class Updater {
       cdiMonitor.setPO2(paO2); // paO2 set in tubing update
       cdiMonitor.setPCO2(tube.getPostPCO2());
 
-      /* update equipment (pump) */
+      // update equipment (pump)
       if ((pump.getFlow() < (0.02f * patient.getWeight())) || (!pump.isOn())) {
         pump.setAlarm(true);
       }
@@ -476,12 +476,12 @@ public final class Updater {
         }
       }
       
-      /* update equipment (pressure monitor) */
+      // update equipment (pressure monitor)
       pressureMonitor.setPreMembranePressure(tube.getPreMembranePressure());
       pressureMonitor.setPostMembranePressure(tube.getPostMembranePressure());
       pressureMonitor.setVenousPressure(tube.getVenousPressure());
       
-      /* update equipment (ventilator) */
+      // update equipment (ventilator)
       // TODO: What happens when on emergency ventilator and on ECMO?
       if (ventilator.isEmergencyFuction()) {
         if (ventilator.getName().equals("High Frequency Ventilator")) {
@@ -504,7 +504,7 @@ public final class Updater {
         }
       }
 
-      /* update equipment (alarm) */
+      // update equipment (alarm)
       if (pressureMonitor.isAlarm()
           || physiologicMonitor.isAlarm()
           || bubbleDetector.isAlarm()
@@ -524,7 +524,7 @@ public final class Updater {
         alarmIndicator.setAlarm(false);
       }
       
-      /* update patient */
+      // update patient
       // Following "effects" are independent of the circuit
       
       // TODO Patient bicarb and base excess calc? from Mark's table
@@ -818,11 +818,11 @@ public final class Updater {
       }
       
       // and return if goal is reached
-      return goal.isReached(game);
+      return goal.isReached(game);  
     }
     else {
       return true;
-    }
+    }  
   }
   
   /**
