@@ -5,9 +5,8 @@ import java.awt.Font;
 
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.ColorUIResource;
-import javax.swing.BorderFactory;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.NarrowBevelBorder;
 
 /**
@@ -132,8 +131,8 @@ public class GameLookAndFeel extends MetalLookAndFeel {
     UIManager.put("OptionPane.background", DEFAULT_BACKGROUND_COLOR);
     
     // set ToolTip values
-    UIManager.put("ToolTip.background", new ColorUIResource(255, 247, 200)); // The color is #fff7c8 for yellow.
-    UIManager.put("ToolTip.border", BorderFactory.createLineBorder(new Color(76, 79, 83)));
+    UIManager.put("ToolTip.background", new Color(0xf0fff7c8, true));
+    UIManager.put("ToolTip.border", new LineBorder(new Color(0x4c4f53), 1, true));
   }
   
   /**

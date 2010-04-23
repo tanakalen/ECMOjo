@@ -93,7 +93,7 @@ public class PatientPanel extends ComponentPanel implements Runnable {
 
     // add toggle button
     selectionButton = new ImageToggleButton(null, patientRolImage, patientSelImage, patientSelImage);
-    selectionButton.setToolTipText("<html><table><tr><td width=\"250\" height=\"200\" valign=\"top\"><b>" 
+    selectionButton.setToolTipText("<html><table><tr><td width=\"250\" valign=\"top\"><b>" 
         + name + "</b><br>" 
         + description + "</td></tr></table></html>");
     selectionButton.addActionListener(new ActionListener() {
