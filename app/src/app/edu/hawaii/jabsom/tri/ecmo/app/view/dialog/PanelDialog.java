@@ -1,11 +1,11 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view.dialog;
 
-import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Composite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -34,6 +34,13 @@ public abstract class PanelDialog {
   private JFrame owner;
   /** True for modal. */
   private boolean modal;
+  
+  /** True to draw the stripe. */
+  private boolean stripe = true;
+  /** The stripe color. */
+  private Color stripeColor = new Color(0x30ffffff, true);
+  /** The stripe stroke. */
+  private BasicStroke stripeStroke = new BasicStroke(30);
   
   /** The dialog. */
   private JPanel dialogPanel;
@@ -82,16 +89,28 @@ public abstract class PanelDialog {
         
         // draw dark overlay if modal
         if (PanelDialog.this.modal) {
-          g2.setColor(Color.BLACK);
-          Composite oldComp = g2.getComposite();
-          Composite alphaComp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.25f);
-          g2.setComposite(alphaComp);
+          // draw background
+          g2.setColor(getBackground());
           g2.fillRect(0, 0, dialogPanel.getWidth(), dialogPanel.getHeight());
-          g2.setComposite(oldComp);
+          
+          // draw stroke
+          if (stripe) {
+            Stroke stroke = g2.getStroke();
+            g2.setStroke(stripeStroke);
+            g2.setColor(stripeColor);
+            int distance = getWidth() > getHeight() ? getWidth() : getHeight();
+            int maxX = getWidth() + getHeight();
+            int xInc = (int)(stripeStroke.getLineWidth() * 3);
+            for (int x = 0; x < maxX; x += xInc) {
+              g2.drawLine(x, 0, x - distance, distance);
+            }
+            g2.setStroke(stroke);
+          }
         }
       }
     };
     dialogPanel.setOpaque(false);
+    dialogPanel.setBackground(new Color(0x40000000, true));
     dialogPanel.setLayout(null);
     
     // and set the panel
@@ -128,6 +147,78 @@ public abstract class PanelDialog {
     }
   }
   
+  /**
+   * Returns the background.
+   * 
+   * @return  The background.
+   */
+  public Color getBackground() {
+    return dialogPanel.getBackground();
+  }
+  
+  /**
+   * Sets the background.
+   * 
+   * @param background  The background.
+   */
+  public void setBackground(Color background) {
+    dialogPanel.setBackground(background);
+  }
+  
+  /**
+   * Returns true to draw the stripe.
+   *
+   * @return  True to draw.
+   */
+  public boolean isStripe() {
+    return stripe;
+  }
+
+  /**
+   * Set true to draw the stripe.
+   *
+   * @param stripe  True to draw.
+   */
+  public void setStripe(boolean stripe) {
+    this.stripe = stripe;
+  }
+
+  /**
+   * Returns the stripe color.
+   *
+   * @return  The stripe color.
+   */
+  public Color getStripeColor() {
+    return stripeColor;
+  }
+
+  /**
+   * Sets the stripe color.
+   *
+   * @param stripeColor  The stripe color.
+   */
+  public void setStripeColor(Color stripeColor) {
+    this.stripeColor = stripeColor;
+  }
+
+  /**
+   * Returns the stripe width.
+   *
+   * @return  The stripe width.
+   */
+  public int getStripeWidth() {
+    return (int)stripeStroke.getLineWidth();
+  }
+
+  /**
+   * Sets the stripe width.
+   *
+   * @param width  The stripe width.
+   */
+  public void setStripeWidth(int width) {
+    this.stripeStroke = new BasicStroke(width);
+  }
+
   /**
    * Shows or hides this dialog.
    * 
