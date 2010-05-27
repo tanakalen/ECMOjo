@@ -15,9 +15,6 @@ import king.lib.access.LocalHookup;
  */
 public class Configuration {
   
-  /** The application type. */
-  public enum AppType { INFANT, ADULT };
-  
   /** Admin property. */
   private static final String ADMIN = "ADMIN";
     
