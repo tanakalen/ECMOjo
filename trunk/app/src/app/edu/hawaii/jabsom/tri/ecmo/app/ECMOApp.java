@@ -24,7 +24,6 @@ import java.util.Calendar;
 
 import javax.swing.JFrame;
 
-import edu.hawaii.jabsom.tri.ecmo.app.Configuration.AppType;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.plaf.GameLookAndFeel;
 import edu.hawaii.jabsom.tri.ecmo.app.state.LoadState;
 import edu.hawaii.jabsom.tri.ecmo.app.state.StateMachine;
@@ -99,14 +98,7 @@ public final class ECMOApp extends JApplet {
     ToolTipManager.sharedInstance().setDismissDelay(60000);
     
     // load configuration
-    AppType appType = null;
-    if (args[0].equalsIgnoreCase("infant")) {
-      appType = AppType.INFANT;
-    }
-    else if (args[0].equalsIgnoreCase("adult")) {
-      appType = AppType.ADULT;
-    }
-    Configuration.init(appType);   
+    Configuration.init(AppType.parse(args[0]));   
 
     // create state machine
     StateMachine stateMachine = new StateMachine();

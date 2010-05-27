@@ -18,7 +18,7 @@ public class AccessApplication extends Access {
    * Returns the scenario directory. Depending if started e.g. with web start (user.home)
    * or as application ("scenario").
    * 
-   * @return  The scenario directory with the scenario files.
+   * @return  The scenario directory with the scenario files without "/" at the end.
    */
   public final String getScenarioDir() {
     // in relative path, so return as relative path.
@@ -29,7 +29,7 @@ public class AccessApplication extends Access {
    * Returns the extra directory. Depending if started e.g. with web start (user.home)
    * or as application ("extra").
    * 
-   * @return  The extra directory with the extra files.
+   * @return  The extra directory with the extra files without "/" at the end.
    */
   public final String getExtraDir() {
     // in relative path, so return as relative path.

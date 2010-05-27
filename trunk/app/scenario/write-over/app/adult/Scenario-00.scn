@@ -1,5 +1,5 @@
 # Scenario Information
-name = Continuous Simulation
+name = Adult Scenario Template
 desc = The never ending simulation...
 
 # Scenario Parameters
@@ -112,6 +112,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-#lab-img-xray = xr-nb-vv-mas,xr-nb-va-ards
-#lab-img-us = us-nb-va-ivh
-#lab-img-echo = echo-nb-va-normal,echo-nb-vv-normal
+lab-img-xray = 
+lab-img-us = 
+lab-img-echo = 
