@@ -76,6 +76,7 @@ baseline-alarming = false
 
 # Patient Information
 patient-species = human
+patient-gender = male
 patient-age = 1
 patient-weight = 5
 patient-lung-function = good
