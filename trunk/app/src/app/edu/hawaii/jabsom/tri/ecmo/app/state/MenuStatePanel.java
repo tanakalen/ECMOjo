@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.ECMOAppRelease;
+import edu.hawaii.jabsom.tri.ecmo.app.Configuration.AppType;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
@@ -87,10 +88,11 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     setLayout(null);
     
     // add text label
-    TextLabel textLabel = new TextLabel("Welcome to ECMOjo");
+    String name = Configuration.getInstance().getAppType() == AppType.INFANT ? "Infant" : "Adult";
+    TextLabel textLabel = new TextLabel("Welcome to " + name + " ECMOjo");
     textLabel.setHorizontalAlignment(JLabel.LEFT);
     textLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 36f)); 
-    textLabel.setLocation(100, 16);
+    textLabel.setLocation(60, 16);
     textLabel.setSize(600, 45);
     add(textLabel);
     

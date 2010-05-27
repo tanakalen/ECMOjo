@@ -15,6 +15,9 @@ import king.lib.access.LocalHookup;
  */
 public class Configuration {
   
+  /** The application type. */
+  public enum AppType { INFANT, ADULT };
+  
   /** Admin property. */
   private static final String ADMIN = "ADMIN";
     
@@ -31,6 +34,9 @@ public class Configuration {
   
   /** The configuration instance. */
   private static Configuration instance;
+  
+  /** The application type. */
+  private AppType appType;
   
   /** True for admin. */
   private boolean admin;
@@ -49,9 +55,12 @@ public class Configuration {
   
   /**
    * Init function for configuration.
+   * 
+   * @param appType  The application type.
    */
-  public static void init() {
+  public static void init(AppType appType) {
     instance = new Configuration();
+    instance.appType = appType;
     
     // load from the config file
     instance.loadConfiguration();
@@ -124,6 +133,15 @@ public class Configuration {
     return instance;
   }
 
+  /**
+   * Returns the application type.
+   * 
+   * @return  The application type.
+   */
+  public AppType getAppType() {
+    return appType;
+  }
+  
   /**
    * Returns true for admin.
    *

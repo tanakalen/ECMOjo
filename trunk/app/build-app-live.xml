@@ -16,7 +16,7 @@
     <!-- Program Properties (leave as is if not needed) -->
     <property name="prg.memory" value="256"/>
     <property name="prg.classfile" value="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp"/>
-  	<property name="prg.exe0" value="ECMOjo,${prg.memory},${prg.classfile},none"/>
+  	<property name="prg.exe0" value="ECMOjo,${prg.memory},${prg.classfile},infant"/>
   	<property name="executables.list" value="${prg.exe0}"/>  <!-- ${prg.exe0}+${prg.exe1} ... -->
     <!-- Java Web Start properties (leave as is if not needed) -->
     <property name="keystore.alias" value="kalias"/>
