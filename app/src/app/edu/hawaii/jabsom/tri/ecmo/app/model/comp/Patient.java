@@ -53,6 +53,51 @@ public class Patient  extends Component {
     }
   };
 
+  /** The gender. */
+  public enum Gender { 
+    /** Human. */
+    MALE("male"), 
+    /** Pig. */
+    FEMALE("female");
+    
+    /** The name. */
+    private String name;
+    
+    /**
+     * The constructor.
+     *
+     * @param name  The name.
+     */
+    private Gender(String name) {
+      this.name = name;
+    }
+    
+    /**
+     * Returns the name.
+     * 
+     * @return  The name.
+     */
+    public String getName() {
+      return name;
+    }
+    
+    /**
+     * Returns the lung function that matches the name.
+     * 
+     * @param name  The name.
+     * @return  The matching lung function or null for none.
+     */
+    public static Gender parse(String name) {
+      for (int i = 0; i < values().length; i++) {
+        Gender value = values()[i];
+        if (name.equalsIgnoreCase(values()[i].getName())) {
+          return value;
+        }
+      }
+      return null;
+    }
+  };
+
   /** The lung function enumeration. */
   public enum LungFunction { 
     /** Good function. */
@@ -146,6 +191,8 @@ public class Patient  extends Component {
   
   /** The species. */
   private Species species;
+  /** The gender. */
+  private Gender gender;
   
   /** 0.0 for dead, 1.0 for fully alive. */
   private double life;
@@ -222,6 +269,24 @@ public class Patient  extends Component {
    */
   public void setSpecies(Species species) {
     this.species = species;
+  }
+  
+  /**
+   * Returns the gender.
+   *
+   * @return  The gender.
+   */
+  public Gender getGender() {
+    return gender;
+  }
+
+  /**
+   * Sets the gender.
+   *
+   * @param gender  The gender.
+   */
+  public void setGender(Gender gender) {
+    this.gender = gender;
   }
 
   /**

@@ -19,8 +19,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.Gender;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.Species;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.InterventionLocation;
@@ -65,6 +67,8 @@ public final class ScenarioCreator {
     // set the patient
     Patient patient = new Patient();
     patient.setLife(1.0);
+    patient.setSpecies(Species.HUMAN);
+    patient.setGender(Gender.MALE);
     patient.setAge(1);
     patient.setWeight(5);
     patient.setLungFunction(LungFunction.BAD);

@@ -31,6 +31,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent.OxyType;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.Gender;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.HeartFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.LungFunction;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient.Species;
@@ -255,6 +256,7 @@ public final class ScenarioLoader {
       // the patient
       Patient patient = scenario.getPatient();
       patient.setSpecies(Species.parse(parameters.get("patient-species")));
+      patient.setGender(Gender.parse(parameters.get("patient-gender")));
       patient.setAge(Double.parseDouble(parameters.get("patient-age")));
       patient.setWeight(Double.parseDouble(parameters.get("patient-weight")));
       patient.setLungFunction(LungFunction.parse(parameters.get("patient-lung-function")));
