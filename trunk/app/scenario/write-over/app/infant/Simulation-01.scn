@@ -12,7 +12,7 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Baseline
-time-init = 30
+time-init = 15
 time-limit = 300
 trigger = arterial-cannula-kink
 
