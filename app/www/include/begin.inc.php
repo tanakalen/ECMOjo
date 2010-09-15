@@ -19,7 +19,7 @@
 <div class="banner" style="margin-left: 680; margin-top: 28">
   
   <a href="http://www.hanuola.com">Hanuola</a> &nbsp;&nbsp;&amp;&nbsp;&nbsp; <a href="http://www.tri.jabsom.hawaii.edu">Telehealth Research Institute</a><br>
-  <a href="http://simtiki.org">SimTiki</a> &nbsp;&nbsp;&amp;&nbsp;&nbsp; <a href="http://www.simtikinihon.org/">シムチキ日本</a><br>
+  <a href="http://simtiki.org">SimTiki</a> &nbsp;&nbsp;&amp;&nbsp;&nbsp; <a href="http://www.simtikinihon.org/">シムチキ日本</a> &nbsp;&nbsp;&amp;&nbsp;&nbsp; <a href="http://www.noblemaster.com">Noble Master</a><br>
   <a href="http://www.jabsom.hawaii.edu">John A. Burns School of Medicine</a>
 
 </div>
