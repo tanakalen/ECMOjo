@@ -119,10 +119,10 @@ public class InterventionAction extends Action {
       // affect blood pressure and ACT
       patient.setAct(patient.getAct() * 1.02);      // +2% increase ACT
       if (patient.getHeartFunction() == HeartFunction.GOOD) { 
-        patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 4.0f);   // 4 mmHg increase
+        patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 1.0f);   // 1 mmHg increase
       }
       else if (patient.getHeartFunction() == HeartFunction.BAD) {
-        patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 4.5f);   // 4.5 mmHg increase
+        patient.setCentralVenousPressure(patient.getCentralVenousPressure() + 2.0f);   // 2 mmHg increase
       }
       patient.setFibrinogen(patient.getFibrinogen() * 1.1);
 
