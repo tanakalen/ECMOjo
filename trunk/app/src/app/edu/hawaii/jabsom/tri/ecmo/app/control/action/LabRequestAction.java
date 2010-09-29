@@ -271,10 +271,10 @@ public class LabRequestAction extends Action {
     labTest.setHgb(patient.getHgb());
     
     if (weight < 5) {
-      // Fibrinogen 125-300 range
-      labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 70));
-      // platelets 100-478 * 10(9) range
-      labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 295)); //373
+      // Fibrinogen 50-300 range
+      labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 15));
+      // platelets 50-478 * 10(9) range
+      labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 25)); //373
       // PT 13-18 range
       labTest.setPt(patient.getPt() + (Math.random() * 5));
       // PTT 80-100 range
@@ -284,9 +284,9 @@ public class LabRequestAction extends Action {
     }
     else if (weight < 10) {
       // Fibrinogen 200-400 range
-      labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 195));
+      labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 15));
       // platelets 100-400 * 10(9) range
-      labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 295));
+      labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 25));
       // PT 11-15 range
       labTest.setPt(patient.getPt() + (Math.random() * 4));
       // PTT 80-100 range
@@ -296,9 +296,9 @@ public class LabRequestAction extends Action {
     }
     else if (weight < 50) {
       // Fibrinogen 200-400 range
-      labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 195));
+      labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 15));
       // platelets 100-400 * 10(9) range
-      labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 295));
+      labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 25));
       // PT 11-15 range
       labTest.setPt(patient.getPt() + (Math.random() * 4));
       // PTT 80-100 range
@@ -308,9 +308,9 @@ public class LabRequestAction extends Action {
     }
     else {
       // Fibrinogen 200-400 range
-      labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 195));
+      labTest.setFibrinogen(patient.getFibrinogen() + (Math.random() * 5) + (patient.hashCode() % 15));
       // platelets 100-400 * 10(9) range
-      labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 295));
+      labTest.setPlatelets(patient.getPlatelets() + (Math.random() * 5) + (patient.hashCode() % 25));
       // PT 11-15 range
       labTest.setPt(patient.getPt() + (Math.random() * 4));
       // PTT 80-100 range
