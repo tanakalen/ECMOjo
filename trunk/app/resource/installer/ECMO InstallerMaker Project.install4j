@@ -39,8 +39,8 @@
     <components />
   </files>
   <launchers>
-    <launcher name="ECMOjo" id="37" external="false" excludeFromMenu="false" menuName="" icnsFile="./logo-128x128.icns" pngIcon16File="./logo-16x16.png" pngIcon32File="./logo-32x32.png" macServiceDependencies="" swtApp="false">
-      <executable name="ECMOjo" type="1" iconSet="true" iconFile="" executableDir="." redirectStderr="true" stderrFile="error.log" redirectStdout="false" stdoutFile="output.log" failOnStderrOutput="true" executableMode="1" changeWorkingDirectory="true" workingDirectory="." singleInstance="false" serviceStartType="2" serviceDependencies="" serviceDescription="" jreLocation="" executionLevel="requireAdministrator">
+    <launcher name="ECMOjo (Infant)" id="37" external="false" excludeFromMenu="false" menuName="" icnsFile="./logo-128x128.icns" pngIcon16File="./logo-16x16.png" pngIcon32File="./logo-32x32.png" macServiceDependencies="" swtApp="false">
+      <executable name="Infant ECMOjo" type="1" iconSet="true" iconFile="" executableDir="." redirectStderr="true" stderrFile="error.log" redirectStdout="false" stdoutFile="output.log" failOnStderrOutput="true" executableMode="1" changeWorkingDirectory="true" workingDirectory="." singleInstance="false" serviceStartType="2" serviceDependencies="" serviceDescription="" jreLocation="" executionLevel="requireAdministrator">
         <versionInfo include="false" fileVersion="" fileDescription="" legalCopyright="" internalName="" />
       </executable>
       <splashScreen show="false" autoOff="true" alwaysOnTop="true" width="0" height="0" bitmapFile="">
@@ -50,6 +50,28 @@
         </text>
       </splashScreen>
       <java mainClass="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp" vmParameters="" arguments="infant" allowVMPassthroughParameters="true" preferredVM="">
+        <classPath>
+          <scanDirectory location="lib" failOnError="false" />
+        </classPath>
+        <nativeLibraryDirectories />
+      </java>
+      <includedFiles />
+      <unextractableFiles />
+      <customScript mode="1" file="">
+        <scriptLines />
+      </customScript>
+    </launcher>
+    <launcher name="ECMOjo (Infant JA)" id="323" external="false" excludeFromMenu="false" menuName="" icnsFile="./logo-128x128.icns" pngIcon16File="./logo-16x16.png" pngIcon32File="./logo-32x32.png" macServiceDependencies="" swtApp="false">
+      <executable name="Infant ECMOjo (Japanese)" type="1" iconSet="true" iconFile="" executableDir="." redirectStderr="true" stderrFile="error.log" redirectStdout="false" stdoutFile="output.log" failOnStderrOutput="true" executableMode="1" changeWorkingDirectory="true" workingDirectory="." singleInstance="false" serviceStartType="2" serviceDependencies="" serviceDescription="" jreLocation="" executionLevel="requireAdministrator">
+        <versionInfo include="false" fileVersion="" fileDescription="" legalCopyright="" internalName="" />
+      </executable>
+      <splashScreen show="false" autoOff="true" alwaysOnTop="true" width="0" height="0" bitmapFile="">
+        <text>
+          <statusLine x="20" y="20" text="" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
+          <versionLine x="20" y="40" text="version ${compiler:sys.version}" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
+        </text>
+      </splashScreen>
+      <java mainClass="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp" vmParameters="" arguments="infant_ja" allowVMPassthroughParameters="true" preferredVM="">
         <classPath>
           <scanDirectory location="lib" failOnError="false" />
         </classPath>
@@ -257,14 +279,29 @@
       <excludedInstallerScreens />
       <excludedUninstallerScreens />
     </win32>
-    <macos name="Mac OS X Single Bundle" id="312" mediaFileName="" installDir="ECMOjo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" customInstallBaseDir="" createUninstallIcon="true" contentFilesType="1" downloadURL="" launcherId="37">
+    <win32Archive name="Windows Archive" id="351" mediaFileName="" installDir="ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" includedJRE="windows-x86-1.5.0_17" manualJREEntry="false">
+      <excludedLaunchers />
+      <excludedComponents />
+      <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
+      <exclude />
+      <variables />
+    </win32Archive>
+    <macosFolder name="Mac OS X Folder" id="342" mediaFileName="" installDir="ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" customInstallBaseDir="" createUninstallIcon="true" contentFilesType="1" downloadURL="">
+      <excludedLaunchers />
       <excludedComponents />
       <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
       <exclude />
       <variables />
       <excludedInstallerScreens />
       <excludedUninstallerScreens />
-    </macos>
+    </macosFolder>
+    <macosFolderArchive name="Mac OS X Folder Archive" id="352" mediaFileName="" installDir="ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false">
+      <excludedLaunchers />
+      <excludedComponents />
+      <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
+      <exclude />
+      <variables />
+    </macosFolderArchive>
     <unixInstaller name="Unix Installer" id="313" mediaFileName="" installDir="ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" includedJRE="" manualJREEntry="false" bundleType="1" jreURL="" jreFtpURL="" jreShared="false" customInstallBaseDir="" createUninstallIcon="true" contentFilesType="1" downloadURL="">
       <excludedLaunchers />
       <excludedComponents />
@@ -277,20 +314,14 @@
         <scriptLines />
       </installerScript>
     </unixInstaller>
-    <macosArchive name="Mac OS X Single Bundle Archive" id="316" mediaFileName="" installDir="ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" launcherId="37">
-      <excludedComponents />
-      <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
-      <exclude />
-      <variables />
-    </macosArchive>
-    <unixArchive name="Unix Archive" id="317" mediaFileName="" installDir="ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" includedJRE="" manualJREEntry="false">
+    <unixArchive name="Unix Archive" id="353" mediaFileName="" installDir="ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" includedJRE="" manualJREEntry="false">
       <excludedLaunchers />
       <excludedComponents />
       <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
       <exclude />
       <variables />
     </unixArchive>
-    <linuxRPM name="Linux RPM" id="318" mediaFileName="" installDir="/opt/ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" includedJRE="" manualJREEntry="false" os="linux" arch="i386">
+    <linuxRPM name="Linux RPM" id="354" mediaFileName="" installDir="/opt/ecmojo" overridePrincipalLanguage="false" requires64bit="false" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" includedJRE="" manualJREEntry="false" os="linux" arch="i386">
       <excludedLaunchers />
       <excludedComponents />
       <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
@@ -310,8 +341,8 @@
       </postUninstallScript>
     </linuxRPM>
   </mediaSets>
-  <buildIds buildAll="true">
-    <mediaSet refId="39" />
+  <buildIds buildAll="false">
+    <mediaSet refId="311" />
   </buildIds>
 </install4j>
 
