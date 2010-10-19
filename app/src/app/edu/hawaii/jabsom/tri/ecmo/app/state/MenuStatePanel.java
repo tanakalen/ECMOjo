@@ -38,6 +38,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import king.lib.access.ImageLoader;
+import king.lib.util.Translator;
 
 /**
  * The menu state panel. 
@@ -87,7 +88,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     setLayout(null);
     
     // add text label
-    TextLabel textLabel = new TextLabel("Welcome to ECMOjo");
+    TextLabel textLabel = new TextLabel(Translator.getString("title.WelcomeToECMOjo[i18n]: Welcome to ECMOjo"));
     textLabel.setHorizontalAlignment(JLabel.LEFT);
     textLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 36f)); 
     textLabel.setLocation(60, 16);

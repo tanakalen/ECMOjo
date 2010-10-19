@@ -2,10 +2,13 @@ package edu.hawaii.jabsom.tri.ecmo.app;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import king.lib.access.Access;
 import king.lib.access.LocalHookup;
+import king.lib.util.Translator;
 
 /**
  * The configuration. 
@@ -58,6 +61,11 @@ public class Configuration {
   public static void init(AppType appType) {
     instance = new Configuration();
     instance.appType = appType;
+    
+    // set the language
+    if (appType == AppType.INFANT_JA) {
+      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", Locale.JAPANESE));
+    }
     
     // load from the config file
     instance.loadConfiguration();

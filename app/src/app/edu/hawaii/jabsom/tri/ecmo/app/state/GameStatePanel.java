@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import king.lib.access.ImageLoader;
+import king.lib.util.Translator;
 
 /**
  * The game state panel. 
@@ -154,8 +155,8 @@ public class GameStatePanel extends JPanel implements ManagerListener, KeyEventD
         if (goal instanceof TutorialGoal) {
           // show completed dialog
           StandardDialog.showDialog(GameStatePanel.this, DialogType.SUCCESS, DialogOption.OK
-              , "Scenario Completed"
-              , "You successfully completed the scenario.");
+              , Translator.getString("title.ScenarioCompleted[i18n]: Scenario Completed")
+              , Translator.getString("text.ScenarioCompleted[i18n]: You successfully completed the scenario."));
 
           // and exit to menu
           state.menuState();
