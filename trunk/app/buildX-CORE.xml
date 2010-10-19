@@ -122,7 +122,15 @@
     </checkstyle>
   </target>  
   <!-- *********************************************************************** -->
-  <target name="test" depends="checkstyle"
+  <target name="i18n" depends="checkstyle">
+    <taskdef name="i18n" classname="net.java.hulp.i18n.buildtools.I18NTask" classpath="${lib.ant.dir}/net.java.hulp.i18ntask-2.1-SNAPSHOT.jar"/>
+    <i18n dir="${build.dest.dir}"
+          file="${conf.dir}/app/bundle/MessagesBundle.properties" 
+          prefix=""
+          pattern="([a-z]+\.[A-Za-z0-9]+)(\[i18n\]: )(.*)" />
+  </target>  
+  <!-- *********************************************************************** -->
+  <target name="test" depends="i18n"
           description="Run JUnit tests (classes whose name starts with Test) and generate a report.">
     <mkdir dir="${build.test.dir}"/>
 		<!-- add scenario dir for testing -->
@@ -208,7 +216,7 @@
     <echo message="Javadoc can be found in ${build.api.dir}"/>
   </target>
   <!-- *********************************************************************** -->
-  <target name="library" depends="checkstyle"
+  <target name="library" depends="i18n"
   	      description="Creates the jar files containing all the java classes.">
     <mkdir dir="${build.library.dir}"/>
     <!-- The jar file of the project -->

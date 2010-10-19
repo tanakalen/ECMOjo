@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.InternetTextPane;
+import king.lib.util.Translator;
 
 /**
  * The about state panel. 
@@ -75,7 +76,7 @@ public class AboutStatePanel extends JPanel {
     setLayout(null);
     
     // add text label
-    TextLabel textLabel = new TextLabel("About ECMOjo");
+    TextLabel textLabel = new TextLabel(Translator.getString("title.AboutECMOjo[i18n]: About ECMOjo"));
     textLabel.setHorizontalAlignment(JLabel.CENTER);
     textLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 36f)); 
     textLabel.setLocation(100, 16);

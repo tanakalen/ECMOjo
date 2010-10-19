@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.InternetTextPane;
+import king.lib.util.Translator;
 
 /**
  * The contact state panel. 
@@ -70,7 +71,7 @@ public class ContactStatePanel extends JPanel {
     setLayout(null);
     
     // add text label
-    TextLabel textLabel = new TextLabel("Contact Us");
+    TextLabel textLabel = new TextLabel(Translator.getString("title.ContactUs[i18n]: Contact Us"));
     textLabel.setHorizontalAlignment(JLabel.CENTER);
     textLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 36f)); 
     textLabel.setLocation(100, 16);
