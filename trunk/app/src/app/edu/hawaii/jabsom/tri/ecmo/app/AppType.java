@@ -9,9 +9,11 @@ package edu.hawaii.jabsom.tri.ecmo.app;
 public enum AppType {
   
   /** ECMOjo Infant application. */
-  INFANT("Infant", "infant"), 
+  INFANT("infant", "infant"), 
+  /** ECMOjo Infant application. */
+  INFANT_JA("infant_ja", "infant_ja"), 
   /** ECMOjo Adult application. */
-  ADULT("Adult", "adult");
+  ADULT("adult", "adult");
   
   /** The name. */
   private String name;

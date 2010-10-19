@@ -87,8 +87,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     setLayout(null);
     
     // add text label
-    String name =  Configuration.getInstance().getAppType().getName();
-    TextLabel textLabel = new TextLabel("Welcome to " + name + " ECMOjo");
+    TextLabel textLabel = new TextLabel("Welcome to ECMOjo");
     textLabel.setHorizontalAlignment(JLabel.LEFT);
     textLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 36f)); 
     textLabel.setLocation(60, 16);
@@ -161,7 +160,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     simulButton.setLocation(176, 130);
     add(simulButton);
     buttonGroup.add(simulButton);
-    
+   
     // add scenario list panel
     scenarioListPanel = new ScenarioListPanel(state.getScenarios());
     Image scenarioImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/scenario-background.png");
@@ -177,7 +176,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     simulationListPanel.setSize(385, 460);
     simulationListPanel.setLocation(37, 110);
     add(simulationListPanel);
-    
+ 
     // add component selection panel
     JPanel componentSelectionPanel = new JPanel();
     componentSelectionPanel.setOpaque(false);
