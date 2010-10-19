@@ -35,7 +35,7 @@
   Fax: 808.692.1250<br>
   Email:
   <script type="text/javascript">
-    document.write("<n uers=\"<?php echo str_rot13('mailto:telemed@hawaii.edu'); ?>\"><?php echo str_rot13('telemed@hawaii.edu'); ?></n>".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
+    document.write("<n uers=\"<?php echo str_rot13('mailto:808ecmojo@gmail.com'); ?>\"><?php echo str_rot13('808ecmojo@gmail.com'); ?></n>".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
   </script><br>
   Website: <a href="http://www.tri.jabsom.hawaii.edu">http://www.tri.jabsom.hawaii.edu</a><br>
 </p>

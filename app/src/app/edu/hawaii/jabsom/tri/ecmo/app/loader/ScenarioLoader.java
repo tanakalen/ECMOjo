@@ -94,8 +94,8 @@ public final class ScenarioLoader {
     BufferedReader reader = null;
     try {
       // open the reader
-      reader = new BufferedReader(new InputStreamReader(inputStream));    
-    
+      reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    
+
       // read the scenario data
       Map<String, String> parameters = new HashMap<String, String>();
       String line = reader.readLine();
@@ -112,7 +112,7 @@ public final class ScenarioLoader {
         // read next line
         line = reader.readLine();
       }
-        
+
       // parse and load data
       Scenario scenario = ScenarioCreator.create();
       
@@ -547,7 +547,7 @@ public final class ScenarioLoader {
    */
   public static ScenarioFile loadFile(InputStream inputStream) throws IOException {
     // read the data
-    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
     StringBuilder parameters = new StringBuilder();
     String code = "";
     String line = reader.readLine();
