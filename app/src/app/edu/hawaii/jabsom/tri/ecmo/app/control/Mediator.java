@@ -11,7 +11,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
  * Collection of methods to simplify Updater.java
  * 
  * @author tanaka
- * @since April 1, 2009
+ * @since December 2, 2010
  * 
  */
 public final class Mediator {
@@ -29,14 +29,14 @@ public final class Mediator {
    * 
    * @param ecmo
    *          Mode of ecmo {VA, VV}
-   * @param flow
-   *          Rate of blood flow in mL/kg/min
    * @param patient
    *          Current patient instantiation
+   * @param flow
+   *          Rate of blood flow in mL/kg/min
    * @return pH by curve fit of Mark's chart
    * @throws Exception for flow < 0, heartFunction bad, and data limit
    */
-  public static double flowToPH(Mode ecmo, double flow, Patient patient) throws Exception {
+  public static double flowToPH(Mode ecmo, Patient patient, double flow) throws Exception {
     if (flow < 0) {
       throw new Exception("Flow cannot be less than 0");
     }
@@ -71,61 +71,60 @@ public final class Mediator {
       }
     }
     else { // must be VA
-      if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
-        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          if ((flow >= 0) && (flow < 100)) {
-            return (3 * Math.pow(10, -8) * Math.pow(flow, 4)) 
-                    - (5 * Math.pow(10, -6) * Math.pow(flow, 3)) 
-                    + (0.0003 * Math.pow(flow, 2)) - (0.0019 * flow) + 7.05;
-          }
-          else if ((flow >= 100) && (flow <= 150)) {
-            return (-0.001 * flow) + 7.4983;
-          }
-          else {
-            throw new Exception("Reached data limit"); // no data beyond 150cc/kg/min flow
-          }
+      if ((patient.getHeartFunction() == Patient.HeartFunction.BAD) 
+          && (patient.getLungFunction() == Patient.LungFunction.BAD)) {
+        if ((flow >= 0) && (flow < 100)) {
+          return (3 * Math.pow(10, -8) * Math.pow(flow, 4)) 
+          - (5 * Math.pow(10, -6) * Math.pow(flow, 3)) 
+          + (0.0003 * Math.pow(flow, 2)) - (0.0019 * flow) + 7.05;
         }
-        else { // Lungs are working but heart not so good
-          if ((flow >= 0) && (flow < 100)) {
-            return (3 * Math.pow(10, -8) * Math.pow(flow, 4)) 
-                    - (5 * Math.pow(10, -6) * Math.pow(flow, 3)) 
-                    + (0.0003 * Math.pow(flow, 2)) - (0.0037 * flow) + 7.12;
-          }
-          else if ((flow >= 100) && (flow <= 150)) {
-            return (-0.0022 * flow) + 7.615;
-          }
-          else {
-            throw new Exception("Reached data limit"); // no data beyond 150cc/kg/min flow
-          }
+        else if ((flow >= 100) && (flow <= 150)) {
+          return (-0.001 * flow) + 7.4983;
         }
-
+        else {
+          throw new Exception("Reached data limit"); // no data beyond 150cc/kg/min flow
+        }
       }
-      else { // Heart function is good
-        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          if ((flow >= 0) && (flow < 100)) {
-            return (4 * Math.pow(10, -7) * Math.pow(flow, 3)) 
-                    - (3 * Math.pow(10, -5) * Math.pow(flow, 2)) 
-                    + (0.0028 * flow) + 7.069;
-          }
-          else if ((flow >= 100) && (flow <= 150)) {
-            return (6 * Math.pow(10, -5) * Math.pow(flow, 2)) - (0.017 * flow) + 8.54;
-          }
-          else {
-            throw new Exception("Reached data limit"); // no data beyond 150cc/kg/min flow
-          }
+      else if ((patient.getHeartFunction() == Patient.HeartFunction.BAD) 
+          && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
+        if ((flow >= 0) && (flow < 100)) {
+          return (3 * Math.pow(10, -8) * Math.pow(flow, 4)) 
+          - (5 * Math.pow(10, -6) * Math.pow(flow, 3)) 
+          + (0.0003 * Math.pow(flow, 2)) - (0.0037 * flow) + 7.12;
         }
-        else { // Lungs & Heart are working why are we on ECMO?
-          if ((flow >= 0) && (flow < 100)) {
-            return (3 * Math.pow(10, -7) * Math.pow(flow, 3)) 
-                    - (4 * Math.pow(10, -5) * Math.pow(flow, 2)) 
-                    + (0.0031 * flow) + 7.1197;
-          }
-          else if ((flow >= 100) && (flow <= 150)) {
-            return (-0.0018 * flow) + 7.5783;
-          }
-          else {
-            throw new Exception("Reached data limit"); // no data beyond 175cc/kg/min flow
-          }
+        else if ((flow >= 100) && (flow <= 150)) {
+          return (-0.0022 * flow) + 7.615;
+        }
+        else {
+          throw new Exception("Reached data limit"); // no data beyond 150cc/kg/min flow
+        }
+      }
+      else if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
+          && (patient.getLungFunction() == Patient.LungFunction.BAD)) {
+        if ((flow >= 0) && (flow < 100)) {
+          return (4 * Math.pow(10, -7) * Math.pow(flow, 3)) 
+          - (3 * Math.pow(10, -5) * Math.pow(flow, 2)) 
+          + (0.0028 * flow) + 7.069;
+        }
+        else if ((flow >= 100) && (flow <= 150)) {
+          return (6 * Math.pow(10, -5) * Math.pow(flow, 2)) - (0.017 * flow) + 8.54;
+        }
+        else {
+          throw new Exception("Reached data limit"); // no data beyond 150cc/kg/min flow
+        }
+      }
+      else { // if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
+             // && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
+        if ((flow >= 0) && (flow < 100)) {
+          return (3 * Math.pow(10, -7) * Math.pow(flow, 3)) 
+          - (4 * Math.pow(10, -5) * Math.pow(flow, 2)) 
+          + (0.0031 * flow) + 7.1197;
+        }
+        else if ((flow >= 100) && (flow <= 150)) {
+          return (-0.0018 * flow) + 7.5783;
+        }
+        else {
+          throw new Exception("Reached data limit"); // no data beyond 175cc/kg/min flow
         }
       }
     }
@@ -137,14 +136,14 @@ public final class Mediator {
    * 
    * @param ecmo
    *          Mode of ecmo {VA, VV}
-   * @param flow
-   *          Rate of blood flow in mL/kg/min
    * @param patient
    *          Current patient instantiation
+   * @param flow
+   *          Rate of blood flow in mL/kg/min
    * @return pCO2 by curve fit of Mark's chart
    * @throws Exception for flow < 0, heartFunction bad, and data limit
    */
-  public static double flowToPCO2(Mode ecmo, double flow, Patient patient) throws Exception {
+  public static double flowToPCO2(Mode ecmo, Patient patient, double flow) throws Exception {
     if (flow < 0) {
       throw new Exception("Flow cannot be less than 0");
     }
@@ -180,59 +179,58 @@ public final class Mediator {
       }
     }
     else { // must be VA
-      if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
-        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          if ((flow >= 0) && (flow < 100)) {
-            return ((-3 * Math.pow(10, -6)) * Math.pow(flow, 4)) 
-                    + (0.0006 * Math.pow(flow, 3)) - (0.0316 * Math.pow(flow, 2)) 
-                    + (0.2 * flow) + 81;
-          }
-          else if ((flow >= 100) && (flow <= 150)) {
-            return (0.06 * flow) + 34.833;
-          }
-          else {
-            throw new Exception("Reached data limit");
-          }
+      if ((patient.getHeartFunction() == Patient.HeartFunction.BAD) 
+          && (patient.getLungFunction() == Patient.LungFunction.BAD)) {
+        if ((flow >= 0) && (flow < 100)) {
+          return ((-3 * Math.pow(10, -6)) * Math.pow(flow, 4)) 
+          + (0.0006 * Math.pow(flow, 3)) - (0.0316 * Math.pow(flow, 2)) 
+          + (0.2 * flow) + 81;
         }
-        else { // Lungs are working but heart not so good
-          if ((flow >= 0) && (flow < 100)) {
-            return ((-4 * Math.pow(10, -6)) * Math.pow(flow, 4)) 
-                    + (0.0007 * Math.pow(flow, 3)) - (0.0458 * Math.pow(flow, 2)) 
-                    + (0.59 * flow) + 72;
-          }
-          else if ((flow >= 100) && (flow <= 150)) {
-            return (0.18 * flow) + 23.167;
-          }
-          else {
-            throw new Exception("Reached data limit");
-          }
+        else if ((flow >= 100) && (flow <= 150)) {
+          return (0.06 * flow) + 34.833;
         }
-
+        else {
+          throw new Exception("Reached data limit");
+        }
       }
-      else { // Heart function is good
-        if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          if ((flow >= 0) && (flow < 100)) {
-            return (3 * Math.pow(10, -6) * Math.pow(flow, 4)) 
-                    - (0.0005 * Math.pow(flow, 3)) + (0.0278 * Math.pow(flow, 2)) 
-                    - (0.77 * flow) + 80;
-          }
-          else if ((flow >= 100) && (flow <= 150)) {
-            return (-0.004 * Math.pow(flow, 2)) + (1.26 * flow) - 45;
-          }
-          else {
-            throw new Exception("Reached data limit");
-          }
+      else if ((patient.getHeartFunction() == Patient.HeartFunction.BAD) 
+          && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
+        if ((flow >= 0) && (flow < 100)) {
+          return ((-4 * Math.pow(10, -6)) * Math.pow(flow, 4)) 
+          + (0.0007 * Math.pow(flow, 3)) - (0.0458 * Math.pow(flow, 2)) 
+          + (0.59 * flow) + 72;
         }
-        else { // Lungs & Heart are working why are we on ECMO?
-          if ((flow >= 0) && (flow < 100)) {
-            return (-0.292 * flow) + 70.8;
-          }
-          else if ((flow >= 100) && (flow <= 150)) {
-            return (0.14 * flow) + 26.833;
-          }
-          else {
-            throw new Exception("Reached data limit");
-          }
+        else if ((flow >= 100) && (flow <= 150)) {
+          return (0.18 * flow) + 23.167;
+        }
+        else {
+          throw new Exception("Reached data limit");
+        }
+      }
+      else if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
+          && (patient.getLungFunction() == Patient.LungFunction.BAD)) {
+        if ((flow >= 0) && (flow < 100)) {
+          return (3 * Math.pow(10, -6) * Math.pow(flow, 4)) 
+          - (0.0005 * Math.pow(flow, 3)) + (0.0278 * Math.pow(flow, 2)) 
+          - (0.77 * flow) + 80;
+        }
+        else if ((flow >= 100) && (flow <= 150)) {
+          return (-0.004 * Math.pow(flow, 2)) + (1.26 * flow) - 45;
+        }
+        else {
+          throw new Exception("Reached data limit");
+        }
+      }
+      else { // if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
+        // && (patient.getLungFunction() == Patient.LungFunction.GOOD)) {
+        if ((flow >= 0) && (flow < 100)) {
+          return (-0.292 * flow) + 70.8;
+        }
+        else if ((flow >= 100) && (flow <= 150)) {
+          return (0.14 * flow) + 26.833;
+        }
+        else {
+          throw new Exception("Reached data limit");
         }
       }
     }
