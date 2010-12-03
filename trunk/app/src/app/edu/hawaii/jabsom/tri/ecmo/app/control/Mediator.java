@@ -33,7 +33,7 @@ public final class Mediator {
    *          Rate of blood flow in mL/kg/min
    * @param patient
    *          Current patient instantiation
-   * @return pH by linear interpolation of Mark's chart
+   * @return pH by curve fit of Mark's chart
    * @throws Exception for flow < 0, heartFunction bad, and data limit
    */
   public static double flowToPH(Mode ecmo, double flow, Patient patient) throws Exception {
@@ -46,46 +46,23 @@ public final class Mediator {
       }
       else { // Heart function is good
         if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          if ((flow >= 0) && (flow < 50)) {
-            return ((7.15 - 7.03) / 50) * flow + 7.03;
+          if ((flow >= 0) && (flow < 120)) {
+            return ((7 * Math.pow(10, -7)) * Math.pow(flow, 3)) 
+                    - (0.0001 * Math.pow(flow, 2)) + (0.0062 * flow) + 7.0291;
           }
-          else if ((flow >= 50) && (flow < 75)) {
-            return ((7.2 - 7.15) / 25) * flow + 7.05;
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return ((7.24 - 7.2) / 25) * flow + 7.08;
-          }
-          else if ((flow >= 100) && (flow < 120)) {
-            return ((7.4 - 7.24) / 20) * flow + 6.44;
-          }
-          else if ((flow >= 120) && (flow < 150)) {
-            return ((7.32 - 7.4) / 30) * flow + 7.72; // estimate and rounded
-          }
-          else if ((flow >= 150) && (flow <= 175)) {
-            return ((7.24 - 7.32) / 25) * flow + 7.8;
+          else if ((flow >= 120) && (flow <= 175)) {
+            return (-0.0029 * flow) + 7.7503;
           }
           else {
             throw new Exception("Reached data limit"); // no data beyond 175cc/kg/min flow
           }
         }
         else { // Lungs are working why are we on ECMO?
-          if ((flow >= 0) && (flow < 50)) {
-            return ((7.25 - 7.15) / 50) * flow + 7.15;
+          if ((flow >= 0) && (flow < 120)) {
+            return (0.0021 * flow) + 7.148;
           }
-          else if ((flow >= 50) && (flow < 75)) {
-            return ((7.3 - 7.25) / 25) * flow + 7.15;
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return ((7.35 - 7.3) / 25) * flow + 7.15;
-          }
-          else if ((flow >= 100) && (flow < 120)) {
-            return ((7.4 - 7.35) / 20) * flow + 7.1;
-          }
-          else if ((flow >= 120) && (flow < 150)) {
-            return ((7.32 - 7.4) / 30) * flow + 7.72; // estimate and rounded
-          }
-          else if ((flow >= 150) && (flow <= 175)) {
-            return ((7.24 - 7.32) / 25) * flow + 7.8;
+          else if ((flow >= 120) && (flow <= 175)) {
+            return (-0.0029 * flow) + 7.7503;
           }
           else {
             throw new Exception("Reached data limit"); // no data beyond 175cc/kg/min flow
@@ -96,46 +73,26 @@ public final class Mediator {
     else { // must be VA
       if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
         if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          if ((flow >= 0) && (flow < 25)) {
-            return ((7.1 - 7.05) / 25) * flow + 7.05;
+          if ((flow >= 0) && (flow < 100)) {
+            return (3 * Math.pow(10, -8) * Math.pow(flow, 4)) 
+                    - (5 * Math.pow(10, -6) * Math.pow(flow, 3)) 
+                    + (0.0003 * Math.pow(flow, 2)) - (0.0019 * flow) + 7.05;
           }
-          else if ((flow >= 25) && (flow < 50)) {
-            return ((7.17 - 7.1) / 25) * flow + 7.03;
-          }
-          else if ((flow >= 50) && (flow < 75)) {
-            return ((7.2 - 7.17) / 25) * flow + 7.11;
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return ((7.4 - 7.2) / 25) * flow + 6.6;
-          }
-          else if ((flow >= 100) && (flow < 125)) {
-            return ((7.37 - 7.4) / 25) * flow + 7.52;
-          }
-          else if ((flow >= 125) && (flow <= 150)) {
-            return ((7.35 - 7.37) / 25) * flow + 7.47;
+          else if ((flow >= 100) && (flow <= 150)) {
+            return (-0.001 * flow) + 7.4983;
           }
           else {
             throw new Exception("Reached data limit"); // no data beyond 150cc/kg/min flow
           }
         }
         else { // Lungs are working but heart not so good
-          if ((flow >= 0) && (flow < 25)) {
-            return ((7.15 - 7.12) / 25) * flow + 7.12;
+          if ((flow >= 0) && (flow < 100)) {
+            return (3 * Math.pow(10, -8) * Math.pow(flow, 4)) 
+                    - (5 * Math.pow(10, -6) * Math.pow(flow, 3)) 
+                    + (0.0003 * Math.pow(flow, 2)) - (0.0037 * flow) + 7.12;
           }
-          else if ((flow >= 25) && (flow < 50)) {
-            return ((7.23 - 7.15) / 25) * flow + 7.07;
-          }
-          else if ((flow >= 50) && (flow < 75)) {
-            return ((7.26 - 7.23) / 25) * flow + 7.17;
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return ((7.4 - 7.26) / 25) * flow + 6.84;
-          }
-          else if ((flow >= 100) && (flow < 125)) {
-            return ((7.33 - 7.4) / 25) * flow + 7.68;
-          }
-          else if ((flow >= 125) && (flow <= 150)) {
-            return ((7.29 - 7.33) / 25) * flow + 7.53;
+          else if ((flow >= 100) && (flow <= 150)) {
+            return (-0.0022 * flow) + 7.615;
           }
           else {
             throw new Exception("Reached data limit"); // no data beyond 150cc/kg/min flow
@@ -145,46 +102,26 @@ public final class Mediator {
       }
       else { // Heart function is good
         if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          if ((flow >= 0) && (flow < 25)) {
-            return ((7.12 - 7.07) / 25) * flow + 7.07;
+          if ((flow >= 0) && (flow < 100)) {
+            return (4 * Math.pow(10, -7) * Math.pow(flow, 3)) 
+                    - (3 * Math.pow(10, -5) * Math.pow(flow, 2)) 
+                    + (0.0028 * flow) + 7.069;
           }
-          else if ((flow >= 25) && (flow < 50)) {
-            return ((7.18 - 7.12) / 25) * flow + 7.0575;
-          }
-          else if ((flow >= 50) && (flow < 75)) {
-            return ((7.25 - 7.18) / 25) * flow + 7.04;
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return ((7.4 - 7.25) / 25) * flow + 6.8;
-          }
-          else if ((flow >= 100) && (flow < 125)) {
-            return ((7.29 - 7.4) / 25) * flow + 7.84;
-          }
-          else if ((flow >= 125) && (flow <= 150)) {
-            return ((7.25 - 7.29) / 25) * flow + 7.49;
+          else if ((flow >= 100) && (flow <= 150)) {
+            return (6 * Math.pow(10, -5) * Math.pow(flow, 2)) - (0.017 * flow) + 8.54;
           }
           else {
             throw new Exception("Reached data limit"); // no data beyond 150cc/kg/min flow
           }
         }
         else { // Lungs & Heart are working why are we on ECMO?
-          if ((flow >= 0) && (flow < 25)) {
-            return ((7.18 - 7.12) / 25) * flow + 7.12;
+          if ((flow >= 0) && (flow < 100)) {
+            return (3 * Math.pow(10, -7) * Math.pow(flow, 3)) 
+                    - (4 * Math.pow(10, -5) * Math.pow(flow, 2)) 
+                    + (0.0031 * flow) + 7.1197;
           }
-          else if ((flow >= 25) && (flow < 50)) {
-            return ((7.23 - 7.18) / 25) * flow + 7.13;
-          }
-          else if ((flow >= 50) && (flow < 75)) {
-            return ((7.29 - 7.23) / 25) * flow + 7.11;
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return ((7.4 - 7.29) / 25) * flow + 6.96;
-          }
-          else if ((flow >= 100) && (flow < 125)) {
-            return ((7.35 - 7.4) / 25) * flow + 7.6;
-          }
-          else if ((flow >= 125) && (flow <= 150)) {
-            return ((7.31 - 7.35) / 25) * flow + 7.55;
+          else if ((flow >= 100) && (flow <= 150)) {
+            return (-0.0018 * flow) + 7.5783;
           }
           else {
             throw new Exception("Reached data limit"); // no data beyond 175cc/kg/min flow
@@ -204,7 +141,7 @@ public final class Mediator {
    *          Rate of blood flow in mL/kg/min
    * @param patient
    *          Current patient instantiation
-   * @return pCO2 by linear interpolation of Mark's chart
+   * @return pCO2 by curve fit of Mark's chart
    * @throws Exception for flow < 0, heartFunction bad, and data limit
    */
   public static double flowToPCO2(Mode ecmo, double flow, Patient patient) throws Exception {
@@ -217,46 +154,24 @@ public final class Mediator {
       }
       else { // Heart function is good
         if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          if ((flow >= 0) && (flow < 50)) {
-            return Math.rint(((66 - 83) / 50) * flow + 83);
+          if ((flow >= 0) && (flow < 120)) {
+            return (-6 * Math.pow(10, -5) * Math.pow(flow, 3)) 
+                    + (0.0105 * Math.pow(flow, 2)) - (0.7277 * flow) + 83.074;
           }
-          else if ((flow >= 50) && (flow < 75)) {
-            return Math.rint(((60 - 66) / 25) * flow + 78);
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return Math.rint(((55 - 60) / 25) * flow + 75);
-          }
-          else if ((flow >= 100) && (flow < 120)) {
-            return Math.rint(((40 - 55) / 20) * flow + 130);
-          }
-          else if ((flow >= 120) && (flow < 150)) {
-            return Math.rint(((46 - 40) / 30) * flow + 16);
-          }
-          else if ((flow >= 150) && (flow <= 175)) {
-            return Math.rint(((53 - 46) / 25) * flow + 4);
+          else if ((flow >= 120) && (flow <= 175)) {
+            return (0.2352 * flow) + 11.451;
           }
           else {
             throw new Exception("Reached data limit");
           }
         }
         else { // Lungs are working why are we on ECMO?
-          if ((flow >= 0) && (flow < 50)) {
-            return Math.rint(((53 - 66) / 50) * flow + 66);
+          if ((flow >= 0) && (flow < 120)) {
+            return (-8 * Math.pow(10, -6) * Math.pow(flow, 3)) 
+                    + (0.0019 * Math.pow(flow, 2)) - (0.3402 * flow) + 66.01;
           }
-          else if ((flow >= 50) && (flow < 75)) {
-            return Math.rint(((48 - 53) / 25) * flow + 63);
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return Math.rint(((44 - 48) / 25) * flow + 60);
-          }
-          else if ((flow >= 100) && (flow < 120)) {
-            return Math.rint(((40 - 44) / 20) * flow + 64);
-          }
-          else if ((flow >= 120) && (flow < 150)) {
-            return Math.rint(((46 - 40) / 30) * flow + 16);
-          }
-          else if ((flow >= 150) && (flow <= 175)) {
-            return Math.rint(((53 - 46) / 25) * flow + 4);
+          else if ((flow >= 120) && (flow <= 175)) {
+            return (0.2352 * flow) + 11.451;
           }
           else {
             throw new Exception("Reached data limit");
@@ -267,46 +182,26 @@ public final class Mediator {
     else { // must be VA
       if (patient.getHeartFunction() == Patient.HeartFunction.BAD) {
         if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          if ((flow >= 0) && (flow < 25)) {
-            return Math.rint(((74 - 81) / 25) * flow + 81);
+          if ((flow >= 0) && (flow < 100)) {
+            return ((-3 * Math.pow(10, -6)) * Math.pow(flow, 4)) 
+                    + (0.0006 * Math.pow(flow, 3)) - (0.0316 * Math.pow(flow, 2)) 
+                    + (0.2 * flow) + 81;
           }
-          else if ((flow >= 25) && (flow < 50)) {
-            return Math.rint(((64 - 74) / 25) * flow + 84);
-          }
-          else if ((flow >= 50) && (flow < 75)) {
-            return Math.rint(((60 - 64) / 25) * flow + 72);
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return Math.rint(((41 - 60) / 25) * flow + 117);
-          }
-          else if ((flow >= 100) && (flow < 125)) {
-            return Math.rint(((42 - 41) / 25) * flow + 37);
-          }
-          else if ((flow >= 125) && (flow <= 150)) {
-            return Math.rint(((44 - 42) / 25) * flow + 32);
+          else if ((flow >= 100) && (flow <= 150)) {
+            return (0.06 * flow) + 34.833;
           }
           else {
             throw new Exception("Reached data limit");
           }
         }
         else { // Lungs are working but heart not so good
-          if ((flow >= 0) && (flow < 25)) {
-            return Math.rint(((68 - 72) / 25) * flow + 72);
+          if ((flow >= 0) && (flow < 100)) {
+            return ((-4 * Math.pow(10, -6)) * Math.pow(flow, 4)) 
+                    + (0.0007 * Math.pow(flow, 3)) - (0.0458 * Math.pow(flow, 2)) 
+                    + (0.59 * flow) + 72;
           }
-          else if ((flow >= 25) && (flow < 50)) {
-            return Math.rint(((55 - 68) / 25) * flow + 81);
-          }
-          else if ((flow >= 50) && (flow < 75)) {
-            return Math.rint(((51 - 55) / 25) * flow + 63);
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return Math.rint(((41 - 51) / 25) * flow + 81);
-          }
-          else if ((flow >= 100) && (flow < 125)) {
-            return Math.rint(((46 - 41) / 25) * flow + 21);
-          }
-          else if ((flow >= 125) && (flow <= 150)) {
-            return Math.rint(((50 - 46) / 25) * flow + 26);
+          else if ((flow >= 100) && (flow <= 150)) {
+            return (0.18 * flow) + 23.167;
           }
           else {
             throw new Exception("Reached data limit");
@@ -316,46 +211,24 @@ public final class Mediator {
       }
       else { // Heart function is good
         if (patient.getLungFunction() == Patient.LungFunction.BAD) {
-          if ((flow >= 0) && (flow < 25)) {
-            return Math.rint(((71 - 80) / 25) * flow + 80);
+          if ((flow >= 0) && (flow < 100)) {
+            return (3 * Math.pow(10, -6) * Math.pow(flow, 4)) 
+                    - (0.0005 * Math.pow(flow, 3)) + (0.0278 * Math.pow(flow, 2)) 
+                    - (0.77 * flow) + 80;
           }
-          else if ((flow >= 25) && (flow < 50)) {
-            return Math.rint(((63 - 71) / 25) * flow + 79);
-          }
-          else if ((flow >= 50) && (flow < 75)) {
-            return Math.rint(((47 - 63) / 25) * flow + 95);
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return Math.rint(((41 - 47) / 25) * flow + 65);
-          }
-          else if ((flow >= 100) && (flow < 125)) {
-            return Math.rint(((50 - 41) / 25) * flow + 5);
-          }
-          else if ((flow >= 125) && (flow <= 150)) {
-            return Math.rint(((54 - 50) / 25) * flow + 30);
+          else if ((flow >= 100) && (flow <= 150)) {
+            return (-0.004 * Math.pow(flow, 2)) + (1.26 * flow) - 45;
           }
           else {
             throw new Exception("Reached data limit");
           }
         }
         else { // Lungs & Heart are working why are we on ECMO?
-          if ((flow >= 0) && (flow < 25)) {
-            return Math.rint(((63 - 71) / 25) * flow + 71);
+          if ((flow >= 0) && (flow < 100)) {
+            return (-0.292 * flow) + 70.8;
           }
-          else if ((flow >= 25) && (flow < 50)) {
-            return Math.rint(((56 - 63) / 25) * flow + 70);
-          }
-          else if ((flow >= 50) && (flow < 75)) {
-            return Math.rint(((50 - 56) / 25) * flow + 68);
-          }
-          else if ((flow >= 75) && (flow < 100)) {
-            return Math.rint(((41 - 50) / 25) * flow + 77);
-          }
-          else if ((flow >= 100) && (flow < 125)) {
-            return Math.rint(((44 - 41) / 25) * flow + 29);
-          }
-          else if ((flow >= 125) && (flow <= 150)) {
-            return Math.rint(((48 - 44) / 25) * flow + 24);
+          else if ((flow >= 100) && (flow <= 150)) {
+            return (0.14 * flow) + 26.833;
           }
           else {
             throw new Exception("Reached data limit");
