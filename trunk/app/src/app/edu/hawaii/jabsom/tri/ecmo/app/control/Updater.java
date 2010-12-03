@@ -184,9 +184,9 @@ public final class Updater {
       Mode mode = tube.getMode();
       HeartFunction heartFunction = patient.getHeartFunction();
       LungFunction lungFunction = patient.getLungFunction();
-      double ccPerKg = pump.getFlow() * 1000 / patient.getWeight();
+      double pumpFlow = pump.getFlow() * 1000 / patient.getWeight();
       if (!pump.isOn()) {
-        ccPerKg = 0;
+        pumpFlow = 0;
       }
       
       /* update equipment (physiologic monitor) */
@@ -623,7 +623,7 @@ public final class Updater {
           // update patient pH, pCO2, HCO3, base excess
 
           try {
-            double patientPH = Mediator.flowToPH(mode, ccPerKg, patient);
+            double patientPH = Mediator.flowToPH(mode, patient, pumpFlow);
             patient.setPH(patientPH);
           }
           catch (Exception e) {
@@ -772,7 +772,7 @@ public final class Updater {
 
           // pump flow to patient and tube SvO2
           try{ 
-            double tubeSvO2 = Mediator.flowToSvO2(mode, ccPerKg, patient);
+            double tubeSvO2 = Mediator.flowToSvO2(mode, pumpFlow, patient);
             tube.setSvO2(tubeSvO2); 
           }
           catch (Exception e) {
@@ -783,7 +783,7 @@ public final class Updater {
 
           // pump flow to patient PaO2
           try {
-            double patientSaturation = Mediator.flowToSPO2(mode, ccPerKg, patient);
+            double patientSaturation = Mediator.flowToSPO2(mode, pumpFlow, patient);
             if (ventilator.isEmergencyFuction()) {
               patientSaturation *= 1.25;
               if (patientSaturation > 1.0) {
