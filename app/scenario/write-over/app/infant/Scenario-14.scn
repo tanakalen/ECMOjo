@@ -14,13 +14,13 @@ tutorial-item1-text = Notice what alarms are ringing and the changes in physiolo
 tutorial-item1-trigger = N/A
 tutorial-item2-text = You can't handle this one by yourself. Call for help.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Clamp the circuit!\n  Roller Pump: Clamp Venous, Unclamp Bridge, Clamp Arterial\n  Centrifugal: Clamp Arterial, Unclamp Bridge, Clamp Venous
-tutorial-item3-trigger = Action:Tube:Clamped:true
-tutorial-item4-text = Increase the ventilator settings for additional support in respiratory cases. Click the [Emergency Vent] button.
-tutorial-item4-trigger = Action:Ventilator:Emergency:on
-tutorial-item5-text = Resuscitate the patient as needed.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = At the bedside, consider using the handcrank until the problem is solved.
+tutorial-item3-text = The pump appears to have failed, be prepared to start hand cranking
+tutorial-item3-trigger = N/A
+tutorial-item4-text = Clamp the circuit!\n  Roller Pump: Clamp Venous, Unclamp Bridge, Clamp Arterial\n  Centrifugal: Clamp Arterial, Unclamp Bridge, Clamp Venous
+tutorial-item4-trigger = Action:Tube:Clamped:true
+tutorial-item5-text = Increase the ventilator settings for additional support in respiratory cases. Click the [Emergency Vent] button.
+tutorial-item5-trigger = Action:Ventilator:Emergency:on
+tutorial-item6-text = Resuscitate the patient as needed.
 tutorial-item6-trigger = N/A
 
 # Baseline Values
