@@ -18,16 +18,14 @@ tutorial-item3-text = Everybody loves everybody, but nobody trusts anybody.
 tutorial-item3-trigger = N/A
 tutorial-item4-text = ECMO is 95% boredom, and 5% sheer terror.
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Any fool can do ECMO when everything is going well, but only a real fool would do ECMO when things aren't going well.
+tutorial-item5-text = There is no time like the present.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = There is no time like the present.
+tutorial-item6-text = The enemy of good is better.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = The enemy of good is better.
+tutorial-item7-text = It's not over till it's over.
 tutorial-item7-trigger = N/A
-tutorial-item8-text = It's not over till it's over.
+tutorial-item8-text = The best ECMO is boring ECMO.
 tutorial-item8-trigger = N/A
-tutorial-item9-text = The best ECMO is boring ECMO.
-tutorial-item9-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
