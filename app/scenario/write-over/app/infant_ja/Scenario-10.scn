@@ -1,6 +1,6 @@
 # Scenario Information
-name = Coming off Roller ECMO
-desc = Steps to emergently come off of ECLS support with roller pump.
+name = ローラーポンプECMOの離脱 
+desc = ローラーポンプによるECLS（ExtraCorporial Life Support 体外循環）サポートの緊急離脱の手順
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,27 +10,27 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = ECMOism:  ECMO is 95% boredom, and 5% sheer terror.
+tutorial-item1-text = ECMOイズム:  ECMOは95%は退屈なものであり、残りの5%が極度の恐怖である。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = You are now one elite 5% that will experience the terror of ECMO.  If you can't immediately see what's causing all the alarms, what should you do?
+tutorial-item2-text = さあ今からECMOの恐怖を体験する5%の精鋭になります。もしもあなたが即座にすべてのアラームがどうしてなっているかわからなければ、何をしたらいいでしょうか。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = A circuit check.
+tutorial-item3-text = 回路チェック
 tutorial-item3-trigger = N/A
-tutorial-item4-text = Call for HELP!
+tutorial-item4-text = 助けを呼ぶ！
 tutorial-item4-trigger = N/A
-tutorial-item5-text = You find a catastrophic problem, and you must come off ECMO.
+tutorial-item5-text = 破滅的な問題を見つけたら、あなたはECMOを止めなければなりません。
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Clamp the circuit!\n - Clamp Venous, Unclamp Bridge, Clamp Arterial
+tutorial-item6-text = 回路をクランプして下さい。\n -すなわち脱血側回路をクランプして、ブリッジのクランプをはずして、送血側回路をクランプします。
 tutorial-item6-trigger = Action:Tube:Clamped:true
-tutorial-item7-text = Increase the ventilator settings for additional support in respiratory cases. Click the [Emergency Vent] button. 
+tutorial-item7-text = 呼吸器疾患では呼吸器の設定をさらに上げてください。[Emergency Vent]ボタンを押してください。
 tutorial-item7-trigger = Action:Ventilator:Emergency:on
-tutorial-item8-text = Please note in this simulation world, handbagging or institution of the emergency settings is accomplished in a single step.
+tutorial-item8-text = この模擬モジュールではマニュアル換気や緊急呼吸器設定はボタンを一回押すだけでできてしまいますが、実際にはそうでないことを忘れないで下さい。
 tutorial-item8-trigger = N/A
-tutorial-item9-text = Resuscitate the patient as needed.
+tutorial-item9-text = 必要に応じて患者を蘇生して下さい。
 tutorial-item9-trigger = N/A
-tutorial-item10-text = Do you need a surgeon?
+tutorial-item10-text = 外科医は必要ですか?
 tutorial-item10-trigger = N/A
-tutorial-item11-text = If it involves the cannulas, the answer is yes.
+tutorial-item11-text = もしも問題がカニューラにあるのであれば、答えはyesです。
 tutorial-item11-trigger = N/A
 
 # Baseline Values

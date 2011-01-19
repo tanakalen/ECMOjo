@@ -1,6 +1,6 @@
 # Scenario Information
-name = ECMOisms
-desc = The unofficial laws of ECMO, by J Devn Cornish, MD.
+name = ECMOイズム
+desc = ECMOの非公式法、J Devn Cornish, MD著
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,23 +10,23 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = There's no ECMO, like no ECMO.
+tutorial-item1-text = ECMOらしくないECMOは存在しない。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = ECMO is a team effort.
+tutorial-item2-text = ECMOはチーム作業である。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Everybody loves everybody, but nobody trusts anybody.
+tutorial-item3-text = 誰もが皆を愛すが誰でも信用するものはいない。
 tutorial-item3-trigger = N/A
-tutorial-item4-text = ECMO is 95% boredom, and 5% sheer terror.
+tutorial-item4-text = ECMOの時間の95%は退屈そのものであるが、残りの5%はすさまじい恐怖である。
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Any fool can do ECMO when everything is going well, but only a real fool would do ECMO when things aren't going well.
+tutorial-item5-text = 物事が順調なときはどんな馬鹿でもECMOをできるが、本当の馬鹿だけがそうでない時にECMOをする。
 tutorial-item5-trigger = N/A
-tutorial-item6-text = There is no time like the present.
+tutorial-item6-text = 現在のように時間がない。
 tutorial-item6-trigger = N/A
-tutorial-item7-text = The enemy of good is better.
+tutorial-item7-text = 良い事の敵はより良いことである。
 tutorial-item7-trigger = N/A
-tutorial-item8-text = It's not over till it's over.
+tutorial-item8-text = 終わるまでは終わりではない。
 tutorial-item8-trigger = N/A
-tutorial-item9-text = The best ECMO is boring ECMO.
+tutorial-item9-text = 最高のECMOは何も起こらなくてつまらないECMOである。
 tutorial-item9-trigger = N/A
 
 # Baseline Values

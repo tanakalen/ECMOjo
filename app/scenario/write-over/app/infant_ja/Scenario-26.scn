@@ -1,6 +1,6 @@
 # Scenario Information
-name = Negative Venous Pressure
-desc = Identifying the cause of a very negative venous/bladder pressure.
+name = 脱血圧
+desc = 脱血圧が高くなる（陰圧が大きくなる）原因を特定する
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,33 +10,33 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = You are performing your hourly circuit check and your sharp memory tells you that the venous pressure is becoming increasingly negative.
+tutorial-item1-text = あなたはECMO回路の定期チェックで前回に比べて脱血圧が高くなっていることに気がつきました。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = What would you check?
+tutorial-item2-text = 何を調べますか？
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Check upstream (back toward patient) from monitoring site.
+tutorial-item3-text = 脱血圧のモニタリング部位から(患者側に向かって)上流を調べましょう。
 tutorial-item3-trigger = N/A
-tutorial-item4-text = Click patient, then the [Check Cannula Site] button.
+tutorial-item4-text = 患者をクリックし、その後[Check Cannula Site]ボタンをクリックしてください。
 tutorial-item4-trigger = Action:Patient:CANNULA_SITE
-tutorial-item5-text = Check venous cannula for kink.
+tutorial-item5-text = 静脈カニューラの折れ曲がりがないかどうか調べましょう。
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Select the [IMG] button.
+tutorial-item6-text = [IMG]ボタンを選んでください。
 tutorial-item6-trigger = Action:View:LabTest:ImagingLabTest
-tutorial-item7-text = Check the X-Ray.
+tutorial-item7-text = 胸部レントゲンを確認してください。
 tutorial-item7-trigger = N/A
-tutorial-item8-text = Check venous cannula for position.
+tutorial-item8-text = 静脈カニューラの位置異常がないか調べましょう。
 tutorial-item8-trigger = N/A
-tutorial-item9-text = Click patient, then the [Check Sedation] button.
+tutorial-item9-text = 患者をクリックして、[Check Sedation]ボタンをクリックしてください。
 tutorial-item9-trigger = Action:Patient:SEDATION
-tutorial-item10-text = If the patient is active, the catheter may have changed position. Consider sedation.
+tutorial-item10-text = もし患者に体動がみられる場合は、カテーテルの位置が変わる可能性があります。鎮静を考慮してください。
 tutorial-item10-trigger = N/A
-tutorial-item11-text = Do the physiologic variables suggest hypovolemia?
+tutorial-item11-text = 身体所見から循環血液量減少が考えられますか？
 tutorial-item11-trigger = N/A
-tutorial-item12-text = If the patient is hypovolemic and has a low Hgb, you can give PRBC.
+tutorial-item12-text = もし患者の循環血液量が減少していて、Hbの低下がある場合は赤血球を輸血することが出来ます。
 tutorial-item12-trigger = N/A
-tutorial-item13-text = Click on Intervention A, then select the [Blood Cells] button to inject blood cells.
+tutorial-item13-text = Inervention A(介入点A)をクリックして、[Blood Cells]ボタンを選んで血液製剤を投与してください。
 tutorial-item13-trigger = Action:Intervention:Blood
-tutorial-item14-text = A very negative venous pressure suggests a problem upstream (back toward patient) from monitoring site.
+tutorial-item14-text = 脱血圧の上昇は、脱血圧のモニタリング部位よりも患者側に向かって上流に問題が生じている事を示唆します。
 tutorial-item14-trigger = N/A
 
 # Baseline Values

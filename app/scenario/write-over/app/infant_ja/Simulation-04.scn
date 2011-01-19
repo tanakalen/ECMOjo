@@ -1,8 +1,8 @@
 # Scenario Information
-name = Simulation 4 (Roller & Silicon)
-desc = ECMO hour 220 (d9) for 4 kg female with severe sepsis. Improving pulmonary function. Worsening coagulation studies. The circuit was changed and you are in the process of reinitiating flow. The alarms begin to sound.
-info-success = This was a simulation of a clamp not being in the correct position after a circuit change.  Rapid discovery and intervention is required to reduce damage to the oxygenator.\n\nCongratulations.  With your expert training skills you easily detected the problem.\n\nRemember the ECMOism, "Everybody loves everybody, but nobody trusts anybody."  Always check the circuit yourself.
-info-failure = This was a simulation of a clamp not being in the correct position after a circuit change.  Rapid discovery and intervention is required to reduce damage to the oxygenator.\n\nThis was a simulation of a 5% sheer terror moment.  The clamp was left on the arterial line, and someone overrode the post membrane pressure alarm, allowing the roller head pump to continue to pump against a high pressure may cause a membrane rupture.\n\nRemember the ECMOism, "Everybody loves everybody, but nobody trusts anybody."  Always check the circuit yourself.
+name = シミュレーション 4 (ローラーとシリコン)
+desc = 重症敗血症の体重4 kgの女児にECMOを導入して220時間 (約9日)が経過しました。呼吸機能は改善しましたが、凝固能は悪化していました。ECMO回路は交換されて、流量を再開している所です。すると、アラームがなり始めました。 
+info-success = これは、回路交換後にクランプが正しい場所にされていなかったシミュレーションでした。迅速なチェックと介入が人工肺へのダメージを減らすには必要です。\n\nおめでとうございます！トレーニングの成果で、見事に問題を突き止めました。\n\nECMOイズムを忘れないで下さい。 "誰もが皆を愛すが誰でも信用するものはいない。"  いつもECMO回路を自らチェックしてください。
+info-failure = これは、回路交換後にクランプが正しい場所にされていなかったシミュレーションでした。迅速なチェックと介入が人工肺へのダメージを減らすには必要です。\n\nこれは5%はすさまじい恐怖の瞬間のシミュレーションでした。 クランプが送血側にかかったままで、誰かが送血圧のアラームを高く設定していました。そのため、ローラーヘッドが高い圧に対しても血液を送ることができ、膜の破裂が起きたかもしれません。\n\nECMOイズムを忘れないで下さい。 "誰もが皆を愛すが誰でも信用するものはいない。"  いつもECMO回路を自らチェックしてください。
 
 # Scenario Parameters
 scenario-ecmo-mode = *

@@ -1,6 +1,6 @@
 # Scenario Information
-name = 連続的なシミュレーション 
-desc = 終ることがないシミュレーション… 
+name = 持続的なシミュレーション
+desc = ずっと終わらないシミュレーション...
 
 # Scenario Parameters
 scenario-ecmo-mode = *

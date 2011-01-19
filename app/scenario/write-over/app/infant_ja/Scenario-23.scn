@@ -1,6 +1,6 @@
 # Scenario Information
-name = Oxygenator Failure
-desc = Identifying an oxygenator failure.
+name = 人工肺の不全
+desc = 人工肺不全の同定
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,27 +10,27 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = The oxygenator can be a "black hole" for clotting factors.
+tutorial-item1-text = 人工肺は凝固因子の"ブラックホール"となることがあります。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = This oxygenator is beginning to concern you. Can you find the warning signs?
+tutorial-item2-text = この人工肺は問題を生じ始めています。あなたは警告のサインを見つけることができますか。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Pressure monitor changes: A higher pre-membrane pressure, leading to a higher transmembrane gradient.
+tutorial-item3-text = 圧モニターが変化しています: 脱血圧が高くなり、膜間差圧がより高くなっています。
 tutorial-item3-trigger = N/A
-tutorial-item4-text = Heme Lab value changes: Decreases in platelets, fibrinogen. Increases in ACT, PTT, PT.
+tutorial-item4-text = 血算の検査結果も変化しています: 血小板、フィブリノゲンが減少。ACT, PTT, PT値が延長。
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Post Membrane blood gases and sweep gas settings: a) Slight increases in post membrane PaO2 and PaCO2 and b) increased sweep gas settings.
+tutorial-item5-text = 膜の後で血液ガスの結果とスウィープガスの設定は以下です: a)　動脈血中酸素分圧PaO2と動脈血中二酸化炭素分圧PaCO2のわずかな上昇 b) スウィープガスが高く設定されています。
 tutorial-item5-trigger = N/A
-tutorial-item6-text = You have given blood products but your lab values do not correct.
+tutorial-item6-text = 血液製剤を投与しましたが、検査値は改善しません。
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Looks like there may be a clot in the oxygenator that is consuming your blood products. What would you recommend at this time?
+tutorial-item7-text = 人工肺の中に血栓があって血液製剤を消費しているようです。この時点でどうしますか？
 tutorial-item7-trigger = N/A
-tutorial-item8-text = You strongly encourage an oxygenator change as soon as possible. ECMOism: There is no time like the present.
+tutorial-item8-text = 即座に人工肺を交換します。ECMOイズム: 今時間がないように（ECMOにも）あまり時間がない。
 tutorial-item8-trigger = N/A
-tutorial-item9-text = Click on [Circuit Check] button, then the [Change Circuit] button.
+tutorial-item9-text = [Circuit Check]ボタンをクリックして、次に[Change Circuit]ボタンをクリックして下さい。
 tutorial-item9-trigger = Action:Tube:replace
-tutorial-item10-text = Go ahead and increase the flow as directed to at least 600mL/min.
+tutorial-item10-text = 指示通りにECMO流量を600mL/min以上に増加して下さい。
 tutorial-item10-trigger = Action:Pump:flow:>0.59
-tutorial-item11-text = You successfully changed the circuit and fixed the problem.
+tutorial-item11-text = 回路交換に成功して、問題を解決しました！！
 tutorial-item11-trigger = N/A
 
 # Baseline Values

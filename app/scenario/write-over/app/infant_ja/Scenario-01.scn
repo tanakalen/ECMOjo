@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Introduction
-desc = Run the tutorial for an introduction of ECMOjo. 
+name = チュートリアル　－導入
+desc = ECMOジョーの導入を理解するためにチュートリアルを始めましょう。
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,37 +10,37 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Welcome to the introduction. Try to identify the ECMOjo components.
+tutorial-item1-text = 導入へようこそ。さあ、ECMOジョーの各部分の位置と役割を理解しましょう。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = Task 1: Select the ACT component.
+tutorial-item2-text = タスク 1: ACT装置を選んでクリックしてください。
 tutorial-item2-trigger = Action:View:ACTComponent
-tutorial-item3-text = Task 2: Select the bubble detector.
+tutorial-item3-text = タスク 2: 気泡検知器を選んでクリックしてください。
 tutorial-item3-trigger = Action:View:BubbleDetectorComponent
-tutorial-item4-text = Task 3: Select the temperature controls, a.k.a. heater controls.
+tutorial-item4-text = タスク 3: 温度制御器（加温器）を選んでクリックしてください。
 tutorial-item4-trigger = Action:View:HeaterComponent
-tutorial-item5-text = Task 4: Select one of the intervention points displayed as syringes A-D.
+tutorial-item5-text = タスク 4: AからDのシリンジとして示されているECMO回路上の介入ポイントの一つを選んでクリックしてください。
 tutorial-item5-trigger = Action:View:InterventionComponent
-tutorial-item6-text = Task 5: Select one of the lab buttons at the bottom left corner of the screen.
+tutorial-item6-text = タスク 5: 画面の左角にある検査項目のボタンの一つを選んでクリックしてください。
 tutorial-item6-trigger = Action:View:LabComponent
-tutorial-item7-text = Task 6: Select the gas blender.
+tutorial-item7-text = タスク 6: ガス混合器（ブレンダー）を選んでクリックしてください。
 tutorial-item7-trigger = Action:View:OxygenatorComponent
-tutorial-item8-text = Task 7: Click on the patient.
+tutorial-item8-text = タスク 7: 患児を選んでクリックしてください。
 tutorial-item8-trigger = Action:View:Patient
-tutorial-item9-text = Task 8: Select the pressure monitor at the top right corner of the screen.
+tutorial-item9-text = タスク 8: 画面の右上にある圧モニタを選んでクリックしてください。
 tutorial-item9-trigger = Action:View:PressureMonitorComponent
-tutorial-item10-text = Task 9: Select the pump controls at the bottom right corner of the screen.
+tutorial-item10-text = タスク 9: 画面の右下にあるポンプ制御器を選んでクリックしてください。
 tutorial-item10-trigger = Action:View:PumpComponent
-tutorial-item11-text = Task 10: Select the ventilator on the left hand side just above the patient.
+tutorial-item11-text = タスク 10: 画面の左で患児のすぐ上にある呼吸器を選んでクリックしてください。
 tutorial-item11-trigger = Action:View:VentilatorComponent
-tutorial-item12-text = Task 11: Remove the clamp from the bridge (between arterial limb and venous limb).
+tutorial-item12-text = タスク 11: 送血側と脱血側の間にあるブリッジのクランプを選んでクリックしてください（クランプが外れます）。
 tutorial-item12-trigger = Action:Tube:-BRIDGE
-tutorial-item13-text = Task 12: When the patient vital signs change too much an alarm will start ringing. To silence the alarm, click on the yellow mute button beneath the red alarm to the right.
+tutorial-item13-text = タスク 12: 患児のバイタルサインが異常になるとアラームが鳴り始めます。アラームを止めるには、点灯しているアラームのすぐ下にある黄色のボタンをクリックしてください。
 tutorial-item13-trigger = N/A
-tutorial-item14-text = Task 13: Hovering the mouse pointer over the patient picture will bring up the scenario description.
+tutorial-item14-text = タスク 13: 患児の上にマウスのポインタを持ってくると、シナリオの情報が表示されます。
 tutorial-item14-trigger = N/A
 
 # Baseline Values
-baseline-sedated = true
+baseline-seated = true
 baseline-bleeding = false
 baseline-min-heart-rate = 100
 baseline-max-heart-rate = 160

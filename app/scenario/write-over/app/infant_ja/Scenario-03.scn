@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Advanced
-desc = Run the tutorial for an advanced ECMOjo example. 
+name = チュートリアル - ハイレベル
+desc = より高度なECMOjoの例のチュートリアルを始めましょう。 
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,29 +10,29 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Welcome to the advanced ECMOjo tutorial.
+tutorial-item1-text = より高度なECMOjoのチュートリアルにようこそ。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = Let's have a look at the various diagnostic tests available.
+tutorial-item2-text = 本プログラムで利用可能な様々な診断テストを見てみましょう。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Task 1: Select the lab [ABG] button to view blood gas lab values.
+tutorial-item3-text = Task 1: 血液ガスの結果を見るために検査"Lab"の中にある[ABG]ボタンを選んでクリックして下さい。
 tutorial-item3-trigger = Action:View:LabTest:BloodGasLabTest
-tutorial-item4-text = Task 2: Click the [Lab] button to request new lab values.
+tutorial-item4-text = Task 2: 新しい血液ガスの検査をオーダーするには[Lab]ボタンをクリックして下さい。
 tutorial-item4-trigger = Action:LabRequest
-tutorial-item5-text = Task 3: Select the lab [CHEM] button to view chemistry lab values.
+tutorial-item5-text = Task 3: 生化学検査の結果を見るために[CHEM]ボタンをクリックして下さい。
 tutorial-item5-trigger = Action:View:LabTest:ChemistryLabTest
-tutorial-item6-text = Task 4: Click the [Lab] button to request new lab values.
+tutorial-item6-text = Task 4: 新しい生化学検査をオーダーするために[Lab]ボタンをクリックして下さい。
 tutorial-item6-trigger = Action:LabRequest
-tutorial-item7-text = Task 5: Select the lab [HEME] button to view hematology lab values.
+tutorial-item7-text = Task 5: 血算検査結果を見るために[HEME]ボタンをクリックして下さい。
 tutorial-item7-trigger = Action:View:LabTest:HematologyLabTest
-tutorial-item8-text = Task 6: Click the [Lab] button to request new lab values.
+tutorial-item8-text = Task 6: 新しい血算検査をオーダーするために[Lab]ボタンをクリックして下さい。
 tutorial-item8-trigger = Action:LabRequest
-tutorial-item9-text = Task 7: Select the lab [IMG] button to view imaging lab values.
+tutorial-item9-text = Task 7: 画像検査結果をみるために[IMG]ボタンをクリックして下さい。
 tutorial-item9-trigger = Action:View:LabTest:ImagingLabTest
-tutorial-item10-text = Clicking on the image name "Echo" or "X-Ray" will bring up the actual image. Clicking on the image will remove it from the screen.
+tutorial-item10-text = "Echo"や"X-Ray"ボタンをクリックすることで心エコーやレントゲン写真などの実際の画像検査結果が現れます。その結果をクリックすると結果が画面から消えます。
 tutorial-item10-trigger = N/A
-tutorial-item11-text = Task 8: Select the [ACT] button to view the ACT values.
+tutorial-item11-text = Task 8: ACTの結果を見るために[ACT]ボタンをクリックして下さい。
 tutorial-item11-trigger = Action:View:ACTComponent
-tutorial-item12-text = Task 9: Click the [Lab] button to request new values.
+tutorial-item12-text = Task 9: 新しいACTをオーダーするために[Lab]ボタンをクリックして下さい。
 tutorial-item12-trigger = Action:ACTRequest
 
 # Baseline Values

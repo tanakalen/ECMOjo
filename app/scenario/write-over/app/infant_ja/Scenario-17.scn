@@ -1,6 +1,6 @@
 # Scenario Information
-name = Sweep Gases 2
-desc = Adjusting the total sweep gas delivered to the oxygenator.
+name = スウィープガス 2
+desc = 人工肺へ供給される総スウィープガスを調節します。
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,25 +10,25 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Click on the gas blender.
+tutorial-item1-text = ガス混合器（ブレンダー）をクリックして下さい。
 tutorial-item1-trigger = Action:View:OxygenatorComponent
-tutorial-item2-text = This device controls the gases delivered to the oxygenator.
+tutorial-item2-text = この装置は人工肺に供給されるガスをコントロールします。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Increase the total sweep gas to the membrane.
+tutorial-item3-text = 膜に供給される総スウィープガスを増加して下さい。
 tutorial-item3-trigger = Action:Oxy:totalSweep:>0.65
-tutorial-item4-text = Notice the changes on the CDI monitor's post membrane values?
+tutorial-item4-text = 膜より後で測定している持続血液ガスモニタ値の変化に気づきましたか。?
 tutorial-item4-trigger = N/A
-tutorial-item5-text = The CDI PaCO2 decreased rapidly and pH increased.
+tutorial-item5-text = 動脈血中二酸化炭素分圧PaCO2が急速に減少してpHあがりました。
 tutorial-item5-trigger = N/A
-tutorial-item6-text = The CDI PaO2 and SaO2 remained unchanged.
+tutorial-item6-text = 動脈血中酸素分圧PaO2と動脈血中酸素飽和度SaO2は変わりません。
 tutorial-item6-trigger = N/A
-tutorial-item7-text = What happens to the patient's ABG?
+tutorial-item7-text = 患者の動脈血ガスには何がおきますか。
 tutorial-item7-trigger = N/A
-tutorial-item8-text = Patient ABG  PaCO2 decreases, pH increases, and PaO2 stays the same.
+tutorial-item8-text = 患者の動脈血中二酸化炭素PaCO2は減少しpHはあがり、動脈血中酸素分圧PaO2は同じです。
 tutorial-item8-trigger = N/A
-tutorial-item9-text = Select the best answer to remove CO2; a) increasing sweep gas flow to the oxygenator; b) increasing vent settings; or c) changing pump flow?
+tutorial-item9-text = 二酸化炭素を除去する最もよい答えを選んでください。a) 人工肺へのスウィープガス流量を増やす。b) 呼吸器設定を上げる。 c) ポンプ流量を上げる。
 tutorial-item9-trigger = N/A
-tutorial-item10-text = CO2 removal is a function of total sweep gas flow through the oxygenator. With VA and VV ECMO, turn up sweep gas flow to remove CO2.
+tutorial-item10-text = 二酸化炭素除去量は人工肺を通る総スウィープガスを変数とする関数です。 VA でもVV ECMOでも、二酸化炭素を除去するにはスウィープガスを上げます。
 tutorial-item10-trigger = N/A
 
 # Baseline Values

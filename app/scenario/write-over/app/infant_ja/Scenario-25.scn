@@ -1,6 +1,6 @@
 # Scenario Information
-name = High Pre-Membrane Pressure
-desc = Identifying the cause of a high pre-membrane pressure.
+name = 高い脱血圧
+desc = 脱血圧が高くなる原因を同定する。
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,19 +10,19 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = You are performing your hourly circuit check and your keen senses tell you that the pre-membrane pressure is rising.
+tutorial-item1-text = 毎時の回路チェックをしていて、鋭い観察により脱血圧がどんどん上昇しているのに気付きました。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = What would you check?
+tutorial-item2-text = 何をチェックしますか？
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Check downstream (forward toward patient) from monitoring site.
+tutorial-item3-text = モニタしている場所から上流（患者に向かって）をチェックします。
 tutorial-item3-trigger = N/A
-tutorial-item4-text = Click pressure monitor.
+tutorial-item4-text = 圧モニタをクリックして下さい。
 tutorial-item4-trigger = Action:View:PressureMonitorComponent
-tutorial-item5-text = Notice there is no change in the post-membrane pressure (post).
+tutorial-item5-text = 送血圧（post）に変化がないことを確認してください。
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Isolated high pre-membrane pressure suggests a problem inside your oxygenator.
+tutorial-item6-text = 脱血圧だけが高いのは人工肺の中に問題がある可能性があります。
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Consider changing the oxygenator.
+tutorial-item7-text = 人工肺を変えることを考慮します。
 tutorial-item7-trigger = N/A
 
 # Baseline Values
