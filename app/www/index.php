@@ -32,7 +32,7 @@
 
 <h1>News & Updates</h1>
 <ul>
-  <li><strong>January 19, 2011</strong> - Version 2.3.1 available for download /w Japanse (Windows, Mac, Linux).
+  <li><strong>January 19, 2011</strong> - Version 2.3.1 available for download /w Japanese (Windows, Mac, Linux).
   <li><strong>September 30, 2010</strong> - Version 2.3.0 available for download (Windows, Mac, Linux).
   <li><strong>March 11, 2010</strong> - Demo video added.
   <li><strong>February 22, 2010</strong> - Version 2.2.9 available for download (Windows, Mac, Linux).
