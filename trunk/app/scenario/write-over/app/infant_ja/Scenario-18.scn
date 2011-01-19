@@ -1,6 +1,6 @@
 # Scenario Information
-name = Temperature Control
-desc = Functions of the heater.
+name = 温度制御
+desc = 加温器の機能
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,21 +10,21 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Click on the heater control.
+tutorial-item1-text = 加温制御器をクリックして下さい。
 tutorial-item1-trigger = Action:View:HeaterComponent
-tutorial-item2-text = The heater unit is a very efficient way to maintain normothermia.
+tutorial-item2-text = 加温ユニットは正常体温を保つ上ｔでとても有効な方法です。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Due to the large tubing surface area, significant heat loss may result if the heater unit malfunctions.
+tutorial-item3-text = チュービングの表面積が大きいため、もしも加温ユニットが正常に作動しないと、たくさんの熱が奪われます。
 tutorial-item3-trigger = N/A
-tutorial-item4-text = With significant hypothermia, note the impact on some of the coagulation values.
+tutorial-item4-text = 重度の低体温では、凝固検査値のいくつかの項目で影響が生じます。
 tutorial-item4-trigger = N/A
-tutorial-item5-text = A DIC picture emerges.  The PT, PTT and ACT increases. Fibrinogen decreases.
+tutorial-item5-text = 臨床的にはDIC（播種性凝固障害）を呈します。 PTやPTT、ACTは延長します。 フィブリノゲンは減少します。
 tutorial-item5-trigger = N/A
-tutorial-item6-text = If you suspect a heater failure, check the water tube connections, power cord attachment and temperature set point. 
+tutorial-item6-text = 加温器の故障を疑うのであれば、配水管の接続、電源コード接続、設定温をチェックして下さい。 
 tutorial-item6-trigger = N/A
-tutorial-item7-text = If everything checks out OK, the unit may have failed. Go ahead and replace the heater; click on the [Replace Heater] button.
+tutorial-item7-text = もしもすべてチェックに問題なければ、加温ユニットは故障している可能性があります。加温器を交換しましょう。すなわち、このプログラムでは [Replace Heater] ボタンを押します。
 tutorial-item7-trigger = Action:Heater:replace
-tutorial-item8-text = You replaced the malfunctioning heater. Patient temperature values will return back to normal.
+tutorial-item8-text = 故障した加温器を交換しました。患者体温が正常に戻ります。
 tutorial-item8-trigger = N/A
 
 # Baseline Values

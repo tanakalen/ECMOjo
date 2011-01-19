@@ -1,6 +1,6 @@
 # Scenario Information
-name = Oxygenator Rupture
-desc = Description of events that occur with a oxygenator rupture.
+name = 人工肺の破裂
+desc = 人工肺破裂に伴って起こるイベントについての説明
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,9 +10,9 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = TERROR TIME due to a ruptured membrane!
+tutorial-item1-text = 膜が破裂したための"恐怖の時間"！
 tutorial-item1-trigger = N/A
-tutorial-item2-text = Next time change the oxygenator before it is too late!
+tutorial-item2-text = 次回は遅くならないうちに人工肺を交換しましょう！
 tutorial-item2-trigger = N/A
 
 # Baseline Values

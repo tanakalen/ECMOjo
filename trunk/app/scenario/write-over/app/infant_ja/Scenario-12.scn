@@ -1,6 +1,6 @@
 # Scenario Information
-name = Accidental Arterial Decannulation
-desc = 5% Terror Time - One of four situations that you should recognize for coming off of ECMO emergently.
+name = 動脈カニューラの事故抜去
+desc = 5%の恐怖の時間 - 緊急にECMOを停止しなければならない4つの状況のひとつ
 
 # Scenario Parameters
 scenario-ecmo-mode = VA
@@ -10,21 +10,21 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = The bedside nurse is performing her patient assessment and you notice that her ID badge is under the arterial cannula.  She raises her head and her badge catches and pulls on the arterial cannula.
+tutorial-item1-text = ベッドサイドの看護士が患者評価をしていて、あなたは彼女のIDバッジが動脈カニューラの下にあるのに気がつきました。彼女は頭を上げた途端にバッジで動脈カニューラを抜去してしまいました。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = Notice the changes in physiologic parameters.
+tutorial-item2-text = 生理学的パラメーターの変化に気が付いてください。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = You can't handle this one by yourself.\n\nCall for help! ECMOism: ECMO is a team effort.
+tutorial-item3-text = あなた一人ではこの状況には対処できません。つまり、助けを呼ぶ。ECMOイズム: ECMOはチームで行うものです。
 tutorial-item3-trigger = N/A
-tutorial-item4-text = At the bedside you would apply pressure to the cannulation site.
+tutorial-item4-text = ベッドサイドでは、あなたはカニュレーション部位を圧迫します。
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Clamp the circuit!\n  Roller Pump: Clamp Venous, Unclamp Bridge, Clamp Arterial\n  Centrifugal: Clamp Arterial, Unclamp Bridge, Clamp Venous
+tutorial-item5-text = 回路をクランプします。\n ローラーポンプ: 脱血側回路をクランプして、ブリッジのクランプをはずして、最後に送血側回路をクランプします。\n　遠心ポンプ: 送血側回路をクランプして、ブリッジのクランプをはずして最後に脱血側回路をクランプします。
 tutorial-item5-trigger = Action:Tube:Clamped:true
-tutorial-item6-text = Increase the ventilator settings for additional support in respiratory cases. Click the [Emergency Vent] button.
+tutorial-item6-text = 呼吸器疾患ではさらに呼吸器条件を上げます。[Emergency Vent]ボタンを押してください。
 tutorial-item6-trigger = Action:Ventilator:Emergency:on
-tutorial-item7-text = Resuscitate the patient as needed.
+tutorial-item7-text = 必要に応じて患者を蘇生してください。
 tutorial-item7-trigger = N/A
-tutorial-item8-text = Don't forget to call the surgeon to replace the cannula.
+tutorial-item8-text = カニューラを再挿入するために外科医を呼ぶのを忘れないで下さい。
 tutorial-item8-trigger = N/A
 
 # Baseline Values

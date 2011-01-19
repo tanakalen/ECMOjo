@@ -1,6 +1,6 @@
 # Scenario Information
-name = Air in the Venous Limb
-desc = Actions to take when air is seen in the venous limb of the circuit.
+name = 脱血側への空気混入
+desc = ECMO回路の脱血側に空気混入を見たときにとるべき行動。
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,19 +10,19 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = While performing your hourly circuit check you notice some air bubbles streaming down the venous side of the circuit.
+tutorial-item1-text = 毎時の回路チェック施行中に気泡がECMO回路の脱血側を流れていくのに気付きました。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = What decision do you need to make immediately?
+tutorial-item2-text = すぐに何をしなければなりませんか。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Is this a "Terror Time" moment? Or is there time to triage the situation and get coffee?
+tutorial-item3-text = これは"恐怖の時間"の瞬間ですか？あるいは状況を判断してコーヒーを買いにいく時間があるでしょうか。
 tutorial-item3-trigger = N/A
-tutorial-item4-text = Let's pretend that there isn't much venous air. What sites are the most likely sources for venous air?
+tutorial-item4-text = さて、脱血管中の空気が大した量でないとしましょう。脱血側の空気混入の原因と最もなりやす場所はどの部位ですか。
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Most likely sources for venous air are: a) entrainment air from venous catheter, b) open or cracked stopcock on the venous side and c) air introduced from medications infusing into the patient via a central venous line.
+tutorial-item5-text = 脱血側の空気混入の最もなりやすい原因は: a) 静脈カテーテルからの空気の引き込み、b) 脱血側のストップコックが開いている、あるいは破損、c) 中心静脈ラインからの注入薬剤からの空気混入
 tutorial-item5-trigger = N/A
-tutorial-item6-text = After you have made sure the patient is safe, remove air from system.
+tutorial-item6-text = 患者の安全を確認した後、システムから空気を除いてください。
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Identify and fix the cause, if possible.
+tutorial-item7-text = 可能な限り問題を同定して解決して下さい。
 tutorial-item7-trigger = N/A
 
 # Baseline Values

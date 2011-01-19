@@ -1,6 +1,6 @@
 # Scenario Information
-name = Sweep Gases 1
-desc = Adjusting the FiO2 delivered to the oxygenator.
+name = スウィープガス 1
+desc = 人工肺への供給酸素濃度（FiO2）を調節します。
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,25 +10,25 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Click on the gas blender.
+tutorial-item1-text = ガス混合器（ブレンダー）をクリックして下さい。
 tutorial-item1-trigger = Action:View:OxygenatorComponent
-tutorial-item2-text = This device controls the gases delivered to the oxygenator.
+tutorial-item2-text = この装置は人工肺に供給されるガスをコントロールします。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Increase the level of oxygen to the membrane.
+tutorial-item3-text = 膜への酸素レベルを上げてください。
 tutorial-item3-trigger = Action:Oxy:fiO2:>0.52
-tutorial-item4-text = Notice the changes on the CDI monitor's post membrane values?
+tutorial-item4-text = 膜より後で測定しているCDIモニタ値の変化に気づきましたか。
 tutorial-item4-trigger = N/A
-tutorial-item5-text = The CDI PaO2 increased.
+tutorial-item5-text = 動脈中酸素分圧PaO2が上昇しました。
 tutorial-item5-trigger = N/A
-tutorial-item6-text = The CDI PO2 increased, but the CDI sO2 remains at 100%. The oxygen content CaO2 of the blood exiting the membrane remains the same. Why?
+tutorial-item6-text = 酸素分圧PO2が上昇しましたが、酸素飽和度sO2は100%のままです。膜に存在する血液の動脈中酸素 CaO2 は（ほぼ）同じです。なぜでしょう？
 tutorial-item6-trigger = N/A
-tutorial-item7-text = The CaO2 is a function of Hgb concentration and oxygen saturation.  If the Hgb concentration stays the same, and oxygen saturation remains 100%, then the oxygen content should stay the same.
+tutorial-item7-text = 動脈血中酸素含有量CaO2は（Hgbが十分に高いときにはほぼ）Hgb濃度と酸素飽和度を変数とする関数です。（極度の貧血でないときには）Hgb濃度が同じであって、かつ酸素飽和度が100%であれば、酸素含有量は（ほぼ）同じです。
 tutorial-item7-trigger = N/A
-tutorial-item8-text = What happens to the patient's saturations?
+tutorial-item8-text = 患者の酸素飽和度には何が起こりますか?
 tutorial-item8-trigger = N/A
-tutorial-item9-text = Select the best answer to increase oxygen delivery? a) Increasing sweep gas flow to the oxygenator; b) increasing vent settings; or c) changing pump flow?
+tutorial-item9-text = 患者への酸素供給量を増加させるもっともよい答えを選んでください。a) 人工肺へのスウィープガス流量を増やす。 b) 呼吸器条件を上げる。 c) ポンプ流量を変える。
 tutorial-item9-trigger = N/A
-tutorial-item10-text = Oxygen delivery is a function of cardiac output and CaO2. With VA ECMO, turn up the flow. Same with VV ECMO, except watch out for recirculation (more later).
+tutorial-item10-text = 酸素供給量は心拍出量と動脈血中酸素含有量CaO2を変数とする関数です。VA（静脈ー動脈） ECMOではポンプ流量をあげることです。 VV（静脈ー静脈） ECMOでも再循環（後出）に気を付ける以外は同様です。
 tutorial-item10-trigger = N/A
 
 # Baseline Values

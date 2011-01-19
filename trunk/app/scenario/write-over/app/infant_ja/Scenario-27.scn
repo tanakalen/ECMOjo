@@ -1,6 +1,6 @@
 # Scenario Information
-name = High Post-Membrane Pressure
-desc = Identifying the cause of a high post-membrane pressure.
+name = 送血圧の上昇
+desc = 送血圧上昇の原因を特定する
 
 # Scenario Parameters
 scenario-ecmo-mode = VA
@@ -10,29 +10,29 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = You are performing your hourly circuit check and with your keen sight you notice that the post-membrane pressure has risen.
+tutorial-item1-text = あなたは回路の定期チェックで送血圧が上昇していることに気がつきました。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = What would you check?
+tutorial-item2-text = 何を調べますか？
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Check downstream (forward toward patient) from monitoring site.
+tutorial-item3-text = 送血圧のモニタリング部位から(患者に向かって)下流を調べます。
 tutorial-item3-trigger = N/A
-tutorial-item4-text = Check arterial cannula for kink.
+tutorial-item4-text = 動脈カニューラに折れ曲がりがないかどうか調べましょう。
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Select the [IMG] button.
+tutorial-item5-text = [IMG]ボタンを選んでください。
 tutorial-item5-trigger = Action:View:LabTest:ImagingLabTest
-tutorial-item6-text = Check the X-Ray.
+tutorial-item6-text = 胸部レントゲンを確認してください。
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Check arterial cannula's position.
+tutorial-item7-text = 動脈カニューラの位置異常がないかどうか調べましょう。
 tutorial-item7-trigger = N/A
-tutorial-item8-text = If the patient is active, the catheter may have changed position. Consider sedation.
+tutorial-item8-text = もし患者に体動がみられる場合は、カテーテルの位置が変わる可能性があります。鎮静を考慮してください。
 tutorial-item8-trigger = N/A
-tutorial-item9-text = Click on the patient, then the [Check Sedation] button.
+tutorial-item9-text = 患者をクリックして、その後[Check Sedation]ボタンをクリックしてください。
 tutorial-item9-trigger = Action:Patient:SEDATION
-tutorial-item10-text = Click patient, then the [Check Cannula Site] button.
+tutorial-item10-text = 患者をクリックして、その後[Check Cannula Site]ボタンをクリックしてください。
 tutorial-item10-trigger = Action:Patient:CANNULA_SITE
-tutorial-item11-text = In VA ECMO, a high afterload from hypertension can also increase post membrane pressures. Consider treatment with an antihypertensive.
+tutorial-item11-text = VA―ECMOでは、高血圧により後負荷が高くなると、送血圧が上昇します。降圧薬による治療を考慮してください。
 tutorial-item11-trigger = N/A
-tutorial-item12-text = Isolated high post-membrane pressure suggests a problem downstream (forward toward patient) from monitoring site.
+tutorial-item12-text = 送血圧のみの上昇はモニタリング部位から患者側へ向かって下流に原因があることを示唆します。
 tutorial-item12-trigger = N/A
 
 # Baseline Values

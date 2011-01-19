@@ -1,6 +1,6 @@
 # Scenario Information
-name = Circuit Failure
-desc = Events associated with a circuit failure.
+name = 回路不全
+desc = ECMOの回路不全に関連するイベント
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,33 +10,33 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = One of the purposes of a circuit check is to look for nasty clots growing silently in the circuit.
+tutorial-item1-text = 回路チェックの目的のひとつは、ECMO回路内でひっそりと大きくなっている、意地の悪い血栓を捜すことです。
 tutorial-item1-trigger = N/A
-tutorial-item2-text = Where are the common areas for these clots to form?
+tutorial-item2-text = 血栓のできやすい場所はどこでしょう。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Clots can form at the oxygenator, heat exchanger (if applicable), connectors and bridge.
+tutorial-item3-text = 人工肺、熱交換器（あれば）、コネクター、ブリッジに血栓はできます。
 tutorial-item3-trigger = N/A
-tutorial-item4-text = Let's review the HEME and ACT lab values. Click on the [HEME] lab button.
+tutorial-item4-text = 血算とACTの値を確認してみましょう。 [HEME]検査ボタンをクリックして下さい。
 tutorial-item4-trigger = Action:View:LabTest:HematologyLabTest
-tutorial-item5-text = Note the decreases in platelets as well as fibrinogen and the increases in ACT, PTT, PT.
+tutorial-item5-text = フィブリノゲンと血小板が減っていて、ACTやPTT、PT値が伸びていることに着目してください。
 tutorial-item5-trigger = N/A
-tutorial-item6-text = You have given blood products but your lab values do not correct.
+tutorial-item6-text = 血液製剤を投与しましたが、検査値は改善しません。
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Looks like the circuit is consuming blood products. What would you recommend at this time?
+tutorial-item7-text = どうやら回路が血液製剤を消費しているようです。この時点でどうしますか。
 tutorial-item7-trigger = N/A
-tutorial-item8-text = Consider changing the circuit. Select the [Circuit Check] button and and click on the [Change Circuit].
+tutorial-item8-text = ECMO回路の交換を考慮しましょう。 [Circuit Check]ボタンを選んで、[Change Circuit]ボタンをクリックして下さい。
 tutorial-item8-trigger = Action:Tube:replace
-tutorial-item9-text = Go ahead and increase the flow as directed to at least 600mL/min.
+tutorial-item9-text = 指示の通り、ECMO流量を600mL/min以上に増加させてください。
 tutorial-item9-trigger = Action:Pump:flow:>0.599
-tutorial-item10-text = If your assessment was correct, the lab values will normalize.
+tutorial-item10-text = あなたの評価が正しければ、検査値は正常化するはずです。
 tutorial-item10-trigger = N/A
-tutorial-item11-text = Let's re-review the HEME lab values. Click on the [HEME] lab button. Then the [Lab] button.
+tutorial-item11-text = 血算を再検しましょう。[HEME]検査ボタンをクリックして下さい。そして [Lab]ボタンをクリックしましょう。
 tutorial-item11-trigger = Action:View:LabTest:HematologyLabTest
-tutorial-item12-text = Note the improvement in the platelets, fibrinogen, and PTT.
+tutorial-item12-text = 血小板、フィブリノゲン、PTT値が改善していることに着目してください。
 tutorial-item12-trigger = N/A
-tutorial-item13-text = Let's re-review the ACT lab value. Click on the [ACT] lab button. Then the [Lab] button.
+tutorial-item13-text = ACT値を再検しましょう。[ACT]検査ボタンをクリックして下さい。 そして[Lab]ボタンをクリックしましょう。
 tutorial-item13-trigger = Action:ACTRequest
-tutorial-item14-text = Note the improvement in the ACT.
+tutorial-item14-text = ACT値が改善していることに気が付きますでしょうか。
 tutorial-item14-trigger = N/A
 
 

@@ -1,8 +1,8 @@
 # Scenario Information
-name = Simulation 2
-desc = ECMO hour 52 (d2) for 5 kg LGA infant with persistent pulmonary hypertension. No change in pulmonary function, remaining poor. Cardiac function is normal. Infant is awake and responsive, but well sedated. The baby received a platelet transfusion and a post transfusion lasix dose two hours ago. Morning labs were just sent.
-info-success = This was a simulation of bleeding at a surgical site. Parameters suggesting a volume related problem include lower CVP, lower BP, and higher HR.\n\nCongratulations. You have detected the source of the problem.  Identifying the bleeding and applying personal point pressure is the right first step.  Due to the blood loss and hemodynamic changes, volume replacement is necessary to correct the hypotension.  If necessary, calling the the surgeon is also recommended.
-info-failure = This was a simulation of bleeding at a surgical site. Parameters suggesting a volume related problem include lower CVP, lower BP, and higher HR.\n\nIdentifying the source of the bleeding and applying personal point pressure is the correct first step.  Due to the blood loss and hemodynamic changes, volume replacement is also necessary to correct the hypovolemia.  In the ICU, calling the surgeon would also be recommended.
+name = シミュレーション 2
+desc = 遷延性肺高血圧の診断の体重5 kgの不当過大児にECMOを開始して52時間（約2日）が経過しました。 肺機能に変化はなく、悪い状態が続いています。心機能は正常です。児は覚醒し反応しますが、よく鎮静されています。血小板輸血とその後のラシックスを2時間前に投与されました。朝の定時検査は今送った所です。
+info-success = これはカニュレーション部位の出血のシミュレーションです。パラメーターは低いCVP、低血圧、頻脈など血管内容量に関連した問題を示唆しています。\n\nおめでとうございます！あなたは見事に問題の原因を突き止めました。出血を同定して、用手的に圧迫することは正しい手順の第一歩です。出血と血行動態の変化により、大量の容量負荷を行い、低血圧を治療することが必要です。 必要あれば、外科医を呼ぶことも求められます。
+info-failure = これはカニュレーション部位の出血のシミュレーションです。パラメーターは低いCVP、低血圧、頻脈など血管内容量に関連した問題を示唆しています。\n\n出血を同定して、用手的に圧迫することは正しい手順の第一歩です。出血と血行動態の変化により、大量の容量負荷を行い、低血圧を治療することも必要です。 ICUでは、外科医を呼ぶことも求められます。
 
 # Scenario Parameters
 scenario-ecmo-mode = *

@@ -1,6 +1,6 @@
 # Scenario Information
-name = 個人指導-概観 
-desc = ECMOjoの概観のための個人指導を動かしなさい。 
+name = チュートリアル　－概要
+desc = ECMOジョーの概要を理解するためにチュートリアルを始めましょう。
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,19 +10,19 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = ECMOjoの概観への歓迎。 
+tutorial-item1-text = ECMOジョーへようこそ
 tutorial-item1-trigger = N/A
-tutorial-item2-text = ECMO回路に接続される患者はスクリーンの左下のコーナーで示されている。 
+tutorial-item2-text = このECMOに接続されている患者は画面の左下に表示されています。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = 換気装置の設定、生理学的なモニターおよびCDIのモニターは赤ん坊の上でちょうど示されている。
+tutorial-item3-text = 呼吸器の設定、バイタルサイン、 持続血液ガスモニタは患児のすぐ上に表示されています。
 tutorial-item3-trigger = N/A
-tutorial-item4-text = 管は権利のECMO装置に患者を接続する。
+tutorial-item4-text = 患児に接続されているECMOの機器はその右側に表示されています。
 tutorial-item4-trigger = N/A
-tutorial-item5-text = 主要なECMOの部品は右側で取付けられる: oxygenator、ヒーター、ポンプおよびガス流量計。
+tutorial-item5-text = ECMOの主要な部分である、人工肺、加温器、ポンプ、ガス流量計はその右端にあります。
 tutorial-item5-trigger = N/A
-tutorial-item6-text = 問題がある時はいつでも点滅させ始める右へ警報表示燈がある。
+tutorial-item6-text = 何か問題があれば点灯するアラームランプが右上端にあります。
 tutorial-item6-trigger = N/A
-tutorial-item7-text = 以下の事項に注意して下さい:、[Esc]あなたのキーボードで押すことによってのシナリオ出ることができる。
+tutorial-item7-text = あなたのキーボードの[Esc]を押すことで、いつでもシナリオを中止することができます。
 tutorial-item7-trigger = N/A
 
 # Baseline Values

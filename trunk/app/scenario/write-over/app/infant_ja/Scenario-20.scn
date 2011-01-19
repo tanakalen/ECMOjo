@@ -1,6 +1,6 @@
 # Scenario Information
-name = VV ECMO Pump Flow
-desc = Physiologic and ECMO variables impacted by VV pump flow.
+name = VV （静脈－静脈）ECMOポンプ流量
+desc = VVポンプ流量が影響をあたえる生理学的およびECMOの値
 
 # Scenario Parameters
 scenario-ecmo-mode = VV
@@ -10,27 +10,27 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Click on the pump control.
+tutorial-item1-text = ポンプ制御器をクリックして下さい。
 tutorial-item1-trigger = Action:View:PumpComponent
-tutorial-item2-text = Notice the pump is rotating. To simplify the simulation, the pump control panel only shows the flow rate without RPM.
+tutorial-item2-text = ポンプが回っていることに気付きますね。このプログラムを単純化するために、ポンプ制御盤はRPM（回転毎分）なしで流量のみを示しています。
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Turn the knob to decrease the pump flow by 50 ml to approx 0.55.
+tutorial-item3-text = ポンプ流量を50ml減らして約0.55にするためにノブを回してください。
 tutorial-item3-trigger = Action:Pump:flow:<0.56
-tutorial-item4-text = What changes do you see when the pump flow is decreased by 50 ml?
+tutorial-item4-text = ポンプ流量を50ml減らしてどんな変化に気付きましたか？
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Some of the changes: a) blood pressure minimal change, b) P1 minimal change, c) P2/P3 no change, d) SaO2 decreases and e) SvO2 decreases.
+tutorial-item5-text = 変化のうち: a) 血圧の多少の変化、 b) P1が最小限の変化、 c) P2/P3は変化なし、d) 動脈血中酸素飽和度SaO2が減少、 e) 静脈血中酸素穂和戸SvO2が減少
 tutorial-item5-trigger = N/A
-tutorial-item6-text = On VV, oxygen delivery is affected by flow. Less flow, less oxygen delivery. More flow, more oxygen delivery, but only up to a certain point (more later).
+tutorial-item6-text = VV ECMOでは、酸素供給量はECMO流量に影響を受けます。少ない流用では、より少ない酸素供給量となります。となると多い流量では、より多くの酸素供給となるはずですが、実際にはある程度以上の流量ではそうではありません（後述）。 
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Turn the knob to increase the pump flow by 200 ml to approx 0.75.
+tutorial-item7-text = ノブを回してポンプ流量を200 ml増やして約0.75にして下さい。
 tutorial-item7-trigger = Action:Pump:flow:>0.75
-tutorial-item8-text = What changes do you see when the pump flow is increased significantly?
+tutorial-item8-text = ポンプ流量を著しく増やした結果、何が起こっていますか。
 tutorial-item8-trigger = N/A
-tutorial-item9-text = Some of the changes: a) blood pressure minimal change, b) P1 becomes more negative, c) P2/P3 small increases, d) SaO2 decreases and e) SvO2 increases.
+tutorial-item9-text = いくつかの変化は以下のようです: a) 血圧の最小限の変化、 b) P1でより陰圧、 c) P2/P3でわずかな圧上昇、 d) 動脈血中酸素飽和度SaO2の減少、e) 静脈血中酸素飽和度SvO2の上昇
 tutorial-item9-trigger = N/A
-tutorial-item10-text = What does this suggest?
+tutorial-item10-text = これはどういうことですか？
 tutorial-item10-trigger = N/A
-tutorial-item11-text = Recirculation!
+tutorial-item11-text =　再還流（送血管から送られた血液が体を通らずに一部そのまま脱血管に入るためにECMO流量増加が患者への酸素供給につながらずむしろ減少すること）です！
 tutorial-item11-trigger = N/A
 
 # Baseline Values
