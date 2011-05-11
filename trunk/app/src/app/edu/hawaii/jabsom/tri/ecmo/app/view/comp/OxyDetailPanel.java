@@ -12,6 +12,7 @@ import java.text.DecimalFormat;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
+import king.lib.util.Translator;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.OxygenatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
@@ -297,9 +298,10 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     g.drawString(text, 54, 130);
     
 
-    g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
+    g.setFont(g.getFont().deriveFont(Font.BOLD, 15f));
     value = component.getTotalSweep();
-    text = "Sweep: " + totalSweepTenthFormatter.format(value);
+    text = Translator.getString("text.Sweep[i18n]: Sweep") + ": "
+      + totalSweepTenthFormatter.format(value);
     g.drawString(text, 54, 150);
   }
   
