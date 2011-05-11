@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 import king.lib.access.ImageLoader;
+import king.lib.util.Translator;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 
 /**
@@ -41,7 +42,8 @@ public class VentilatorDetailPanel extends DetailPanel {
     setOpaque(false);
     
     // add title
-    JLabel titleLabel = new JLabel("Ventilator Settings");
+    JLabel titleLabel = new JLabel(Translator.getString("title.VentilatorSettings[i18n]: " 
+        + "Ventilator Settings"));
     titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
@@ -49,7 +51,8 @@ public class VentilatorDetailPanel extends DetailPanel {
 
     // show text
     JTextArea infoLabel = new JTextArea();
-    infoLabel.setText("You are advised not to change the Ventilator Settings.");
+    infoLabel.setText(Translator.getString("text.VentilatorSettings[i18n]: " 
+        + "You are advised not to change the Ventilator Settings."));
     infoLabel.setOpaque(false);
     infoLabel.setFont(infoLabel.getFont().deriveFont(Font.PLAIN, 14f));
     infoLabel.setEditable(false);
