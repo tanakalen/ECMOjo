@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import king.lib.access.ImageLoader;
+import king.lib.util.Translator;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -56,7 +57,7 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
     this.component = component;
     
     // add title
-    JLabel titleLabel = new JLabel("Hematology");
+    JLabel titleLabel = new JLabel(Translator.getString("title.Hematology[i18n]: Hematology"));
     titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
