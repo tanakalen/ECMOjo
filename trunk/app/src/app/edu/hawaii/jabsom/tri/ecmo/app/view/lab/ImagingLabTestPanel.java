@@ -30,6 +30,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import king.lib.access.ImageLoader;
+import king.lib.util.Translator;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -74,7 +75,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
     this.component = component;
     
     // add title
-    JLabel titleLabel = new JLabel("Imaging");
+    JLabel titleLabel = new JLabel(Translator.getString("title.Imaging[i18n]: Imaging"));
     titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
