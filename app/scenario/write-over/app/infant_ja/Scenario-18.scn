@@ -10,9 +10,9 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = 加温制御器をクリックして下さい。
+tutorial-item1-text = 加温制御器（加温器）をクリックして下さい。
 tutorial-item1-trigger = Action:View:HeaterComponent
-tutorial-item2-text = 加温ユニットは正常体温を保つ上ｔでとても有効な方法です。
+tutorial-item2-text = 加温ユニットは正常体温を保つ上でとても有効な方法です。
 tutorial-item2-trigger = N/A
 tutorial-item3-text = チュービングの表面積が大きいため、もしも加温ユニットが正常に作動しないと、たくさんの熱が奪われます。
 tutorial-item3-trigger = N/A
@@ -22,7 +22,7 @@ tutorial-item5-text = 臨床的にはDIC（播種性凝固障害）を呈しま�
 tutorial-item5-trigger = N/A
 tutorial-item6-text = 加温器の故障を疑うのであれば、配水管の接続、電源コード接続、設定温をチェックして下さい。 
 tutorial-item6-trigger = N/A
-tutorial-item7-text = もしもすべてチェックに問題なければ、加温ユニットは故障している可能性があります。加温器を交換しましょう。すなわち、このプログラムでは [Replace Heater] ボタンを押します。
+tutorial-item7-text = もしもすべてチェックに問題なければ、加温ユニットは故障している可能性があります。加温器を交換しましょう。すなわち、このプログラムでは [加温器交換] ボタンを押します。
 tutorial-item7-trigger = Action:Heater:replace
 tutorial-item8-text = 故障した加温器を交換しました。患者体温が正常に戻ります。
 tutorial-item8-trigger = N/A
