@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
+import king.lib.util.Translator;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.KillAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PressureMonitorAction;
@@ -30,7 +31,9 @@ public class PressureMonitorDetailPanel extends DetailPanel implements Runnable 
 
   /** The detail image. */
   private Image detailImage 
-    = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-PressureMonitor.png");
+    = ImageLoader.getInstance().getImage(
+        Translator.getString(
+          "image.DetailPressureMonitor[i18n]: conf/image/interface/game/Detail-PressureMonitor.png"));
 
   /** The red alert image. */
   private Image redAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-RedMedium.png");
