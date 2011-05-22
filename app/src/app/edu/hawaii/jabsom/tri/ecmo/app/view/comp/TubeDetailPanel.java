@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 
 import king.lib.access.ImageLoader;
+import king.lib.util.Translator;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.CircuitChangeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
@@ -30,7 +31,8 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
 public class TubeDetailPanel extends DetailPanel implements Runnable {
 
   /** The detail image. */
-  private Image detailImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Tube.png");
+  private Image detailImage = ImageLoader.getInstance().getImage(
+      Translator.getString("image.DetailTube[i18n]: conf/image/interface/game/Detail-Tube.png"));
   
   /** The info label. */
   private JLabel infoLabel;
