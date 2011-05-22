@@ -22,6 +22,7 @@ import java.awt.Image;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
+import king.lib.util.Translator;
 
 /**
  * The manager panel. 
@@ -32,7 +33,8 @@ import king.lib.out.Error;
 public class ManagerPanel extends JPanel {
 
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/game/Base.png");
+  private Image background = ImageLoader.getInstance().getImage(
+      Translator.getString("image.base[i18n]: conf/image/interface/game/Base.png"));
 
   /** The current detail panel. null for none. */
   private DetailPanel detailPanel;
