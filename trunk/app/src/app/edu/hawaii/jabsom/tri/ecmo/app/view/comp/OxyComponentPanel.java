@@ -90,12 +90,12 @@ public class OxyComponentPanel extends ComponentPanel implements Runnable {
     
     // load images
     if (component.getOxyType() == OxyType.QUADROX_D) {
-      oxyImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-QuadroxDOxigenator.png");
-      brokenImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-QuadroxDOxigenatorBroken.png");
+      oxyImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-QuadroxDOxygenator.png");
+      brokenImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-QuadroxDOxygenatorBroken.png");
     }
     else {
-      oxyImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-SciMedOxigenator.png");
-      brokenImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-SciMedOxigenatorBroken.png");
+      oxyImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-SciMedOxygenator.png");
+      brokenImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Comp-SciMedOxygenatorBroken.png");
     }
     
     // setup blood dripping

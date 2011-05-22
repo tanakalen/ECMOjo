@@ -29,7 +29,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 public class OxyDetailPanel extends DetailPanel implements Runnable {
 
   /** The detail image. */
-  private Image detailImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Oxigenator.png");
+  private Image detailImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Oxygenator.png");
   
   /** The red alert image. */
   private Image redAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-RedMedium.png");

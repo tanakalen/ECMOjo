@@ -99,7 +99,7 @@ public class OxygenatorAction extends Action {
    */
   @Override
   public void execute(Game game) {
-    // sets the oxigenator
+    // sets the oxygenator
     OxygenatorComponent component = (OxygenatorComponent)game.getEquipment().getComponent(OxygenatorComponent.class);
     if (totalSweepInteger != -1) {
       component.setTotalSweepInteger(totalSweepInteger);
@@ -117,6 +117,6 @@ public class OxygenatorAction extends Action {
    */
   @Override
   public String toString() {
-    return "Action:Oxigenator:{" + totalSweepInteger + ", " + totalSweepDecimal + ", " + fiO2 + "}";
+    return "Action:Oxygenator:{" + totalSweepInteger + ", " + totalSweepDecimal + ", " + fiO2 + "}";
   }
 }
