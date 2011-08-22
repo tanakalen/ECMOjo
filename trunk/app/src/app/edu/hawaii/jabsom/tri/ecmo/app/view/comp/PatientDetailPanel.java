@@ -14,8 +14,8 @@ import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase;
-import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase.DialogOption;
-import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase.DialogType;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase.DialogResult;
+import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase.*;
 
 /**
  * The detail panel. 
@@ -27,7 +27,6 @@ public class PatientDetailPanel extends DetailPanel {
 
   /** The detail image. */
   private Image detailImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Detail-Patient.png");
-  
   
   /**
    * Constructor for panel.
@@ -45,7 +44,7 @@ public class PatientDetailPanel extends DetailPanel {
     // set layout and look
     setLayout(null);
     setOpaque(false);
-
+    
     // patient buttons and actions
     Image suctionETTNormalImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETT.png");
@@ -59,23 +58,27 @@ public class PatientDetailPanel extends DetailPanel {
       public void actionPerformed(ActionEvent event) {
         boolean problem = tubeComponent.isSuctionETT();
         
-        // send the action
-        PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.SUCTION_ETT);
-        notifyActionListeners(action);
-            
         // output dialog
         if (problem) {
           // fixed
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
-              , "Good catch! The ETT suction was broken and has been fixed.");
+              , "Good catch! The ETT suction was broken and has been fixed.",
+              new DialogListener() {
+                public void handleResult(DialogResult result) {
+                  handlePatientAction(PatientAction.Check.SUCTION_ETT);
+                }
+          });
         }
         else {
           // no problem = nothing done
-          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-              , "No Problem Detected"
-              , "No problem has been detected.");
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK,
+              "No Problem Detected", "No problem has been detected.",
+              new DialogListener() {
+                public void handleResult(DialogResult result) {
+                  handlePatientAction(PatientAction.Check.SUCTION_ETT);
+                }      
+          });
         }
       }
     });
@@ -95,23 +98,27 @@ public class PatientDetailPanel extends DetailPanel {
       public void actionPerformed(ActionEvent event) {
         boolean problem = tubeComponent.isBrokenCannula();
         
-        // send the action
-        PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.CANNULA_SITE);
-        notifyActionListeners(action);
-            
         // output dialog
         if (problem) {
           // fixed
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
-              , "Good catch! The cannula site was kinked and has been fixed.");
+              , "Good catch! The cannula site was kinked and has been fixed.",
+              new DialogListener() {
+                public void handleResult(DialogResult result) {
+                  handlePatientAction(PatientAction.Check.CANNULA_SITE);
+                }
+          });
         }
         else {
           // no problem = nothing done
-          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-              , "No Problem Detected"
-              , "No problem has been detected.");
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK,
+              "No Problem Detected", "No problem has been detected.",
+              new DialogListener() {
+                public void handleResult(DialogResult result) {
+                  handlePatientAction(PatientAction.Check.CANNULA_SITE);
+                }
+          });
         }
       }
     });
@@ -131,23 +138,27 @@ public class PatientDetailPanel extends DetailPanel {
       public void actionPerformed(ActionEvent event) {
         boolean problem = patient.isBleeding();
         
-        // send the action
-        PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.BLEEDING);
-        notifyActionListeners(action);
-            
         // output dialog
         if (problem) {
           // fixed
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
-              , "Good catch! The bleeding has been stopped.");
+              , "Good catch! The bleeding has been stopped.",
+              new DialogListener() {
+                public void handleResult(DialogResult result) {
+                  handlePatientAction(PatientAction.Check.BLEEDING);
+                }
+          });
         }
         else {
           // no problem = nothing done
-          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-              , "No Problem Detected"
-              , "No problem has been detected.");
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK,
+              "No Problem Detected", "No problem has been detected.",
+              new DialogListener() {
+                public void handleResult(DialogResult result) {
+                  handlePatientAction(PatientAction.Check.BLEEDING);
+                }
+          });
         }
       }
     });
@@ -167,23 +178,27 @@ public class PatientDetailPanel extends DetailPanel {
       public void actionPerformed(ActionEvent event) {
         boolean problem = tubeComponent.isBrokenETT();
         
-        // send the action
-        PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.URINE_OUTPUT);
-        notifyActionListeners(action);
-            
         // output dialog
         if (problem) {
           // fixed
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
               , "Problem Fixed"
-              , "Good catch! The urine output has been fixed.");
+              , "Good catch! The urine output has been fixed.",
+              new DialogListener() {
+                public void handleResult(DialogResult result) {
+                  handlePatientAction(PatientAction.Check.URINE_OUTPUT);
+                }
+          });
         }
         else {
           // no problem = nothing done
-          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-              , "No Problem Detected"
-              , "No problem has been detected.");
+          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK,
+              "No Problem Detected", "No problem has been detected.",
+              new DialogListener() {
+              public void handleResult(DialogResult result) {
+                handlePatientAction(PatientAction.Check.URINE_OUTPUT);
+              }
+          });
         }
       }
     });
@@ -201,15 +216,15 @@ public class PatientDetailPanel extends DetailPanel {
       = new ImageButton(checkDiaperNormalImage, checkDiaperRolloverImage, checkDiaperSelectedImage);    
     checkDiaperButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        // send the action
-        PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.DIAPER);
-        notifyActionListeners(action);
-            
         // output dialog
         DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
             , "Strange Smell"
-            , "A unpleasant odor has been detected.");
+            , "A unpleasant odor has been detected.",
+            new DialogListener() {
+              public void handleResult(DialogResult result) {
+                handlePatientAction(PatientAction.Check.DIAPER);
+              }
+        });
       }
     });
     checkDiaperButton.setLocation(22, 156);
@@ -228,23 +243,28 @@ public class PatientDetailPanel extends DetailPanel {
       public void actionPerformed(ActionEvent event) {
         boolean sedated = patient.isSedated();
         
-        // send the action
-        PatientAction action = new PatientAction();
-        action.setCheck(PatientAction.Check.SEDATION);
-        notifyActionListeners(action);
-            
         // output dialog
         if (!sedated) {
           // not sedated!
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.WARNING, DialogOption.OK
               , "Not Sedated"
-              , "The patient is moving, wiggling and breathing.");
+              , "The patient is moving, wiggling and breathing.",
+              new DialogListener() {
+                public void handleResult(DialogResult result) {
+                  handlePatientAction(PatientAction.Check.SEDATION);
+                }
+          });
         }
         else {
           // the patient is sleeping
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
               , "Sedated"
-              , "The patient is fully sedated.");
+              , "The patient is fully sedated.",
+              new DialogListener() {
+                public void handleResult(DialogResult result) {
+                  handlePatientAction(PatientAction.Check.SEDATION);
+                }
+          });
         }
       }
     });
@@ -258,6 +278,17 @@ public class PatientDetailPanel extends DetailPanel {
    */
   public void handleUpdate() {
     repaint();
+  }
+  
+  /**
+   * Called when dialog result occurs. Handles patient actions.
+   * 
+   * @param check PatientAction Enum item for goal check.
+   */
+  private void handlePatientAction(PatientAction.Check check) {
+    PatientAction action = new PatientAction();
+    action.setCheck(check);
+    notifyActionListeners(action);    
   }
   
   /**

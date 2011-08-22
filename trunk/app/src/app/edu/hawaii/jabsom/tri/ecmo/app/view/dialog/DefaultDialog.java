@@ -52,11 +52,11 @@ public abstract class DefaultDialog extends AbstractDialog {
         g.setFont(g.getFont().deriveFont(Font.BOLD, 20f));
         g.drawString(getTitle(), 35, 27);
         
-        super.repaint(); // lt_add: initial fix for mac disorder works on non-mac
+        super.repaint();
       }
     };
     contentPane.setOpaque(true);
     setContentPane(contentPane);
-    //setComponentZOrder(contentPane, 1); // lt_add: fix for mac due to z-order issue, breaks non-mac
+    setComponentZOrder(contentPane, 1);
   }
 }
