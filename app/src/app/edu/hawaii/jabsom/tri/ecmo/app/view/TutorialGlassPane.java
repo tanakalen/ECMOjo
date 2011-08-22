@@ -15,7 +15,7 @@ import king.lib.access.ImageLoader;
 
 /**
  * The tutorial glass pane. It is transparent for MouseEvents, and respects
- * underneath component's cursors by default. It is also friedly for other users,
+ * underneath component's cursors by default. It is also friendly for other users,
  * if someone adds a mouseListener to this GlassPane or set a new cursor it will
  * respect them.
  * <p>
@@ -23,14 +23,13 @@ import king.lib.access.ImageLoader;
  * 
  * @author Christoph Aschwanden
  * @author Alexander Potochkin
- * @since Januarty 12, 2009
+ * @since January 12, 2009
  */
 public class TutorialGlassPane extends JPanel implements AWTEventListener {
   
   /** Our view cursor. */
   private Cursor cursor;
-  
-  
+    
   /**
    * The constructor.
    */
@@ -42,7 +41,7 @@ public class TutorialGlassPane extends JPanel implements AWTEventListener {
     
     // load our view cursor
     Image image = ImageLoader.getInstance().getImage("conf/cursor/view-cursor.gif");
-    cursor = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(13, 13), "View");  
+    cursor = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(13, 13), "View"); 
   }
 
   /**
@@ -85,8 +84,7 @@ public class TutorialGlassPane extends JPanel implements AWTEventListener {
       int y = (int)point.getY();
       if ((x < 293) || (x > 800) || (y < 2) || (y > 95)) {
         setCursor(cursor);
-        if (!(((x < 364) || (x > 538) || (y < 370) || (y > 399))         // can still click dialog buttons
-            && ((x < 304) || (x > 584) || (y < 95) || (y > 343)))) {   // can still click selected component
+        if ((x < 304) || (x > 584) || (y < 95) || (y > 343)) {   // can still click selected component
           if ((id == MouseEvent.MOUSE_CLICKED) || (id == MouseEvent.MOUSE_PRESSED) 
                                                || (id == MouseEvent.MOUSE_RELEASED)) {
             mouseEvent.consume();

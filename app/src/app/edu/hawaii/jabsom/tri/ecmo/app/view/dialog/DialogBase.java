@@ -257,8 +257,9 @@ public class DialogBase extends PanelDialog {
    * @param message  The dialog message.
    * @param listener  The listener.
    */
-  public static void showDialog(Component parent, DialogType dialogType, DialogOption dialogOption
-                              , String title, String message, DialogListener listener) {
+  public static void showDialog(Component parent, DialogType dialogType, 
+                                DialogOption dialogOption, String title, 
+                                String message, DialogListener listener) {
     DialogBase dialog = new DialogBase(parent, dialogType, dialogOption, title, message);
     if (listener != null) {  
       dialog.addDialogListener(listener);

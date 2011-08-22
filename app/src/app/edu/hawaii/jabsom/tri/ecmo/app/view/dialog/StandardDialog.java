@@ -2,6 +2,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.view.dialog;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
@@ -162,6 +163,8 @@ public class StandardDialog extends DefaultDialog {
       });
       buttonPanel.add(button);
     }
+    
+    setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
     
     // fix up size and location
     pack();
