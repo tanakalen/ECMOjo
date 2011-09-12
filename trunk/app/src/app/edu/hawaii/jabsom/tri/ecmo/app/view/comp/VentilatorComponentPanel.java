@@ -16,6 +16,7 @@ import javax.swing.JToggleButton;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
+import king.lib.util.Translator;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.VentilatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
@@ -44,17 +45,17 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
   private Image image;
 
   /** The emergency normal image. */
-  private Image emergencyNormalImage 
-    = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Emergency.png");
+  private Image emergencyNormalImage = ImageLoader.getInstance().getImage(
+      Translator.getString("image.ButtonEmergency[i18n]: conf/image/interface/game/Btn-Emergency.png"));
   /** The emergency rollover image. */
-  private Image emergencyRolloverImage 
-    = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-EmergencyRol.png");
+  private Image emergencyRolloverImage = ImageLoader.getInstance().getImage(
+      Translator.getString("image.ButtonEmergencyRol[i18n]: conf/image/interface/game/Btn-EmergencyRol.png"));
   /** The emergency selected image. */
-  private Image emergencySelectedImage 
-    = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-EmergencySel.png");
+  private Image emergencySelectedImage = ImageLoader.getInstance().getImage(
+      Translator.getString("image.ButtonEmergencySel[i18n]: conf/image/interface/game/Btn-EmergencySel.png"));
   /** The emergency none image. */
-  private Image emergencyNoneImage 
-    = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-EmergencyNone.png");
+  private Image emergencyNoneImage = ImageLoader.getInstance().getImage(
+      Translator.getString("image.ButtonEmergencyNone[i18n]: conf/image/interface/game/Btn-EmergencyNone.png"));
   
   /** The font color. */
   private final Color textColor = new Color(0.2f, 0.2f, 0.2f);
