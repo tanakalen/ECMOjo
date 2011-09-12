@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
+import king.lib.util.Translator;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.InterventionAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
@@ -84,9 +85,12 @@ public class InterventionDetailPanel extends DetailPanel {
       Error.out("Intervention location not defined: " + interventionLocation);
     }
     
-    Image bloodNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Blood.png");
-    Image bloodRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-BloodRol.png");
-    Image bloodSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-BloodSel.png");
+    Image bloodNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonBlood[i18n]: conf/image/interface/game/Btn-Blood.png"));
+    Image bloodRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonBloodRol[i18n]: conf/image/interface/game/Btn-BloodRol.png"));
+    Image bloodSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonBloodSel[i18n]: conf/image/interface/game/Btn-BloodSel.png"));
     ImageButton bloodButton = new ImageButton(bloodNormalImage, bloodRolloverImage, bloodSelectedImage);
     bloodButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
@@ -97,9 +101,12 @@ public class InterventionDetailPanel extends DetailPanel {
     bloodButton.setSize(192, 32);
     add(bloodButton);
     
-    Image plateletsNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Platelets.png");
-    Image plateletsRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-PlateletsRol.png");
-    Image plateletsSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-PlateletsSel.png");
+    Image plateletsNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonPlatelets[i18n]: conf/image/interface/game/Btn-Platelets.png"));
+    Image plateletsRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonPlateletsRol[i18n]: conf/image/interface/game/Btn-PlateletsRol.png"));
+    Image plateletsSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonPlateletsSel[i18n]: conf/image/interface/game/Btn-PlateletsSel.png"));
     ImageButton plateletsButton = new ImageButton(plateletsNormalImage, plateletsRolloverImage, plateletsSelectedImage);
     plateletsButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
@@ -123,9 +130,12 @@ public class InterventionDetailPanel extends DetailPanel {
     ffpButton.setSize(192, 32);
     add(ffpButton); 
     
-    Image heparinNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Heparin.png");
-    Image heparinRollImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-HeparinRol.png");
-    Image heparinSelImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-HeparinSel.png");
+    Image heparinNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonHeparin[i18n]: conf/image/interface/game/Btn-Heparin.png"));
+    Image heparinRollImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonHeparinRol[i18n]: conf/image/interface/game/Btn-HeparinRol.png"));
+    Image heparinSelImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonHeparinSel[i18n]: conf/image/interface/game/Btn-HeparinSel.png"));
     ImageButton heparinButton = new ImageButton(heparinNormalImage, heparinRollImage, heparinSelImage);
     heparinButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
@@ -136,12 +146,12 @@ public class InterventionDetailPanel extends DetailPanel {
     heparinButton.setSize(192, 32);
     add(heparinButton); 
  
-    Image catecholamineNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Catecholamine.png");
-    Image catecholamineRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CatecholamineRol.png");
-    Image catecholamineSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CatecholamineSel.png");
+    Image catecholamineNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCatecholamine[i18n]: conf/image/interface/game/Btn-Catecholamine.png"));
+    Image catecholamineRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCatecholamineRol[i18n]: conf/image/interface/game/Btn-CatecholamineRol.png"));
+    Image catecholamineSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCatecholamineSel[i18n]: conf/image/interface/game/Btn-CatecholamineSel.png"));
     ImageButton catecholamineButton 
       = new ImageButton(catecholamineNormalImage, catecholamineRolloverImage, catecholamineSelectedImage);
     catecholamineButton.addActionListener(new ActionListener() {
@@ -153,9 +163,12 @@ public class InterventionDetailPanel extends DetailPanel {
     catecholamineButton.setSize(192, 32);
     add(catecholamineButton); 
  
-    Image albuminNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Albumin.png");
-    Image albuminRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-AlbuminRol.png");
-    Image albuminSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-AlbuminSel.png");
+    Image albuminNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonAlbumin[i18n]: conf/image/interface/game/Btn-Albumin.png"));
+    Image albuminRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonAlbuminRol[i18n]: conf/image/interface/game/Btn-AlbuminRol.png"));
+    Image albuminSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonAlbuminSel[i18n]: conf/image/interface/game/Btn-AlbuminSel.png"));
     ImageButton albuminButton
       = new ImageButton(albuminNormalImage, albuminRolloverImage, albuminSelectedImage);
     albuminButton.addActionListener(new ActionListener() {
@@ -167,9 +180,12 @@ public class InterventionDetailPanel extends DetailPanel {
     albuminButton.setSize(192, 32);
     add(albuminButton);    
     
-    Image sedationNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Sedation.png");
-    Image sedationRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SedationRol.png");
-    Image sedationSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SedationSel.png");
+    Image sedationNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonSedation[i18n]: conf/image/interface/game/Btn-Sedation.png"));
+    Image sedationRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonSedationRol[i18n]: conf/image/interface/game/Btn-SedationRol.png"));
+    Image sedationSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonSedationSel[i18n]: conf/image/interface/game/Btn-SedationSel.png"));
     ImageButton sedationButton
       = new ImageButton(sedationNormalImage, sedationRolloverImage, sedationSelectedImage);
     sedationButton.addActionListener(new ActionListener() {
