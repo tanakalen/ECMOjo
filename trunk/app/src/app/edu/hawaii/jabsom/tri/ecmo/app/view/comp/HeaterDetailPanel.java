@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
+import king.lib.util.Translator;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.HeaterAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ReplaceHeaterAction;
@@ -105,12 +106,12 @@ public class HeaterDetailPanel extends DetailPanel implements Runnable {
     add(decButton); 
     
     // add replace heater button
-    Image replaceHeaterNormalImage 
-        = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ReplaceHeater.png");
-    Image replaceHeaterRolloverImage 
-        = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ReplaceHeaterRol.png");
-    Image replaceHeaterSelectedImage 
-        = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ReplaceHeaterSel.png");
+    Image replaceHeaterNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonReplaceHeater[i18n]: conf/image/interface/game/Btn-ReplaceHeater.png"));
+    Image replaceHeaterRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonReplaceHeaterRol[i18n]: conf/image/interface/game/Btn-ReplaceHeaterRol.png"));
+    Image replaceHeaterSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonReplaceHeaterSel[i18n]: conf/image/interface/game/Btn-ReplaceHeaterSel.png"));
     ImageButton replaceHeaterButton 
         = new ImageButton(replaceHeaterNormalImage, replaceHeaterRolloverImage, replaceHeaterSelectedImage);
     replaceHeaterButton.addActionListener(new ActionListener() {
