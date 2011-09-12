@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
+import king.lib.util.Translator;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.TubeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.TubeAction.Location;
@@ -216,9 +217,12 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     add(selectionClampButton5); 
     
     // add toggle button
-    Image normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CircuitCheck.png");
-    Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CircuitCheckRol.png");
-    Image selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CircuitCheckSel.png");
+    Image normalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCircuitCheck[i18n]: conf/image/interface/game/Btn-CircuitCheck.png"));
+    Image rolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCircuitCheckRol[i18n]: conf/image/interface/game/Btn-CircuitCheckRol.png"));
+    Image selectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCircuitCheckSel[i18n]: conf/image/interface/game/Btn-CircuitCheckSel.png"));
     selectionButton = new ImageToggleButton(normalImage, rolloverImage, selectedImage, selectedImage);
     selectionButton.setToolTipText(component.getName());
     selectionButton.addActionListener(new ActionListener() {
