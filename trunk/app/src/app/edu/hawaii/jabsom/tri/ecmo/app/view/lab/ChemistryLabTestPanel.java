@@ -63,9 +63,12 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
     titleLabel.setSize(150, 20);
     add(titleLabel);
     
-    Image requestButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Lab.png");
-    Image requestButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-LabRol.png");
-    Image requestButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-LabSel.png");
+    Image requestButtonImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonLab[i18n]: conf/image/interface/game/Btn-Lab.png"));
+    Image requestButtonRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonLabRol[i18n]: conf/image/interface/game/Btn-LabRol.png"));
+    Image requestButtonSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonLabSel[i18n]: conf/image/interface/game/Btn-LabSel.png"));
     
     // add lab request button
     ImageButton requestButton 
