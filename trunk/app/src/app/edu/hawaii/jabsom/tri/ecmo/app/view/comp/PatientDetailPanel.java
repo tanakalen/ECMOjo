@@ -8,13 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
+import king.lib.util.Translator;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase;
-import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase.DialogResult;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.DialogBase.*;
 
 /**
@@ -46,12 +46,12 @@ public class PatientDetailPanel extends DetailPanel {
     setOpaque(false);
     
     // patient buttons and actions
-    Image suctionETTNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETT.png");
-    Image suctionETTRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETTRol.png");
-    Image suctionETTSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-SuctionETTSel.png");
+    Image suctionETTNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonSuctionETT[i18n]: conf/image/interface/game/Btn-SuctionETT.png"));
+    Image suctionETTRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonSuctionETTRol[i18n]: conf/image/interface/game/Btn-SuctionETTRol.png"));
+    Image suctionETTSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonSuctionETTSel[i18n]: conf/image/interface/game/Btn-SuctionETTSel.png"));
     ImageButton suctionETTButton 
       = new ImageButton(suctionETTNormalImage, suctionETTRolloverImage, suctionETTSelectedImage);
     suctionETTButton.addActionListener(new ActionListener() {
@@ -86,12 +86,15 @@ public class PatientDetailPanel extends DetailPanel {
     suctionETTButton.setSize(192, 32);
     add(suctionETTButton);
   
-    Image checkCannulaSiteNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCannulaSite.png");
-    Image checkCannulaSiteRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCannulaSiteRol.png");
-    Image checkCannulaSiteSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckCannulaSiteSel.png");
+    Image checkCannulaSiteNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckCannulaSite[i18n]: " 
+            + "conf/image/interface/game/Btn-CheckCannulaSite.png"));
+    Image checkCannulaSiteRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckCannulaSiteRol[i18n]: " 
+            + "conf/image/interface/game/Btn-CheckCannulaSiteRol.png"));
+    Image checkCannulaSiteSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckCannulaSiteSel[i18n]: " 
+            + "conf/image/interface/game/Btn-CheckCannulaSiteSel.png"));
     ImageButton checkCannulaSiteButton 
       = new ImageButton(checkCannulaSiteNormalImage, checkCannulaSiteRolloverImage, checkCannulaSiteSelectedImage);
     checkCannulaSiteButton.addActionListener(new ActionListener() {
@@ -126,12 +129,15 @@ public class PatientDetailPanel extends DetailPanel {
     checkCannulaSiteButton.setSize(192, 32);
     add(checkCannulaSiteButton);
     
-    Image checkforBleedingNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckforBleeding.png");
-    Image checkforBleedingRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckforBleedingRol.png");
-    Image checkforBleedingSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckforBleedingSel.png");
+    Image checkforBleedingNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckforBleeding[i18n]: "
+            + "conf/image/interface/game/Btn-CheckforBleeding.png"));
+    Image checkforBleedingRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckforBleedingRol[i18n]: "
+            + "conf/image/interface/game/Btn-CheckforBleedingRol.png"));
+    Image checkforBleedingSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckforBleedingSel[i18n]: "
+            + "conf/image/interface/game/Btn-CheckforBleedingSel.png"));
     ImageButton checkforBleedingButton 
       = new ImageButton(checkforBleedingNormalImage, checkforBleedingRolloverImage, checkforBleedingSelectedImage);
     checkforBleedingButton.addActionListener(new ActionListener() {
@@ -166,12 +172,15 @@ public class PatientDetailPanel extends DetailPanel {
     checkforBleedingButton.setSize(192, 32);
     add(checkforBleedingButton);
     
-    Image checkUrineOutputNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckUrineOutput.png");
-    Image checkUrineOutputRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckUrineOutputRol.png");
-    Image checkUrineOutputSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckUrineOutputSel.png");
+    Image checkUrineOutputNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckUrineOutput[i18n]: "
+            + "conf/image/interface/game/Btn-CheckUrineOutput.png"));
+    Image checkUrineOutputRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckUrineOutputRol[i18n]: "
+            + "conf/image/interface/game/Btn-CheckUrineOutputRol.png"));
+    Image checkUrineOutputSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckUrineOutputSel[i18n]: "
+            + "conf/image/interface/game/Btn-CheckUrineOutputSel.png"));
     ImageButton checkUrineOutputButton
       = new ImageButton(checkUrineOutputNormalImage, checkUrineOutputRolloverImage, checkUrineOutputSelectedImage);
     checkUrineOutputButton.addActionListener(new ActionListener() {
@@ -206,12 +215,12 @@ public class PatientDetailPanel extends DetailPanel {
     checkUrineOutputButton.setSize(192, 32);
     add(checkUrineOutputButton);
         
-    Image checkDiaperNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckDiaper.png");
-    Image checkDiaperRolloverImage
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckDiaperRol.png");
-    Image checkDiaperSelectedImage
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckDiaperSel.png");
+    Image checkDiaperNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckDiaper[i18n]: conf/image/interface/game/Btn-CheckDiaper.png"));
+    Image checkDiaperRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckDiaperRol[i18n]: conf/image/interface/game/Btn-CheckDiaperRol.png"));
+    Image checkDiaperSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckDiaperSel[i18n]: conf/image/interface/game/Btn-CheckDiaperSel.png"));
     ImageButton checkDiaperButton
       = new ImageButton(checkDiaperNormalImage, checkDiaperRolloverImage, checkDiaperSelectedImage);    
     checkDiaperButton.addActionListener(new ActionListener() {
@@ -231,12 +240,12 @@ public class PatientDetailPanel extends DetailPanel {
     checkDiaperButton.setSize(192, 32);
     add(checkDiaperButton);
     
-    Image checkSedationNormalImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckSedation.png");
-    Image checkSedationRolloverImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckSedationRol.png");
-    Image checkSedationSelectedImage 
-      = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckSedationSel.png");
+    Image checkSedationNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckSedation[i18n]: conf/image/interface/game/Btn-CheckSedation.png"));
+    Image checkSedationRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckSedationRol[i18n]: conf/image/interface/game/Btn-CheckSedationRol.png"));
+    Image checkSedationSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonCheckSedationSel[i18n]: conf/image/interface/game/Btn-CheckSedationSel.png"));
     ImageButton checkSedationButton = new ImageButton(checkSedationNormalImage
         , checkSedationRolloverImage, checkSedationSelectedImage);    
     checkSedationButton.addActionListener(new ActionListener() {
