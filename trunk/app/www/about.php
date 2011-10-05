@@ -52,7 +52,7 @@
 	<strong>Project Manager</strong>: <br>
 	&nbsp;&nbsp;&nbsp;Mark T. Ogino, MD -
 	   <script type="text/javascript">
-	     document.write("<n uers=\"<?php echo str_rot13('mailto:Mark.T.Ogino@kp.org'); ?>\"><?php echo str_rot13('Mark.T.Ogino@kp.org'); ?></n>".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
+	     document.write("<n uers=\"<?php echo str_rot13('mailto:mogino@cchosp.com'); ?>\"><?php echo str_rot13('mogino@cchosp.com'); ?></n>".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
 	   </script><br><br>
 	     
 	<strong>Lead Developer</strong>: <br>
