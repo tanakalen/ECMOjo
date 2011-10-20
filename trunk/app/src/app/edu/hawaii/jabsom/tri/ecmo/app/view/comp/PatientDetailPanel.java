@@ -62,8 +62,9 @@ public class PatientDetailPanel extends DetailPanel {
         if (problem) {
           // fixed
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
-              , "Problem Fixed"
-              , "Good catch! The ETT suction was broken and has been fixed.",
+              , Translator.getString("title.ProblemFixed[i18n]: Problem Fixed")
+              , Translator.getString("text.PatientDialogETT[i18n]: "
+                  + "Good catch! The ETT suction was broken and has been fixed."),
               new DialogListener() {
                 public void handleResult(DialogResult result) {
                   handlePatientAction(PatientAction.Check.SUCTION_ETT);
@@ -72,13 +73,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
         else {
           // no problem = nothing done
-          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK,
-              "No Problem Detected", "No problem has been detected.",
-              new DialogListener() {
-                public void handleResult(DialogResult result) {
-                  handlePatientAction(PatientAction.Check.SUCTION_ETT);
-                }      
-          });
+          showOKDialog();
         }
       }
     });
@@ -105,8 +100,9 @@ public class PatientDetailPanel extends DetailPanel {
         if (problem) {
           // fixed
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
-              , "Problem Fixed"
-              , "Good catch! The cannula site was kinked and has been fixed.",
+              , Translator.getString("title.ProblemFixed[i18n]: Problem Fixed")
+              , Translator.getString("text.PatientDialogCannula[i18n]: "
+                  + "Good catch! The cannula site was kinked and has been fixed."),
               new DialogListener() {
                 public void handleResult(DialogResult result) {
                   handlePatientAction(PatientAction.Check.CANNULA_SITE);
@@ -115,13 +111,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
         else {
           // no problem = nothing done
-          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK,
-              "No Problem Detected", "No problem has been detected.",
-              new DialogListener() {
-                public void handleResult(DialogResult result) {
-                  handlePatientAction(PatientAction.Check.CANNULA_SITE);
-                }
-          });
+          showOKDialog();
         }
       }
     });
@@ -148,8 +138,9 @@ public class PatientDetailPanel extends DetailPanel {
         if (problem) {
           // fixed
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
-              , "Problem Fixed"
-              , "Good catch! The bleeding has been stopped.",
+              , Translator.getString("title.ProblemFixed[i18n]: Problem Fixed")
+              , Translator.getString("text.PatientDialogBleeding[i18n]: "
+                  + "Good catch! The bleeding has been stopped."),
               new DialogListener() {
                 public void handleResult(DialogResult result) {
                   handlePatientAction(PatientAction.Check.BLEEDING);
@@ -158,13 +149,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
         else {
           // no problem = nothing done
-          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK,
-              "No Problem Detected", "No problem has been detected.",
-              new DialogListener() {
-                public void handleResult(DialogResult result) {
-                  handlePatientAction(PatientAction.Check.BLEEDING);
-                }
-          });
+          showOKDialog();
         }
       }
     });
@@ -191,8 +176,9 @@ public class PatientDetailPanel extends DetailPanel {
         if (problem) {
           // fixed
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
-              , "Problem Fixed"
-              , "Good catch! The urine output has been fixed.",
+              , Translator.getString("title.ProblemFixed[i18n]: Problem Fixed")
+              , Translator.getString("text.PatientDialogUrine[i18n]: "
+                  + "Good catch! The urine output has been fixed."),
               new DialogListener() {
                 public void handleResult(DialogResult result) {
                   handlePatientAction(PatientAction.Check.URINE_OUTPUT);
@@ -201,13 +187,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
         else {
           // no problem = nothing done
-          DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK,
-              "No Problem Detected", "No problem has been detected.",
-              new DialogListener() {
-              public void handleResult(DialogResult result) {
-                handlePatientAction(PatientAction.Check.URINE_OUTPUT);
-              }
-          });
+          showOKDialog();
         }
       }
     });
@@ -227,8 +207,9 @@ public class PatientDetailPanel extends DetailPanel {
       public void actionPerformed(ActionEvent event) {
         // output dialog
         DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-            , "Strange Smell"
-            , "A unpleasant odor has been detected.",
+            , Translator.getString("title.PatientDialogDiaper[i18n]: Strange Smell")
+            , Translator.getString("text.PatientDialogDiaper[i18n]: "
+                + "An unpleasant odor has been detected."),
             new DialogListener() {
               public void handleResult(DialogResult result) {
                 handlePatientAction(PatientAction.Check.DIAPER);
@@ -256,8 +237,9 @@ public class PatientDetailPanel extends DetailPanel {
         if (!sedated) {
           // not sedated!
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.WARNING, DialogOption.OK
-              , "Not Sedated"
-              , "The patient is moving, wiggling and breathing.",
+              , Translator.getString("title.PatientDialogNotSedated[i18n]: Not Sedated")
+              , Translator.getString("text.PatientDialogNotSedated[i18n]: "
+                  + "The patient is moving, wiggling and breathing."),
               new DialogListener() {
                 public void handleResult(DialogResult result) {
                   handlePatientAction(PatientAction.Check.SEDATION);
@@ -267,8 +249,9 @@ public class PatientDetailPanel extends DetailPanel {
         else {
           // the patient is sleeping
           DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-              , "Sedated"
-              , "The patient is fully sedated.",
+              , Translator.getString("title.PatientDialogSedated[i18n]: Sedated")
+              , Translator.getString("text.PatientDialogSedated[i18n]: "
+                  + "The patient is fully sedated."),
               new DialogListener() {
                 public void handleResult(DialogResult result) {
                   handlePatientAction(PatientAction.Check.SEDATION);
@@ -298,6 +281,18 @@ public class PatientDetailPanel extends DetailPanel {
     PatientAction action = new PatientAction();
     action.setCheck(check);
     notifyActionListeners(action);    
+  }
+  
+  /**
+   * Called when dialog needed and no problem detected.
+   * 
+   */
+  private void showOKDialog() {
+    // no problem = nothing done
+    DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
+        , Translator.getString("title.NoProblemDetected[i18n]: No Problem Detected")
+        , Translator.getString("text.PatientDialogOK[i18n]: No problem has been detected.")
+    );
   }
   
   /**

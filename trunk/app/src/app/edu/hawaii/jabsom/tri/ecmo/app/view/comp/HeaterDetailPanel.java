@@ -122,7 +122,7 @@ public class HeaterDetailPanel extends DetailPanel implements Runnable {
         if (problem) {
           // fixed
           DialogBase.showDialog(HeaterDetailPanel.this, DialogType.SUCCESS, DialogOption.OK
-              , Translator.getString("title.HeaterDialogProblem[i18n]: Problem Fixed")
+              , Translator.getString("title.ProblemFixed[i18n]: Problem Fixed")
               , Translator.getString("text.HeaterDialogProblem[i18n]: Good catch!"
                   + " The heater was broken and has been replaced."),
               new DialogListener() {
@@ -135,7 +135,7 @@ public class HeaterDetailPanel extends DetailPanel implements Runnable {
         else {
           // no problem = nothing done
           DialogBase.showDialog(HeaterDetailPanel.this, DialogType.PLAIN, DialogOption.OK
-              , Translator.getString("title.HeaterDialogNoProblem[i18n]: No Problem Detected")
+              , Translator.getString("title.NoProblemDetected[i18n]: No Problem Detected")
               , Translator.getString("text.HeaterDialogNoProblem[i18n]: "
                   + "Although the heater has now been replaced, no problem was detected. " 
                   + "The old heater was working just fine."),
