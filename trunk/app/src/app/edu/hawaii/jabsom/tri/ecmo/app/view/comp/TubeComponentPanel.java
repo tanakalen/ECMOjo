@@ -158,8 +158,11 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
                                                       , selectedClampDownImage);
     selectionClampButton2.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        StandardDialog.showDialog(SwingUtilities.getRootPane(selectionClampButton2), DialogType.WARNING, DialogOption.OK
-            , "Clamp Placement", "Dr. Ogino says: don't add a clamp there!");
+        StandardDialog.showDialog(SwingUtilities.getRootPane(selectionClampButton2)
+            , DialogType.WARNING, DialogOption.OK
+            , Translator.getString("title.TubeComponentDialog[i18n]: Clamp Placement")
+            , Translator.getString("text.TubeComponentDialog[i18n]: "
+                + "Dr. Ogino says: don't add a clamp there!"));
         selectionClampButton2.setSelected(false);
       }
     });
@@ -207,8 +210,11 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
                                                       , selectedClampUpImage);
     selectionClampButton5.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
-        StandardDialog.showDialog(SwingUtilities.getRootPane(selectionClampButton5), DialogType.WARNING, DialogOption.OK
-            , "Clamp Placement", "Dr. Ogino says: don't add a clamp there!");
+        StandardDialog.showDialog(SwingUtilities.getRootPane(selectionClampButton5)
+            , DialogType.WARNING, DialogOption.OK
+            , Translator.getString("title.TubeComponentDialog[i18n]: Clamp Placement")
+            , Translator.getString("text.TubeComponentDialog[i18n]: "
+                + "Dr. Ogino says: don't add a clamp there!"));
         selectionClampButton5.setSelected(false);
       }
     });
