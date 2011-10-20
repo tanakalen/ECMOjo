@@ -92,7 +92,7 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
     
     // add flash text
     infoLabel = new JLabel();
-    infoLabel.setText("Location OK!");
+    infoLabel.setText(Translator.getString("label.LocOK[i18n]: Location OK!"));
     infoLabel.setFont(infoLabel.getFont().deriveFont(Font.BOLD, 16f));
     infoLabel.setForeground(new Color(0x00000000, true));
     infoLabel.setLocation(30, 90);
@@ -105,10 +105,10 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
       public void actionPerformed(ActionEvent event) {
         // output splash - nothing found
         infoLabel.setForeground(Color.RED);
-        infoLabel.setText("Location OK!");
+        infoLabel.setText(Translator.getString("label.LocOK[i18n]: Location OK!"));
         // something wrong with circuit
         if (component.isCoagulopathy()) {
-          infoLabel.setText("Fibrin!");
+          infoLabel.setText(Translator.getString("label.Fibrin[i18n]: Fibrin!"));
         }
       }
     };
@@ -116,10 +116,10 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
       public void actionPerformed(ActionEvent event) {
         // output splash - nothing found
         infoLabel.setForeground(Color.RED);
-        infoLabel.setText("Location OK!");
+        infoLabel.setText(Translator.getString("label.LocOK[i18n]: Location OK!"));
         // oxygenator having issues
         if (oxygenator.getClotting() > 1) {
-          infoLabel.setText("Clots!");
+          infoLabel.setText(Translator.getString("label.Clots[i18n]: Clots!"));
         }
       }
     };
