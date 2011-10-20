@@ -207,7 +207,11 @@ public class InterventionDetailPanel extends DetailPanel {
     final int interventionLimit = 5;
     if (tracker.getCount(intervention.getClass()) >= interventionLimit) {
       StandardDialog.showDialog(this, DialogType.ERROR, DialogOption.OK
-          , "Intervention Usage", "You cannot use this intervention more than " + interventionLimit + " times.");
+          , Translator.getString("title.InterventionDialog[i18n]: Intervention Usage")
+          , Translator.getString("text.InterventionDialog1[i18n]: "
+              + "You cannot use this intervention more than ")
+              + interventionLimit
+              + Translator.getString("text.InterventionDialog2[i18n]: times."));
     }
     else {
       // execute intervention
