@@ -229,9 +229,10 @@ public class InterventionDetailPanel extends DetailPanel {
           
           // shows the location warning dialog box when the intervention is executed at the wrong place
           StandardDialog.showDialog(this, DialogType.WARNING, DialogOption.OK
-              , "Intervention Location Warning"
-              , "The intervention has been executed. The baby's mojo has been reduced by 10%. Please check your "
-              + "policies and procedures.");
+              , Translator.getString("title.InterventionLocation[i18n]: Intervention Location Warning")
+              , Translator.getString("text.InterventionLocation[i18n]: "
+                  + "The intervention has been executed. The baby's mojo has been reduced by 10%. "
+                  + "Please check your policies and procedures."));
         }
       }
     }
