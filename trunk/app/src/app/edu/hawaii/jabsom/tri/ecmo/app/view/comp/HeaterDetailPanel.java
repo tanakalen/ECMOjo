@@ -138,7 +138,7 @@ public class HeaterDetailPanel extends DetailPanel implements Runnable {
               , Translator.getString("title.HeaterDialogNoProblem[i18n]: No Problem Detected")
               , Translator.getString("text.HeaterDialogNoProblem[i18n]: "
                   + "Although the heater has now been replaced, no problem was detected. " 
-                  + "The old heater was working just fine.",
+                  + "The old heater was working just fine."),
               new DialogListener() {
                 public void handleResult(DialogResult result) {
                   ReplaceHeaterAction action = new ReplaceHeaterAction();
