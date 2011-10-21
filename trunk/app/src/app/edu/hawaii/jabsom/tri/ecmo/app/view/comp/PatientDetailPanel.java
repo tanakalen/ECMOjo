@@ -11,6 +11,7 @@ import king.lib.access.ImageLoader;
 import king.lib.util.Translator;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction;
+import edu.hawaii.jabsom.tri.ecmo.app.control.action.PatientAction.Check;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
@@ -73,7 +74,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
         else {
           // no problem = nothing done
-          showOKDialog();
+          showOKDialog(PatientAction.Check.SUCTION_ETT);
         }
       }
     });
@@ -111,7 +112,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
         else {
           // no problem = nothing done
-          showOKDialog();
+          showOKDialog(PatientAction.Check.CANNULA_SITE);
         }
       }
     });
@@ -149,7 +150,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
         else {
           // no problem = nothing done
-          showOKDialog();
+          showOKDialog(PatientAction.Check.BLEEDING);
         }
       }
     });
@@ -187,7 +188,7 @@ public class PatientDetailPanel extends DetailPanel {
         }
         else {
           // no problem = nothing done
-          showOKDialog();
+          showOKDialog(PatientAction.Check.URINE_OUTPUT);
         }
       }
     });
@@ -286,12 +287,18 @@ public class PatientDetailPanel extends DetailPanel {
   /**
    * Called when dialog needed and no problem detected.
    * 
+   * @param action PatientAction Enum item for goal check.
    */
-  private void showOKDialog() {
+  private void showOKDialog(final Check action) {
     // no problem = nothing done
     DialogBase.showDialog(PatientDetailPanel.this, DialogType.PLAIN, DialogOption.OK
         , Translator.getString("title.NoProblemDetected[i18n]: No Problem Detected")
-        , Translator.getString("text.PatientDialogOK[i18n]: No problem has been detected.")
+        , Translator.getString("text.PatientDialogOK[i18n]: No problem has been detected."),
+        new DialogListener() {
+          public void handleResult(DialogResult result) {
+            handlePatientAction(action);
+          }
+    }
     );
   }
   
