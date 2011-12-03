@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updateDescriptor baseUrl="">
+  <entry targetMediaFileId="311" updatableVersionMin="" updatableVersionMax="" fileName="ecmojo_windows_2_4_0.exe" newVersion="2.4.0" newMediaFileId="311" fileSize="28660736" bundledJre="windows-x86-1.6.0_29" archive="false">
+    <comment language="en" />
+  </entry>
+  <entry targetMediaFileId="351" updatableVersionMin="" updatableVersionMax="" fileName="ecmojo_windows_2_4_0.zip" newVersion="2.4.0" newMediaFileId="351" fileSize="28304273" bundledJre="windows-x86-1.6.0_29" archive="true">
+    <comment language="en" />
+  </entry>
+  <entry targetMediaFileId="342" updatableVersionMin="" updatableVersionMax="" fileName="ecmojo_macos_2_4_0.dmg" newVersion="2.4.0" newMediaFileId="342" fileSize="11816960" bundledJre="" archive="false">
+    <comment language="en" />
+  </entry>
+  <entry targetMediaFileId="352" updatableVersionMin="" updatableVersionMax="" fileName="ecmojo_macos_2_4_0.tgz" newVersion="2.4.0" newMediaFileId="352" fileSize="11293591" bundledJre="" archive="true">
+    <comment language="en" />
+  </entry>
+  <entry targetMediaFileId="313" updatableVersionMin="" updatableVersionMax="" fileName="ecmojo_unix_2_4_0.sh" newVersion="2.4.0" newMediaFileId="313" fileSize="11284731" bundledJre="" archive="false">
+    <comment language="en" />
+  </entry>
+  <entry targetMediaFileId="353" updatableVersionMin="" updatableVersionMax="" fileName="ecmojo_unix_2_4_0.tar.gz" newVersion="2.4.0" newMediaFileId="353" fileSize="11184017" bundledJre="" archive="true">
+    <comment language="en" />
+  </entry>
+  <entry targetMediaFileId="354" updatableVersionMin="" updatableVersionMax="" fileName="ecmojo_linux_2_4_0.rpm" newVersion="2.4.0" newMediaFileId="354" fileSize="11198023" bundledJre="" archive="true">
+    <comment language="en" />
+  </entry>
+</updateDescriptor>
+
