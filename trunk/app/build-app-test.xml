@@ -26,7 +26,7 @@
     <property name="keystore.storepass" value="kpassword"/>
     <property name="webstart.files.exclude" value="j3dcore.jar,j3dutils.jar,vecmath.jar"/>
     <property name="webstart.title" value="ECMOjo"/>
-    <property name="webstart.author" value="Christoph Aschwanden"/>
+    <property name="webstart.author" value="ECMO Team"/>
     <property name="webstart.description" value="ECMOjo Application"/>
     <property name="webstart.scenario.dir" value="ECMOjo"/>
     <property name="webstart.url" value="http://ecmojo.sourceforge.net"/>
