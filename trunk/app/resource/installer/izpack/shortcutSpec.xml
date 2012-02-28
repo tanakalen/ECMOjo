@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<shortcuts>
+	<skipIfNotSupported/>
+	<programGroup defaultName="ECMOjo" location="applications"/>
+		<shortcut
+			name="ECMOjo"
+			programGroup="yes"
+			desktop="yes"
+			applications="no"
+			startMenu="yes"
+			startup="no"
+			target="$INSTALL_PATH\ECMOjo.jar"
+			commandLine=""
+			description="ECMOjo Application"
+			iconFile="$INSTALL_PATH\logo-128x128.icns"
+			iconIndex="0"
+			initialState="noShow">
+			<createForPack name="Base"/>
+		</shortcut>
+		<shortcut
+			name="ECMOjo Uninstaller"
+			programGroup="yes"
+			desktop="no"
+			applications="no"
+			startMenu="no"
+			startup="no"
+			target="$INSTALL_PATH\Uninstaller\uninstaller.jar"
+			commandLine=""
+			iconFile="%SystemRoot%\system32\SHELL32.dll"
+			iconIndex="31"
+			description="Uninstall ECMOjo Application">
+			<createForPack name="Base"/>
+		</shortcut>
+</shortcuts>

@@ -23,7 +23,14 @@
             <author name="Christoph Aschwanden" email="caschwan@hawaii.edu"/>
         </authors>
         <url>http://ecmojo.sourceforge.net/</url>
-    </info>
+	</info>
+
+	<!--
+	    The variable definitions. DOES NOT WORK?!
+	-->
+	<variables>
+		<variable name="rcsIzpack" value="resource/installer/izpack"/>
+	</variables>
 
     <!-- 
         The gui preferences indication.
@@ -45,8 +52,9 @@
         The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
     -->
     <resources>
-        <res id="LicencePanel.licence" src="Licence.txt"/>
-        <res id="InfoPanel.info" src="Readme.txt"/>
+        <res id="LicencePanel.licence" src="LICENSE.txt"/>
+		<res id="InfoPanel.info" src="README" parse="yes"/>
+		<res id="shortcutSpec.xml" src="resource/installer/izpack/shortcutSpec.xml"/>
     </resources>
 
     <!-- 
@@ -59,8 +67,9 @@
         <panel classname="LicencePanel"/>
         <panel classname="TargetPanel"/>
         <panel classname="PacksPanel"/>
-        <panel classname="InstallPanel"/>
-        <panel classname="FinishPanel"/>
+		<panel classname="ShortcutPanel"/>
+		<panel classname="InstallPanel"/>
+        <panel classname="SimpleFinishPanel"/>
     </panels>
 
     <!-- 
@@ -70,21 +79,18 @@
     <packs>
         <pack name="Base" required="yes">
             <description>The base files</description>
-            <file src="Readme.txt" targetdir="$INSTALL_PATH"/>
-            <file src="Licence.txt" targetdir="$INSTALL_PATH"/>
-            <file src="script.bat" targetdir="$INSTALL_PATH"/>
-            <parsable targetfile="$INSTALL_PATH/script.bat"/>
+            <file src="README" targetdir="$INSTALL_PATH"/>
+            <file src="LICENSE.txt" targetdir="$INSTALL_PATH"/>
+			<!--<file src="logo-128x128.icns" targetdir="$INSTALL_PATH"/>-->
             <!-- The file will be parsed -->
+			<file src="src" targetdir="$INSTALL_PATH"/>
+			<fileset dir="lib" targetdir="$INSTALL_PATH/lib">
+				<include name="**"/>
+			</fileset>
         </pack>
-        <pack name="Docs" required="no">
-            <description>The documentation</description>
-            <file src="doc" targetdir="$INSTALL_PATH"/>
-            <!-- Reccursive adding -->
-        </pack>
-        <pack name="Sources" required="no">
-            <description>The sources</description>
-            <file src="src" targetdir="$INSTALL_PATH"/>
-        </pack>
-    </packs>
+	</packs>
+
+	<!-- The native libraries to add. For Windows shortcuts -->
+	<native type="izpack" name="ShellLink.dll"/>
 
 </installation>
