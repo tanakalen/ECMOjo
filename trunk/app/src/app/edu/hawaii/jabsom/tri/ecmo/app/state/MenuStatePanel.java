@@ -49,7 +49,8 @@ import king.lib.util.Translator;
 public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
 
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/menu/Base.jpg");
+  private Image background = ImageLoader.getInstance().getImage(
+      Translator.getString("image.menubase[i18n]: conf/image/interface/menu/Base.jpg"));
 
   /** The state. */
   private MenuState state;
@@ -96,9 +97,12 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     add(textLabel);
     
     // add about button
-    Image aboutNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-About.png");
-    Image aboutRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-AboutRol.png");
-    Image aboutSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-AboutSel.png");
+    Image aboutNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonAbout[i18n]: conf/image/interface/menu/Btn-About.png"));
+    Image aboutRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonAboutRol[i18n]: conf/image/interface/menu/Btn-AboutRol.png"));
+    Image aboutSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonAboutSel[i18n]: conf/image/interface/menu/Btn-AboutSel.png"));
     final ImageButton aboutButton = new ImageButton(aboutNormalImage, aboutRolloverImage, aboutSelectedImage);
     aboutButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
@@ -111,9 +115,12 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     add(aboutButton);    
 
     // add contact button
-    Image contactNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Contact.png");
-    Image contactRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-ContactRol.png");
-    Image contactSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-ContactSel.png");
+    Image contactNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonContact[i18n]: conf/image/interface/menu/Btn-Contact.png"));
+    Image contactRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonContactRol[i18n]: conf/image/interface/menu/Btn-ContactRol.png"));
+    Image contactSelectedImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonContactSel[i18n]: conf/image/interface/menu/Btn-ContactSel.png"));
     ImageButton contactButton = new ImageButton(contactNormalImage, contactRolloverImage, contactSelectedImage);
     contactButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
@@ -129,8 +136,10 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     ButtonGroup buttonGroup = new ButtonGroup();
     
     // add scenario toogle button
-    Image scenarioNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Scenario.png");
-    Image scenarioRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-ScenarioRol.png");
+    Image scenarioNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonScenario[i18n]: conf/image/interface/menu/Btn-Scenario.png"));
+    Image scenarioRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonScenarioRol[i18n]: conf/image/interface/menu/Btn-ScenarioRol.png"));
     ImageToggleButton scenarioButton 
         = new ImageToggleButton(scenarioNormalImage, scenarioRolloverImage, scenarioNormalImage);
     scenarioButton.addActionListener(new ActionListener() {
@@ -146,8 +155,10 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     buttonGroup.add(scenarioButton);
 
     // add simulation toogle button
-    Image simulNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-Simulation.png");
-    Image simulRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/menu/Btn-SimulationRol.png");
+    Image simulNormalImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonSimulation[i18n]: conf/image/interface/menu/Btn-Simulation.png"));
+    Image simulRolloverImage = ImageLoader.getInstance().getImage(
+        Translator.getString("image.ButtonSimulationRol[i18n]: conf/image/interface/menu/Btn-SimulationRol.png"));
     ImageToggleButton simulButton 
         = new ImageToggleButton(simulNormalImage, simulRolloverImage, simulNormalImage);
     simulButton.addActionListener(new ActionListener() {
@@ -210,6 +221,19 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     else {
       vaRadio.setSelected(true);
     }
+    // TODO: add text label for Mode button group
+//    TextLabel textLabelVV = new TextLabel(Translator.getString("label.modeVV[i18n]: Veno-venous"));
+//    textLabelVV.setHorizontalAlignment(JLabel.LEFT);
+//    textLabelVV.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f)); 
+//    textLabelVV.setLocation(32, 15);
+//    textLabelVV.setSize(120, 45);
+//    componentSelectionPanel.add(textLabelVV);
+//    TextLabel textLabelVA = new TextLabel(Translator.getString("label.modeVA[i18n]: Veno-arterial"));
+//    textLabelVA.setHorizontalAlignment(JLabel.LEFT);
+//    textLabelVA.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f)); 
+//    textLabelVA.setLocation(174, 15);
+//    textLabelVA.setSize(120, 45);
+//    componentSelectionPanel.add(textLabelVA);
     
     ButtonGroup oxygenatorButtonGroup = new ButtonGroup();
     Image sciMedRadioRolloverImage 
@@ -298,7 +322,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
             Configuration.getInstance().setSelectionVVModeECMO(vvRadio.isSelected());
           }
 
-          // update oxigenator
+          // update oxygenator
           OxygenatorComponent oxy = (OxygenatorComponent)equipment.getComponent(OxygenatorComponent.class);
           if (oxy.getOxyType() == null) {
             if (siliconeRadio.isSelected()) {
