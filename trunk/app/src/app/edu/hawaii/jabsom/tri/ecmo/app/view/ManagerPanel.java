@@ -34,7 +34,7 @@ public class ManagerPanel extends JPanel {
 
   /** The panel image. */
   private Image background = ImageLoader.getInstance().getImage(
-      Translator.getString("image.base[i18n]: conf/image/interface/game/Base.png"));
+      Translator.getString("image.gamebase[i18n]: conf/image/interface/game/Base.png"));
 
   /** The current detail panel. null for none. */
   private DetailPanel detailPanel;
