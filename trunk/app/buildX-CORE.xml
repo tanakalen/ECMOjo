@@ -24,6 +24,18 @@
     <property name="lib.dir" value="${basedir}/lib"/>
     <property name="lib.ant.dir" value="${lib.dir}/ant"/>
     <property name="lib.project.dir" value="${lib.dir}/project"/>
+    <condition property="lib.rt.dir" value="${java.home}/lib/rt.jar">
+      <os family="windows"/>
+    </condition>
+    <condition property="lib.rt.dir" value="${java.home}/../Classes/classes.jar">
+      <os family="mac"/>
+    </condition>
+    <condition property="lib.jsse.dir" value="${java.home}/lib/jsse.jar">
+      <os family="windows"/>
+    </condition>
+    <condition property="lib.jsse.dir" value="${java.home}/../Classes/jsse.jar">
+      <os family="mac"/>
+    </condition>
   </target>
   <!-- *********************************************************************** -->
   <target name="post-init" depends="init">          
@@ -323,7 +335,7 @@
   	      description="Obfuscates files so they are not anymore readable."> 
     <!-- Proguard code obfuscator -->
     <mkdir dir="${build.obfuscate.dir}"/>
-  	<delete file="${build.obfuscate.dir}/${name}.jar"/> 	
+  	<delete file="${build.obfuscate.dir}/${name}.jar"/>
   	<taskdef resource="proguard/ant/task.properties" classpath="${lib.ant.dir}/proguard.jar" />
   	<!-- Please note that [obfuscate="false"]: it's an open source project... -->
   	<proguard printseeds="true" optimize="false" obfuscate="false" ignorewarnings="true"
@@ -332,8 +344,8 @@
   	  <!-- Specify the input jars, output jars, and library jars. -->
   	  <injar  file="${build.library.dir}/${name}.jar"/>
   	  <outjar file="${build.obfuscate.dir}/${name}.jar"/>
-  	  <libraryjar file="${java.home}/lib/rt.jar"/> 
-  	  <libraryjar file="${java.home}/lib/jsse.jar"/> <!-- maybe not needed in later releases? -->
+  	  <libraryjar file="${lib.rt.dir}"/> 
+  	  <libraryjar file="${lib.jsse.dir}"/> <!-- maybe not needed in later releases? -->
   	  <libraryjar file="${lib.project.dir}">
         <fileset dir="${lib.project.dir}" includes="${library.files}"/>
       </libraryjar>
@@ -394,7 +406,7 @@
   	              name      ="readResolve"
   	              parameters="" />
   	  </keepclassmembers>
-  	</proguard> 
+  	</proguard>
     <!-- Sign all the jars (Eclipse problem: Preferences>Java>Installed JRE: Put JDK instead of JRE directory) -->
 	  <signjar alias="${keystore.alias}" keystore="${keystore.file}" storepass="${keystore.storepass}">
       <fileset dir="${build.obfuscate.dir}" includes="*.jar"/>
@@ -522,9 +534,9 @@
     <for param="jarpath">
       <fileset dir="${build.webstart.dir}" includes="*.jar" />
       <sequential>
-	    <propertyregex override="yes"
-	      property="pack.jar" input="@{jarpath}"
-	      regexp=".*\\([^\\]*)\.jar" select="\1.jar"/>
+        <propertyregex override="yes"
+          property="pack.jar" input="@{jarpath}"
+          regexp=".*[\\\/]([^\\\/]*)\.jar" select="\1.jar"/>
         <pack200 src="${build.webstart.dir}/${pack.jar}" destfile="${build.webstart.dir}/unpacked/${pack.jar}" repack="true" />
       </sequential>
     </for>
@@ -539,9 +551,9 @@
     <for param="jarpath">
       <fileset dir="${build.webstart.dir}/unpacked" includes="*.jar" />
       <sequential>
-	    <propertyregex override="yes"
-	      property="pack.jar" input="@{jarpath}"
-	      regexp=".*\\([^\\]*)\.jar" select="\1.jar"/>
+        <propertyregex override="yes"
+          property="pack.jar" input="@{jarpath}"
+          regexp=".*[\\\/]([^\\\/]*)\.jar" select="\1.jar"/>
         <pack200 src="${build.webstart.dir}/unpacked/${pack.jar}" destfile="${build.webstart.dir}/packed/${pack.jar}.pack.gz" gzipoutput="true" />
         <echo file="${build.webstart.dir}/${pack.jar}.var">URI: packed/${pack.jar}.pack.gz
 Content-Type: x-java-archive

@@ -103,7 +103,16 @@
 	&nbsp;&nbsp;&nbsp;John Lutz -
 	   <script type="text/javascript">
 	     document.write("<n uers=\"<?php echo str_rot13('mailto:lutzw@upmc.edu'); ?>\"><?php echo str_rot13('lutzw@upmc.edu'); ?></n>".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
+	   </script><br><br>
+
+	<strong>Translation</strong>: <br>
+	&nbsp;&nbsp;&nbsp;<strong>Japanese</strong>:<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Takanari Ikeyama, MD -
+	   <script type="text/javascript">
+	     document.write("<n uers=\"<?php echo str_rot13('mailto:taqnary@gmail.com'); ?>\"><?php echo str_rot13('taqnary@gmail.com'); ?></n>".replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}));
 	   </script><br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yuko Shiima, MD
+	<br>
 </div>
 <p class="footnote">
   (*) Please contact us if we forgot to add your name. Our apologies.
