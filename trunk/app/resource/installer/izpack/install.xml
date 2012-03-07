@@ -38,14 +38,14 @@
     -->
     <guiprefs width="640" height="480" resizable="yes"/>
 
-    <!-- 
+	<!-- 
         The locale section.
 		Asks here to include the English and Japanese langpacks.
-    -->
+	-->
     <locale>
         <langpack iso3="eng"/>
-        <langpack iso3="jpn"/>
-    </locale>
+		<!--<langpack iso3="jpn"/>-->
+	</locale>
 
     <!-- 
         The resources section.
@@ -87,6 +87,8 @@
 			<fileset dir="lib" targetdir="$INSTALL_PATH/lib">
 				<include name="**"/>
 			</fileset>
+			<file src="scenario" targetdir="$INSTALL_PATH"/>
+			<singlefile src="scenario/write/app/Application.config" target="$INSTALL_PATH/scenario">
         </pack>
 	</packs>
 
