@@ -29,38 +29,7 @@ public class AboutStatePanel extends JPanel {
   private Image background = ImageLoader.getInstance().getImage("conf/image/interface/about/Base.jpg");
     
   /** The info text. */
-  private final String infoText = 
-        "<h1>Information &amp; Overview</h1>"  
-      + "ECMOjo is a simulator and trainer for extracorporeal membrane oxygenation (ECMO). " 
-      + "It consists of a graphical user interface to allow interaction and train ECMO practitioners, and has been " 
-      + "developed by Telehealth Research Institute (TRI), University of Hawaii. "
-      + "<font color=\"#e00000\"><b>ECMOjo</b></font> contains the word ECMO and mojo "
-      + "(<b><font color=\"#e00000\">magic charm</font></b>). In intensive care medicine, extracorporeal membrane " 
-      + "oxygenation (ECMO) is an extracorporeal technique of providing both cardiac and respiratory support " 
-      + "oxygen to patients whose heart and lungs are so severely diseased or damaged that they can no longer "
-      + "serve their function.<br>"
-      + "<br>"
-      + "ECMOjo is open source software hosted on SourceForge. The program has been implemented in Java and "
-      + "can be run as either a standalone desktop application or via the Internet. "
-      + "ECMOjo has been developed by Telehealth Research Institute, University of Hawaii.<br>"
-      + "<br>"
-      + "<h1>Credits</h1>"
-      + "Lawrence P. Burgess, MD, Principal Investigator<br>"
-      + "Mark T. Ogino, MD, Project Manager<br>"
-      + "Christoph Aschwanden, PhD, Lead Developer<br>"
-      + "Kin Lik Wang (Alex), Developer<br>"
-      + "Len Tanaka, MD, Developer<br>"
-      + "Kaleiohu Lee, Artist<br>"
-      + "Donald McCurnin, MD, Godfather<br>"
-      + "Kristen Costales, CCP, Advisor<br>"
-      + "Melinda Hamilton, MD, Advisor<br>"
-      + "Kent Kelly, CCP, Advisor<br>"
-      + "Melody Kilcommons, RNC, Advisor<br>"
-      + "John Lutz, Advisor<br>"
-      + "<br>"
-      + "<h1>Acknowledgement</h1>"
-      + "This project has been supported by grant No. W81XWH-06-2-0061 awarded by Department of Defense (DoD), "
-      + "United States of America.<br>";
+//  private final String infoText;
 
     
   /**
@@ -86,7 +55,42 @@ public class AboutStatePanel extends JPanel {
     // add text panel
     InternetTextPane infoArea = new InternetTextPane();
     infoArea.setDefaultLineSpacing(0.25f);
-    infoArea.addHTML(infoText);
+    infoArea.addHTML(
+        Translator.getString("text.infoText[i18n]: "
+            + "<h1>Information &amp; Overview</h1>"  
+            + "ECMOjo is a simulator and trainer for extracorporeal membrane oxygenation (ECMO). " 
+            + "It consists of a graphical user interface to allow interaction and train ECMO practitioners, "
+            + "and has been developed by Telehealth Research Institute (TRI), University of Hawaii. "
+            + "<font color=\"#e00000\"><b>ECMOjo</b></font> contains the word ECMO and mojo "
+            + "(<b><font color=\"#e00000\">magic charm</font></b>). "
+            + "In intensive care medicine, extracorporeal membrane " 
+            + "oxygenation (ECMO) is an extracorporeal technique of providing both cardiac and respiratory support " 
+            + "oxygen to patients whose heart and lungs are so severely diseased or damaged that they can no longer "
+            + "serve their function.<br>"
+            + "<br>"
+            + "ECMOjo is open source software hosted on SourceForge. The program has been implemented in Java and "
+            + "can be run as either a standalone desktop application or via the Internet. "
+            + "ECMOjo has been developed by Telehealth Research Institute, University of Hawaii.<br>"
+            + "<br>"
+            + "<h1>Credits</h1>"
+            + "Lawrence P. Burgess, MD, Principal Investigator<br>"
+            + "Mark T. Ogino, MD, Project Manager<br>"
+            + "Christoph Aschwanden, PhD, Lead Developer<br>"
+            + "Kin Lik Wang (Alex), Developer<br>"
+            + "Len Y. Tanaka, MD, Developer<br>"
+            + "Kaleiohu Lee, Artist<br>"
+            + "Donald McCurnin, MD, Godfather<br>"
+            + "Kristen Costales, CCP, Advisor<br>"
+            + "Melinda Hamilton, MD, Advisor<br>"
+            + "Kent Kelly, CCP, Advisor<br>"
+            + "Melody Kilcommons, RNC, Advisor<br>"
+            + "John Lutz, Advisor<br>"
+            + "<br>"
+            + "<h1>Acknowledgement</h1>"
+            + "This project has been supported by grant No. W81XWH-06-2-0061 awarded by Department of Defense (DoD), "
+            + "United States of America.<br>"
+            )
+    );
     JScrollPane infoScroll = new JScrollPane(infoArea);
     infoScroll.setLocation(15, 95);
     infoScroll.setSize(770, 450);
