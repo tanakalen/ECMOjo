@@ -29,7 +29,9 @@
 	    The variable definitions. DOES NOT WORK?!
 	-->
 	<variables>
+		<variable name="build" value="build/app/application"/>
 		<variable name="rcsIzpack" value="resource/installer/izpack"/>
+		<variable name="InstallerFrame.logfilePath" value="Default"/>
 	</variables>
 
     <!-- 
@@ -53,7 +55,7 @@
     -->
     <resources>
         <res id="LicencePanel.licence" src="LICENSE.txt"/>
-		<res id="InfoPanel.info" src="README" parse="yes"/>
+		<res id="InfoPanel.info" src="README" parse="no"/>
 		<res id="shortcutSpec.xml" src="resource/installer/izpack/shortcutSpec.xml"/>
     </resources>
 
@@ -82,28 +84,23 @@
             <file src="README" targetdir="$INSTALL_PATH"/>
             <file src="LICENSE.txt" targetdir="$INSTALL_PATH"/>
 			<!--<file src="logo-128x128.icns" targetdir="$INSTALL_PATH"/>-->
-            <!-- The file will be parsed -->
+			<!-- The file will be parsed -->
+			<fileset dir="build/app/application/lib" targetdir="$INSTALL_PATH/lib">
+				<include name="**"/>
+			</fileset>
+			<fileset dir="build/app/application/extra" targetdir="$INSTALL_PATH/extra">
+				<include name="**"/>
+			</fileset>
+			<fileset dir="build/app/application/scenario" targetdir="$INSTALL_PATH/scenario">
+				<include name="**"/>
+			</fileset>
 			<file src="src" targetdir="$INSTALL_PATH"/>
-			<fileset dir="lib/project" targetdir="$INSTALL_PATH/lib">
-				<include name="**"/>
-			</fileset>
-			<singlefile src="extra" target="$INSTALL_PATH/extra"/>
-			<singlefile src="scenario/write/app/Application.config" target="$INSTALL_PATH/scenario/Application.config"/>
-			<singlefile src="scenario/write/app/logs" target="$INSTALL_PATH/scenario/logs"/>
-			<singlefile src="scenario/write/app/scores" target="$INSTALL_PATH/scenario/scores"/>
-			<fileset dir="scenario/write-over/app/adult" targetdir="$INSTALL_PATH/scenario/adult">
-				<include name="**"/>
-			</fileset>
-			<fileset dir="scenario/write-over/app/infant" targetdir="$INSTALL_PATH/scenario/infant">
-				<include name="**"/>
-			</fileset>
-			<fileset dir="scenario/write-over/app/infant_ja" targetdir="$INSTALL_PATH/scenario/infant_ja">
-				<include name="**"/>
-			</fileset>
         </pack>
 	</packs>
 
 	<!-- The native libraries to add. For Windows shortcuts -->
-	<native type="izpack" name="ShellLink.dll"/>
+	<native type="izpack" name="ShellLink.dll">
+		<os family="windows"/>
+	</native>
 
 </installation>
