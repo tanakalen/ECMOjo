@@ -82,9 +82,9 @@ public class ScenarioListPanel extends JPanel {
       public void rollover(int index) {
         if (index >= 0) {
           Scenario scenario = scenarios.get(index);
-          listPanel.setToolTipText("<u>" 
+          listPanel.setToolTipText("<html><u>" 
               + scenario.getName() + "</u><br>" 
-              + scenario.getDescription() + "");
+              + scenario.getDescription() + "</html>");
         }
         else {
           listPanel.setToolTipText(null);

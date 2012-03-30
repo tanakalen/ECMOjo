@@ -1,6 +1,6 @@
 # Scenario Information
 name = ローラーポンプECMOの離脱 
-desc = ローラーポンプによるECLS（ExtraCorporial Life Support 体外循環）サポートの緊急離脱の手順
+desc = ローラーポンプによるECLS（Extracorporeal Life Support 体外循環）サポートの緊急離脱の手順
 
 # Scenario Parameters
 scenario-ecmo-mode = *
