@@ -1,4 +1,4 @@
-<project name="ECMOApp (Test)" default="application">	
+<project name="ECMOApp (Test)" default="application" basedir=".">	
   <import file="buildX-GLOBALS.xml"/>
   <!-- *********************************************************************** -->
   <target name="init" depends="pre-init, globals">  

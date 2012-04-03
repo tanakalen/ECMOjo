@@ -1,5 +1,5 @@
 <?eclipse.ant.import ?>
-<project name="Core Build file - Define init in subfile and include.">	
+<project name="Core Build file - Define init in subfile and include." basedir=".">	
   <target name="pre-init">          
     <!-- Global Release time -->
     <tstamp>
@@ -13,15 +13,15 @@
     <property name="time" value="${TSTAMP}"/>
     <property name="release.time" value="${YEARSTAMP}-${MONTHSTAMP}-${DAYSTAMP}.${MINUTESTAMP}"/>  	
     <!-- Global directories -->
-    <property name="src.dir" value="${basedir}/src"/>
-    <property name="conf.dir" value="${basedir}/conf"/>
-    <property name="resource.dir" value="${basedir}/resource"/>
-    <property name="scenario.dir" value="${basedir}/scenario"/>
-    <property name="extra.dir" value="${basedir}/extra"/>
-    <property name="extra-special.dir" value="${basedir}/extra-special"/>
-    <property name="doc.dir" value="${basedir}/doc"/>
-    <property name="web.dir" value="${basedir}/web"/>
-    <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="src.dir" value="src"/>
+    <property name="conf.dir" value="conf"/>
+    <property name="resource.dir" value="resource"/>
+    <property name="scenario.dir" value="scenario"/>
+    <property name="extra.dir" value="extra"/>
+    <property name="extra-special.dir" value="extra-special"/>
+    <property name="doc.dir" value="doc"/>
+    <property name="web.dir" value="web"/>
+    <property name="lib.dir" value="lib"/>
     <property name="lib.ant.dir" value="${lib.dir}/ant"/>
     <property name="lib.project.dir" value="${lib.dir}/project"/>
     <condition property="lib.rt.dir" value="${java.home}/lib/rt.jar">
@@ -42,7 +42,7 @@
   	<!-- Global Test files -->
     <property name="test.files" value="**/Test*"/>    
     <!-- Global directories -->
-    <property name="build.dir" value="${basedir}/build/${subname}"/>
+    <property name="build.dir" value="build/${subname}"/>
     <property name="build.src.dir" value="${build.dir}/src"/>
     <property name="build.dest.dir" value="${build.dir}/classes"/>
     <property name="build.src_html.dir" value="${build.dir}/src_html"/>
@@ -264,25 +264,43 @@
   </target>
   <!-- *********************************************************************** -->
   <target name="executable">
-    <!-- Convert path, depending on os -->
+  	<path id="project.class.path">
+  	  <fileset dir="${structure.dir}/lib">
+  	    <include name="**/*.jar"/>
+  	  </fileset>
+  	</path>
+  	<pathconvert property="string.classpath" pathsep=" ">
+  	  <path refid="project.class.path" />
+  	  <mapper><chainedmapper>
+  	  <flattenmapper />
+      <globmapper from="*" to="lib/*" />
+  	  </chainedmapper></mapper>
+  	</pathconvert>
+  	<!-- create the manifest file method for invocation "java -jar ECMOjo.jar" -->
+    <manifest file="${structure.dir}/MANIFEST.MF">
+      <attribute name="Implementation-Title" value="ECMOjo" />
+      <attribute name="Implementation-Version" value="${global.release.version}" />
+      <attribute name="Built-By" value="${author}" />
+      <attribute name="Main-Class" value="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp" />
+      <attribute name="Class-Path" value="${string.classpath}" />
+    </manifest>
+  	<jar jarfile="${structure.dir}/ECMOjo.jar" basedir="${structure.dir}/lib"
+  	  manifest="${structure.dir}/MANIFEST.MF" />
+  	<!-- Convert path, depending on os -->
   	<condition property="os.target.name" value="windows">
   		<os family="windows"/>
   	</condition>
   	<condition property="os.target.name" value="unix">
   		<os family="unix"/>
   	</condition>
-    <pathconvert targetos="${os.target.name}" property="java.class.path.absolute" >
-      <path>
-        <fileset dir="${structure.dir}/lib" includes="*.jar"/>
-      </path>
+    <pathconvert targetos="${os.target.name}" property="bat.classpath">
+      <path refid="project.class.path" />
+      <mapper><chainedmapper>
+      <flattenmapper />
+      <globmapper from="*" to="lib/*" />
+      </chainedmapper></mapper>
     </pathconvert>
-    <pathconvert targetos="${os.target.name}" property="build.app.dir.absolute" >
-      <path location="${structure.dir}" />
-    </pathconvert>
-    <pathconvert targetos="${os.target.name}" property="java.lib.class.path">
-      <path path="${java.class.path.absolute}"/>
-      <map from="${build.app.dir.absolute}\" to=""/>
-    </pathconvert>
+  	<!-- Reference to JRE -->
   	<condition property="jreloc" value="&quot;%JAVA_HOME%\jre\bin\java&quot;">
   		<equals arg1="${os.target.name}" arg2="windows"/>
   	</condition>
@@ -291,7 +309,7 @@
   	</condition>
     <!-- Create executable file (windows, unix or mac) use: -Dsun.java2d.noddraw=true -->
     <echo file="${structure.dir}/${executable.file.name}.bat"
-          message="${jreloc} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${java.lib.class.path} ${executable.run} ${executable.args}"/>
+      message="${jreloc} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}"/>
   	<chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx"/>
   </target>
   <!-- *********************************************************************** -->
@@ -588,10 +606,10 @@ Content-Type: x-java-archive
     <!-- Copy .html for applet. -->
     <path id="applet.class.path">
       <fileset dir="${build.webstart.dir}/unpacked" includes="*.jar" />
-	  </path>	
-	  <pathconvert property="applet.class.path.property" refid="applet.class.path" pathsep=",">
-	    <mapper type="flatten"/>
-	  </pathconvert>
+	</path>	
+	<pathconvert property="applet.class.path.property" refid="applet.class.path" pathsep=",">
+	  <mapper type="flatten"/>
+	</pathconvert>
     <copy file="${resource.dir}/webstart/applet.inc" todir="${build.webstart.dir}" overwrite="true">
       <filterset>                                
         <filter token="applet.class.main" value="${prg.classfile}"/>
