@@ -56,8 +56,13 @@
     <property name="build.obfuscate.dir" value="${build.dir}/obfuscate"/>
     <property name="build.webapp.dir" value="${build.dir}/webapp"/>
     <property name="build.war.dir" value="${build.dir}/war"/>
+    <property name="dist_macos_name" value="ECMOjo_${global.release.version}"/>
+    <property name="dist_macos_base" location="${build.dir}/dist_macos"/>
+    <property name="dist_macos" location="${dist_macos_base}/${dist_macos_name}"/>
+    <property name="jarbundler.dir" value="jarbundler-2.2.0"/>
   	<!-- Load additional ant tasks -->
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
+    <taskdef name="jarbundler" classpath="${resource.dir}/installer/${jarbundler.dir}/${jarbundler.dir}.jar" classname="net.sourceforge.jarbundler.JarBundler"/>
     <!-- Jakarta-Tomcat (Catalina) - ant tasks -->
     <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"    classpath="${lib.ant.dir}/catalina-ant.jar" />
     <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask"    classpath="${lib.ant.dir}/catalina-ant.jar" />
@@ -281,7 +286,7 @@
       <attribute name="Implementation-Title" value="ECMOjo" />
       <attribute name="Implementation-Version" value="${global.release.version}" />
       <attribute name="Built-By" value="${author}" />
-      <attribute name="Main-Class" value="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp" />
+      <attribute name="Main-Class" value="${executable.run}" />
       <attribute name="Class-Path" value="${string.classpath}" />
     </manifest>
   	<jar jarfile="${structure.dir}/ECMOjo.jar" basedir="${structure.dir}/lib"
@@ -311,6 +316,46 @@
     <echo file="${structure.dir}/${executable.file.name}.bat"
       message="${jreloc} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}"/>
   	<chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx"/>
+  	<!-- Create app for Mac -->
+    <condition property="isMacOs">
+      <os family="mac"/>
+    </condition>
+    <antcall target="dist_macos"/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="dist_macos" if="isMacOs">
+    <property name="dist_macos_app_name" value="${executable.file.name}.app"/>
+    <property name="dist_macos_app" location="${dist_macos}/${dist_macos_app_name}"/>
+    <property name="dist_macos_contents" location="${dist_macos_app}/Contents"/>
+    <property name="dist_macos_info" location="${dist_macos_contents}/Info.plist"/>
+    <jarbundler dir="${dist_macos}"
+  	            name="${executable.file.name}" 
+    	        mainclass="${executable.run}"
+    	        icon="logo-128x128.icns"
+    	        version="${release.version}"
+  	            infostring="ECMOjo ${release.version} (build: ${release.time}) application (c) ${YEARSTAMP}"
+    	        shortname="ECMOjo"
+    	        bundleid="${executable.run}"
+    	        signature="ECJO"
+    	        jvmversion="1.4+"
+    	        vmoptions="-Xms${executable.memory}m -Xmx${executable.memory}m -Xss8M"
+    	        arguments="${executable.args}"
+                workingdirectory="${dist_macos_contents}/Resources/Java">
+      <jarfileset dir="${build.app.dir}/lib">
+        <include name="**/*.jar" />
+      </jarfileset>
+    </jarbundler>
+  	<copy todir="${dist_macos_contents}/Resources">
+  	  <fileset dir="${resource.dir}/installer/izpack">
+  	    <include name="logo-128x128.icns"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist_macos_contents}/Resources/Java">
+  	  <fileset dir="${build.app.dir}">
+  	    <include name="scenario/**"/>
+  	    <include name="extra/**"/>
+      </fileset>
+    </copy>
   </target>
   <!-- *********************************************************************** -->
   <target name="webjnlp">
@@ -433,7 +478,9 @@
   </target>
   <!-- *********************************************************************** -->
   <target name="application" depends="library, libconf"
-  	      description="Create Microsoft Windows executable(s) of the software for testing.">
+  	      description="Create executable(s) of the software for platform testing.">
+    <delete dir="${dist_macos}" followsymlinks="false"/>
+    <mkdir dir="${dist_macos}"/>
     <!-- copy external jar files -->
     <copy todir="${build.app.dir}/lib">
       <fileset dir="${lib.project.dir}" includes="${library.files}"/>
@@ -493,7 +540,14 @@
   	    </antcall>
   	  </sequential>
   	</for>
-    <echo message="The ${name} Application can be found in ${build.app.dir}"/>
+    <echo message="The ${name} Windows applications can be found in ${build.app.dir}"/>
+    <echo message="The ${name} Mac applications can be found in ${dist_macos}"/>
+    <!-- <exec dir="." os="Mac OS X" executable="/bin/bash">
+        <arg value="-c"/>
+        <arg value="./scripts/mkdmg.sh /Users/Me/Development/ ./mac/ ./mac-image/ Project"/>
+    </exec>
+    <gzip zipfile="${dist}/mac-image/MyTool .dmg.gz" src="${dist}/mac-image/MyTool.dmg"/>
+    -->
   </target>
   <!-- *********************************************************************** -->
   <target name="webstart" depends="obfuscate, libconf"
