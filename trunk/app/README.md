@@ -1,22 +1,24 @@
 Information & Overview
+----------------------
 
-ECMOjo is a simulator and trainer for extracorporeal membrane
+[ECMOjo][ecmojo] is a simulator and trainer for extracorporeal membrane
 oxygenation (ECMO). It consists of a graphical user interface to allow
-interaction and train ECMO practitioners, and has been developed by Telehealth
-Research Institute (TRI), University of Hawaii. ECMOjo contains
+interaction and train ECMO practitioners, and has been developed by [Telehealth
+Research Institute (TRI), University of Hawaii][tri]. [ECMOjo][ecmojo] contains
 the word ECMO and mojo (magic charm). In intensive care medicine,
 extracorporeal membrane oxygenation (ECMO) is an artificial device to provide
 both cardiac and respiratory support oxygen to patients whose heart and lungs
 are so severely diseased or damaged that they can no longer serve their
 function.
 
-ECMOjo is open source software hosted on SourceForge and GitHub. The
+[ECMOjo][ecmojo] is open source software hosted on SourceForge and GitHub. The
 program has been implemented in Java and can be run as either a standalone
-desktop application or via the Internet. ECMOjo has been developed by
-Telehealth Research Institute, University of Hawaii.
+desktop application or via the Internet. [ECMOjo][ecmojo] has been developed by
+[Telehealth Research Institute, University of Hawaii][tri].
 
 
 Credits
+-------
 
 Lawrence P. Burgess, MD, Principal Investigator
 Mark T. Ogino, MD, Project Manager
@@ -33,13 +35,18 @@ John Lutz, Advisor
 
 
 Acknowledgement
+---------------
 
 This project has been supported by grant No. W81XWH-06-2-0061 awarded by
 Department of Defense (DoD), United States of America.
 
 
 Installation
+------------
 
 With Java and Ant:
     ant -f build-app-live.xml application
 Executables will be located in build/app/application directory
+
+[emcmojo]: http://ecmojo.sourceforge.net
+[tri]: http://www.tri.jabsom.hawaii.edu
