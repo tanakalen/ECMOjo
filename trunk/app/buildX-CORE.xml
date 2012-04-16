@@ -302,7 +302,7 @@
   	<!-- Create apps for Mac OS X -->
     <antcall target="dist_macos"/>
   	<!-- Create exe for Windows -->
-  	<!-- <antcall target="dist_win"> -->
+  	<antcall target="dist_win"/>
   </target>
   <!-- *********************************************************************** -->
   <target name="dist_macos" if="isMacOs">
@@ -359,22 +359,54 @@
   </target>
   <!-- *********************************************************************** -->
   <target name="dist_win" if="isWinOs">
-  <!--
+    <property name="dist_win_app_name" value="${executable.file.longname}"/>
+    <property name="dist_win_app" value="${dist_win}/${dist_win_app_name}"/>
+  	<echo message="${dist_win}"/>
+    <copy todir="${dist_win_app}">
+      <fileset dir="${build.app.dir}">
+        <include name="lib/**"/>
+        <include name="scenario/**"/>
+        <include name="extra/**"/>
+      </fileset>
+    </copy>
   	<launch4j>
-  	  <config headerType="gui" outfile="${executable.file.longname}.exe"
-  	      dontWrapJar="true" jarPath="demo.jar" >
-  	    <var>SETTINGS="%HomeDrive%%HomePath%\\settings.ini"</var>
-  	    <classPath mainClass="org.demo.DemoApp">
-  	        <cp>./lib/looks.jar</cp>
-  	        <cp>%USER_LIBS%/*.jar</cp>
+  	  <config 
+  	  	  headerType="gui" 
+  	  	  outfile="${dist_win_app}/${executable.file.longname}.exe"
+  	      dontWrapJar="true" 
+  	  	  cmdLine="${executable.args}"
+  	  	  icon="${resource.dir}/installer/izpack/logo-32x32.ico"
+  		  >
+  	    <classPath mainClass="${executable.run}">
+  	        <cp>${dist_win_app}/lib/*.jar</cp>
   	    </classPath>
   	    <jre minVersion="1.4.0">
-  	        <opt>-Dlaunch4j.exedir="%EXEDIR%"</opt>
-  	        <opt>-Dlaunch4j.exefile="%EXEFILE%"</opt>
+  	      <opt>-Xms${executable.memory}m</opt>
+  	      <opt>-Xmx${executable.memory}m</opt>
+  	      <opt>-Xss8M</opt>
+  	      <opt>-Dlaunch4j.exedir="%EXEDIR%"</opt>
+  	      <opt>-Dlaunch4j.exefile="%EXEFILE%"</opt>
   	    </jre>
+        <!--
+  	    <versionInfo
+          copyright="${YEARSTAMP}"/>
+          fileVersion="2.4.0"
+          txtFileVersion="${executable.file.longname} ${release.version} (build: ${release.time}) application (c) ${YEARSTAMP}"/>
+          fileDescription="ECMOjo: ECMO simulation training"
+          copyright="${YEARSTAMP}"
+          productName="${executable.file.longname}"
+          companyName="TRI"
+          internalName="${executable.file.name}"
+          originalFilename="${executable.file.name}.exe"
+  	    <messages>
+  	      <startupErr>text</startupErr>
+  	      <bundledJreErr>text</bundledJreErr>
+  	      <jreVersionErr>text</jreVersionErr>
+  	      <launcherErr>text</launcherErr>
+  	    </messages>
+  	    -->
   	  </config>
   	</launch4j>
-  -->
   </target>
   <!-- *********************************************************************** -->
   <target name="webjnlp">
