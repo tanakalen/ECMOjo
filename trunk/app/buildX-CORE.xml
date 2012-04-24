@@ -1,74 +1,76 @@
 <?eclipse.ant.import ?>
-<project name="Core Build file - Define init in subfile and include." basedir=".">	
+<project name="Core Build file - Define init in subfile and include." basedir=".">
   <target name="pre-init">
     <!-- Global Release time -->
     <tstamp>
-      <format property="TSTAMP" pattern="HH:mm:ss"/>
-      <format property="MINUTESTAMP" pattern="HHmm"/>
-      <format property="DAYSTAMP" pattern="dd"/>
-      <format property="MONTHSTAMP" pattern="MM"/>
+      <format property="TSTAMP" pattern="HH:mm:ss" />
+      <format property="MINUTESTAMP" pattern="HHmm" />
+      <format property="DAYSTAMP" pattern="dd" />
+      <format property="MONTHSTAMP" pattern="MM" />
       <format property="YEARSTAMP" pattern="yyyy" />
     </tstamp>
-    <property name="date" value="${MONTHSTAMP}/${DAYSTAMP}/${YEARSTAMP}"/>
-    <property name="time" value="${TSTAMP}"/>
-    <property name="release.time" value="${YEARSTAMP}-${MONTHSTAMP}-${DAYSTAMP}.${MINUTESTAMP}"/>  	
+    <property name="date" value="${MONTHSTAMP}/${DAYSTAMP}/${YEARSTAMP}" />
+    <property name="time" value="${TSTAMP}" />
+    <property name="release.time" value="${YEARSTAMP}-${MONTHSTAMP}-${DAYSTAMP}.${MINUTESTAMP}" />
     <!-- Global directories -->
-    <property name="src.dir" value="src"/>
-    <property name="conf.dir" value="conf"/>
-    <property name="resource.dir" value="resource"/>
-    <property name="scenario.dir" value="scenario"/>
-    <property name="extra.dir" value="extra"/>
-    <property name="extra-special.dir" value="extra-special"/>
-    <property name="doc.dir" value="doc"/>
-    <property name="web.dir" value="web"/>
-    <property name="lib.dir" value="lib"/>
-    <property name="lib.ant.dir" value="${lib.dir}/ant"/>
-    <property name="lib.project.dir" value="${lib.dir}/project"/>
+    <property name="src.dir" value="src" />
+    <property name="conf.dir" value="conf" />
+    <property name="resource.dir" value="resource" />
+    <property name="scenario.dir" value="scenario" />
+    <property name="extra.dir" value="extra" />
+    <property name="extra-special.dir" value="extra-special" />
+    <property name="doc.dir" value="doc" />
+    <property name="web.dir" value="web" />
+    <property name="lib.dir" value="lib" />
+    <property name="lib.ant.dir" value="${lib.dir}/ant" />
+    <property name="lib.project.dir" value="${lib.dir}/project" />
     <condition property="lib.rt.dir" value="${java.home}/lib/rt.jar">
-      <os family="windows"/>
+      <os family="windows" />
     </condition>
     <condition property="lib.rt.dir" value="${java.home}/../Classes/classes.jar">
-      <os family="mac"/>
+      <os family="mac" />
     </condition>
     <condition property="lib.jsse.dir" value="${java.home}/lib/jsse.jar">
-      <os family="windows"/>
+      <os family="windows" />
     </condition>
     <condition property="lib.jsse.dir" value="${java.home}/../Classes/jsse.jar">
-      <os family="mac"/>
+      <os family="mac" />
     </condition>
   </target>
   <!-- *********************************************************************** -->
   <target name="post-init" depends="init">
     <!-- Global Test files -->
-    <property name="test.files" value="**/Test*"/>
+    <property name="test.files" value="**/Test*" />
     <!-- Global directories -->
-    <property name="build.dir" value="build/${subname}"/>
-    <property name="build.src.dir" value="${build.dir}/src"/>
-    <property name="build.dest.dir" value="${build.dir}/classes"/>
-    <property name="build.src_html.dir" value="${build.dir}/src_html"/>
-    <property name="build.api.dir" value="${build.dir}/api"/>
-    <property name="build.size.dir" value="${build.dir}/size_data"/>
-    <property name="build.test.dir" value="${build.dir}/test_output"/>
-    <property name="build.library.dir" value="${build.dir}/library"/>
-    <property name="build.libconf.dir" value="${build.dir}/libconf"/>
-    <property name="build.app.dir" value="${build.dir}/application"/>
-    <property name="build.webstart.dir" value="${build.dir}/webstart"/>
-    <property name="build.obfuscate.dir" value="${build.dir}/obfuscate"/>
-    <property name="build.webapp.dir" value="${build.dir}/webapp"/>
-    <property name="build.war.dir" value="${build.dir}/war"/>
-    <property name="dist_name" value="ECMOjo_${global.release.version}"/>
-    <property name="dist.dir" value="${build.dir}/dist"/>
-    <property name="dist_macos_base" value="${dist.dir}/dist_macos"/>
-    <property name="dist_macos" value="${dist_macos_base}/${dist_name}"/>
-    <property name="jarbundler.ver" value="jarbundler-2.2.0"/>
-    <property name="jarbundler.dir" value="${resource.dir}/installer/${jarbundler.ver}"/>
-    <property name="dist_win_base" value="${dist.dir}/dist_win"/>
-    <property name="dist_win" value="${dist_win_base}/${dist_name}"/>
+    <property name="build.dir" value="build/${subname}" />
+    <property name="build.src.dir" value="${build.dir}/src" />
+    <property name="build.dest.dir" value="${build.dir}/classes" />
+    <property name="build.src_html.dir" value="${build.dir}/src_html" />
+    <property name="build.api.dir" value="${build.dir}/api" />
+    <property name="build.size.dir" value="${build.dir}/size_data" />
+    <property name="build.test.dir" value="${build.dir}/test_output" />
+    <property name="build.library.dir" value="${build.dir}/library" />
+    <property name="build.libconf.dir" value="${build.dir}/libconf" />
+    <property name="build.app.dir" value="${build.dir}/application" />
+    <property name="build.webstart.dir" value="${build.dir}/webstart" />
+    <property name="build.obfuscate.dir" value="${build.dir}/obfuscate" />
+    <property name="build.webapp.dir" value="${build.dir}/webapp" />
+    <property name="build.war.dir" value="${build.dir}/war" />
+    <property name="dist_name" value="ECMOjo_${global.release.version}" />
+    <property name="dist.dir" value="${build.dir}/dist" />
+    <property name="dist_src_base" value="${dist.dir}/dist_src" />
+    <property name="dist_src" value="${dist_src_base}/${dist_name}" />
+    <property name="dist_macos_base" value="${dist.dir}/dist_macos" />
+    <property name="dist_macos" value="${dist_macos_base}/${dist_name}" />
+    <property name="jarbundler.ver" value="jarbundler-2.2.0" />
+    <property name="jarbundler.dir" value="${resource.dir}/installer/${jarbundler.ver}" />
+    <property name="dist_win_base" value="${dist.dir}/dist_win" />
+    <property name="dist_win" value="${dist_win_base}/${dist_name}" />
     <property name="launch4j.dir" value="${resource.dir}/installer/launch4j" />
     <!-- Load additional ant tasks -->
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
-    <taskdef name="jarbundler" classpath="${jarbundler.dir}/${jarbundler.ver}.jar" classname="net.sourceforge.jarbundler.JarBundler"/>
-    <taskdef name="launch4j" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" classname="net.sf.launch4j.ant.Launch4jTask"/>
+    <taskdef name="jarbundler" classpath="${jarbundler.dir}/${jarbundler.ver}.jar" classname="net.sourceforge.jarbundler.JarBundler" />
+    <taskdef name="launch4j" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" classname="net.sf.launch4j.ant.Launch4jTask" />
     <!-- Jakarta-Tomcat (Catalina) - ant tasks -->
     <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"    classpath="${lib.ant.dir}/catalina-ant.jar" />
     <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask"    classpath="${lib.ant.dir}/catalina-ant.jar" />
@@ -79,28 +81,28 @@
   <!-- *********************************************************************** -->
   <target name="clean" depends="post-init"
           description="Delete build/ and misc other files.">
-    <delete dir="${build.dir}"/>
+    <delete dir="${build.dir}" />
     <!-- Delete backup files left by IDE and JRefactory. -->
     <delete>
-      <fileset dir="${basedir}" defaultexcludes="no" includes="**/*~"/>
-      <fileset dir="${basedir}" includes="src/**/*.java.*"/>
+      <fileset dir="${basedir}" defaultexcludes="no" includes="**/*~" />
+      <fileset dir="${basedir}" includes="src/**/*.java.*" />
     </delete>
   </target>
   <!-- *********************************************************************** -->
   <target name="eclipse-properties" if="eclipse.running">
     <!-- Use different eclipse compiler if eclipse is running -->
-    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
   </target>
   <!-- *********************************************************************** -->
   <target name="prepare" depends="post-init,eclipse-properties">
     <!-- Prepare directories -->
-    <mkdir dir="${build.dir}"/>
-    <mkdir dir="${build.src.dir}"/>
-    <mkdir dir="${build.dest.dir}"/>
+    <mkdir dir="${build.dir}" />
+    <mkdir dir="${build.src.dir}" />
+    <mkdir dir="${build.dest.dir}" />
     <!-- Copy src files after touching the release file to update release. -->
-    <touch file="${release.file}"/>
+    <touch file="${release.file}" />
     <copy todir="${build.src.dir}" filtering="on">
-      <mapper type="regexp" from="${subdirs}" to="\3"/>
+      <mapper type="regexp" from="${subdirs}" to="\3" />
       <fileset dir="${src.dir}">
         <exclude name="**/*.class" />
       </fileset>
@@ -112,10 +114,10 @@
     <javac srcdir="${build.src.dir}"
            destdir="${build.dest.dir}"
            nowarn="on">
-      <compilerarg value="-Xlint:deprecation"/>
+      <compilerarg value="-Xlint:deprecation" />
       <classpath>
 	      <fileset dir="${lib.project.dir}">
-	        <include name="**/*.jar"/>
+	        <include name="**/*.jar" />
 	      </fileset>
       </classpath>
     </javac>
@@ -155,11 +157,11 @@
   <!-- *********************************************************************** -->
   <target name="test" depends="i18n"
           description="Run JUnit tests (classes whose name starts with Test) and generate a report.">
-    <mkdir dir="${build.test.dir}"/>
+    <mkdir dir="${build.test.dir}" />
     <!-- add scenario dir for testing -->
     <copy todir="${build.test.dir}/scenario">
       <mapper type="regexp" from="${subdirs}" to="\3" />
-      <fileset dir="${scenario.dir}/write"/>
+      <fileset dir="${scenario.dir}/write" />
     </copy>
     <copy todir="${build.test.dir}/scenario" overwrite="true">
       <mapper type="regexp" from="${subdirs}" to="\3" />
@@ -217,7 +219,7 @@
   <!-- *********************************************************************** -->
   <target name="javadoc" depends="checkstyle"
           description="Creates the JavaDoc API documentation.">
-    <mkdir dir="${build.api.dir}"/>
+    <mkdir dir="${build.api.dir}" />
     <!-- copy images -->
     <copy todir="${build.api.dir}">
       <fileset dir="${resource.dir}/overview" includes="images/*.jpg,images/*.gif"/>
@@ -245,7 +247,7 @@
     <!-- The jar file of the project -->
     <jar destfile="${build.library.dir}/${name}.jar">
       <fileset dir="${build.dest.dir}">
-        <include name="**/*.class"/>
+        <include name="**/*.class" />
         <include name="**/hibernate.cfg.xml" />
         <include name="**/*.hbm.xml" />
         <include name="**/*.properties" />
@@ -259,7 +261,7 @@
   <!-- *********************************************************************** -->
   <target name="libconf" depends="post-init"
           description="Creates the jar files containing all the files in conf directory.">
-    <mkdir dir="${build.libconf.dir}"/>
+    <mkdir dir="${build.libconf.dir}" />
     <!-- Create temp dir to copy conf files first. -->
     <mkdir dir="${build.libconf.dir}/temp" />
     <mkdir dir="${build.libconf.dir}/temp/conf" />
@@ -327,7 +329,7 @@
         <include name="**/*.jar" />
       </jarfileset>
     </jarbundler>
-    <copy file="${resource.dir}/installer/izpack/logo-128x128.icns" todir="${dist_macos_contents}/Resources" />
+    <copy file="${resource.dir}/installer/Icons/logo-128x128.icns" todir="${dist_macos_contents}/Resources" />
     <copy todir="${dist_macos_contents}/Resources/Java">
       <fileset dir="${structure.dir}">
         <include name="scenario/**" />
@@ -372,9 +374,9 @@
               headerType="gui"
               outfile="${dist_win_app}/${executable.file.longname}.exe"
               cmdLine="${executable.args}"
-              icon="${resource.dir}/installer/izpack/logo-32x32.ico">
+              icon="${resource.dir}/installer/Icons/logo-32x32.ico">
         <classPath mainClass="${executable.run}">
-            <cp>%EXEDIR%/lib/*.jar</cp>
+          <cp>%EXEDIR%/lib/*.jar</cp>
         </classPath>
         <jre minVersion="1.4.0"
              initialHeapSize="${executable.memory}"
@@ -405,6 +407,18 @@
     </launch4j>
   </target>
   <!-- *********************************************************************** -->
+  <target name="dist_src">
+    <tar destfile="${dist_src_base}/${dist_name}.tar.gz"
+         compression="gzip">
+      <tarfileset dir="${basedir}">
+        <exclude name="build/**" />
+        <exclude name="doc/**" />
+        <exclude name="test/**" />
+        <exclude name="www/**" />
+      </tarfileset>
+    </tar>
+  </target>
+  <!-- *********************************************************************** -->
   <target name="webjnlp">
     <!-- create jnlp file -->
     <jnlp toFile="${structure.dir}/${executable.file.name}.jnlp"
@@ -415,23 +429,23 @@
       <information>
         <title>${webstart.title}</title>
         <vendor>${webstart.author}</vendor>
-        <homepage href="${webstart.url}"/>
+        <homepage href="${webstart.url}" />
         <description>${webstart.description}</description>
-        <icon href="webstart-logo.gif"/>
+        <icon href="webstart-logo.gif" />
       </information>
       <security>
-        <all_permissions/>
+        <all_permissions />
       </security>
       <resources>
         <j2se version="1.5+" href="http://java.sun.com/products/autodl/j2se" initial_heap_size="${executable.memory}M" max_heap_size="${executable.memory}M"/>
-        <jar href="${name}.jar"/>
+        <jar href="${name}.jar" />
         <fileset dir="${structure.dir}/unpacked" includes="*.jar">
-          <exclude name="${name}.jar"/>
+          <exclude name="${name}.jar" />
         </fileset>
-        <!-- <property name="sun.java2d.noddraw" value="true"/> -->
-        <property name="webstart" value="true"/>
-        <property name="webstart.dir" value="${webstart.scenario.dir}"/>
-        <property name="webstart.extra.dir" value="${webstart.url}/webstart/extra"/>
+        <!-- <property name="sun.java2d.noddraw" value="true" /> -->
+        <property name="webstart" value="true" />
+        <property name="webstart.dir" value="${webstart.scenario.dir}" />
+        <property name="webstart.extra.dir" value="${webstart.url}/webstart/extra" />
         <!-- Java3D extensions (Depending on Project if to be added) -->
         <!-- <extension href="https://j3d-webstart.dev.java.net/release/java3d-1.3.2.jnlp"/> -->
       </resources>
@@ -444,20 +458,20 @@
   <target name="obfuscate" depends="library"
           description="Obfuscates files so they are not anymore readable."> 
     <!-- Proguard code obfuscator -->
-    <mkdir dir="${build.obfuscate.dir}"/>
-    <delete file="${build.obfuscate.dir}/${name}.jar"/>
+    <mkdir dir="${build.obfuscate.dir}" />
+    <delete file="${build.obfuscate.dir}/${name}.jar" />
     <taskdef resource="proguard/ant/task.properties" classpath="${lib.ant.dir}/proguard.jar" />
     <!-- Please note that [obfuscate="false"]: it's an open source project... -->
     <proguard printseeds="true" optimize="false" obfuscate="false" ignorewarnings="true"
               printmapping="${resource.dir}/obfuscate/proguard-mapping-${name}-${release.version}-${release.time}.txt" 
               defaultpackage="cg">
       <!-- Specify the input jars, output jars, and library jars. -->
-      <injar  file="${build.library.dir}/${name}.jar"/>
-      <outjar file="${build.obfuscate.dir}/${name}.jar"/>
-      <libraryjar file="${lib.rt.dir}"/> 
-      <libraryjar file="${lib.jsse.dir}"/> <!-- maybe not needed in later releases? -->
+      <injar  file="${build.library.dir}/${name}.jar" />
+      <outjar file="${build.obfuscate.dir}/${name}.jar" />
+      <libraryjar file="${lib.rt.dir}" /> 
+      <libraryjar file="${lib.jsse.dir}" /> <!-- maybe not needed in later releases? -->
       <libraryjar file="${lib.project.dir}">
-        <fileset dir="${lib.project.dir}" includes="${library.files}"/>
+        <fileset dir="${lib.project.dir}" includes="${library.files}" />
       </libraryjar>
       <!-- Preserve all public applications. -->
       <keepclasseswithmembers access="public">
@@ -519,7 +533,7 @@
     </proguard>
     <!-- Sign all the jars (Eclipse problem: Preferences>Java>Installed JRE: Put JDK instead of JRE directory) -->
     <signjar alias="${keystore.alias}" keystore="${keystore.file}" storepass="${keystore.storepass}">
-      <fileset dir="${build.obfuscate.dir}" includes="*.jar"/>
+      <fileset dir="${build.obfuscate.dir}" includes="*.jar" />
     </signjar>
     <echo message="Obfuscated and signed jar files can be found in ${build.obfuscate.dir}" />
   </target>
@@ -528,63 +542,63 @@
           description="Create executable(s) of the software for platform testing.">
     <!-- copy external jar files -->
     <copy todir="${build.app.dir}/lib">
-      <fileset dir="${lib.project.dir}" includes="${library.files}"/>
+      <fileset dir="${lib.project.dir}" includes="${library.files}" />
     </copy>
     <!-- copy project jar files -->
     <copy todir="${build.app.dir}/lib">
-      <fileset dir="${build.library.dir}"/>
+      <fileset dir="${build.library.dir}" />
     </copy>
     <copy todir="${build.app.dir}/lib">
-      <fileset dir="${build.libconf.dir}"/>
+      <fileset dir="${build.libconf.dir}" />
     </copy>
     <!-- copy scenario directory -->
     <copy todir="${build.app.dir}/scenario">
-      <mapper type="regexp" from="${subdirs}" to="\3"/>
-      <fileset dir="${scenario.dir}/write"/>
+      <mapper type="regexp" from="${subdirs}" to="\3" />
+      <fileset dir="${scenario.dir}/write" />
     </copy>
     <!-- make logs and scores directories -->
-    <mkdir dir="${build.app.dir}/scenario/logs"/>
-    <mkdir dir="${build.app.dir}/scenario/scores"/>
+    <mkdir dir="${build.app.dir}/scenario/logs" />
+    <mkdir dir="${build.app.dir}/scenario/scores" />
     <copy todir="${build.app.dir}/scenario" overwrite="true">
-      <mapper type="regexp" from="${subdirs}" to="\3"/>
-      <fileset dir="${scenario.dir}/write-over"/>
+      <mapper type="regexp" from="${subdirs}" to="\3" />
+      <fileset dir="${scenario.dir}/write-over" />
     </copy>
     <!-- copy extra directory -->
     <copy todir="${build.app.dir}/extra" overwrite="true">
-      <mapper type="regexp" from="${subdirs}" to="\3"/>
-      <fileset dir="${extra.dir}"/>
+      <mapper type="regexp" from="${subdirs}" to="\3" />
+      <fileset dir="${extra.dir}" />
     </copy>
     <copy todir="${build.app.dir}/extra" overwrite="true">
-      <fileset dir="${extra-special.dir}/${specialdir}"/>
+      <fileset dir="${extra-special.dir}/${specialdir}" />
     </copy>
     <!-- Copy license file -->
-    <copy file="LICENSE.txt" todir="${build.app.dir}"/>
+    <copy file="LICENSE.txt" todir="${build.app.dir}" />
     <!-- Determine build platform [windows, mac, unix] -->
     <condition property="os.target.name" value="windows">
-        <os family="windows"/>
+        <os family="windows" />
     </condition>
     <condition property="os.target.name" value="unix">
-        <os family="unix"/>
+        <os family="unix" />
     </condition>
     <!-- Create executable files. -->
     <for list="${executables.list}" param="executable" delimiter="+">
       <sequential>
-        <propertyregex property="exe.longname" select="\1" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
-        <propertyregex property="exe.file" select="\2" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
-        <propertyregex property="exe.memory" select="\3" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
-        <propertyregex property="exe.class" select="\4" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
-        <propertyregex property="exe.args" select="\5" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+        <propertyregex property="exe.longname" select="\1" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes" />
+        <propertyregex property="exe.file" select="\2" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes" />
+        <propertyregex property="exe.memory" select="\3" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes" />
+        <propertyregex property="exe.class" select="\4" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes" />
+        <propertyregex property="exe.args" select="\5" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes" />
         <antcall target="executable">
-          <param name="executable.file.longname" value="${exe.longname}"/>
-          <param name="executable.file.name" value="${exe.file}"/>
-          <param name="executable.memory" value="${exe.memory}"/>
-          <param name="executable.run" value="${exe.class}"/>
-          <param name="executable.args" value="${exe.args}"/>
-          <param name="structure.dir" value="${build.app.dir}"/>
+          <param name="executable.file.longname" value="${exe.longname}" />
+          <param name="executable.file.name" value="${exe.file}" />
+          <param name="executable.memory" value="${exe.memory}" />
+          <param name="executable.run" value="${exe.class}" />
+          <param name="executable.args" value="${exe.args}" />
+          <param name="structure.dir" value="${build.app.dir}" />
         </antcall>
       </sequential>
     </for>
-    <echo message="The ${name} applications can be found in ${build.app.dir}"/>
+    <echo message="The ${name} applications can be found in ${build.app.dir}" />
   </target>
   <!-- *********************************************************************** -->
   <target name="dist" depends="application"
@@ -620,9 +634,10 @@
         </antcall>
       </sequential>
     </for>
+    <antcall target="dist_src" />
     <antcall target="dist_mac_dmg" />
-    <zip destfile="${dist_win_base}/${dist_name}.zip" basedir="${dist_win_base}/${dist_name}"/>
-    <echo message="The ${name} distributions can be found in ${dist.dir}"/>
+    <zip destfile="${dist_win_base}/${dist_name}.zip" basedir="${dist_win_base}/${dist_name}" />
+    <echo message="The ${name} distributions can be found in ${dist.dir}" />
   </target>
   <!-- *********************************************************************** -->
   <target name="webstart" depends="obfuscate, libconf"
