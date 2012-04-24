@@ -45,8 +45,18 @@ Installation
 ------------
 
 With Java and Ant:
-    ant -f build-app-live.xml application
-Executables will be located in build/app/application directory
+    tar xzf (ECMOjo).tar.gz
+    cd (ECMOjo)
+    ant -f build.xml application
+Where (ECMOjo) is the current version. Executables will be located in directory
+build/app/application
+
+Windows:
+Unzip file. Copy specific application directory to desired location. Double-
+click application exe file.
+
+Mac:
+Double-click (ECMOjo).dmg. Copy specific application to desired location.
 
 [emcmojo]: http://ecmojo.sourceforge.net
 [tri]: http://www.tri.jabsom.hawaii.edu
