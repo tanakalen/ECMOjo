@@ -20,18 +20,18 @@ desktop application or via the Internet. [ECMOjo][ecmojo] has been developed by
 Credits
 -------
 
-Lawrence P. Burgess, MD, Principal Investigator
-Mark T. Ogino, MD, Project Manager
-Christoph Aschwanden, PhD, Lead Developer
-Kin Lik Wang (Alex), Developer
-Len Tanaka, MD, Developer
-Kaleiohu Lee, Artist
-Donald McCurnin, MD, Godfather
-Kristen Costales, CCP, Advisor
-Melinda Hamilton, MD, Advisor
-Kent Kelly, CCP, Advisor
-Melody Kilcommons, RNC, Advisor
-John Lutz, Advisor
+* Lawrence P. Burgess, MD, Principal Investigator
+* Mark T. Ogino, MD, Project Manager
+* Christoph Aschwanden, PhD, Lead Developer
+* Kin Lik Wang (Alex), Developer
+* Len Tanaka, MD, Developer
+* Kaleiohu Lee, Artist
+* Donald McCurnin, MD, Godfather
+* Kristen Costales, CCP, Advisor
+* Melinda Hamilton, MD, Advisor
+* Kent Kelly, CCP, Advisor
+* Melody Kilcommons, RNC, Advisor
+* John Lutz, Advisor
 
 
 Acknowledgement
@@ -45,9 +45,9 @@ Installation
 ------------
 
 With Java and Ant:
-    tar xzf (ECMOjo).tar.gz
-    cd (ECMOjo)
-    ant -f build.xml application
+> tar xzf (ECMOjo).tar.gz
+> cd (ECMOjo)
+> ant -f build.xml application
 Where (ECMOjo) is the current version. Executables will be located in directory
 build/app/application
 
@@ -58,5 +58,5 @@ click application exe file.
 Mac:
 Double-click (ECMOjo).dmg. Copy specific application to desired location.
 
-[emcmojo]: http://ecmojo.sourceforge.net
+[ecmojo]: http://ecmojo.sourceforge.net
 [tri]: http://www.tri.jabsom.hawaii.edu
