@@ -44,19 +44,19 @@ Department of Defense (DoD), United States of America.
 Installation
 ------------
 
-With Java and Ant:
-> tar xzf (ECMOjo).tar.gz
-> cd (ECMOjo)
-> ant -f build.xml application
-Where (ECMOjo) is the current version. Executables will be located in directory
-build/app/application
-
-Windows:
-Unzip file. Copy specific application directory to desired location. Double-
+**Windows:**  
+  Unzip file. Copy specific application directory to desired location. Double-
 click application exe file.
 
-Mac:
-Double-click (ECMOjo).dmg. Copy specific application to desired location.
+**Mac:**  
+  Double-click (ECMOjo).dmg. Copy specific application to desired location.
+
+**Source:** (With Java and Ant)  
+    `tar xzf (ECMOjo).tar.gz`  
+    `cd (ECMOjo)`  
+    `ant -f build.xml application`  
+
+Where (ECMOjo) is the current version. Executables will be located in directory build/app/application
 
 [ecmojo]: http://ecmojo.sourceforge.net
 [tri]: http://www.tri.jabsom.hawaii.edu
