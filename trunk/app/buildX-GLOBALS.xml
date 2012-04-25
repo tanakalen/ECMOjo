@@ -1,4 +1,4 @@
-<project name="ECMO App" default="application">	
+<project name="ECMO App" default="application" basedir=".">	
   <!-- *********************************************************************** -->
   <target name="globals">  
   	<!-- Globals for projects -->
