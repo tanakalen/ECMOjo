@@ -115,10 +115,10 @@ public class KnobButton extends JPanel implements MouseListener, MouseMotionList
     this.angle = angle;
     
     if (angle < minAngle) {
-      angle = minAngle;
+      this.angle = minAngle;
     }
     else if (angle > maxAngle) {
-      angle = maxAngle;
+      this.angle = maxAngle;
     }
   }
   
