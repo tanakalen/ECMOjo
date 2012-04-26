@@ -1031,11 +1031,11 @@ public class DateTime implements Serializable, Comparable {
   }
   
   /**
-   * Returns an exact clone of this object.
+   * Returns an exact copy of this object.
    * 
-   * @return  An exact clone of this object.
+   * @return  An exact copy of this object.
    */
-  public DateTime clone() {
+  public DateTime copy() {
     return new DateTime(timestamp);
   }
   

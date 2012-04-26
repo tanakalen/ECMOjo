@@ -40,8 +40,8 @@ public class TestBaseTypes {
     assertEquals("The hour in the same time zone should match.", now.getLocalHour(), now.getHour(zone));
     DateTime now2 = new DateTime(now.getTimestamp());
     assertEquals("We should have the same date and time (create new).", now, now2);
-    DateTime now3 = now.clone();
-    assertEquals("We should have the same date and time (clone).", now, now3);
+    DateTime now3 = now.copy();
+    assertEquals("We should have the same date and time (copy).", now, now3);
     DateTime now4 = DateTime.createUTC(1814, 1, 1, 17, 45, 9, 64);
     assertEquals("We are in 1814.", 1814, now4.getUTCYear());
     now4.setTimestamp(now.getTimestamp());
