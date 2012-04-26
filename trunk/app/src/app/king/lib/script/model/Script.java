@@ -1,12 +1,14 @@
 package king.lib.script.model;
 
+import java.io.Serializable;
+
 /**
  * A script.
  *
  * @author  noblemaster
  * @since  October 21, 2009
  */
-public class Script {
+public class Script implements Serializable {
 
   /** The ID. 0 for invalid. */
   private long id;
