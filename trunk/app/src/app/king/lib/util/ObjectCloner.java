@@ -51,8 +51,8 @@ public final class ObjectCloner {
     }
     finally {
       try {
-        oos.close();
-        ois.close();
+        if (oos != null) { oos.close(); }
+        if (ois != null) { ois.close(); }
       }
       catch (IOException e) {
         return null;
