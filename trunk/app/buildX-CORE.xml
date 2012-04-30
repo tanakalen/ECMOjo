@@ -1,6 +1,6 @@
 <?eclipse.ant.import ?>
-<project name="Core Build file - Define init in subfile and include." basedir=".">
-  <target name="pre-init">
+<project name="Core Build file - Define init in subfile and include." basedir=".">	
+  <target name="pre-init">          
     <!-- Global Release time -->
     <tstamp>
       <format property="TSTAMP" pattern="HH:mm:ss" />
@@ -13,17 +13,17 @@
     <property name="time" value="${TSTAMP}" />
     <property name="release.time" value="${YEARSTAMP}-${MONTHSTAMP}-${DAYSTAMP}.${MINUTESTAMP}" />
     <!-- Global directories -->
-    <property name="src.dir" value="src" />
-    <property name="conf.dir" value="conf" />
-    <property name="resource.dir" value="resource" />
-    <property name="scenario.dir" value="scenario" />
-    <property name="extra.dir" value="extra" />
-    <property name="extra-special.dir" value="extra-special" />
-    <property name="doc.dir" value="doc" />
-    <property name="web.dir" value="web" />
-    <property name="lib.dir" value="lib" />
-    <property name="lib.ant.dir" value="${lib.dir}/ant" />
-    <property name="lib.project.dir" value="${lib.dir}/project" />
+    <property name="src.dir" value="src"/>
+    <property name="conf.dir" value="conf"/>
+    <property name="resource.dir" value="resource"/>
+    <property name="scenario.dir" value="scenario"/>
+    <property name="extra.dir" value="extra"/>
+    <property name="extra-special.dir" value="extra-special"/>
+    <property name="doc.dir" value="doc"/>
+    <property name="web.dir" value="web"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="lib.ant.dir" value="${lib.dir}/ant"/>
+    <property name="lib.project.dir" value="${lib.dir}/project"/>
     <condition property="lib.rt.dir" value="${java.home}/lib/rt.jar">
       <os family="windows" />
     </condition>
@@ -42,32 +42,21 @@
     <!-- Global Test files -->
     <property name="test.files" value="**/Test*" />
     <!-- Global directories -->
-    <property name="build.dir" value="build/${subname}" />
-    <property name="build.src.dir" value="${build.dir}/src" />
-    <property name="build.dest.dir" value="${build.dir}/classes" />
-    <property name="build.src_html.dir" value="${build.dir}/src_html" />
-    <property name="build.api.dir" value="${build.dir}/api" />
-    <property name="build.size.dir" value="${build.dir}/size_data" />
-    <property name="build.test.dir" value="${build.dir}/test_output" />
-    <property name="build.library.dir" value="${build.dir}/library" />
-    <property name="build.libconf.dir" value="${build.dir}/libconf" />
-    <property name="build.app.dir" value="${build.dir}/application" />
-    <property name="build.webstart.dir" value="${build.dir}/webstart" />
-    <property name="build.obfuscate.dir" value="${build.dir}/obfuscate" />
-    <property name="build.webapp.dir" value="${build.dir}/webapp" />
-    <property name="build.war.dir" value="${build.dir}/war" />
-    <property name="dist_name" value="ECMOjo_${global.release.version}" />
-    <property name="dist.dir" value="${build.dir}/dist" />
-    <property name="dist_src_base" value="${dist.dir}/dist_src" />
-    <property name="dist_src" value="${dist_src_base}/${dist_name}" />
-    <property name="dist_macos_base" value="${dist.dir}/dist_macos" />
-    <property name="dist_macos" value="${dist_macos_base}/${dist_name}" />
-    <property name="jarbundler.ver" value="jarbundler-2.2.0" />
-    <property name="jarbundler.dir" value="${resource.dir}/installer/${jarbundler.ver}" />
-    <property name="dist_win_base" value="${dist.dir}/dist_win" />
-    <property name="dist_win" value="${dist_win_base}/${dist_name}" />
-    <property name="launch4j.dir" value="${resource.dir}/installer/launch4j" />
-    <!-- Load additional ant tasks -->
+    <property name="build.dir" value="build/${subname}"/>
+    <property name="build.src.dir" value="${build.dir}/src"/>
+    <property name="build.dest.dir" value="${build.dir}/classes"/>
+    <property name="build.src_html.dir" value="${build.dir}/src_html"/>
+    <property name="build.api.dir" value="${build.dir}/api"/>
+    <property name="build.size.dir" value="${build.dir}/size_data"/>
+    <property name="build.test.dir" value="${build.dir}/test_output"/>        
+    <property name="build.library.dir" value="${build.dir}/library"/>
+    <property name="build.libconf.dir" value="${build.dir}/libconf"/>
+    <property name="build.app.dir" value="${build.dir}/application"/>
+    <property name="build.webstart.dir" value="${build.dir}/webstart"/>
+    <property name="build.obfuscate.dir" value="${build.dir}/obfuscate"/>
+    <property name="build.webapp.dir" value="${build.dir}/webapp"/>
+    <property name="build.war.dir" value="${build.dir}/war"/>
+  	<!-- Load additional ant tasks -->
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
     <taskdef name="jarbundler" classpath="${jarbundler.dir}/${jarbundler.ver}.jar" classname="net.sourceforge.jarbundler.JarBundler" />
     <taskdef name="launch4j" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" classname="net.sf.launch4j.ant.Launch4jTask" />
@@ -281,12 +270,35 @@
   </target>
   <!-- *********************************************************************** -->
   <target name="executable">
-    <path id="project.class.path">
-      <fileset dir="${structure.dir}/lib">
-        <include name="**/*.jar" />
-      </fileset>
-    </path>
-    <!-- Convert path, depending on os -->
+  	<path id="project.class.path">
+  	  <fileset dir="${structure.dir}/lib">
+  	    <include name="**/*.jar"/>
+  	  </fileset>
+  	</path>
+  	<pathconvert property="string.classpath" pathsep=" ">
+  	  <path refid="project.class.path" />
+  	  <mapper><chainedmapper>
+  	  <flattenmapper />
+      <globmapper from="*" to="lib/*" />
+  	  </chainedmapper></mapper>
+  	</pathconvert>
+  	<!-- create the manifest file method for invocation "java -jar ECMOjo.jar" -->
+    <manifest file="${structure.dir}/MANIFEST.MF">
+      <attribute name="Implementation-Title" value="ECMOjo" />
+      <attribute name="Implementation-Version" value="${global.release.version}" />
+      <attribute name="Built-By" value="${author}" />
+      <attribute name="Main-Class" value="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp" />
+      <attribute name="Class-Path" value="${string.classpath}" />
+    </manifest>
+  	<jar jarfile="${structure.dir}/ECMOjo.jar" basedir="${structure.dir}/lib"
+  	  manifest="${structure.dir}/MANIFEST.MF" />
+  	<!-- Convert path, depending on os -->
+  	<condition property="os.target.name" value="windows">
+  		<os family="windows"/>
+  	</condition>
+  	<condition property="os.target.name" value="unix">
+  		<os family="unix"/>
+  	</condition>
     <pathconvert targetos="${os.target.name}" property="bat.classpath">
       <path refid="project.class.path" />
       <mapper><chainedmapper>
@@ -294,17 +306,17 @@
       <globmapper from="*" to="lib/*" />
       </chainedmapper></mapper>
     </pathconvert>
-    <!-- Reference to JRE -->
-    <condition property="jreloc" value="&quot;%JAVA_HOME%\jre\bin\java&quot;">
-      <equals arg1="${os.target.name}" arg2="windows" />
-    </condition>
-    <condition property="jreloc" value="java">
-      <equals arg1="${os.target.name}" arg2="unix" />
-    </condition>
-    <!-- Create batch/script file (windows or unix): -Dsun.java2d.noddraw=true -->
+  	<!-- Reference to JRE -->
+  	<condition property="jreloc" value="&quot;%JAVA_HOME%\jre\bin\java&quot;">
+  		<equals arg1="${os.target.name}" arg2="windows"/>
+  	</condition>
+  	<condition property="jreloc" value="java">
+  	  <equals arg1="${os.target.name}" arg2="unix"/>
+  	</condition>
+    <!-- Create executable file (windows, unix or mac) use: -Dsun.java2d.noddraw=true -->
     <echo file="${structure.dir}/${executable.file.name}.bat"
-      message="${jreloc} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}" />
-    <chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx" />
+      message="${jreloc} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}"/>
+  	<chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx"/>
   </target>
   <!-- *********************************************************************** -->
   <target name="dist_macos">
@@ -753,10 +765,10 @@ Content-Type: x-java-archive
     <!-- Copy .html for applet. -->
     <path id="applet.class.path">
       <fileset dir="${build.webstart.dir}/unpacked" includes="*.jar" />
-    </path>	
-    <pathconvert property="applet.class.path.property" refid="applet.class.path" pathsep=",">
-      <mapper type="flatten" />
-    </pathconvert>
+	</path>	
+	<pathconvert property="applet.class.path.property" refid="applet.class.path" pathsep=",">
+	  <mapper type="flatten"/>
+	</pathconvert>
     <copy file="${resource.dir}/webstart/applet.inc" todir="${build.webstart.dir}" overwrite="true">
       <filterset>
         <filter token="applet.class.main" value="${prg.classfile}" />
