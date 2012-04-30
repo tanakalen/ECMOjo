@@ -84,11 +84,22 @@
 			<!--<file src="logo-128x128.icns" targetdir="$INSTALL_PATH"/>-->
             <!-- The file will be parsed -->
 			<file src="src" targetdir="$INSTALL_PATH"/>
-			<fileset dir="lib" targetdir="$INSTALL_PATH/lib">
+			<fileset dir="lib/project" targetdir="$INSTALL_PATH/lib">
 				<include name="**"/>
 			</fileset>
-			<file src="scenario" targetdir="$INSTALL_PATH"/>
-			<singlefile src="scenario/write/app/Application.config" target="$INSTALL_PATH/scenario">
+			<singlefile src="extra" target="$INSTALL_PATH/extra"/>
+			<singlefile src="scenario/write/app/Application.config" target="$INSTALL_PATH/scenario/Application.config"/>
+			<singlefile src="scenario/write/app/logs" target="$INSTALL_PATH/scenario/logs"/>
+			<singlefile src="scenario/write/app/scores" target="$INSTALL_PATH/scenario/scores"/>
+			<fileset dir="scenario/write-over/app/adult" targetdir="$INSTALL_PATH/scenario/adult">
+				<include name="**"/>
+			</fileset>
+			<fileset dir="scenario/write-over/app/infant" targetdir="$INSTALL_PATH/scenario/infant">
+				<include name="**"/>
+			</fileset>
+			<fileset dir="scenario/write-over/app/infant_ja" targetdir="$INSTALL_PATH/scenario/infant_ja">
+				<include name="**"/>
+			</fileset>
         </pack>
 	</packs>
 
