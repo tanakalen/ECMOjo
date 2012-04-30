@@ -45,8 +45,7 @@ Installation
 ------------
 
 **Windows:**  
-  Unzip file. Copy specific application directory to desired location. Double-
-click application exe file.
+  Unzip file. Copy specific application directory to desired location. Double-click application exe file.
 
 **Mac:**  
   Double-click (ECMOjo).dmg. Copy specific application to desired location.
