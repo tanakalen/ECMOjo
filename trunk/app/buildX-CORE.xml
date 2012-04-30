@@ -56,10 +56,13 @@
     <property name="build.obfuscate.dir" value="${build.dir}/obfuscate"/>
     <property name="build.webapp.dir" value="${build.dir}/webapp"/>
     <property name="build.war.dir" value="${build.dir}/war"/>
+    <property name="dist_macos_name" value="ECMOjo_${global.release.version}"/>
+    <property name="dist_macos_base" location="${build.dir}/dist_macos"/>
+    <property name="dist_macos" location="${dist_macos_base}/${dist_macos_name}"/>
+    <property name="jarbundler.dir" value="jarbundler-2.2.0"/>
   	<!-- Load additional ant tasks -->
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
-    <taskdef name="jarbundler" classpath="${jarbundler.dir}/${jarbundler.ver}.jar" classname="net.sourceforge.jarbundler.JarBundler" />
-    <taskdef name="launch4j" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" classname="net.sf.launch4j.ant.Launch4jTask" />
+    <taskdef name="jarbundler" classpath="${resource.dir}/installer/${jarbundler.dir}/${jarbundler.dir}.jar" classname="net.sourceforge.jarbundler.JarBundler"/>
     <!-- Jakarta-Tomcat (Catalina) - ant tasks -->
     <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"    classpath="${lib.ant.dir}/catalina-ant.jar" />
     <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask"    classpath="${lib.ant.dir}/catalina-ant.jar" />
@@ -287,7 +290,7 @@
       <attribute name="Implementation-Title" value="ECMOjo" />
       <attribute name="Implementation-Version" value="${global.release.version}" />
       <attribute name="Built-By" value="${author}" />
-      <attribute name="Main-Class" value="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp" />
+      <attribute name="Main-Class" value="${executable.run}" />
       <attribute name="Class-Path" value="${string.classpath}" />
     </manifest>
   	<jar jarfile="${structure.dir}/ECMOjo.jar" basedir="${structure.dir}/lib"
@@ -317,118 +320,46 @@
     <echo file="${structure.dir}/${executable.file.name}.bat"
       message="${jreloc} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}"/>
   	<chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx"/>
+  	<!-- Create app for Mac -->
+    <condition property="isMacOs">
+      <os family="mac"/>
+    </condition>
+    <antcall target="dist_macos"/>
   </target>
   <!-- *********************************************************************** -->
-  <target name="dist_macos">
-    <property name="dist_macos_app_name" value="${executable.file.longname}.app" />
-    <property name="dist_macos_app" value="${dist_macos}/${dist_macos_app_name}" />
-    <property name="dist_macos_contents" value="${dist_macos_app}/Contents" />
-    <property name="dist_macos_info" value="${dist_macos_contents}/Info.plist" />
+  <target name="dist_macos" if="isMacOs">
+    <property name="dist_macos_app_name" value="${executable.file.name}.app"/>
+    <property name="dist_macos_app" location="${dist_macos}/${dist_macos_app_name}"/>
+    <property name="dist_macos_contents" location="${dist_macos_app}/Contents"/>
+    <property name="dist_macos_info" location="${dist_macos_contents}/Info.plist"/>
     <jarbundler dir="${dist_macos}"
-                name="${executable.file.longname}"
-                mainclass="${executable.run}"
-                icon="logo-128x128.icns"
-                version="${release.version}"
-                infostring="${executable.file.longname} ${release.version} (build: ${release.time}) application (c) ${YEARSTAMP}"
-                shortname="ECMOjo"
-                bundleid="${executable.run}"
-                signature="ECJO"
-                jvmversion="1.4+"
-                vmoptions="-Xms${executable.memory}m -Xmx${executable.memory}m -Xss8M"
-                arguments="${executable.args}"
-                workingdirectory="$APP_PACKAGE/Contents/Resources/Java">
-      <jarfileset dir="${structure.dir}/lib">
+  	            name="${executable.file.name}" 
+    	        mainclass="${executable.run}"
+    	        icon="logo-128x128.icns"
+    	        version="${release.version}"
+  	            infostring="ECMOjo ${release.version} (build: ${release.time}) application (c) ${YEARSTAMP}"
+    	        shortname="ECMOjo"
+    	        bundleid="${executable.run}"
+    	        signature="ECJO"
+    	        jvmversion="1.4+"
+    	        vmoptions="-Xms${executable.memory}m -Xmx${executable.memory}m -Xss8M"
+    	        arguments="${executable.args}"
+                workingdirectory="${dist_macos_contents}/Resources/Java">
+      <jarfileset dir="${build.app.dir}/lib">
         <include name="**/*.jar" />
       </jarfileset>
     </jarbundler>
-    <copy file="${resource.dir}/installer/Icons/logo-128x128.icns" todir="${dist_macos_contents}/Resources" />
+  	<copy todir="${dist_macos_contents}/Resources">
+  	  <fileset dir="${resource.dir}/installer/izpack">
+  	    <include name="logo-128x128.icns"/>
+      </fileset>
+    </copy>
     <copy todir="${dist_macos_contents}/Resources/Java">
-      <fileset dir="${structure.dir}">
-        <include name="scenario/**" />
-        <include name="extra/**" />
+  	  <fileset dir="${build.app.dir}">
+  	    <include name="scenario/**"/>
+  	    <include name="extra/**"/>
       </fileset>
     </copy>
-  </target>
-  <!-- *********************************************************************** -->
-  <target name="dist_mac_dmg">
-    <!-- Identify size of MacOS distribution -->
-    <length property="dmac.size" mode="all">
-      <fileset dir="${dist_macos}" includes="**/*.*" />
-    </length>
-    <script language="javascript">
-      <![CDATA[
-        var length_bytes = project.getProperty("dmac.size");
-        var length_kbytes = Math.round((length_bytes / 1024) * Math.pow(10,2) / Math.pow(10,2));
-        var length_mbytes = Math.round((length_kbytes / 1024) * Math.pow(10,2) / Math.pow(10,2));
-        project.setNewProperty("dmac.size.mb", length_mbytes+2);
-      ]]>
-    </script>
-    <!-- Create compressed disk image -->
-    <exec dir="." executable="/bin/bash">
-      <arg value="-c" />
-      <arg value="${jarbundler.dir}/mkdmg.sh ${dist_macos} ${dist_macos_base} ${dist_name} ${dmac.size.mb}" />
-    </exec>
-  </target>
-  <!-- *********************************************************************** -->
-  <target name="dist_win">
-    <property name="dist_win_app_name" value="${executable.file.longname}" />
-    <property name="dist_win_app" value="${dist_win}/${dist_win_app_name}" />
-    <copy todir="${dist_win_app}">
-      <fileset dir="${structure.dir}">
-        <include name="lib/**" />
-        <include name="scenario/**" />
-        <include name="extra/**" />
-      </fileset>
-    </copy>
-    <launch4j>
-      <config jarPath="${dist_win_app}/lib/ecmosim-app.jar"
-              dontWrapJar="true"
-              headerType="gui"
-              outfile="${dist_win_app}/${executable.file.longname}.exe"
-              cmdLine="${executable.args}"
-              icon="${resource.dir}/installer/Icons/logo-32x32.ico">
-        <classPath mainClass="${executable.run}">
-          <cp>%EXEDIR%/lib/*.jar</cp>
-        </classPath>
-        <jre minVersion="1.4.0"
-             initialHeapSize="${executable.memory}"
-             maxHeapSize="${executable.memory}">
-          <opt>-Xss8M</opt>
-          <opt>-Dlaunch4j.exedir="%EXEDIR%"</opt>
-          <opt>-Dlaunch4j.exefile="%EXEFILE%"</opt>
-        </jre>
-        <!--
-        <versionInfo
-          copyright="${YEARSTAMP}"/>
-          fileVersion="2.4.0"
-          txtFileVersion="${executable.file.longname} ${release.version} (build: ${release.time}) application (c) ${YEARSTAMP}"/>
-          fileDescription="ECMOjo: ECMO simulation training"
-          copyright="${YEARSTAMP}"
-          productName="${executable.file.longname}"
-          companyName="TRI"
-          internalName="${executable.file.name}"
-          originalFilename="${executable.file.name}.exe"
-        <messages>
-          <startupErr>Error with startup</startupErr>
-          <bundledJreErr>Unable to find Java runtime</bundledJreErr>
-          <jreVersionErr>Impropre Java version</jreVersionErr>
-          <launcherErr>Error with Launch4j</launcherErr>
-        </messages>
-        -->
-      </config>
-    </launch4j>
-  </target>
-  <!-- *********************************************************************** -->
-  <target name="dist_src">
-    <tar destfile="${dist_src_base}/${dist_name}.tar.gz"
-         compression="gzip">
-      <tarfileset dir="${basedir}">
-        <exclude name="build/**" />
-        <exclude name="doc/**" />
-        <exclude name="test/**" />
-        <exclude name="www/**" />
-      </tarfileset>
-    </tar>
   </target>
   <!-- *********************************************************************** -->
   <target name="webjnlp">
@@ -551,7 +482,9 @@
   </target>
   <!-- *********************************************************************** -->
   <target name="application" depends="library, libconf"
-          description="Create executable(s) of the software for platform testing.">
+  	      description="Create executable(s) of the software for platform testing.">
+    <delete dir="${dist_macos}" followsymlinks="false"/>
+    <mkdir dir="${dist_macos}"/>
     <!-- copy external jar files -->
     <copy todir="${build.app.dir}/lib">
       <fileset dir="${lib.project.dir}" includes="${library.files}" />
@@ -594,24 +527,29 @@
         <os family="unix" />
     </condition>
     <!-- Create executable files. -->
-    <for list="${executables.list}" param="executable" delimiter="+">
-      <sequential>
-        <propertyregex property="exe.longname" select="\1" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes" />
-        <propertyregex property="exe.file" select="\2" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes" />
-        <propertyregex property="exe.memory" select="\3" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes" />
-        <propertyregex property="exe.class" select="\4" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes" />
-        <propertyregex property="exe.args" select="\5" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes" />
-        <antcall target="executable">
-          <param name="executable.file.longname" value="${exe.longname}" />
-          <param name="executable.file.name" value="${exe.file}" />
-          <param name="executable.memory" value="${exe.memory}" />
-          <param name="executable.run" value="${exe.class}" />
-          <param name="executable.args" value="${exe.args}" />
-          <param name="structure.dir" value="${build.app.dir}" />
-        </antcall>
-      </sequential>
-    </for>
-    <echo message="The ${name} applications can be found in ${build.app.dir}" />
+  	<for list="${executables.list}" param="executable" delimiter="+">
+  	  <sequential>
+  	  	<propertyregex property="exe.file" select="\1" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<propertyregex property="exe.memory" select="\2" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<propertyregex property="exe.class" select="\3" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<propertyregex property="exe.args" select="\4" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
+  	  	<antcall target="executable">
+  	      <param name="executable.file.name" value="${exe.file}"/>
+  	      <param name="executable.memory" value="${exe.memory}"/>
+  	      <param name="executable.run" value="${exe.class}"/>
+  	      <param name="executable.args" value="${exe.args}"/>
+          <param name="structure.dir" value="${build.app.dir}"/>
+  	    </antcall>
+  	  </sequential>
+  	</for>
+    <echo message="The ${name} Windows applications can be found in ${build.app.dir}"/>
+    <echo message="The ${name} Mac applications can be found in ${dist_macos}"/>
+    <!-- <exec dir="." os="Mac OS X" executable="/bin/bash">
+        <arg value="-c"/>
+        <arg value="./scripts/mkdmg.sh /Users/Me/Development/ ./mac/ ./mac-image/ Project"/>
+    </exec>
+    <gzip zipfile="${dist}/mac-image/MyTool .dmg.gz" src="${dist}/mac-image/MyTool.dmg"/>
+    -->
   </target>
   <!-- *********************************************************************** -->
   <target name="dist" depends="application"
