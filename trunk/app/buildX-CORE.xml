@@ -57,13 +57,14 @@
     <property name="build.webapp.dir" value="${build.dir}/webapp"/>
     <property name="build.war.dir" value="${build.dir}/war"/>
     <property name="dist_name" value="ECMOjo_${global.release.version}"/>
-    <property name="dist_macos_base" location="${build.dir}/dist_macos"/>
-    <property name="dist_macos" location="${dist_macos_base}/${dist_name}"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
+    <property name="dist_macos_base" value="${build.dir}/dist_macos"/>
+    <property name="dist_macos" value="${dist_macos_base}/${dist_name}"/>
   	<property name="jarbundler.ver" value="jarbundler-2.2.0"/>
     <property name="jarbundler.dir" value="${resource.dir}/installer/${jarbundler.ver}"/>
-    <property name="dist_win_base" location="${build.dir}/dist_win"/>
-  	<property name="dist_win" location="${dist_win_base}/${dist_name}"/>
-  	<property name="launch4j.dir" location="${resource.dir}/installer/launch4j" />
+    <property name="dist_win_base" value="${build.dir}/dist_win"/>
+  	<property name="dist_win" value="${dist_win_base}/${dist_name}"/>
+  	<property name="launch4j.dir" value="${resource.dir}/installer/launch4j" />
   	<!-- Load additional ant tasks -->
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
     <taskdef name="jarbundler" classpath="${jarbundler.dir}/${jarbundler.ver}.jar" classname="net.sourceforge.jarbundler.JarBundler"/>
@@ -310,9 +311,9 @@
   <!-- *********************************************************************** -->
   <target name="dist_macos" if="isMacOs">
     <property name="dist_macos_app_name" value="${executable.file.longname}.app"/>
-    <property name="dist_macos_app" location="${dist_macos}/${dist_macos_app_name}"/>
-    <property name="dist_macos_contents" location="${dist_macos_app}/Contents"/>
-    <property name="dist_macos_info" location="${dist_macos_contents}/Info.plist"/>
+    <property name="dist_macos_app" value="${dist_macos}/${dist_macos_app_name}"/>
+    <property name="dist_macos_contents" value="${dist_macos_app}/Contents"/>
+    <property name="dist_macos_info" value="${dist_macos_contents}/Info.plist"/>
     <jarbundler dir="${dist_macos}"
   	            name="${executable.file.longname}" 
     	        mainclass="${executable.run}"
@@ -325,7 +326,7 @@
     	        jvmversion="1.4+"
     	        vmoptions="-Xms${executable.memory}m -Xmx${executable.memory}m -Xss8M"
     	        arguments="${executable.args}"
-                workingdirectory="${dist_macos_contents}/Resources/Java">
+				workingdirectory="$APP_PACKAGE/Contents/Resources/Java">
       <jarfileset dir="${build.app.dir}/lib">
         <include name="**/*.jar" />
       </jarfileset>
@@ -364,7 +365,7 @@
   <target name="dist_win" if="isWinOs">
   <!--
   	<launch4j>
-  	  <config headerType="gui" outfile="demo.exe"
+  	  <config headerType="gui" outfile="${executable.file.longname}.exe"
   	      dontWrapJar="true" jarPath="demo.jar" >
   	    <var>SETTINGS="%HomeDrive%%HomePath%\\settings.ini"</var>
   	    <classPath mainClass="org.demo.DemoApp">
@@ -579,43 +580,10 @@
   <!-- *********************************************************************** -->
   <target name="dist" depends="application"
           description="Creates distributions for various platforms.">
-    <!-- Prepare dist directory -->
-    <delete dir="${dist.dir}" followsymlinks="false" />
-    <mkdir dir="${dist.dir}" />
-    <!-- Prepare Mac dist directory -->
-    <delete dir="${dist_macos}" followsymlinks="false" />
-    <mkdir dir="${dist_macos}" />
-    <copy file="LICENSE.txt" todir="${dist_macos}" />
-    <copy file="README" todir="${dist_macos}" />
-    <!-- Prepare Win dist directory -->
-    <delete dir="${dist_win}" followsymlinks="false" />
-    <mkdir dir="${dist_win}" />
-    <copy file="LICENSE.txt" todir="${dist_win}" />
-    <copy file="README" todir="${dist_win}" />
-    <!-- Create executable files. -->
-    <for list="${executables.list}" param="executable" delimiter="+">
-      <sequential>
-        <propertyregex property="exe.longname" select="\1" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
-        <propertyregex property="exe.file" select="\2" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
-        <propertyregex property="exe.memory" select="\3" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
-        <propertyregex property="exe.class" select="\4" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
-        <propertyregex property="exe.args" select="\5" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
-        <antcall>
-          <target name="dist_macos" />
-          <target name="dist_win" />
-          <param name="executable.file.longname" value="${exe.longname}" />
-          <param name="executable.file.name" value="${exe.file}" />
-          <param name="executable.memory" value="${exe.memory}" />
-          <param name="executable.run" value="${exe.class}" />
-          <param name="executable.args" value="${exe.args}" />
-          <param name="structure.dir" value="${build.app.dir}" />
-        </antcall>
-      </sequential>
-    </for>
-    <antcall target="dist_src" />
-    <antcall target="dist_mac_dmg" />
-    <zip destfile="${dist_win_base}/${dist_name}.zip" basedir="${dist_win_base}/${dist_name}" />
-    <echo message="The ${name} distributions can be found in ${dist.dir}" />
+    <delete dir="${dist.dir}" followsymlinks="false"/>
+    <mkdir dir="${dist.dir}"/>
+    <antcall target="dist_mac_dmg"/>
+  	<antcall target="dist_win"/>
   </target>
   <!-- *********************************************************************** -->
   <target name="webstart" depends="obfuscate, libconf"
