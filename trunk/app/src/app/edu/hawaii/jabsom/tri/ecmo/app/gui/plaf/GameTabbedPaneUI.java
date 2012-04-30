@@ -194,19 +194,21 @@ public class GameTabbedPaneUI extends MetalTabbedPaneUI {
       offset = lastWidth;
     }
     
-    Rectangle selectedRect = selectedIndex < 0 ? null : getTabBounds(selectedIndex, calcRect);
-
-    selectedRect.width = selectedRect.width + (selectedRect.height / 2) - 1;
-
-    g.setColor(GameLookAndFeel.DARKEST_BACKGROUND_COLOR);
-    g.drawLine(x, y, selectedRect.x, y);
-    g.drawLine(selectedRect.x + selectedRect.width - offset + 1, y, x + w, y);
-
-    g.setColor(GameLookAndFeel.DARK_BACKGROUND_COLOR);
-    g.drawLine(selectedRect.x + 2, y, selectedRect.x + selectedRect.width - offset - 1, y);
-    
-    g.setColor(Color.BLACK);
-    g.drawLine(selectedRect.x + selectedRect.width - offset, y, selectedRect.x + selectedRect.width - offset, y);
+    if (selectedIndex >= 0) {
+      Rectangle selectedRect = getTabBounds(selectedIndex, calcRect);
+      
+      selectedRect.width = selectedRect.width + (selectedRect.height / 2) - 1;
+      
+      g.setColor(GameLookAndFeel.DARKEST_BACKGROUND_COLOR);
+      g.drawLine(x, y, selectedRect.x, y);
+      g.drawLine(selectedRect.x + selectedRect.width - offset + 1, y, x + w, y);
+      
+      g.setColor(GameLookAndFeel.DARK_BACKGROUND_COLOR);
+      g.drawLine(selectedRect.x + 2, y, selectedRect.x + selectedRect.width - offset - 1, y);
+      
+      g.setColor(Color.BLACK);
+      g.drawLine(selectedRect.x + selectedRect.width - offset, y, selectedRect.x + selectedRect.width - offset, y);
+    }
   }
 
   /**
