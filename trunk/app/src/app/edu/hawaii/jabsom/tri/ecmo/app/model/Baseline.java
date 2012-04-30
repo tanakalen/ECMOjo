@@ -1,5 +1,6 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model;
 
+import java.io.Serializable;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.BubbleDetectorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.HeaterComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
@@ -13,7 +14,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
  * @author   king
  * @since    Jan 6, 2009
  */
-public class Baseline {
+public class Baseline implements Serializable {
 
   /** Baseline value for sedated. */
   private boolean sedated;
