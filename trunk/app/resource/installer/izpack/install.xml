@@ -94,6 +94,12 @@
 			<fileset dir="build/app/application/scenario" targetdir="$INSTALL_PATH/scenario">
 				<include name="**"/>
 			</fileset>
+			<singlefile src="$build/ECMOjo-Infant.bat" target="$INSTALL_PATH/Infant ECMOjo"/>
+			<singlefile src="$build/ECMOjo-Infant-JA.bat" target="$INSTALL_PATH/Infant ECMOjo (Japanese)"/>
+			<!-- Set executable flag -->
+			<executable targetfile="$INSTALL_PATH/Infant ECMOjo" stage="never" keep="true"/>
+			<executable targetfile="$INSTALL_PATH/Infant ECMOjo (Japanese)" stage="never" keep="true"/>
+
 			<file src="src" targetdir="$INSTALL_PATH"/>
         </pack>
 	</packs>
