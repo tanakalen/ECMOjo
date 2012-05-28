@@ -453,6 +453,7 @@
          compression="gzip">
       <tarfileset dir="${basedir}">
         <exclude name="build/**" />
+        <exclude name="target/**" />
         <exclude name="doc/**" />
         <exclude name="www/**" />
       </tarfileset>
