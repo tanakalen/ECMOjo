@@ -413,7 +413,6 @@
       <tarfileset dir="${basedir}">
         <exclude name="build/**" />
         <exclude name="doc/**" />
-        <exclude name="test/**" />
         <exclude name="www/**" />
       </tarfileset>
     </tar>
@@ -573,7 +572,7 @@
     </copy>
     <!-- Copy license file -->
     <copy file="LICENSE.txt" todir="${build.app.dir}" />
-    <copy file="README" todir="${build.app.dir}" />
+    <copy file="README.txt" todir="${build.app.dir}" />
     <!-- Determine build platform [windows, mac, unix] -->
     <condition property="os.target.name" value="windows">
         <os family="windows" />
@@ -611,12 +610,12 @@
     <delete dir="${dist_macos}" followsymlinks="false" />
     <mkdir dir="${dist_macos}" />
     <copy file="LICENSE.txt" todir="${dist_macos}" />
-    <copy file="README" todir="${dist_macos}" />
+    <copy file="README.txt" todir="${dist_macos}" />
     <!-- Prepare Win dist directory -->
     <delete dir="${dist_win}" followsymlinks="false" />
     <mkdir dir="${dist_win}" />
     <copy file="LICENSE.txt" todir="${dist_win}" />
-    <copy file="README" todir="${dist_win}" />
+    <copy file="README.txt" todir="${dist_win}" />
     <!-- Create executable files. -->
     <for list="${executables.list}" param="executable" delimiter="+">
       <sequential>

@@ -47,7 +47,7 @@
     <!-- Library Properties -->
     <property name="author" value="king" />
 	<property name="subname" value="app" />
-	<property name="subdirs" value="(app|main\/java)(/|\\)(.*)" />
+	<property name="subdirs" value="(app|main[\\\/]java|test[\\\/]java)(/|\\)(.*)" />
     <property name="name" value="ecmosim-${subname}" />
     <property name="release.version" value="${global.release.version}" />
 	<property name="release.file" value="${basedir}/src/main/java/edu/hawaii/jabsom/tri/ecmo/app/ECMOAppRelease.java" />
@@ -454,7 +454,6 @@
       <tarfileset dir="${basedir}">
         <exclude name="build/**" />
         <exclude name="doc/**" />
-        <exclude name="test/**" />
         <exclude name="www/**" />
       </tarfileset>
     </tar>
