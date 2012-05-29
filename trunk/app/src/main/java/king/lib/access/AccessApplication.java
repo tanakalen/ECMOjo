@@ -1,6 +1,7 @@
 package king.lib.access;
 
-import king.lib.browser.Browser;
+//import king.lib.browser.Browser;
+import com.Ostermiller.util.Browser;
 
 /**
  * Provides basic functionality for applications.
