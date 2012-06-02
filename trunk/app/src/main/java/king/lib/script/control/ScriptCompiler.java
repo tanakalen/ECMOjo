@@ -55,17 +55,19 @@ public final class ScriptCompiler {
         // write the file
         String name = JavaCompile.SCRIPT_NAME;
         String random = System.nanoTime() + "" + ((int)(Math.random() * 10000000));
-        String dir = System.getProperty("java.io.tmpdir") + "/Java/com.noblemaster.lib.script.Java/" + random + "/";
-        new File(dir).mkdirs();
-        String path = dir + name + ".java";
-        DataOutputStream out = new DataOutputStream(new FileOutputStream(new File(path)));
+        File tmpDir = new File(System.getProperty("java.io.tmpdir"));
+        String dir = "Java/com.noblemaster.lib.script.Java/" + random + "/"; //Windows???
+        File scriptDir = new File(tmpDir, dir);
+        scriptDir.mkdirs();
+        File scriptFile = new File(scriptDir, name + ".java");
+        DataOutputStream out = new DataOutputStream(new FileOutputStream(scriptFile));
         out.writeBytes(script.getCode());
         out.close();
         out = null;
   
         // compile Java | NOTE/TODO: Java 6 can compile in memory :)
         try {
-          Process process = Runtime.getRuntime().exec("javac \"" + path + "\"");
+          Process process = Runtime.getRuntime().exec("javac " + scriptFile.getName(), null, scriptDir);
           String error = "unknown error";
           try {
             // read err input
@@ -86,10 +88,10 @@ public final class ScriptCompiler {
           catch(InterruptedException e) { 
             System.out.println(e); 
           }
-          int ret = process.exitValue();            
+          int ret = process.exitValue();
           if (ret == 0) {
             // load the class bytes
-            File file = new File(dir + name + ".class");
+            File file = new File(scriptDir, name + ".class");
             byte[] b = new byte[(int)file.length()];
             InputStream in = new FileInputStream(file);
             in.read(b, 0, b.length);
@@ -106,8 +108,8 @@ public final class ScriptCompiler {
         }
         finally {
           // cleanup temp directory
-          new File(path).delete();
-          new File(dir).delete();
+          scriptFile.delete();
+          scriptDir.delete();
         }
       }
       catch (IOException e) {
