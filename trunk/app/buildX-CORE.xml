@@ -437,7 +437,7 @@
         <all_permissions />
       </security>
       <resources>
-        <j2se version="1.5+" href="http://java.sun.com/products/autodl/j2se" initial_heap_size="${executable.memory}M" max_heap_size="${executable.memory}M"/>
+        <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se" initial_heap_size="${executable.memory}M" max_heap_size="${executable.memory}M"/>
         <jar href="${name}.jar" />
         <fileset dir="${structure.dir}/unpacked" includes="*.jar">
           <exclude name="${name}.jar" />
