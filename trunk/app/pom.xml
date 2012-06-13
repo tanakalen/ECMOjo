@@ -14,6 +14,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	<release.version>${project.version}</release.version>
+	<release.time>${maven.build.timestamp}</release.time>
+	<maven.build.timestamp.format>yyyy-MM-dd.HHmm</maven.build.timestamp.format>
   </properties>
 
   <!-- The Dependencies -->
@@ -80,6 +83,104 @@
 	  <version>0.9.5</version>
 	</dependency>
   </dependencies>
+
+  <!-- The Build -->
+  <build>
+	<resources>
+	  <!-- TODO: Create resource file to load on classpath for buildtime -->
+      <resource>
+		<directory>src/main/java</directory>
+		<filtering>true</filtering>
+		<targetPath>${basedir}/target/filtered-sources/java</targetPath>
+	  </resource>
+	  <resource>
+	    <directory>src/main/resources</directory>
+		<filtering>true</filtering>
+	  </resource>
+    </resources>
+    <sourceDirectory>${basedir}/target/filtered-sources/java</sourceDirectory>
+	<plugins>
+	  <plugin>
+		<artifactId>maven-resources-plugin</artifactId>
+        <version>2.5</version>
+		<executions>
+		  <execution>
+			<id>copy-resources</id>
+			<phase>process-resources</phase>
+			<goals>
+			  <goal>copy-resources</goal>
+			</goals>
+			<configuration>
+			  <outputDirectory>${project.build.directory}/scenario</outputDirectory>
+              <includeEmptyDirs>true</includeEmptyDirs>
+			  <resources>
+				<resource>
+				  <directory>src/main/app-resources/scenario</directory>
+				</resource>
+			  </resources>
+			</configuration>
+		  </execution>
+		</executions>
+	  </plugin>
+	  <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-jar-plugin</artifactId>
+		<version>2.4</version>
+		<configuration>
+		  <archive>
+		    <manifest>
+			  <addClasspath>true</addClasspath>
+			  <mainClass>edu.hawaii.jabsom.tri.ecmo.app.ECMOApp</mainClass>
+			</manifest>
+		  </archive>
+        </configuration>
+	  </plugin>
+      <plugin>
+		<artifactId>maven-assembly-plugin</artifactId>
+		<configuration>
+		  <descriptorRefs>
+			<descriptorRef>jar-with-dependencies</descriptorRef>
+	      </descriptorRefs>
+	    </configuration>
+        <executions>
+		  <execution>
+			<id>make-jar-with-dependencies</id>
+			<phase>package</phase>
+			<goals>
+			  <goal>single</goal>
+			</goals>
+		  </execution>
+		</executions>
+	  </plugin>
+      <plugin>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>osxappbundle-maven-plugin</artifactId>
+		<version>1.0-alpha-2</version>
+		<configuration>
+		  <mainClass>edu.hawaii.jabsom.tri.ecmo.app.ECMOApp</mainClass>
+          <iconFile>${basedir}/src/main/app-resources/Icons/logo-128x128.icns</iconFile>
+		  <dictionaryFile>${basedir}/src/main/app-resources/Info.plist</dictionaryFile>
+		  <additionalResources>
+			<fileSet>
+			  <directory>${basedir}</directory>
+			  <includes>
+				<include>README.txt</include>
+				<include>LICENSE.txt</include>
+			  </includes>
+		    </fileSet>
+		  </additionalResources>
+	    </configuration>
+        <executions>
+		  <execution>
+			<phase>package</phase>
+			<goals>
+			  <goal>bundle</goal>
+			</goals>
+		  </execution>
+	    </executions>
+      </plugin>
+	</plugins>
+  </build>
 
   <!-- Other repositories -->
   <repositories>
