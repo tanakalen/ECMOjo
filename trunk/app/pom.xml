@@ -130,6 +130,7 @@
 		  <archive>
 		    <manifest>
 			  <addClasspath>true</addClasspath>
+			  <classpathPrefix>lib/</classpathPrefix>
 			  <mainClass>edu.hawaii.jabsom.tri.ecmo.app.ECMOApp</mainClass>
 			</manifest>
 		  </archive>
@@ -138,11 +139,14 @@
       <plugin>
 		<artifactId>maven-assembly-plugin</artifactId>
 		<configuration>
-		  <descriptorRefs>
+		  <descriptors>
+		    <descriptor>${basedir}/src/main/assembly/assembly.xml</descriptor>
+		  </descriptors>
+		  <!--<descriptorRefs>
 			<descriptorRef>jar-with-dependencies</descriptorRef>
-	      </descriptorRefs>
+		  </descriptorRefs>-->
 	    </configuration>
-        <executions>
+		<!--<executions>
 		  <execution>
 			<id>make-jar-with-dependencies</id>
 			<phase>package</phase>
@@ -150,7 +154,7 @@
 			  <goal>single</goal>
 			</goals>
 		  </execution>
-		</executions>
+	    </executions>-->
 	  </plugin>
       <plugin>
 		<groupId>org.codehaus.mojo</groupId>
@@ -178,7 +182,66 @@
 			</goals>
 		  </execution>
 	    </executions>
-      </plugin>
+	  </plugin>
+	  <!--<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-shade-plugin</artifactId>
+		<version>1.7</version>
+		<configuration>
+		  <shadedArtifactAttached>true</shadedArtifactAttached>
+		  <shadedClassifierName>shaded</shadedClassifierName>
+		</configuration>
+		<executions>
+		  <execution>
+			<phase>package</phase>
+			<goals>
+			  <goal>shade</goal>
+			</goals>
+		  </execution>
+		</executions>
+	  </plugin>-->
+	  <plugin>
+		<groupId>com.akathist.maven.plugins.launch4j</groupId>
+		<artifactId>launch4j-maven-plugin</artifactId>
+		<version>1.3</version>
+		<executions>
+		  <execution>
+			<id>win</id>
+			<phase>package</phase>
+			<goals>
+			  <goal>launch4j</goal>
+			</goals>
+			<configuration>
+			  <headerType>gui</headerType>
+			  <outfile>${project.build.directory}/${project.name}.exe</outfile>
+			  <cmdLine>infant</cmdLine>
+			  <jar>${project.build.directory}/${project.build.finalName}.jar</jar>
+			  <errTitle>ECMOjo</errTitle>
+			  <icon>${basedir}/src/main/app-resources/Icons/logo-32x32.ico</icon>
+			  <classPath>
+				<mainClass>edu.hawaii.jabsom.tri.ecmo.app.ECMOApp</mainClass>
+				<addDependencies>true</addDependencies>
+				<jarLocation>lib/</jarLocation>
+			  </classPath>
+			  <jre>
+				<minVersion>1.6.0</minVersion>
+			  </jre>
+			  <versionInfo>
+				<fileVersion>2.4.0.0</fileVersion>
+				<txtFileVersion>${project.build.finalName} ${release.version} (build: ${release.time})</txtFileVersion>
+				<fileDescription>ECMOjo: ECMO simulation training</fileDescription>
+				<copyright>TRI</copyright>
+				<companyName>TRI</companyName>
+				<productVersion>2.4.0.0</productVersion>
+				<txtProductVersion>${project.build.finalName} ${release.version} (build: ${release.time})</txtProductVersion>
+				<productName>${project.name}</productName>
+				<internalName>${project.build.finalName}</internalName>
+				<originalFilename>${project.name}.exe</originalFilename>
+			  </versionInfo>
+			</configuration>
+		  </execution>
+		</executions>
+	  </plugin>
 	</plugins>
   </build>
 
@@ -189,6 +252,18 @@
 	  <name>Java.net Repository for Maven</name>
 	  <url>http://download.java.net/maven/2/</url>
 	  <layout>default</layout>
+    </repository>
+	<repository>
+	  <id>akathist-repository</id>
+	  <name>Akathist Repository</name>
+	  <url>http://www.9stmaryrd.com/maven</url>
 	</repository>
   </repositories>
+  <pluginRepositories>
+	<pluginRepository>
+      <id>akathist-repository</id>
+	  <name>Akathist Repository</name>
+	  <url>http://www.9stmaryrd.com/maven</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>
