@@ -19,11 +19,10 @@
     <property name="release.time" value="${YEARSTAMP}-${MONTHSTAMP}-${DAYSTAMP}.${MINUTESTAMP}" />
     <!-- Global directories -->
     <property name="src.dir" value="src" />
-    <property name="conf.dir" value="conf" />
+	<property name="conf.dir" value="${src.dir}/main/resources/conf" />
     <property name="resource.dir" value="resource" />
     <property name="scenario.dir" value="scenario" />
     <property name="extra.dir" value="extra" />
-    <property name="extra-special.dir" value="extra-special" />
     <property name="doc.dir" value="doc" />
     <property name="web.dir" value="web" />
     <property name="lib.dir" value="lib" />
@@ -53,7 +52,6 @@
 	<property name="release.file" value="${basedir}/src/main/java/edu/hawaii/jabsom/tri/ecmo/app/ECMOAppRelease.java" />
     <filter token="release.version" value="${release.version}" />
     <filter token="release.time" value="${release.time}" />
-    <property name="specialdir" value="app-live" />
     <property name="library.files" value="browsercode.jar,jgoodies-forms-1.0.4.jar,swingx-0.9.4.jar,jl1.0.jar,mp3spi1.9.2.jar,tritonus_share.jar,mail.jar,activation.jar,pnuts-1.1.jar,jsyntaxpane-0.9.5-jre5-minimal.jar" />
     <!-- Program Properties (leave as is if not needed) -->
     <property name="prg.memory" value="256" />
@@ -191,7 +189,7 @@
   <target name="i18n" depends="checkstyle">
     <taskdef name="i18n" classname="net.java.hulp.i18n.buildtools.I18NTask" classpath="${lib.ant.dir}/net.java.hulp.i18ntask-2.1-SNAPSHOT.jar"/>
     <i18n dir="${build.dest.dir}"
-          file="${conf.dir}/app/bundle/MessagesBundle.properties"
+          file="${conf.dir}/bundle/MessagesBundle.properties"
           prefix=""
           pattern="([a-z]+\.[A-Za-z0-9]+)(\[i18n\]: )(.*)" />
   </target>  
@@ -307,7 +305,7 @@
     <mkdir dir="${build.libconf.dir}/temp" />
     <mkdir dir="${build.libconf.dir}/temp/conf" />
     <copy todir="${build.libconf.dir}/temp/conf">
-      <mapper type="regexp" from="${subdirs}" to="\3" />
+	  <!--<mapper type="regexp" from="${subdirs}" to="\3" />-->
       <fileset dir="${conf.dir}" />
     </copy>
     <!-- Create conf jar -->
@@ -609,9 +607,6 @@
       <mapper type="regexp" from="${subdirs}" to="\3" />
       <fileset dir="${extra.dir}" />
     </copy>
-    <copy todir="${build.app.dir}/extra" overwrite="true">
-      <fileset dir="${extra-special.dir}/${specialdir}" />
-    </copy>
     <!-- Copy license file -->
     <copy file="LICENSE.txt" todir="${build.app.dir}" />
     <copy file="README.txt" todir="${build.app.dir}" />
@@ -712,9 +707,6 @@
     <copy todir="${build.webstart.dir}/extra" overwrite="true">
       <mapper type="regexp" from="${subdirs}" to="\3" />
       <fileset dir="${extra.dir}"/>
-    </copy>
-    <copy todir="${build.webstart.dir}/extra" overwrite="true">
-      <fileset dir="${extra-special.dir}/${specialdir}" />
     </copy>
     <!-- Copy external jar files -->
     <copy todir="${build.webstart.dir}">
