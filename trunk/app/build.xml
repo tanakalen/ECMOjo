@@ -81,7 +81,7 @@
     <!-- Global Test files -->
     <property name="test.files" value="**/Test*" />
     <!-- Global directories -->
-    <property name="build.dir" value="build/${subname}" />
+    <property name="build.dir" value="target/${subname}" />
     <property name="build.src.dir" value="${build.dir}/src" />
     <property name="build.dest.dir" value="${build.dir}/classes" />
     <property name="build.src_html.dir" value="${build.dir}/src_html" />
@@ -119,7 +119,7 @@
   </target>  
   <!-- *********************************************************************** -->
   <target name="clean" depends="post-init"
-          description="Delete build/ and misc other files.">
+          description="Delete the build dir and misc other files.">
     <delete dir="${build.dir}" />
     <!-- Delete backup files left by IDE and JRefactory. -->
     <delete>
@@ -450,7 +450,6 @@
     <tar destfile="${dist_src_base}/${dist_name}.tar.gz"
          compression="gzip">
       <tarfileset dir="${basedir}">
-        <exclude name="build/**" />
         <exclude name="target/**" />
         <exclude name="doc/**" />
         <exclude name="www/**" />
