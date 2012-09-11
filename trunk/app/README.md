@@ -57,7 +57,7 @@ Installation
     `cd (ECMOjo)`  
     `ant -f build.xml application`  
 
-Where (ECMOjo) is the current version. Executables will be located in directory build/app/application
+Where (ECMOjo) is the current version. Executables will be located in directory target/app/application
 
 
 **Maven:**

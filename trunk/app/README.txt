@@ -54,7 +54,7 @@ Source (with Java and Ant):
     cd (ECMOjo)
     ant -f build.xml application
 Where (ECMOjo) is the current version. Executables will be located in directory
-build/app/application
+target/app/application
 
 Maven:
 
