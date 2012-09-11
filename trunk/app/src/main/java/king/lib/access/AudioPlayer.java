@@ -15,8 +15,13 @@ import king.lib.out.Error;
 import java.io.IOException;
 import java.io.InputStream;
 
+//TODO: JavaFX imports
+// import javafx.scene.media.Media;
+// import javafx.scene.media.MediaPlayer;
+
 /**
  * Plays a sound. Internally used by AudioLoader. Audio player is for short sound and looping sound.
+ * Conversion to Java 7 FX will allow removal of libraries:
  * <ul>
  *   <li>jl1.0.jar</li>
  *   <li>mp3spi1.9.2.jar</li>
@@ -24,10 +29,11 @@ import java.io.InputStream;
  * </ul>
  * The following audio file formats are supported:
  * <ul>
- *   <li>wav
- *   <li>aiff
- *   <li>au
- *   <li>mp3
+ *   <li>wav</li>
+ *   <li>aiff</li>
+ *   <li>au</li>
+ *   <li>mp3</li>
+ *   <li>future: fxm, flv, mp4</li>
  * </ul>
  *
  * @author    king 
@@ -77,6 +83,18 @@ public final class AudioPlayer {
     try {
       // open stream to sound file
       InputStream inputStream = hookup.getInputStream(path);
+      
+      //JavaFX Media and MediaPlayer
+      //try {
+      //  media = new Media(inputStream)
+      //  try {
+      //    mediaPlayer = new MediaPlayer(media)
+      //  } catch (Exception MediaPlayerException) {
+      //    // Handle exception in MediaPlayer constructor.
+      //  }
+      //} catch (Exception mediaException) {
+      //  // Handle exception in Media constructor.
+      //
       
       // *** HACK START
       // *** Only audioStream = AudioSystem.getAudioInputStream(inputStream); 

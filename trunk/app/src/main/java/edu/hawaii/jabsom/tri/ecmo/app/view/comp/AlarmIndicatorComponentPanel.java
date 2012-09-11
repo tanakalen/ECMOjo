@@ -95,7 +95,7 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
     fxOff = false;
     
     // the alarm audio player
-    alarmFx = AudioPlayer.create("conf/sound/alarm.mp3");
+    alarmFx = AudioPlayer.create("conf/sound/alarm.wav");
     alarmFx.setLooping(true);
   }
 
