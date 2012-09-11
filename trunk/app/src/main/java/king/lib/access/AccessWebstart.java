@@ -8,11 +8,11 @@ import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.net.URL;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipEntry;
-//import king.lib.browser.Browser;
-import com.Ostermiller.util.Browser;
+import java.awt.Desktop;
 
 /**
  * Provides basic functionality for webstart.
@@ -169,21 +169,22 @@ public class AccessWebstart extends Access {
     
     // if URL not opened yet, try alternative method
     if (!urlOpened) {
-      // init browser if not done yet
-      if (!browserInitDone) {
-        try {
-          // init browser code
-          Browser.init();
-          browserInitDone = true;
-        }
-        catch (Exception e) {
-          throw new AccessException("Error in browser init: " + e);
-        }
-      }    
+//      // init browser if not done yet
+//      if (!browserInitDone) {
+//        try {
+//          // init browser code
+//          Browser.init();
+//          browserInitDone = true;
+//        }
+//        catch (Exception e) {
+//          throw new AccessException("Error in browser init: " + e);
+//        }
+//      }    
   
       // open url
       try {
-        Browser.displayURL(url);
+        Desktop.getDesktop().browse(new URI(url));
+//        Browser.displayURL(url);
       }
       catch (Exception e) {
         throw new AccessException("Error opening URL in browser: " + e);

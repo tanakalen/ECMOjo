@@ -2,11 +2,8 @@ package edu.hawaii.jabsom.tri.ecmo.app.control;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-
 import king.lib.access.Access;
 import king.lib.access.AccessException;
-import king.lib.access.LocalHookup;
 import king.lib.out.Error;
 
 import org.junit.After;
@@ -20,7 +17,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioCreator;
-import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioLoader;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
@@ -109,7 +105,7 @@ public class TestUpdater {
     // TODO: Verify correctness
     double expected = 58.0 * 1.1; // increase SBP by 10%
     int increment = 20;
-    for (int i=0; i<1; i++) {
+    for (int i = 0; i < 1; i++) {
       Updater.store(game, history);
       PumpComponent pump = (PumpComponent)equipment.getComponent(PumpComponent.class);
       pump.setFlow(pump.getFlow() + 0.1); // increased by 20 mL/kg/min

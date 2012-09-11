@@ -1,7 +1,7 @@
 package king.lib.access;
 
-//import king.lib.browser.Browser;
-import com.Ostermiller.util.Browser;
+import java.net.URI;
+import java.awt.Desktop;
 
 /**
  * Provides basic functionality for applications.
@@ -53,21 +53,22 @@ public class AccessApplication extends Access {
    * @throws AccessException  If something goes wrong.
    */
   public void openURL(String url) throws AccessException {
-    // init browser if not done yet
-    if (!browserInitDone) {
-      try {
-        // init browser code
-        Browser.init();
-        browserInitDone = true;
-      }
-      catch (Exception e) {
-        throw new AccessException("Error in browser init: " + e);
-      }
-    }    
+//    // init browser if not done yet
+//    if (!browserInitDone) {
+//      try {
+//        // init browser code
+//        Browser.init();
+//        browserInitDone = true;
+//      }
+//      catch (Exception e) {
+//        throw new AccessException("Error in browser init: " + e);
+//      }
+//    }    
 
     // open url
     try {
-      Browser.displayURL(url);
+      Desktop.getDesktop().browse(new URI(url));
+//      Browser.displayURL(url);
     }
     catch (Exception e) {
       throw new AccessException("Error opening URL in browser: " + e);
