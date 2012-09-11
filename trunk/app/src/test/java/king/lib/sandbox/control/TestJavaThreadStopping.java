@@ -28,7 +28,7 @@ public class TestJavaThreadStopping {
         synchronized(lock) {
           int i = 0;
           while (true) {
-            System.out.println(i++);            
+            System.out.print(i++);
           }
         }
       }
