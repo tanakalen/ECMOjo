@@ -188,12 +188,12 @@
             <phase>package</phase>
             <configuration>
 				<target>
-				  <!-- <ant antfile="${basedir}/build.xml">
+				  <!-- Use existing ant buildfile
+				  <ant antfile="${basedir}/build.xml">
 				    <target name="dist" />
 				  </ant> -->
 				  <tar destfile="${project.build.directory}/${project.build.finalName}.tar.gz" compression="gzip">
 				    <tarfileset dir="${basedir}">
-				      <exclude name="build/**" />
 				      <exclude name="target/**" />
 				      <exclude name="doc/**" />
 				      <exclude name="www/**" />
