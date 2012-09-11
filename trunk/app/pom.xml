@@ -52,16 +52,6 @@
 	  <artifactId>pnuts</artifactId>
 	  <version>1.2</version>
     </dependency>
-	<!--<dependency>
-	  <groupId>org.mobicents.external.tritonus</groupId>
-	  <artifactId>tritonus_share</artifactId>
-	  <version>1.0</version>
-    </dependency>
-    <dependency>
-	  <groupId>org.mobicents.external.fmj</groupId>
-	  <artifactId>mp3spi</artifactId>
-	  <version>1.9.4</version>
-    </dependency>-->
     <dependency>
 	  <groupId>javax.activation</groupId>
 	  <artifactId>activation</artifactId>
@@ -72,11 +62,6 @@
 	  <artifactId>mail</artifactId>
 	  <version>1.4.4</version>
     </dependency>
-	<!--<dependency>
-	  <groupId>org.ostermiller</groupId>
-	  <artifactId>utils</artifactId>
-	  <version>1.07.00</version>
-    </dependency>-->
     <dependency>
 	  <groupId>jsyntaxpane</groupId>
 	  <artifactId>jsyntaxpane</artifactId>
@@ -188,17 +173,17 @@
             <phase>package</phase>
             <configuration>
 				<target>
-				  <!-- Use existing ant buildfile
+				  <!-- Use existing ant buildfile -->
 				  <ant antfile="${basedir}/build.xml">
 				    <target name="dist" />
-				  </ant> -->
-				  <tar destfile="${project.build.directory}/${project.build.finalName}.tar.gz" compression="gzip">
+				  </ant>
+				  <!-- <tar destfile="${project.build.directory}/${project.build.finalName}.tar.gz" compression="gzip">
 				    <tarfileset dir="${basedir}">
 				      <exclude name="target/**" />
 				      <exclude name="doc/**" />
 				      <exclude name="www/**" />
 				    </tarfileset>
-				  </tar>
+				  </tar> -->
 				</target>
             </configuration>
             <goals>
@@ -207,6 +192,7 @@
           </execution>
         </executions>
       </plugin>
+      <!-- Currently using ant build for distributions mac, win, src
       <plugin>
 		<groupId>org.codehaus.mojo</groupId>
 		<artifactId>osxappbundle-maven-plugin</artifactId>
@@ -240,23 +226,6 @@
 		  </execution>
 	    </executions>
 	  </plugin>
-	  <!--<plugin>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-shade-plugin</artifactId>
-		<version>1.7</version>
-		<configuration>
-		  <shadedArtifactAttached>true</shadedArtifactAttached>
-		  <shadedClassifierName>shaded</shadedClassifierName>
-		</configuration>
-		<executions>
-		  <execution>
-			<phase>package</phase>
-			<goals>
-			  <goal>shade</goal>
-			</goals>
-		  </execution>
-		</executions>
-	  </plugin>-->
 	  <plugin>
 		<groupId>com.akathist.maven.plugins.launch4j</groupId>
 		<artifactId>launch4j-maven-plugin</artifactId>
@@ -298,7 +267,7 @@
 			</configuration>
 		  </execution>
 		</executions>
-	  </plugin>
+	  </plugin> -->
 	</plugins>
   </build>
 
