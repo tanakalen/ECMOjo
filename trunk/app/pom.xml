@@ -95,7 +95,6 @@
 	  </resource>
 	  <resource>
 	    <directory>src/main/resources</directory>
-		<filtering>true</filtering>
 	  </resource>
     </resources>
     <sourceDirectory>${basedir}/target/filtered-sources/java</sourceDirectory>
@@ -115,9 +114,29 @@
               <includeEmptyDirs>true</includeEmptyDirs>
 			  <resources>
 				<resource>
-				  <directory>src/main/app-resources/scenario</directory>
+				  <directory>src/main/app-resources/copy/scenario</directory>
 				</resource>
 			  </resources>
+			</configuration>
+		  </execution>
+		</executions>
+	  </plugin>
+	  <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-dependency-plugin</artifactId>
+		<version>2.4</version>
+		<executions>
+		  <execution>
+			<id>copy-dependencies</id>
+			<phase>package</phase>
+			<goals>
+			  <goal>copy-dependencies</goal>
+		    </goals>
+			<configuration>
+			  <outputDirectory>${project.build.directory}/lib</outputDirectory>
+			  <overWriteReleases>false</overWriteReleases>
+			  <overWriteSnapshots>false</overWriteSnapshots>
+			  <overWriteIfNewer>true</overWriteIfNewer>
 			</configuration>
 		  </execution>
 		</executions>
@@ -172,6 +191,12 @@
 				<include>LICENSE.txt</include>
 			  </includes>
 		    </fileSet>
+            <fileSet>
+			  <directory>${basedir}/src/main/app-resources/copy</directory>
+			  <includes>
+				<include>**/*</include>
+			  </includes>
+			</fileSet>
 		  </additionalResources>
 	    </configuration>
         <executions>
