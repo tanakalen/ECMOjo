@@ -11,7 +11,8 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipEntry;
-import king.lib.browser.Browser;
+//import king.lib.browser.Browser;
+import com.Ostermiller.util.Browser;
 
 /**
  * Provides basic functionality for webstart.
