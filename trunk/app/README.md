@@ -44,6 +44,8 @@ Department of Defense (DoD), United States of America.
 Installation
 ------------
 
+**Ant:**
+
 **Windows:**  
   Unzip file. Copy specific application directory to desired location. Double-click application exe file.
 
@@ -57,5 +59,17 @@ Installation
 
 Where (ECMOjo) is the current version. Executables will be located in directory build/app/application
 
+
+**Maven:**
+
+Install [jsyntaxpane][jsp] as jar to local repository using command:
+    `mvn install:install-file -Dfile=<path to jsyntaxpane.jar> \`
+    `    -DgroupId=jsyntaxpane -DartifactId=jsyntaxpane -Dversion=0.9.5 \`
+	`    -Dpackaging=jar`
+
+Then, issue command, or other specific Maven command:
+    `mvn package`
+
 [ecmojo]: http://ecmojo.sourceforge.net
 [tri]: http://www.tri.jabsom.hawaii.edu
+[jsp]: http://code.google.com/p/jsyntaxpane
