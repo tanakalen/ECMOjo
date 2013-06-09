@@ -50,7 +50,10 @@ Installation
   Unzip file. Copy specific application directory to desired location. Double-click application exe file.
 
 **Mac:**  
-  Double-click (ECMOjo).dmg. Copy specific application to desired location.
+  Double-click (ECMOjo).dmg. Copy specific application to desired location. Debug app bundle with:
+    `export JAVA_LAUNCHER_VERBOSE=1`  
+    `cd (ECMOjo).app`  
+    `Contents/MacOS/JavaAppLauncher`  
 
 **Source:** (With Java and Ant)  
     `tar xzf (ECMOjo).tar.gz`  
@@ -62,12 +65,12 @@ Where (ECMOjo) is the current version. Executables will be located in directory 
 
 **Maven:**
 
-Install [jsyntaxpane][jsp] as jar to local repository using command:
-    `mvn install:install-file -Dfile=<path to jsyntaxpane.jar> \`
-    `    -DgroupId=jsyntaxpane -DartifactId=jsyntaxpane -Dversion=0.9.5 \`
-	`    -Dpackaging=jar`
+Install [jsyntaxpane][jsp] as jar to local repository using command:  
+    `mvn install:install-file -Dfile=<path to jsyntaxpane.jar> \`  
+    `    -DgroupId=jsyntaxpane -DartifactId=jsyntaxpane -Dversion=0.9.5 \`  
+    `    -Dpackaging=jar`  
 
-Then, issue command, or other specific Maven command:
+Then, issue command, or other specific Maven command:  
     `mvn package`
 
 [ecmojo]: http://ecmojo.sourceforge.net

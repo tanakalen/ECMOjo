@@ -48,6 +48,10 @@ click application exe file.
 
 Mac:
 Double-click (ECMOjo).dmg. Copy specific application to desired location.
+Debug app bundle with:
+    export JAVA_LAUNCHER_VERBOSE=1
+    cd (ECMOjo).app
+    Contents/MacOS/JavaAppLauncher
 
 Source (with Java and Ant):
     tar xzf (ECMOjo).tar.gz
