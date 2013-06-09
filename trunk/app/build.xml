@@ -345,7 +345,7 @@
     </condition>
     <!-- Create batch/script file (windows or unix): -Dsun.java2d.noddraw=true -->
     <echo file="${structure.dir}/${executable.file.name}.bat"
-      message="${jreloc} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}" />
+      message="${jreloc} -Duser.dir=${structure.dir} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}" />
     <chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx" />
   </target>
 <!-- *********************************************************************** -->
@@ -364,7 +364,7 @@
                 bundleid="${executable.run}"
                 signature="ECJO"
                 jvmversion="1.4+"
-                vmoptions="-Xms${executable.memory}m -Xmx${executable.memory}m -Xss8M"
+                vmoptions="-Xms${executable.memory}m -Xmx${executable.memory}m -Xss8M -Duser.dir=$APP_PACKAGE/Contents/Resources/Java"
                 arguments="${executable.args}"
                 workingdirectory="$APP_PACKAGE/Contents/Resources/Java">
       <jarfileset dir="${structure.dir}/lib">
@@ -381,35 +381,38 @@
   </target>
   <!-- *********************************************************************** -->
   <target name="dist_macos">
+    <echo message="Java home: ${java.home}" />
+    <echo message="Java env home: ${env.JAVA_HOME}" />
     <property name="dist_macos_app_name" value="${executable.file.longname}.app" />
     <property name="dist_macos_app" value="${dist_macos}/${dist_macos_app_name}" />
     <property name="dist_macos_contents" value="${dist_macos_app}/Contents" />
     <property name="dist_macos_info" value="${dist_macos_contents}/Info.plist" />
     <bundleapp outputdirectory="${dist_macos}"
-               name="ECMOjo"
+               name="${executable.file.longname}"
                displayname="${executable.file.longname}"
+               identifier="${executable.run}"
                mainclassname="${executable.run}"
                shortversion="${release.version}"
+               icon="${resource.dir}/installer/Icons/logo-128x128.icns"
                copyright="${executable.file.longname} ${release.version} (build: ${release.time}) application (c) ${YEARSTAMP}"
-               identifier="${executable.run}"
                signature="ECJO"
                applicationCategory="public.app-category.medical">
         <runtime dir="${env.JAVA_HOME}"/>
-        <classpath dir="${structure.dir}">
-            <include name="scenario/**" />
-            <include name="extra/**" />
+        <classpath dir="${structure.dir}/lib">
+          <include name="**/*.jar" />
         </classpath>
+        <option value="-Djava.library.path=$APP_ROOT/Contents/Java/" />
+        <option value="-Duser.dir=$APP_ROOT/Contents/Java"/>
         <option value="-Dapple.laf.useScreenMenuBar=true"/>
         <option value="-Xms${executable.memory}m"/>
         <option value="-Xmx${executable.memory}m"/>
         <option value="-Xss8M"/>
         <argument value="${executable.args}"/>
     </bundleapp>
-    <copy file="${resource.dir}/installer/Icons/logo-128x128.icns" todir="${dist_macos_contents}/Resources" />
-    <copy todir="${dist_macos_contents}/Resources/Java">
+    <copy todir="${dist_macos_contents}/Java">
       <fileset dir="${structure.dir}">
-        <include name="scenario/**" />
-        <include name="extra/**" />
+        <include name="scenario/" />
+        <include name="extra/" />
       </fileset>
     </copy>
   </target>
