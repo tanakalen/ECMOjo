@@ -436,6 +436,8 @@
   </target>
   <!-- *********************************************************************** -->
   <target name="dist_win">
+    <echo message="Base dir: ${basedir}" />
+    <echo message="Java home: ${java.home}" />
     <property name="dist_win_app_name" value="${executable.file.longname}" />
     <property name="dist_win_app" value="${dist_win}/${dist_win_app_name}" />
     <copy todir="${dist_win_app}">
@@ -445,7 +447,7 @@
         <include name="extra/**" />
       </fileset>
     </copy>
-    <launch4j>
+    <launch4j bindir="${launch4j.dir}/bin">
       <config jarPath="${dist_win_app}/lib/ecmosim-app.jar"
               dontWrapJar="true"
               headerType="gui"
@@ -455,12 +457,14 @@
         <classPath mainClass="${executable.run}">
           <cp>%EXEDIR%/lib/*.jar</cp>
         </classPath>
-        <jre minVersion="1.4.0"
+        <jre path="${java.home}/bin"
+             minVersion="1.7.0"
              initialHeapSize="${executable.memory}"
              maxHeapSize="${executable.memory}">
           <opt>-Xss8M</opt>
           <opt>-Dlaunch4j.exedir="%EXEDIR%"</opt>
           <opt>-Dlaunch4j.exefile="%EXEFILE%"</opt>
+          <opt>-Duser.dir="%EXEDIR%"</opt>
         </jre>
         <!--
         <versionInfo
@@ -476,7 +480,7 @@
         <messages>
           <startupErr>Error with startup</startupErr>
           <bundledJreErr>Unable to find Java runtime</bundledJreErr>
-          <jreVersionErr>Impropre Java version</jreVersionErr>
+          <jreVersionErr>Improper Java version</jreVersionErr>
           <launcherErr>Error with Launch4j</launcherErr>
         </messages>
         -->
