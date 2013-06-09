@@ -417,13 +417,14 @@
   <target name="dist_mac_dmg">
     <!-- Identify size of MacOS distribution -->
     <length property="dmac.size" mode="all">
-      <fileset dir="${dist_macos}" includes="**/*.*" />
+      <fileset dir="${dist_macos}" />
     </length>
+	<echo message="dist_mac size: ${dmac.size}" />
     <script language="javascript">
       <![CDATA[
         var length_bytes = project.getProperty("dmac.size");
-        var length_kbytes = Math.round((length_bytes / 1024) * Math.pow(10,2) / Math.pow(10,2));
-        var length_mbytes = Math.round((length_kbytes / 1024) * Math.pow(10,2) / Math.pow(10,2));
+        var length_kbytes = Math.round((length_bytes / 1000) * Math.pow(10,2) / Math.pow(10,2));
+        var length_mbytes = Math.round((length_kbytes / 1000) * Math.pow(10,2) / Math.pow(10,2));
         project.setNewProperty("dmac.size.mb", length_mbytes+2);
       ]]>
     </script>
