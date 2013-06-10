@@ -19,7 +19,7 @@
     <property name="release.time" value="${YEARSTAMP}-${MONTHSTAMP}-${DAYSTAMP}.${MINUTESTAMP}" />
     <!-- Global directories -->
     <property name="src.dir" value="src" />
-	<property name="conf.dir" value="${src.dir}/main/resources/conf" />
+    <property name="conf.dir" value="${src.dir}/main/resources/conf" />
     <property name="resource.dir" value="resource" />
     <property name="scenario.dir" value="scenario" />
     <property name="extra.dir" value="extra" />
@@ -40,16 +40,17 @@
     <condition property="lib.jsse.dir" value="${java.home}/../Classes/jsse.jar">
       <os family="mac" />
     </condition>
+    <property environment="env"/>
   </target>
   <!-- *********************************************************************** -->
   <target name="init" depends="pre-init, globals">
     <!-- Library Properties -->
     <property name="author" value="king" />
-	<property name="subname" value="app" />
-	<property name="subdirs" value="(app|main[\\\/]java|test[\\\/]java)(/|\\)(.*)" />
+    <property name="subname" value="app" />
+    <property name="subdirs" value="(app|main[\\\/]java|test[\\\/]java)(/|\\)(.*)" />
     <property name="name" value="ecmosim-${subname}" />
     <property name="release.version" value="${global.release.version}" />
-	<property name="release.file" value="${basedir}/src/main/java/edu/hawaii/jabsom/tri/ecmo/app/ECMOAppRelease.java" />
+    <property name="release.file" value="${basedir}/src/main/java/edu/hawaii/jabsom/tri/ecmo/app/ECMOAppRelease.java" />
     <filter token="release.version" value="${release.version}" />
     <filter token="release.time" value="${release.time}" />
     <property name="library.files" value="browsercode.jar,jgoodies-forms-1.0.4.jar,swingx-0.9.4.jar,jl1.0.jar,mail.jar,activation.jar,pnuts-1.1.jar,jsyntaxpane-0.9.5-jre5-minimal.jar" />
@@ -100,6 +101,7 @@
     <property name="dist_src_base" value="${dist.dir}/dist_src" />
     <property name="dist_src" value="${dist_src_base}/${dist_name}" />
     <property name="dist_macos_base" value="${dist.dir}/dist_macos" />
+    <property name="dist_macos_old" value="${dist_macos_base}/old/${dist_name}" />
     <property name="dist_macos" value="${dist_macos_base}/${dist_name}" />
     <property name="jarbundler.ver" value="jarbundler-2.2.0" />
     <property name="jarbundler.dir" value="${resource.dir}/installer/${jarbundler.ver}" />
@@ -110,6 +112,7 @@
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
     <taskdef name="jarbundler" classpath="${jarbundler.dir}/${jarbundler.ver}.jar" classname="net.sourceforge.jarbundler.JarBundler" />
     <taskdef name="launch4j" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" classname="net.sf.launch4j.ant.Launch4jTask" />
+    <taskdef name="bundleapp" classpath="${lib.ant.dir}/appbundler-1.0.jar" classname="com.oracle.appbundler.AppBundlerTask" />
     <!-- Jakarta-Tomcat (Catalina) - ant tasks -->
     <taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"    classpath="${lib.ant.dir}/catalina-ant.jar" />
     <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask"    classpath="${lib.ant.dir}/catalina-ant.jar" />
@@ -342,16 +345,16 @@
     </condition>
     <!-- Create batch/script file (windows or unix): -Dsun.java2d.noddraw=true -->
     <echo file="${structure.dir}/${executable.file.name}.bat"
-      message="${jreloc} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}" />
+      message="${jreloc} -Duser.dir=${structure.dir} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}" />
     <chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx" />
   </target>
-  <!-- *********************************************************************** -->
-  <target name="dist_macos">
-    <property name="dist_macos_app_name" value="${executable.file.longname}.app" />
-    <property name="dist_macos_app" value="${dist_macos}/${dist_macos_app_name}" />
-    <property name="dist_macos_contents" value="${dist_macos_app}/Contents" />
-    <property name="dist_macos_info" value="${dist_macos_contents}/Info.plist" />
-    <jarbundler dir="${dist_macos}"
+<!-- *********************************************************************** -->
+  <target name="dist_macos_old">
+    <property name="dist_macos_old_app_name" value="${executable.file.longname}.app" />
+    <property name="dist_macos_old_app" value="${dist_macos_old}/${dist_macos_old_app_name}" />
+    <property name="dist_macos_old_contents" value="${dist_macos_old_app}/Contents" />
+    <property name="dist_macos_old_info" value="${dist_macos_old_contents}/Info.plist" />
+    <jarbundler dir="${dist_macos_old}"
                 name="${executable.file.longname}"
                 mainclass="${executable.run}"
                 icon="logo-128x128.icns"
@@ -361,15 +364,15 @@
                 bundleid="${executable.run}"
                 signature="ECJO"
                 jvmversion="1.4+"
-                vmoptions="-Xms${executable.memory}m -Xmx${executable.memory}m -Xss8M"
+                vmoptions="-Xms${executable.memory}m -Xmx${executable.memory}m -Xss8M -Duser.dir=$APP_PACKAGE/Contents/Resources/Java"
                 arguments="${executable.args}"
                 workingdirectory="$APP_PACKAGE/Contents/Resources/Java">
       <jarfileset dir="${structure.dir}/lib">
         <include name="**/*.jar" />
       </jarfileset>
     </jarbundler>
-    <copy file="${resource.dir}/installer/Icons/logo-128x128.icns" todir="${dist_macos_contents}/Resources" />
-    <copy todir="${dist_macos_contents}/Resources/Java">
+    <copy file="${resource.dir}/installer/Icons/logo-128x128.icns" todir="${dist_macos_old_contents}/Resources" />
+    <copy todir="${dist_macos_old_contents}/Resources/Java">
       <fileset dir="${structure.dir}">
         <include name="scenario/**" />
         <include name="extra/**" />
@@ -377,16 +380,54 @@
     </copy>
   </target>
   <!-- *********************************************************************** -->
+  <target name="dist_macos">
+    <echo message="Java home: ${java.home}" />
+    <echo message="Java env home: ${env.JAVA_HOME}" />
+    <property name="dist_macos_app_name" value="${executable.file.longname}.app" />
+    <property name="dist_macos_app" value="${dist_macos}/${dist_macos_app_name}" />
+    <property name="dist_macos_contents" value="${dist_macos_app}/Contents" />
+    <property name="dist_macos_info" value="${dist_macos_contents}/Info.plist" />
+    <bundleapp outputdirectory="${dist_macos}"
+               name="${executable.file.longname}"
+               displayname="${executable.file.longname}"
+               identifier="${executable.run}"
+               mainclassname="${executable.run}"
+               shortversion="${release.version}"
+               icon="${resource.dir}/installer/Icons/logo-128x128.icns"
+               copyright="${executable.file.longname} ${release.version} (build: ${release.time}) application (c) ${YEARSTAMP}"
+               signature="ECJO"
+               applicationCategory="public.app-category.medical">
+        <runtime dir="${env.JAVA_HOME}"/>
+        <classpath dir="${structure.dir}/lib">
+          <include name="**/*.jar" />
+        </classpath>
+        <option value="-Djava.library.path=$APP_ROOT/Contents/Java/" />
+        <option value="-Duser.dir=$APP_ROOT/Contents/Java"/>
+        <option value="-Dapple.laf.useScreenMenuBar=true"/>
+        <option value="-Xms${executable.memory}m"/>
+        <option value="-Xmx${executable.memory}m"/>
+        <option value="-Xss8M"/>
+        <argument value="${executable.args}"/>
+    </bundleapp>
+    <copy todir="${dist_macos_contents}/Java">
+      <fileset dir="${structure.dir}">
+        <include name="scenario/" />
+        <include name="extra/" />
+      </fileset>
+    </copy>
+  </target>
+  <!-- *********************************************************************** -->
   <target name="dist_mac_dmg">
     <!-- Identify size of MacOS distribution -->
     <length property="dmac.size" mode="all">
-      <fileset dir="${dist_macos}" includes="**/*.*" />
+      <fileset dir="${dist_macos}" />
     </length>
+	<echo message="dist_mac size: ${dmac.size}" />
     <script language="javascript">
       <![CDATA[
         var length_bytes = project.getProperty("dmac.size");
-        var length_kbytes = Math.round((length_bytes / 1024) * Math.pow(10,2) / Math.pow(10,2));
-        var length_mbytes = Math.round((length_kbytes / 1024) * Math.pow(10,2) / Math.pow(10,2));
+        var length_kbytes = Math.round((length_bytes / 1000) * Math.pow(10,2) / Math.pow(10,2));
+        var length_mbytes = Math.round((length_kbytes / 1000) * Math.pow(10,2) / Math.pow(10,2));
         project.setNewProperty("dmac.size.mb", length_mbytes+2);
       ]]>
     </script>
@@ -398,6 +439,8 @@
   </target>
   <!-- *********************************************************************** -->
   <target name="dist_win">
+    <echo message="Base dir: ${basedir}" />
+    <echo message="Java home: ${java.home}" />
     <property name="dist_win_app_name" value="${executable.file.longname}" />
     <property name="dist_win_app" value="${dist_win}/${dist_win_app_name}" />
     <copy todir="${dist_win_app}">
@@ -407,7 +450,7 @@
         <include name="extra/**" />
       </fileset>
     </copy>
-    <launch4j>
+    <launch4j bindir="${launch4j.dir}/bin">
       <config jarPath="${dist_win_app}/lib/ecmosim-app.jar"
               dontWrapJar="true"
               headerType="gui"
@@ -417,12 +460,14 @@
         <classPath mainClass="${executable.run}">
           <cp>%EXEDIR%/lib/*.jar</cp>
         </classPath>
-        <jre minVersion="1.4.0"
+        <jre path="${java.home}/bin"
+             minVersion="1.7.0"
              initialHeapSize="${executable.memory}"
              maxHeapSize="${executable.memory}">
           <opt>-Xss8M</opt>
           <opt>-Dlaunch4j.exedir="%EXEDIR%"</opt>
           <opt>-Dlaunch4j.exefile="%EXEFILE%"</opt>
+          <opt>-Duser.dir="%EXEDIR%"</opt>
         </jre>
         <!--
         <versionInfo
@@ -438,7 +483,7 @@
         <messages>
           <startupErr>Error with startup</startupErr>
           <bundledJreErr>Unable to find Java runtime</bundledJreErr>
-          <jreVersionErr>Impropre Java version</jreVersionErr>
+          <jreVersionErr>Improper Java version</jreVersionErr>
           <launcherErr>Error with Launch4j</launcherErr>
         </messages>
         -->
@@ -645,6 +690,7 @@
     <!-- Prepare Mac dist directory -->
     <delete dir="${dist_macos}" followsymlinks="false" />
     <mkdir dir="${dist_macos}" />
+    <mkdir dir="${dist_macos_old}" />
     <copy file="LICENSE.txt" todir="${dist_macos}" />
     <copy file="README.txt" todir="${dist_macos}" />
     <!-- Prepare Win dist directory -->
@@ -661,6 +707,7 @@
         <propertyregex property="exe.class" select="\4" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
         <propertyregex property="exe.args" select="\5" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
         <antcall>
+          <target name="dist_macos_old" />
           <target name="dist_macos" />
           <target name="dist_win" />
           <param name="executable.file.longname" value="${exe.longname}" />

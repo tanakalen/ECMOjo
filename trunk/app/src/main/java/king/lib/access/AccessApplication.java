@@ -22,8 +22,12 @@ public class AccessApplication extends Access {
    * @return  The scenario directory with the scenario files without "/" at the end.
    */
   public final String getScenarioDir() {
-    // in relative path, so return as relative path.
-    return "scenario";
+    // Obtain system absolute path from user.dir property during build.
+    String userdir = System.getProperty("user.dir");
+    String path = userdir + "/" + "scenario";
+    //System.out.println(newpath);
+    //return "scenario"; //old method used relative path
+    return path;
   }
   
   /**
