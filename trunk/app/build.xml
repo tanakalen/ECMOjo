@@ -343,9 +343,10 @@
     <condition property="jreloc" value="java">
       <equals arg1="${os.target.name}" arg2="unix" />
     </condition>
+    <property name="usrdir" value="${basedir}/${structure.dir}" />
     <!-- Create batch/script file (windows or unix): -Dsun.java2d.noddraw=true -->
     <echo file="${structure.dir}/${executable.file.name}.bat"
-      message="${jreloc} -Duser.dir=${structure.dir} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}" />
+      message="${jreloc} -Duser.dir=${usrdir} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}" />
     <chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx" />
   </target>
 <!-- *********************************************************************** -->
