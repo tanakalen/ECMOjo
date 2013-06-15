@@ -3,6 +3,7 @@ package edu.hawaii.jabsom.tri.ecmo.app;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Locale;
+import java.util.Locale.Builder;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -17,6 +18,9 @@ import king.lib.util.Translator;
  * @since    March 7, 2008
  */
 public class Configuration {
+  
+  /** Language property. */
+  private static final String LANG = "LANG";
   
   /** Admin property. */
   private static final String ADMIN = "ADMIN";
@@ -37,6 +41,9 @@ public class Configuration {
   
   /** The application type. */
   private AppType appType;
+  
+  /** The Unicode code for language two char + country code. */
+  private static String lang;
   
   /** True for admin. */
   private boolean admin;
@@ -62,13 +69,14 @@ public class Configuration {
     instance = new Configuration();
     instance.appType = appType;
     
-    // set the language
-    if (appType == AppType.INFANT_JA) {
-      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", Locale.JAPANESE));
-    }
-    
     // load from the config file
     instance.loadConfiguration();
+    Locale l = new Builder().setLanguage(lang).build();
+    
+    // set the language
+    if ((l.equals(Locale.JAPANESE)) || (appType == AppType.INFANT_JA)) {
+      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", Locale.JAPANESE));
+    }
   }
 
   /**
@@ -85,6 +93,7 @@ public class Configuration {
       properties.load(inputStream);
    
       // read all properties
+      lang = properties.getProperty(LANG);
       admin = Boolean.parseBoolean(properties.getProperty(ADMIN, "false"));
       selectionScenarioTab = Boolean.parseBoolean(properties.getProperty(SELECTION_SCENARIO_TAB, "false"));
       selectionVVModeECMO = Boolean.parseBoolean(properties.getProperty(SELECTION_VV_MODE_ECMO, "true"));
@@ -113,6 +122,7 @@ public class Configuration {
       Properties properties = new Properties();
       
       // set the properties
+      properties.put(LANG, lang);
       properties.put(ADMIN, String.valueOf(admin));
       properties.put(SELECTION_SCENARIO_TAB, String.valueOf(selectionScenarioTab));
       properties.put(SELECTION_VV_MODE_ECMO, String.valueOf(selectionVVModeECMO));
