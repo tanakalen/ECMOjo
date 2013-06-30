@@ -64,7 +64,12 @@ public class MenuState extends State {
     
     // parse scenario files with given prefix
     LocalHookup hookup = LocalHookup.getInstance();
-    String path = Configuration.getInstance().getAppType().getPath();
+//    String path = Configuration.getInstance().getAppType().getPath();
+    String path = Configuration.getInstance().getAppType().getName();
+    String post = Configuration.getInstance().getLang();
+    if (!post.equals("")) {
+      path = path + "_" + post;
+    }
     String[] files = hookup.getFiles(Access.getInstance().getScenarioDir() + "/" + path);
     for (String file: files) {
       String fileName = file.substring(file.lastIndexOf(File.separatorChar) + 1);

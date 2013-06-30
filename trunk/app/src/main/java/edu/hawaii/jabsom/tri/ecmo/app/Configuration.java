@@ -42,8 +42,8 @@ public class Configuration {
   /** The application type. */
   private AppType appType;
   
-  /** The Unicode code for language two char + country code. */
-  private static String lang;
+  /** The Unicode code for language two char. */
+  private static Locale lang;
   
   /** True for admin. */
   private boolean admin;
@@ -71,14 +71,13 @@ public class Configuration {
     
     // load from the config file
     instance.loadConfiguration();
-    Locale l = new Builder().setLanguage(lang).build();
     
     // set the language
-    if ((l.equals(Locale.JAPANESE)) || (appType == AppType.INFANT_JA)) {
-      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", l));
+    if (appType == AppType.INFANT_JA) {
+      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", Locale.JAPANESE));
     }
-    else if (l.equals(new Locale("es"))) {
-      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", l));
+    else if (!lang.getLanguage().equals(new Locale("").getLanguage())) {
+      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", lang));
     }
   }
 
@@ -96,7 +95,7 @@ public class Configuration {
       properties.load(inputStream);
    
       // read all properties
-      lang = properties.getProperty(LANG);
+      lang = new Builder().setLanguage(properties.getProperty(LANG)).build();
       admin = Boolean.parseBoolean(properties.getProperty(ADMIN, "false"));
       selectionScenarioTab = Boolean.parseBoolean(properties.getProperty(SELECTION_SCENARIO_TAB, "false"));
       selectionVVModeECMO = Boolean.parseBoolean(properties.getProperty(SELECTION_VV_MODE_ECMO, "true"));
@@ -125,7 +124,7 @@ public class Configuration {
       Properties properties = new Properties();
       
       // set the properties
-      properties.put(LANG, lang);
+      properties.put(LANG, lang.toString());
       properties.put(ADMIN, String.valueOf(admin));
       properties.put(SELECTION_SCENARIO_TAB, String.valueOf(selectionScenarioTab));
       properties.put(SELECTION_VV_MODE_ECMO, String.valueOf(selectionVVModeECMO));
@@ -160,6 +159,15 @@ public class Configuration {
     return appType;
   }
   
+  /**
+   * Returns the configured language tagged 'LANG'.
+   * 
+   * @return  The configuration language.
+   */
+  public String getLang() {
+    return lang.toString();
+  }
+
   /**
    * Returns true for admin.
    *
