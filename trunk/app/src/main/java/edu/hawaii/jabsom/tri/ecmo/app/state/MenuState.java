@@ -70,7 +70,7 @@ public class MenuState extends State {
     if (!post.equals("")) {
       path = path + "_" + post;
     }
-    String[] files = hookup.getFiles(Access.getInstance().getScenarioDir() + "/" + path);
+    String[] files = hookup.getFiles(Access.getInstance().getScenarioDir() + File.separator + path);
     for (String file: files) {
       String fileName = file.substring(file.lastIndexOf(File.separatorChar) + 1);
       if (fileName.startsWith(prefix)) {
