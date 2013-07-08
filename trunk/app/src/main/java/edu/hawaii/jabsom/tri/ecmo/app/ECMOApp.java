@@ -74,7 +74,7 @@ public final class ECMOApp extends JApplet {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); // lt_add: broken mac LAF
       }
       else {
-        UIManager.setLookAndFeel(new GameLookAndFeel());      
+        UIManager.setLookAndFeel(new GameLookAndFeel());
       }
     }
     catch (UnsupportedLookAndFeelException e) {
