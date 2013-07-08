@@ -134,7 +134,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
 //    add(contactButton);
     
     // add language select combobox
-    String[] langStrings = {"English", "Japanese", "Spanish"};
+    String[] langStrings = Configuration.getInstance().getAvailableLanguages();
     
     JComboBox<String> langList = new JComboBox<String>(langStrings);
     langList.setSelectedIndex(0);
@@ -145,8 +145,10 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     langList.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         JComboBox cb = (JComboBox)e.getSource();
+        int selected = (int)cb.getSelectedIndex();
         String lang = (String)cb.getSelectedItem();
         System.out.println(lang);
+        Configuration.getInstance().setLang(selected);
       }
     });
     langList.setLocation(680, 18);
