@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import king.lib.access.Access;
 import king.lib.access.LocalHookup;
 import king.lib.out.Error;
-
 import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioLoader;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
@@ -64,10 +63,9 @@ public class MenuState extends State {
     
     // parse scenario files with given prefix
     LocalHookup hookup = LocalHookup.getInstance();
-//    String path = Configuration.getInstance().getAppType().getPath();
     String path = Configuration.getInstance().getAppType().getName();
     String post = Configuration.getInstance().getLang();
-    if (!post.equals("")) {
+    if (!post.equals("") && !post.equals("en")) { // Handles blank and en ISO code in config
       path = path + "_" + post;
     }
     String[] files = hookup.getFiles(Access.getInstance().getScenarioDir() + File.separator + path);
@@ -118,5 +116,11 @@ public class MenuState extends State {
    */
   public void contactState() {
     transition(new ContactState());
+  }
+  /**
+   * Reloads the menu state.
+   */
+  public void menuState() {
+    transition(new MenuState());
   }
 }
