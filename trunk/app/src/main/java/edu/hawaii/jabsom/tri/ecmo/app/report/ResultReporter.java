@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
 
+import king.lib.util.Translator;
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.control.ActionList;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
@@ -32,23 +33,49 @@ public abstract class ResultReporter {
   public static String getHTMLOverview(Game game) {
     StringBuilder builder = new StringBuilder();
     String linebreak = "<br>";
+    String sSuccess = "<font color=\"#00c000\">"
+                    + Translator.getString("label.Success[i18n]: Success")
+                    + "</font>";
+    String sFail = "<font color=\"#f00000\">"
+                 + Translator.getString("label.Failure[i18n]: Failure")
+                 + "</font>";
     
     // add introduction
-    builder.append("<u>The following result were recorded while you were running "
-                 + "the ECMOjo scenario selected</u>:").append(linebreak);
+    builder.append("<u>");
+    builder.append(Translator.getString(
+      "text.ResultsIntro[i18n]: The following results were recorded while you "
+        + "were running the selected ECMOjo scenario"));
+    builder.append("</u>:").append(linebreak);
     builder.append(linebreak);
     
     // add overview
-    builder.append("<b>Scenario</b>: ").append(game.getName()).append(linebreak);
-    builder.append("<b>Result</b>: ").append(game.getGoal().isWon(game) ? "<font color=\"#00c000\">Success</font>" 
-                                                                        : "<font color=\"#f00000\">Failure</font>")
-                                                                        .append(linebreak);
+    builder.append("<b>");
+    builder.append(Translator.getString("text.Scenario[i18n]: Scenario"));
+    builder.append("</b>: ").append(game.getName()).append(linebreak);
+    builder.append("<b>");
+    builder.append(Translator.getString("text.Result[i18n]: Result"));
+    builder.append("</b>: ");
+    builder.append(game.getGoal().isWon(game) ? sSuccess
+                                              : sFail)
+                                              .append(linebreak);
     builder.append(linebreak);
     
     // add detail
-    builder.append("Elapsed Time: ").append(game.getElapsedTime() / 1000).append("s").append(linebreak);
-    builder.append("Patient: ").append(game.getPatient().isAlive() ? "Alive" : "Dead").append(linebreak);
-    builder.append("Actions Executed: ").append(game.getActions().size()).append(linebreak);
+    builder.append(Translator.getString("text.ElapsedTime[i18n]: Elapsed Time"));
+    builder.append(": ");
+    builder.append(game.getElapsedTime() / 1000);
+    builder.append(Translator.getString("label.Sec[i18n]: s"));
+    builder.append(linebreak);
+    
+    builder.append(Translator.getString("text.Patient[i18n]: Patient"));
+    builder.append(": ");
+    builder.append(game.getPatient().isAlive() 
+        ? Translator.getString("label.Alive[i18n]: Alive") 
+        : Translator.getString("label.Dead[i18n]: Dead"));
+    builder.append(linebreak);
+    
+    builder.append(Translator.getString("text.ActionsExecuted[i18n]: Actions Executed"));
+    builder.append(": ").append(game.getActions().size()).append(linebreak);
     
     // and return the overview ...
     return builder.toString();
