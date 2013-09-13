@@ -471,13 +471,12 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     g.setColor(Color.DARK_GRAY);
 
     // draw editor info
-    // TODO: i18n this string editor:
-//  String editor = Translator.getString("text.editor[i18n]: Press 'E' to open the scenario editor."));
-    String editor = "Press 'E' to open the scenario editor.";
+    String editor = Translator.getString("text.editor[i18n]: Press 'E' to open the scenario editor.");
     g.drawString(editor, 5, 595);
     
     // draw the release info
-    String release = "Release Version: " + ECMOAppRelease.getReleaseVersion() + " | " + ECMOAppRelease.getReleaseTime();
+    String release = Translator.getString("text.ReleaseVersion[i18n]: Release Version")
+        + ": " + ECMOAppRelease.getReleaseVersion() + " | " + ECMOAppRelease.getReleaseTime();
     int width = g.getFontMetrics().stringWidth(release);
     g.drawString(release, 800 - width - 5, 595);
   }
