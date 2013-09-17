@@ -86,6 +86,9 @@ public class ResultStatePanel extends JPanel {
     // output overall result
     String result = success ? Translator.getString("label.Success[i18n]: Success")
                             : Translator.getString("label.Failure[i18n]: Failure");
+    //TODO: i18n vertical versus horizontal orientation
+    //if lang.locale isEastern: JLabel resultLabel = new TextLabel()
+    //else: // lang.local isWestern
     JLabel resultLabel = new VerticalLabel();
     resultLabel.setText(result);
     resultLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 72f));
