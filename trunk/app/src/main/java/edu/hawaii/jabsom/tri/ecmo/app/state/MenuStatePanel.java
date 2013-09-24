@@ -148,7 +148,11 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     // add scenario toggle button
     String sScenario = Translator.getString("text.Scenario[i18n]: Scenario");
     TextToggleButton scenarioButton 
-        = new TextToggleButton(sScenario, Color.WHITE, Color.GREEN, Color.WHITE);
+//        = new TextToggleButton(sScenario, Color.WHITE, Color.GREEN, Color.WHITE);
+          = new TextToggleButton.Builder(sScenario).
+                                 normal(Color.WHITE).
+                                 rollover(Color.GREEN).
+                                 pressed(Color.WHITE).build();
     scenarioButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         // activate the correct panel
