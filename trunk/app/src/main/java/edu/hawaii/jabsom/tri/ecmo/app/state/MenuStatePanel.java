@@ -148,11 +148,11 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     // add scenario toggle button
     String sScenario = Translator.getString("text.Scenario[i18n]: Scenario");
     TextToggleButton scenarioButton 
-//        = new TextToggleButton(sScenario, Color.WHITE, Color.GREEN, Color.WHITE);
           = new TextToggleButton.Builder(sScenario).
                                  normal(Color.WHITE).
                                  rollover(Color.GREEN).
                                  pressed(Color.WHITE).build();
+    scenarioButton.setFont(scenarioButton.getFont().deriveFont(Font.BOLD, 12f)); 
     scenarioButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         // activate the correct panel
@@ -168,7 +168,12 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     // add simulation toggle button
     String sSimulation = Translator.getString("text.Simulation[i18n]: Simulation");
     TextToggleButton simulationButton 
-        = new TextToggleButton(sSimulation, Color.WHITE, Color.GREEN, Color.WHITE);
+//        = new TextToggleButton(sSimulation, Color.WHITE, Color.GREEN, Color.WHITE);
+          = new TextToggleButton.Builder(sSimulation).
+                                 normal(Color.WHITE).
+                                 rollover(Color.GREEN).
+                                 pressed(Color.WHITE).build();
+    simulationButton.setFont(simulationButton.getFont().deriveFont(Font.BOLD, 12f)); 
     simulationButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         // activate the correct panel
