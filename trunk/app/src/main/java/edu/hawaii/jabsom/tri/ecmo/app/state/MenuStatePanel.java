@@ -500,17 +500,17 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
                         RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     
     // text properties
-    g.setFont(g.getFont().deriveFont(10f));
-    g.setColor(Color.DARK_GRAY);
+    g2.setFont(g.getFont().deriveFont(10f));
+    g2.setColor(Color.DARK_GRAY);
 
     // draw editor info
-    String editor = Translator.getString("text.editor[i18n]: Press 'E' to open the scenario editor.");
-    g.drawString(editor, 5, 595);
+    String editor = Translator.getString("text.editor[i18n]: Press 'E' to open the scenario editor");
+    g2.drawString(editor, 5, 595);
     
     // draw the release info
     String release = Translator.getString("text.ReleaseVersion[i18n]: Release Version")
         + ": " + ECMOAppRelease.getReleaseVersion() + " | " + ECMOAppRelease.getReleaseTime();
     int width = g.getFontMetrics().stringWidth(release);
-    g.drawString(release, 800 - width - 5, 595);
+    g2.drawString(release, 800 - width - 5, 595);
   }
 }
