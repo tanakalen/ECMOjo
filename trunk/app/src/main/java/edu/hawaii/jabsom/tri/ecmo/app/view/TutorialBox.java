@@ -1,9 +1,12 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import king.lib.access.ImageLoader;
+import king.lib.util.Translator;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -63,7 +67,7 @@ public class TutorialBox extends JPanel {
                            , "0px, fill:40px, 2px, 30px, 4px"
       ));
     CellConstraints cc = new CellConstraints();
-      
+    
     // add the button
     Image nextButtonImage = ImageLoader.getInstance().getImage("conf/gui/Btn-Next.png");    
     Image nextButtonRolloverImage = ImageLoader.getInstance().getImage("conf/gui/Btn-NextRol.png");
@@ -173,8 +177,21 @@ public class TutorialBox extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-
+    
     // draw base
     g.drawImage(image, 0, 0, this);
+    
+    // set antialised text
+    Graphics2D g2 = (Graphics2D)g;
+    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    
+    // text properties
+    g2.setFont(g.getFont().deriveFont(10f));
+    g2.setColor(Color.DARK_GRAY);
+    
+    // add i18n text.tutorial "Press [Esc] to exit"
+    String sTutorial = Translator.getString("text.tutorial[i18n]: Press [Esc] to exit");
+    g2.drawString(sTutorial, 18, 66);
   }
 }
