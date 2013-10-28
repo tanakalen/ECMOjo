@@ -52,7 +52,6 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
 
   /** The panel image. */
   private Image background = ImageLoader.getInstance().getImage("conf/image/interface/menu/Base.png");
-//      Translator.getString("image.menubase[i18n]: conf/image/interface/menu/Base.png"));
 
   /** The state. */
   private MenuState state;
