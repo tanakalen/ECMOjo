@@ -3,6 +3,8 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 import java.util.ArrayList;
 import java.util.List;
 
+import king.lib.util.Translator;
+
 
 /**
  * The ACT component. 
@@ -100,6 +102,6 @@ public class ACTComponent extends Component {
    * @return  The name.
    */
   public String getName() {
-    return "ACT";
+    return Translator.getString("text.ACT[i18n]: ACT");
   }
 }
