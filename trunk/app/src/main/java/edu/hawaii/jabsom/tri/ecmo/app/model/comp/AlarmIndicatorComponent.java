@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
+import king.lib.util.Translator;
+
 
 /**
  * The alarm indicator component. 
@@ -38,6 +40,6 @@ public class AlarmIndicatorComponent extends Component {
    * @return  The name.
    */
   public String getName() {
-    return "Alarm Indicator";
+    return Translator.getString("text.AlarmInd[i18n]: Alarm Indicator");
   }
 }
