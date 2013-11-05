@@ -34,10 +34,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
-import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Map;
 
 import king.lib.access.ImageLoader;
 import king.lib.util.Translator;
@@ -169,7 +170,6 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     // add simulation toggle button
     String sSimulation = Translator.getString("text.Simulation[i18n]: Simulation");
     TextToggleButton simulationButton 
-//        = new TextToggleButton(sSimulation, Color.WHITE, Color.GREEN, Color.WHITE);
           = new TextToggleButton.Builder(sSimulation).
                                  normal(Color.WHITE).
                                  rollover(Color.GREEN).
@@ -244,17 +244,13 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
       vaRadio.setSelected(true);
     }
     // add label: Mode VV or VA i18n
-    JLabel lblModeVV = new TextLabel(Translator.getString("label.ModeVV[i18n]: Veno-venous"));
-    lblModeVV.setHorizontalAlignment(JLabel.LEFT);
-    lblModeVV.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
-    lblModeVV.setLocation(32, 15);
-    lblModeVV.setSize(120, 45);
+    TextLabel lblModeVV = createTextLabels(
+        Translator.getString("label.ModeVV[i18n]: Veno-venous"),
+        14f, 32, 15);
     componentSelectionPanel.add(lblModeVV);
-    JLabel lblModeVA = new TextLabel(Translator.getString("label.ModeVA[i18n]: Veno-arterial"));
-    lblModeVA.setHorizontalAlignment(JLabel.LEFT);
-    lblModeVA.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
-    lblModeVA.setLocation(174, 15);
-    lblModeVA.setSize(120, 45);
+    TextLabel lblModeVA = createTextLabels(
+        Translator.getString("label.ModeVA[i18n]: Veno-arterial"),
+        14f, 174, 15);
     componentSelectionPanel.add(lblModeVA);
 
     ButtonGroup oxygenatorButtonGroup = new ButtonGroup();
@@ -276,7 +272,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     quadroxDRadio.setOpaque(false);
     quadroxDRadio.setSize(32, 32);
     quadroxDRadio.setLocation(142, 39);
-    componentSelectionPanel.add(quadroxDRadio);    
+    componentSelectionPanel.add(quadroxDRadio);
     oxygenatorButtonGroup.add(quadroxDRadio);
     if (Configuration.getInstance().isSelectionSiliconeOxygenator()) {
       siliconeRadio.setSelected(true);
@@ -285,17 +281,13 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
       quadroxDRadio.setSelected(true);
     }
     // add label: Oxygenator Silicon or PMP i18n
-    JLabel lblOxySil = new TextLabel(Translator.getString("label.OxySil[i18n]: Silicon"));
-    lblOxySil.setHorizontalAlignment(JLabel.LEFT);
-    lblOxySil.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
-    lblOxySil.setLocation(32, 48);
-    lblOxySil.setSize(120, 45);
+    TextLabel lblOxySil = createTextLabels(
+        Translator.getString("label.OxySil[i18n]: Silicon"),
+        14f, 32, 48);
     componentSelectionPanel.add(lblOxySil);
-    JLabel lblOxyPMP = new TextLabel(Translator.getString("label.OxyPMP[i18n]: PMP"));
-    lblOxyPMP.setHorizontalAlignment(JLabel.LEFT);
-    lblOxyPMP.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
-    lblOxyPMP.setLocation(174, 48);
-    lblOxyPMP.setSize(120, 45);
+    TextLabel lblOxyPMP = createTextLabels(
+        Translator.getString("label.OxyPMP[i18n]: PMP"),
+        14f, 174, 48);
     componentSelectionPanel.add(lblOxyPMP);
     
     ButtonGroup pumpButtonGroup = new ButtonGroup();
@@ -326,17 +318,13 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
       centrifugalRadio.setSelected(true);
     }
     // add label: Pump roller or centrifugal i18n
-    JLabel lblPumpRol = new TextLabel(Translator.getString("label.PumpRol[i18n]: Roller Pump"));
-    lblPumpRol.setHorizontalAlignment(JLabel.LEFT);
-    lblPumpRol.setFont(textLabel.getFont().deriveFont(Font.BOLD, 13f));
-    lblPumpRol.setLocation(30, 80);
-    lblPumpRol.setSize(120, 45);
+    TextLabel lblPumpRol = createTextLabels(
+        Translator.getString("label.PumpRol[i18n]: Roller Pump"),
+        13f, 30, 80);
     componentSelectionPanel.add(lblPumpRol);
-    JLabel lblPumpCen = new TextLabel(Translator.getString("label.Centrifugal[i18n]: Centrifugal"));
-    lblPumpCen.setHorizontalAlignment(JLabel.LEFT);
-    lblPumpCen.setFont(textLabel.getFont().deriveFont(Font.BOLD, 13f));
-    lblPumpCen.setLocation(174, 80);
-    lblPumpCen.setSize(120, 45);
+    TextLabel lblPumpCen = createTextLabels(
+        Translator.getString("label.Centrifugal[i18n]: Centrifugal"),
+        13f, 174, 80);
     componentSelectionPanel.add(lblPumpCen);
     
     Icon disabled = new ImageIcon(ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkDis.png"));
@@ -345,17 +333,17 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     ventilatorCheckmark.setLocation(0, 103);
     componentSelectionPanel.add(ventilatorCheckmark);
     // add label: Ventilator conventional or HFOV i18n
-    JLabel lblVentCon = new TextLabel(Translator.getString("label.VentCon[i18n]: Conventional"));
-    lblVentCon.setHorizontalAlignment(JLabel.LEFT);
-    lblVentCon.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
-    lblVentCon.setLocation(30, 111);
-    lblVentCon.setSize(120, 45);
+    TextLabel lblVentCon = createTextLabels(
+        Translator.getString("label.VentCon[i18n]: Conventional"),
+        14f, 30, 111);
+    lblVentCon.setGradientTopColor(Color.GRAY);
+    lblVentCon.setGradientBottomColor(Color.GRAY);
     componentSelectionPanel.add(lblVentCon);
-    JLabel lblVentHFOV = new TextLabel(Translator.getString("label.VentHFOV[i18n]: HFOV"));
-    lblVentHFOV.setHorizontalAlignment(JLabel.LEFT);
-    lblVentHFOV.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
-    lblVentHFOV.setLocation(174, 111);
-    lblVentHFOV.setSize(120, 45);
+    TextLabel lblVentHFOV = createTextLabels(
+        Translator.getString("label.VentHFOV[i18n]: HFOV"),
+        14f, 174, 111);
+    lblVentHFOV.setGradientTopColor(Color.GRAY);
+    lblVentHFOV.setGradientBottomColor(Color.GRAY);
     componentSelectionPanel.add(lblVentHFOV);
     
     // add scenario selection listener
@@ -443,6 +431,25 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
   }
   
   /**
+   * Private method to simplify & consolidate rendering config box text labels.
+   *
+   * @param text  String for TextLabel.
+   * @param fontSize  Size of font.
+   * @param x  X-coordinate.
+   * @param y  Y-coordinate.
+   * @return TextLabel object.
+   */
+  private TextLabel createTextLabels(String text, float fontSize, int x, int y) {
+    TextLabel label = new TextLabel(text);
+    label.setHorizontalAlignment(JLabel.LEFT);
+    label.setFont(label.getFont().deriveFont(Font.BOLD, fontSize));
+    label.setDrawBorder(false);
+    label.setLocation(x, y);
+    label.setSize(120, 45);
+    return label;
+  }
+  
+  /**
    * Called when panel is added.
    */
   @Override
@@ -496,9 +503,12 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     g.drawImage(background, 0, 0, this);
     
     // set antialised text
+    Toolkit tk = Toolkit.getDefaultToolkit();
+    Map desktopHints = (Map)(tk.getDesktopProperty("awt.font.desktophints"));
     Graphics2D g2 = (Graphics2D)g;
-    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    if(desktopHints != null) {
+        g2.addRenderingHints(desktopHints);
+    }
     
     // text properties
     g2.setFont(g.getFont().deriveFont(10f));
