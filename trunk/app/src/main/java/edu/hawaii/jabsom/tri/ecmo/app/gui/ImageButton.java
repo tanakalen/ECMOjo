@@ -31,7 +31,9 @@ public class ImageButton extends JButton {
   private int rolloverYOffset;
   /** The text y offset for pressed. */
   private int pressedYOffset;
-
+  
+  /** The font color. */
+  private final Color textColor = new Color(3, 174, 195); // Or, webcolor (#03AEC3)
   
   /**
    * Constructor for the button.
@@ -111,7 +113,7 @@ public class ImageButton extends JButton {
     
     // text properties
     g2.setFont(g.getFont().deriveFont(Font.BOLD));
-    g2.setColor(new Color(3, 174, 195)); // Or, webcolor (#03AEC3)
+    g2.setColor(textColor);
     
     if (model.isPressed() || isSelected()) {
       g.drawImage(this.pressedImage, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
@@ -119,6 +121,7 @@ public class ImageButton extends JButton {
     }
     else if (model.isRollover()) {
       g.drawImage(this.rolloverImage, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
+      g2.setColor(textColor.brighter());
       g2.drawString(getText(), x, y + rolloverYOffset);
     }
     else {
