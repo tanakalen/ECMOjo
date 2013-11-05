@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
+import king.lib.util.Translator;
+
 
 /**
  * The bubble detector component. 
@@ -38,6 +40,6 @@ public class BubbleDetectorComponent extends Component {
    * @return  The name.
    */
   public String getName() {
-    return "Bubble Detector";
+    return Translator.getString("text.BubbleDetector[i18n]: Bubble Detector");
   }
 }

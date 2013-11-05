@@ -332,7 +332,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     lblPumpRol.setLocation(30, 80);
     lblPumpRol.setSize(120, 45);
     componentSelectionPanel.add(lblPumpRol);
-    JLabel lblPumpCen = new TextLabel(Translator.getString("label.PumpCen[i18n]: Centrifugal"));
+    JLabel lblPumpCen = new TextLabel(Translator.getString("label.Centrifugal[i18n]: Centrifugal"));
     lblPumpCen.setHorizontalAlignment(JLabel.LEFT);
     lblPumpCen.setFont(textLabel.getFont().deriveFont(Font.BOLD, 13f));
     lblPumpCen.setLocation(174, 80);

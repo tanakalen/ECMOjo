@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
+import king.lib.util.Translator;
+
 /**
  * The pump component. 
  *
@@ -112,10 +114,10 @@ public class PumpComponent extends Component {
    */
   public String getName() {
     if (pumpType == PumpType.CENTRIFUGAL) {
-      return "Centrifugal Pump";
+      return Translator.getString("label.PumpCen[i18n]: Centrifugal Pump");
     }
     else {
-      return "Roller Pump";
+      return Translator.getString("label.PumpRol[i18n]: Roller Pump");
     }
   }
 }
