@@ -66,10 +66,15 @@ public class GameStatePanel extends JPanel implements ManagerListener, KeyEventD
     }
     else {
       // add exit button
-      Image exitNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Exit.png");
-      Image exitRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ExitRol.png");
-      Image exitSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ExitSel.png");
-      ImageButton exitButton = new ImageButton(exitNormalImage, exitRolloverImage, exitSelectedImage);
+      Image exitNormalImage = ImageLoader.getInstance().getImage(
+          "conf/image/interface/menu/BtnBig.png");
+      Image exitRolloverImage = ImageLoader.getInstance().getImage(
+          "conf/image/interface/menu/BtnBig.png");
+      Image exitSelectedImage = ImageLoader.getInstance().getImage(
+          "conf/image/interface/menu/BtnBigSel.png");
+      final ImageButton exitButton = new ImageButton(exitNormalImage, exitRolloverImage, exitSelectedImage);
+      exitButton.setText(
+          Translator.getString("action.Exit[i18n]: Exit"));
       exitButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent arg0) {
           exit();
