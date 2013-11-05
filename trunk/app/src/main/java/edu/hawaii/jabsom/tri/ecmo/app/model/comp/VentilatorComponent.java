@@ -2,6 +2,8 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
 import java.io.Serializable;
 
+import king.lib.util.Translator;
+
 
 /**
  * The ventilator component. 
@@ -112,7 +114,7 @@ public class VentilatorComponent extends Component {
      * @return  The name.
      */
     public String getName() {
-      return "Conventional Ventilator";
+      return Translator.getString("text.ConvVent[i18n]: Conventional Ventilator");
     }
   }
   
@@ -199,7 +201,7 @@ public class VentilatorComponent extends Component {
      */
     @Override
     public String getName() {
-      return "High Frequency Ventilator";
+      return Translator.getString("text.HFVent[i18n]: High Frequency Ventilator");
     }
   }
 
@@ -211,7 +213,7 @@ public class VentilatorComponent extends Component {
   
   /** iTime value [0.0, 2.0]. */
   private double iTime;
-  /** The oxygen conzentration in percent / 100 [0.00, 1.00]. */
+  /** The oxygen concentration in percent / 100 [0.00, 1.00]. */
   private double fiO2;
 
   

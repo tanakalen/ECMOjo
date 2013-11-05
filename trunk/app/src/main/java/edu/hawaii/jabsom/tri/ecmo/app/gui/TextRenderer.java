@@ -74,7 +74,7 @@ public final class TextRenderer {
    */
   public static void renderOutline(Graphics2D g, String text, int x, int y
                                  , Paint fillPaint, Paint borderPaint, boolean shadow) {   
-    // set antialised
+    // set antialiased
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING
                      , RenderingHints.VALUE_ANTIALIAS_ON);
 

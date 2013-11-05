@@ -28,6 +28,9 @@
     <property name="lib.dir" value="lib" />
     <property name="lib.ant.dir" value="${lib.dir}/ant" />
     <property name="lib.project.dir" value="${lib.dir}/project" />
+    <condition property="isMac">
+      <os family="mac" />
+    </condition>
     <condition property="lib.rt.dir" value="${java.home}/lib/rt.jar">
       <os family="windows" />
     </condition>
@@ -194,7 +197,7 @@
     <i18n dir="${build.dest.dir}"
           file="${conf.dir}/bundle/MessagesBundle.properties"
           prefix=""
-          pattern="([a-z]+\.[A-Za-z0-9]+)(\[i18n\]: )(.*)" />
+          pattern="([a-z]+\.[A-Za-z0-9_]+)(\[i18n\]: )(.*)" />
   </target>  
   <!-- *********************************************************************** -->
   <target name="test" depends="i18n"
@@ -343,9 +346,10 @@
     <condition property="jreloc" value="java">
       <equals arg1="${os.target.name}" arg2="unix" />
     </condition>
+    <property name="usrdir" value="${basedir}/${structure.dir}" />
     <!-- Create batch/script file (windows or unix): -Dsun.java2d.noddraw=true -->
     <echo file="${structure.dir}/${executable.file.name}.bat"
-      message="${jreloc} -Duser.dir=${structure.dir} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}" />
+      message="${jreloc} -Duser.dir=${usrdir} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}" />
     <chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx" />
   </target>
 <!-- *********************************************************************** -->
@@ -417,7 +421,7 @@
     </copy>
   </target>
   <!-- *********************************************************************** -->
-  <target name="dist_mac_dmg">
+  <target name="dist_mac_dmg" if="isMac">
     <!-- Identify size of MacOS distribution -->
     <length property="dmac.size" mode="all">
       <fileset dir="${dist_macos}" />

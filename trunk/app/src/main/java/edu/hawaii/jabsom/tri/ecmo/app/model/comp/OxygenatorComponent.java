@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
+import king.lib.util.Translator;
+
 
 /**
  * The oxigenator component. 
@@ -175,10 +177,10 @@ public class OxygenatorComponent extends Component {
    */
   public String getName() {
     if (oxyType == OxyType.QUADROX_D) {
-      return "Quadrox D Oxygenator";
+      return Translator.getString("text.Quadrox[i18n]: Quadrox D Oxygenator");
     }
     else {
-      return "Silicone Oxygenator";
+      return Translator.getString("text.Silicone[i18n]: Silicone Oxygenator");
     }
   }
 }

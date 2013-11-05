@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
+import king.lib.util.Translator;
+
 /**
  * The patient. 
  *
@@ -893,6 +895,6 @@ public class Patient  extends Component {
    * @return  The name.
    */
   public String getName() {
-    return "Patient";
+    return Translator.getString("text.Patient[i18n]: Patient");
   }
 }

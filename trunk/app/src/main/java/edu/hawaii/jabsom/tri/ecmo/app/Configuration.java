@@ -1,8 +1,10 @@
 package edu.hawaii.jabsom.tri.ecmo.app;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Locale;
+import java.util.Locale.Builder;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -17,6 +19,9 @@ import king.lib.util.Translator;
  * @since    March 7, 2008
  */
 public class Configuration {
+  
+  /** Language property. */
+  private static final String LANG = "LANG";
   
   /** Admin property. */
   private static final String ADMIN = "ADMIN";
@@ -37,6 +42,16 @@ public class Configuration {
   
   /** The application type. */
   private AppType appType;
+  
+  /** The Locale using ISO-639-1 code for language (two char). */
+  private static Locale lang;
+  
+  /** Available language bundles. */
+  private static Locale[] availableLanguages = new Locale[]{
+    Locale.ENGLISH,
+    Locale.JAPANESE,
+    new Locale("es")
+  };
   
   /** True for admin. */
   private boolean admin;
@@ -62,13 +77,17 @@ public class Configuration {
     instance = new Configuration();
     instance.appType = appType;
     
+    // load from the config file
+    instance.loadConfiguration();
+    
     // set the language
     if (appType == AppType.INFANT_JA) {
       Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", Locale.JAPANESE));
     }
-    
-    // load from the config file
-    instance.loadConfiguration();
+    else if (!lang.getLanguage().equals(new Locale("").getLanguage())
+        && (!lang.getLanguage().equals(Locale.ENGLISH))) {
+      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", lang));
+    }
   }
 
   /**
@@ -76,7 +95,7 @@ public class Configuration {
    */
   public void loadConfiguration() {
     String applicationConfigFile = "Application.config";
-    String path = Access.getInstance().getScenarioDir() + "/" + applicationConfigFile;
+    String path = Access.getInstance().getScenarioDir() + File.separator + applicationConfigFile;
 
     // Preload last configuration
     try {
@@ -85,6 +104,7 @@ public class Configuration {
       properties.load(inputStream);
    
       // read all properties
+      lang = new Builder().setLanguage(properties.getProperty(LANG)).build();
       admin = Boolean.parseBoolean(properties.getProperty(ADMIN, "false"));
       selectionScenarioTab = Boolean.parseBoolean(properties.getProperty(SELECTION_SCENARIO_TAB, "false"));
       selectionVVModeECMO = Boolean.parseBoolean(properties.getProperty(SELECTION_VV_MODE_ECMO, "true"));
@@ -105,7 +125,7 @@ public class Configuration {
    */
   public void saveConfiguration() {
     String applicationConfigFile = "Application.config";
-    String path = Access.getInstance().getScenarioDir() + "/" + applicationConfigFile;
+    String path = Access.getInstance().getScenarioDir() + File.separator + applicationConfigFile;
 
     // store data
     try {
@@ -113,6 +133,7 @@ public class Configuration {
       Properties properties = new Properties();
       
       // set the properties
+      properties.put(LANG, lang.toString());
       properties.put(ADMIN, String.valueOf(admin));
       properties.put(SELECTION_SCENARIO_TAB, String.valueOf(selectionScenarioTab));
       properties.put(SELECTION_VV_MODE_ECMO, String.valueOf(selectionVVModeECMO));
@@ -145,6 +166,50 @@ public class Configuration {
    */
   public AppType getAppType() {
     return appType;
+  }
+  
+  /**
+   * Returns the configured language tagged 'LANG'.
+   * 
+   * @return  The configuration language using ISO-639-1 code for language (two char).
+   */
+  public String getLang() {
+    return lang.toString();
+  }
+  
+  /**
+   * Returns the configured language tagged 'LANG'.
+   * 
+   * @return  The configuration language as string of displayed name.
+   */
+  public String getConfiguredLanguage() {
+    return lang.getDisplayLanguage(lang);
+  }
+  
+  /**
+   * Returns available languages for program.
+   * 
+   * @return  String[] of available languages.
+   */
+  public String[] getAvailableLanguages() {
+    String[] l = new String[availableLanguages.length];
+    int i = 0;
+    for (Locale language:availableLanguages) {
+      l[i] = language.getDisplayLanguage(lang);
+      i++;
+    }
+    return l;
+  }
+  
+  /**
+   * Sets the configured language from available languages by index.
+   * 
+   * @param index  The index for availableLanguages to switch to 0 being first.
+   */
+  public void setLang(int index) {
+    // Verify 2 char code?
+    lang = availableLanguages[index];
+    Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", lang));
   }
   
   /**

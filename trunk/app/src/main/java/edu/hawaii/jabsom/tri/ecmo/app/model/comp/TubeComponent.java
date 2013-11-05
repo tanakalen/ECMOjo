@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
+import king.lib.util.Translator;
+
 
 /**
  * The tube component. 
@@ -600,10 +602,10 @@ public class TubeComponent extends Component {
    */
   public String getName() {
     if (mode == Mode.VA) {
-      return "VA ECMO";
+      return Translator.getString("label.VA_ECMO[i18n]: VA ECMO");
     }
     else {
-      return "VV ECMO";
+      return Translator.getString("label.VV_ECMO[i18n]: VV ECMO");
     }
   }
 }

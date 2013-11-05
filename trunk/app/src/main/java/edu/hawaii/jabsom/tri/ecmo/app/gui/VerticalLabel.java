@@ -1,13 +1,18 @@
 package edu.hawaii.jabsom.tri.ecmo.app.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
+//import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
+//import java.awt.Paint;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 
 import javax.swing.Icon;
@@ -46,6 +51,7 @@ public class VerticalLabel extends JLabel {
      * @param c  The component.
      * @return  The preferred size.
      */
+    @Override
     public Dimension getPreferredSize(JComponent c) {
       Dimension dim = super.getPreferredSize(c);
       return new Dimension(dim.height, dim.width);
@@ -57,6 +63,7 @@ public class VerticalLabel extends JLabel {
      * @param g  Where to draw to.
      * @param c  The component.
      */
+    @Override
     public void paint(Graphics g, JComponent c) {
       JLabel label = (JLabel)c;
       String text = label.getText();
@@ -91,8 +98,15 @@ public class VerticalLabel extends JLabel {
       paintTextR.height = 0;
 
       String clippedText = layoutCL(label, fm, text, icon, paintViewR, paintIconR, paintTextR);
-
+      // Setup shadow in textLayout
       Graphics2D g2 = (Graphics2D) g;
+      g.setFont(getFont());
+//      Paint fillPaint = new GradientPaint(0, 0, new Color(1.0f, 1.0f, 1.0f)
+//                                        , 0, getFont().getSize(), new Color(0.9f, 0.9f, 0.9f));
+      FontRenderContext fontRenderContext = g2.getFontRenderContext();
+
+      TextLayout textLayout = new TextLayout(clippedText, g2.getFont(), fontRenderContext);
+
       AffineTransform tr = g2.getTransform();
       if (clockwise) {
         g2.rotate(Math.PI / 2);
@@ -112,9 +126,17 @@ public class VerticalLabel extends JLabel {
         int textY = paintTextR.y + fm.getAscent();
 
         if (label.isEnabled()) {
+          // Draws shadow
+          g2.setPaint(new Color(0.0f, 0.0f, 0.0f, 0.3f));
+          textLayout.draw(g2, textX - 3, textY + 3);
+          // Paints text
           paintEnabledText(label, g, clippedText, textX, textY);
         } 
         else {
+          // Draws shadow
+          g2.setPaint(new Color(0.0f, 0.0f, 0.0f, 0.3f));
+          textLayout.draw(g2, textX - 3, textY + 3);
+          // Paints text
           paintDisabledText(label, g, clippedText, textX, textY);
         }
       }
@@ -130,7 +152,7 @@ public class VerticalLabel extends JLabel {
   }
   
   /**
-   * Constructor for fancy lable. Sets default appearance.
+   * Constructor for fancy label. Sets default appearance.
    * 
    * @param clockwise  True for clockwise.
    */
