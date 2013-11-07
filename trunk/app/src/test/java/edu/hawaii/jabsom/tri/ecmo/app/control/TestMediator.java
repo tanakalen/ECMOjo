@@ -31,7 +31,7 @@ public class TestMediator {
     double po2 = 500;
     double expected = 0.9999;
     double result = Mediator.calcOxygenSaturation(po2);
-    assertEquals(expected, result);
+    assertEquals(expected, result, 0.0001);
   }
 
 }
