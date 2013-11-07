@@ -133,7 +133,7 @@ public class TestScriptJava {
     
     // should work
     context.setMaxDuration(0);
-    assertEquals("We should obtain pi.", 3.1415, ScriptRunner.execute(script, context, null));
+    assertEquals("We should obtain pi.", 3.1415f, ScriptRunner.execute(script, context, null));
 
     // should file due to timeout (unless we have a super fast computer)
     context.setMaxDuration(1);

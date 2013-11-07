@@ -2,6 +2,8 @@ package edu.hawaii.jabsom.tri.ecmo.app.control;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import king.lib.access.Access;
 import king.lib.access.AccessException;
 import king.lib.out.Error;
@@ -34,6 +36,8 @@ public class TestUpdater {
   
   /** Static game variable for testing. */
   static Game game;
+  /** Static string for system user dir. */
+  static String origUsrDir;
 
   /**
    * SetUpBeforeClass makes a one time initialization.
@@ -43,6 +47,13 @@ public class TestUpdater {
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
 //    game = new Game(ScenarioCreator.create());
+    origUsrDir = System.getProperty("user.dir");
+    if ((origUsrDir.substring(origUsrDir.lastIndexOf(File.separator) + 1)).equals("test_output")) {
+      System.setProperty("user.dir", origUsrDir);
+    }
+    else {
+      System.setProperty("user.dir", "target");
+    }
     try {
       Access.init();
      }
@@ -58,6 +69,7 @@ public class TestUpdater {
    */
   @AfterClass
   public static void tearDownAfterClass() throws Exception {
+    System.setProperty("user.dir", origUsrDir);
   }
 
   /**

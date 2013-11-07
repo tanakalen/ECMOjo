@@ -6,9 +6,9 @@
 	<classpathentry kind="lib" path="lib/project/browsercode.jar"/>
 	<classpathentry kind="lib" path="lib/project/jgoodies-forms-1.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/project/swingx-0.9.4.jar"/>
-	<classpathentry kind="lib" path="lib/project/junit.jar"/>
 	<classpathentry kind="lib" path="lib/project/mail.jar"/>
 	<classpathentry kind="lib" path="lib/project/jsyntaxpane-0.9.5-jre5-minimal.jar"/>
 	<classpathentry kind="lib" path="lib/project/pnuts-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/project/junit-4.11.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
