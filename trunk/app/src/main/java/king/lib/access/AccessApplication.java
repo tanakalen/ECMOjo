@@ -1,5 +1,6 @@
 package king.lib.access;
 
+import java.io.File;
 import java.net.URI;
 import java.awt.Desktop;
 
@@ -24,7 +25,7 @@ public class AccessApplication extends Access {
   public final String getScenarioDir() {
     // Obtain system absolute path from user.dir property during build.
     String userdir = System.getProperty("user.dir");
-    String path = userdir + "/" + "scenario";
+    String path = userdir + File.separator + "scenario";
     //System.out.println(newpath);
     //return "scenario"; //old method used relative path
     return path;
