@@ -161,9 +161,9 @@
            nowarn="on">
       <compilerarg value="-Xlint:deprecation" />
       <classpath>
-	      <fileset dir="${lib.project.dir}">
-	        <include name="**/*.jar" />
-	      </fileset>
+          <fileset dir="${lib.project.dir}">
+            <include name="**/*.jar" />
+          </fileset>
       </classpath>
     </javac>
     <!-- copy xml (hibernate) files -->
@@ -200,7 +200,7 @@
           pattern="([a-z]+\.[A-Za-z0-9]+)(\[i18n\]: )(.*)" />
   </target>  
   <!-- *********************************************************************** -->
-  <target name="test" depends="i18n"
+  <target name="test" depends="libconf, i18n"
           description="Run JUnit tests (classes whose name starts with Test) and generate a report.">
     <mkdir dir="${build.test.dir}" />
     <!-- add scenario dir for testing -->
@@ -215,10 +215,13 @@
     <!-- Run the tests, which are all classes whose name starts with 'Test'. -->
     <junit printsummary="yes" haltonfailure="no" dir="${build.test.dir}">
       <classpath>
-        <pathelement location="${lib.project.dir}/junit.jar" />
+        <pathelement location="${lib.project.dir}/junit-4.11.jar" />
         <pathelement location="${build.libconf.dir}/${name}-conf.jar" />
         <pathelement location="${build.dest.dir}" />
-        <pathelement path="${lib.project.dir}" />
+        <!-- <pathelement path="${lib.project.dir}" /> -->
+        <fileset dir="${lib.project.dir}">
+          <include name="**/*.jar" />
+        </fileset>
       </classpath>
       <formatter type="xml" />
       <batchtest fork="yes" todir="${build.test.dir}">

@@ -49,13 +49,13 @@ public class TestScriptPnuts {
     script.setCode(
         "context.set(1, 3000000);\n"
     );
-    List list = new ArrayList();
+    List<Integer> list = new ArrayList<Integer>();
     list.add(1322);
     list.add(-524);
     list.add(6456);
-    assertEquals("Item index 1.", -524, list.get(1));
+    assertEquals("Item index 1.", Integer.valueOf(-524), list.get(1));
     ScriptRunner.execute(script, context, list);
-    assertEquals("Item index 1.", 3000000, list.get(1));
+    assertEquals("Item index 1.", Integer.valueOf(3000000), list.get(1));
     
     // can modify custom input
     script.setCode(
@@ -88,8 +88,9 @@ public class TestScriptPnuts {
     StringSet myAccessibleClasses = new StringSet();
     myAccessibleClasses.add(MyObject.class.getName());
     myContext.setSandbox(new ClassSandbox(myAccessibleClasses));
-    Double doubleReturn = (Double)ScriptRunner.execute(script, myContext, myObject);    
-    assertEquals("Return value is the same.", myObject.getSquareRoot(4.03), doubleReturn);
+    Double doubleReturn = (Double)ScriptRunner.execute(script, myContext, myObject);
+    assertEquals("Return value is the same.", 
+        Double.valueOf(myObject.getSquareRoot(4.03)), doubleReturn);
     myObject.writeSomething("sqrt(4.03)=" + myObject.getSquareRoot(4.03));
   }
 
