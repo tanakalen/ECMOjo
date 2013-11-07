@@ -28,6 +28,9 @@
     <property name="lib.dir" value="lib" />
     <property name="lib.ant.dir" value="${lib.dir}/ant" />
     <property name="lib.project.dir" value="${lib.dir}/project" />
+    <condition property="isMac">
+      <os family="mac" />
+    </condition>
     <condition property="lib.rt.dir" value="${java.home}/lib/rt.jar">
       <os family="windows" />
     </condition>
@@ -418,7 +421,7 @@
     </copy>
   </target>
   <!-- *********************************************************************** -->
-  <target name="dist_mac_dmg">
+  <target name="dist_mac_dmg" if="isMac">
     <!-- Identify size of MacOS distribution -->
     <length property="dmac.size" mode="all">
       <fileset dir="${dist_macos}" />
