@@ -85,13 +85,16 @@ public class InterventionDetailPanel extends DetailPanel {
       Error.out("Intervention location not defined: " + interventionLocation);
     }
     
-    Image bloodNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonBlood[i18n]: conf/image/interface/game/Btn-Blood.png"));
-    Image bloodRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonBloodRol[i18n]: conf/image/interface/game/Btn-BloodRol.png"));
-    Image bloodSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonBloodSel[i18n]: conf/image/interface/game/Btn-BloodSel.png"));
-    ImageButton bloodButton = new ImageButton(bloodNormalImage, bloodRolloverImage, bloodSelectedImage);
+    // Load Intervention button images
+    Image normalImage = ImageLoader.getInstance().getImage(
+        "conf/image/interface/game/BtnIntervention.png");
+    Image selectedImage = ImageLoader.getInstance().getImage(
+        "conf/image/interface/game/BtnInterventionSel.png");
+    
+    // add Blood intervention button
+    final ImageButton bloodButton = new ImageButton(normalImage, normalImage, selectedImage);
+    bloodButton.setText(
+        Translator.getString("button.Blood[i18n]: Blood Cells"));
     bloodButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         intervene(new BloodIntervention());
@@ -101,13 +104,10 @@ public class InterventionDetailPanel extends DetailPanel {
     bloodButton.setSize(192, 32);
     add(bloodButton);
     
-    Image plateletsNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonPlatelets[i18n]: conf/image/interface/game/Btn-Platelets.png"));
-    Image plateletsRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonPlateletsRol[i18n]: conf/image/interface/game/Btn-PlateletsRol.png"));
-    Image plateletsSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonPlateletsSel[i18n]: conf/image/interface/game/Btn-PlateletsSel.png"));
-    ImageButton plateletsButton = new ImageButton(plateletsNormalImage, plateletsRolloverImage, plateletsSelectedImage);
+    // add Platelet intervention button
+    final ImageButton plateletsButton = new ImageButton(normalImage, normalImage, selectedImage);
+    plateletsButton.setText(
+        Translator.getString("button.Platelets[i18n]: Platelets"));
     plateletsButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         intervene(new PlateletsIntervention());
@@ -116,11 +116,11 @@ public class InterventionDetailPanel extends DetailPanel {
     plateletsButton.setLocation(22, 60);
     plateletsButton.setSize(192, 32);
     add(plateletsButton); 
-
-    Image ffpNormalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Ffp.png");
-    Image ffpRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-FfpRol.png");
-    Image ffpSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-FfpSel.png");
-    ImageButton ffpButton = new ImageButton(ffpNormalImage, ffpRolloverImage, ffpSelectedImage);
+    
+    // add FFP intervention button
+    final ImageButton ffpButton = new ImageButton(normalImage, normalImage, selectedImage);
+    ffpButton.setText(
+        Translator.getString("button.FFP[i18n]: FFP"));
     ffpButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         intervene(new FFPIntervention());
@@ -128,15 +128,12 @@ public class InterventionDetailPanel extends DetailPanel {
     });
     ffpButton.setLocation(22, 92);
     ffpButton.setSize(192, 32);
-    add(ffpButton); 
+    add(ffpButton);
     
-    Image heparinNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonHeparin[i18n]: conf/image/interface/game/Btn-Heparin.png"));
-    Image heparinRollImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonHeparinRol[i18n]: conf/image/interface/game/Btn-HeparinRol.png"));
-    Image heparinSelImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonHeparinSel[i18n]: conf/image/interface/game/Btn-HeparinSel.png"));
-    ImageButton heparinButton = new ImageButton(heparinNormalImage, heparinRollImage, heparinSelImage);
+    // add Heparin bolus button
+    final ImageButton heparinButton = new ImageButton(normalImage, normalImage, selectedImage);
+    heparinButton.setText(
+        Translator.getString("button.Heparin[i18n]: Heparin Bolus"));
     heparinButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         intervene(new HeparinBolusIntervention());
@@ -144,16 +141,12 @@ public class InterventionDetailPanel extends DetailPanel {
     });
     heparinButton.setLocation(22, 124);
     heparinButton.setSize(192, 32);
-    add(heparinButton); 
- 
-    Image catecholamineNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCatecholamine[i18n]: conf/image/interface/game/Btn-Catecholamine.png"));
-    Image catecholamineRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCatecholamineRol[i18n]: conf/image/interface/game/Btn-CatecholamineRol.png"));
-    Image catecholamineSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCatecholamineSel[i18n]: conf/image/interface/game/Btn-CatecholamineSel.png"));
-    ImageButton catecholamineButton 
-      = new ImageButton(catecholamineNormalImage, catecholamineRolloverImage, catecholamineSelectedImage);
+    add(heparinButton);
+    
+    // add Catecholamine bolus button
+    final ImageButton catecholamineButton = new ImageButton(normalImage, normalImage, selectedImage);
+    catecholamineButton.setText(
+        Translator.getString("button.Catechol[i18n]: Catecholamine"));
     catecholamineButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         intervene(new CatecholamineIntervention());
@@ -161,16 +154,12 @@ public class InterventionDetailPanel extends DetailPanel {
     });
     catecholamineButton.setLocation(22, 156);
     catecholamineButton.setSize(192, 32);
-    add(catecholamineButton); 
- 
-    Image albuminNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonAlbumin[i18n]: conf/image/interface/game/Btn-Albumin.png"));
-    Image albuminRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonAlbuminRol[i18n]: conf/image/interface/game/Btn-AlbuminRol.png"));
-    Image albuminSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonAlbuminSel[i18n]: conf/image/interface/game/Btn-AlbuminSel.png"));
-    ImageButton albuminButton
-      = new ImageButton(albuminNormalImage, albuminRolloverImage, albuminSelectedImage);
+    add(catecholamineButton);
+    
+    // add Albumin button
+    final ImageButton albuminButton = new ImageButton(normalImage, normalImage, selectedImage);
+    albuminButton.setText(
+        Translator.getString("button.Albumin[i18n]: 5% Albumin"));
     albuminButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         intervene(new AlbuminIntervention());
@@ -178,16 +167,11 @@ public class InterventionDetailPanel extends DetailPanel {
     });
     albuminButton.setLocation(22, 188);
     albuminButton.setSize(192, 32);
-    add(albuminButton);    
+    add(albuminButton);
     
-    Image sedationNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonSedation[i18n]: conf/image/interface/game/Btn-Sedation.png"));
-    Image sedationRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonSedationRol[i18n]: conf/image/interface/game/Btn-SedationRol.png"));
-    Image sedationSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonSedationSel[i18n]: conf/image/interface/game/Btn-SedationSel.png"));
-    ImageButton sedationButton
-      = new ImageButton(sedationNormalImage, sedationRolloverImage, sedationSelectedImage);
+    // add Sedation button
+    final ImageButton sedationButton = new ImageButton(normalImage, normalImage, selectedImage);
+    sedationButton.setText(Translator.getString("button.Sedation[i18n]: Sedation"));
     sedationButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         intervene(new SedationIntervention());
