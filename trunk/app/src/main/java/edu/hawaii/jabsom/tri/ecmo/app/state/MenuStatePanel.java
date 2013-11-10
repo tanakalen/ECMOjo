@@ -101,11 +101,9 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     // add about button
     Image aboutNormalImage = ImageLoader.getInstance().getImage(
         "conf/image/interface/menu/BtnBig.png");
-    Image aboutRolloverImage = ImageLoader.getInstance().getImage(
-        "conf/image/interface/menu/BtnBig.png");
     Image aboutSelectedImage = ImageLoader.getInstance().getImage(
         "conf/image/interface/menu/BtnBigSel.png");
-    final ImageButton aboutButton = new ImageButton(aboutNormalImage, aboutRolloverImage, aboutSelectedImage);
+    final ImageButton aboutButton = new ImageButton(aboutNormalImage, aboutNormalImage, aboutSelectedImage);
     aboutButton.setText(
         Translator.getString("button.About[i18n]: About"));
     aboutButton.addActionListener(new ActionListener() {
