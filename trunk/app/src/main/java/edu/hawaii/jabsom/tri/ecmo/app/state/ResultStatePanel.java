@@ -30,7 +30,7 @@ import king.lib.util.Translator;
 public class ResultStatePanel extends JPanel {
 
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/result/Base.jpg");
+  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/Background.png");
     
   /**
    * Constructor for panel. 

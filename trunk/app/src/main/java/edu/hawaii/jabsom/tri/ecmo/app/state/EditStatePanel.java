@@ -41,7 +41,7 @@ import king.lib.util.Translator;
 public class EditStatePanel extends JPanel {
     
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/help/Base.jpg");
+  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/Background.png");
 
   /** The open button. */
   private JButton openButton;
