@@ -107,13 +107,13 @@ public class HeaterDetailPanel extends DetailPanel implements Runnable {
     
     // add replace heater button
     Image replaceHeaterNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonReplaceHeater[i18n]: conf/image/interface/game/Btn-ReplaceHeater.png"));
-    Image replaceHeaterRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonReplaceHeaterRol[i18n]: conf/image/interface/game/Btn-ReplaceHeaterRol.png"));
+        "conf/image/interface/game/BtnReplaceHeater.png");
     Image replaceHeaterSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonReplaceHeaterSel[i18n]: conf/image/interface/game/Btn-ReplaceHeaterSel.png"));
+        "conf/image/interface/game/BtnReplaceHeaterSel.png");
     ImageButton replaceHeaterButton 
-        = new ImageButton(replaceHeaterNormalImage, replaceHeaterRolloverImage, replaceHeaterSelectedImage);
+        = new ImageButton(replaceHeaterNormalImage, replaceHeaterNormalImage, replaceHeaterSelectedImage);
+    replaceHeaterButton.setText(
+        Translator.getString("button.ReplaceHeater[i18n]: Replace Heater"));
     replaceHeaterButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         boolean problem = component.isBroken();

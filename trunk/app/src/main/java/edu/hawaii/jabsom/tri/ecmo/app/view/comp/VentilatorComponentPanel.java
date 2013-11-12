@@ -12,7 +12,6 @@ import java.text.DecimalFormat;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
-import javax.swing.JToggleButton;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
@@ -46,16 +45,16 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
 
   /** The emergency normal image. */
   private Image emergencyNormalImage = ImageLoader.getInstance().getImage(
-      Translator.getString("image.ButtonEmergency[i18n]: conf/image/interface/game/Btn-Emergency.png"));
+      "conf/image/interface/game/BtnEmergency.png");
   /** The emergency rollover image. */
   private Image emergencyRolloverImage = ImageLoader.getInstance().getImage(
-      Translator.getString("image.ButtonEmergencyRol[i18n]: conf/image/interface/game/Btn-EmergencyRol.png"));
+      "conf/image/interface/game/Btn-EmergencyRol.png");
   /** The emergency selected image. */
   private Image emergencySelectedImage = ImageLoader.getInstance().getImage(
-      Translator.getString("image.ButtonEmergencySel[i18n]: conf/image/interface/game/Btn-EmergencySel.png"));
+      "conf/image/interface/game/BtnEmergencySel.png");
   /** The emergency none image. */
   private Image emergencyNoneImage = ImageLoader.getInstance().getImage(
-      Translator.getString("image.ButtonEmergencyNone[i18n]: conf/image/interface/game/Btn-EmergencyNone.png"));
+      "conf/image/interface/game/Btn-EmergencyNone.png");
   
   /** The font color. */
   private final Color textColor = new Color(0.2f, 0.2f, 0.2f);
@@ -70,7 +69,8 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
   private Thread thread;
   
   /** The emergency button. */
-  private JToggleButton emergencyButton;
+//  private JToggleButton emergencyButton;
+  private ImageToggleButton emergencyButton;
   
   /**
    * Constructor for panel.
@@ -96,9 +96,12 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
       image = ImageLoader.getInstance().getImage("conf/image/interface/game/Vtr-HighFrequencyVentilator.png");
     }
     
-    // add toggle button
+    // add Emergency Vent toggle button
     emergencyButton 
       = new ImageToggleButton(null, emergencyRolloverImage, emergencyRolloverImage, emergencyNoneImage);
+    emergencyButton.setText(
+        Translator.getString("button.Emergency[i18n]: Emergency Vent"));
+    emergencyButton.setForeground(Color.WHITE);
     emergencyButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         VentilatorAction action = new VentilatorAction();
@@ -109,7 +112,7 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
     emergencyButton.setSelected(component.isEmergencyFuction());
     emergencyButton.setLocation(145, 60);
     emergencyButton.setSize(128, 32);
-    add(emergencyButton); 
+    add(emergencyButton);
     
     // add toggle button
     selectionButton = new ImageToggleButton(null, rolloverImage, selectedImage, selectedImage);
@@ -225,7 +228,7 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
     g.drawImage(emergencyNormalImage, 145, 60, this);
     if (emergencyButton.isSelected()) {
       if ((((System.nanoTime()) / 500000000) % 2) == 0) {
-        g.drawImage(emergencySelectedImage, 145, 60, this);    
+        g.drawImage(emergencySelectedImage, 145, 60, this);
       }
     }
   }

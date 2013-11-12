@@ -88,11 +88,13 @@ public class InterventionDetailPanel extends DetailPanel {
     // Load Intervention button images
     Image normalImage = ImageLoader.getInstance().getImage(
         "conf/image/interface/game/BtnIntervention.png");
+    Image rolloverImage = ImageLoader.getInstance().getImage(
+        "conf/image/interface/game/BtnInterventionRol.png");
     Image selectedImage = ImageLoader.getInstance().getImage(
         "conf/image/interface/game/BtnInterventionSel.png");
     
     // add Blood intervention button
-    final ImageButton bloodButton = new ImageButton(normalImage, normalImage, selectedImage);
+    final ImageButton bloodButton = new ImageButton(normalImage, rolloverImage, selectedImage);
     bloodButton.setText(
         Translator.getString("button.Blood[i18n]: Blood Cells"));
     bloodButton.addActionListener(new ActionListener() {
@@ -105,7 +107,7 @@ public class InterventionDetailPanel extends DetailPanel {
     add(bloodButton);
     
     // add Platelet intervention button
-    final ImageButton plateletsButton = new ImageButton(normalImage, normalImage, selectedImage);
+    final ImageButton plateletsButton = new ImageButton(normalImage, rolloverImage, selectedImage);
     plateletsButton.setText(
         Translator.getString("button.Platelets[i18n]: Platelets"));
     plateletsButton.addActionListener(new ActionListener() {
@@ -118,7 +120,7 @@ public class InterventionDetailPanel extends DetailPanel {
     add(plateletsButton); 
     
     // add FFP intervention button
-    final ImageButton ffpButton = new ImageButton(normalImage, normalImage, selectedImage);
+    final ImageButton ffpButton = new ImageButton(normalImage, rolloverImage, selectedImage);
     ffpButton.setText(
         Translator.getString("button.FFP[i18n]: FFP"));
     ffpButton.addActionListener(new ActionListener() {
@@ -131,7 +133,7 @@ public class InterventionDetailPanel extends DetailPanel {
     add(ffpButton);
     
     // add Heparin bolus button
-    final ImageButton heparinButton = new ImageButton(normalImage, normalImage, selectedImage);
+    final ImageButton heparinButton = new ImageButton(normalImage, rolloverImage, selectedImage);
     heparinButton.setText(
         Translator.getString("button.Heparin[i18n]: Heparin Bolus"));
     heparinButton.addActionListener(new ActionListener() {
@@ -144,7 +146,7 @@ public class InterventionDetailPanel extends DetailPanel {
     add(heparinButton);
     
     // add Catecholamine bolus button
-    final ImageButton catecholamineButton = new ImageButton(normalImage, normalImage, selectedImage);
+    final ImageButton catecholamineButton = new ImageButton(normalImage, rolloverImage, selectedImage);
     catecholamineButton.setText(
         Translator.getString("button.Catechol[i18n]: Catecholamine"));
     catecholamineButton.addActionListener(new ActionListener() {
@@ -157,7 +159,7 @@ public class InterventionDetailPanel extends DetailPanel {
     add(catecholamineButton);
     
     // add Albumin button
-    final ImageButton albuminButton = new ImageButton(normalImage, normalImage, selectedImage);
+    final ImageButton albuminButton = new ImageButton(normalImage, rolloverImage, selectedImage);
     albuminButton.setText(
         Translator.getString("button.Albumin[i18n]: 5% Albumin"));
     albuminButton.addActionListener(new ActionListener() {
@@ -170,7 +172,7 @@ public class InterventionDetailPanel extends DetailPanel {
     add(albuminButton);
     
     // add Sedation button
-    final ImageButton sedationButton = new ImageButton(normalImage, normalImage, selectedImage);
+    final ImageButton sedationButton = new ImageButton(normalImage, rolloverImage, selectedImage);
     sedationButton.setText(Translator.getString("button.Sedation[i18n]: Sedation"));
     sedationButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
