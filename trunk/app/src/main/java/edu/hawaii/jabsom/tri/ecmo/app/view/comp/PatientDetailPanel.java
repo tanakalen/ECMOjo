@@ -48,11 +48,11 @@ public class PatientDetailPanel extends DetailPanel {
     
     // Load Intervention button images
     Image normalImage = ImageLoader.getInstance().getImage(
-        "conf/image/interface/game/BtnIntervention.png");
+        "conf/image/interface/game/BtnLong.png");
     Image rolloverImage = ImageLoader.getInstance().getImage(
-        "conf/image/interface/game/BtnInterventionRol.png");
+        "conf/image/interface/game/BtnLongRol.png");
     Image selectedImage = ImageLoader.getInstance().getImage(
-        "conf/image/interface/game/BtnInterventionSel.png");
+        "conf/image/interface/game/BtnLongSel.png");
     
     // patient buttons and actions
     // Add Suction ETT button

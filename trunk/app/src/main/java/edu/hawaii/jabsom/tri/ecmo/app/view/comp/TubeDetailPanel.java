@@ -66,13 +66,15 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
     setOpaque(false);
 
     Image changeCircuitNormalImage = ImageLoader.getInstance().getImage(
-      Translator.getString("image.ButtonChangeCircuit[i18n]: conf/image/interface/game/Btn-ChangeCircuit.png"));
+      "conf/image/interface/game/BtnLong.png");
     Image changeCircuitRolloverImage = ImageLoader.getInstance().getImage(
-      Translator.getString("image.ButtonChangeCircuitRol[i18n]: conf/image/interface/game/Btn-ChangeCircuitRol.png"));
+      "conf/image/interface/game/BtnLongRol.png");
     Image changeCircuitSelectedImage = ImageLoader.getInstance().getImage(
-      Translator.getString("image.ButtonChangeCircuitSel[i18n]: conf/image/interface/game/Btn-ChangeCircuitSel.png"));
+      "conf/image/interface/game/BtnLongSel.png");
     ImageButton changeCircuitButton 
       = new ImageButton(changeCircuitNormalImage, changeCircuitRolloverImage, changeCircuitSelectedImage);
+    changeCircuitButton.setText(
+        Translator.getString("button.ChangeCircuit[i18n]: Change Circuit"));
     changeCircuitButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         // send the action
