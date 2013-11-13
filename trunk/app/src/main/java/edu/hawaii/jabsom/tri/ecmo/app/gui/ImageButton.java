@@ -34,6 +34,8 @@ public class ImageButton extends JButton {
   
   /** The font color. */
   private final Color textColor = new Color(3, 174, 195); // Or, webcolor (#03AEC3)
+  //Paint fillPaint = new GradientPaint(0, 0, gradientTopColor
+  //, 0, getFont().getSize(), gradientBottomColor);
   
   /**
    * Constructor for the button.
