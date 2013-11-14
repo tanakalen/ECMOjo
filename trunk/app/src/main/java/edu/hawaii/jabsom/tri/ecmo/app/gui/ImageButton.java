@@ -34,6 +34,8 @@ public class ImageButton extends JButton {
   
   /** The font color. */
   private final Color textColor = new Color(3, 174, 195); // Or, webcolor (#03AEC3)
+  //Paint fillPaint = new GradientPaint(0, 0, gradientTopColor
+  //, 0, getFont().getSize(), gradientBottomColor);
   
   /**
    * Constructor for the button.
@@ -43,7 +45,7 @@ public class ImageButton extends JButton {
    * @param pressedImage  The image for the pressed state.
    */
   public ImageButton(Image normalImage, Image rolloverImage, Image pressedImage) {
-    this(normalImage, 0, rolloverImage, 0, pressedImage, 2);
+    this(normalImage, -2, rolloverImage, -2, pressedImage, 0);
   }
   
   /**

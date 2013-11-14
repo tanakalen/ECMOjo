@@ -511,7 +511,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     // text properties
     g2.setFont(g.getFont().deriveFont(10f));
     g2.setColor(Color.DARK_GRAY);
-
+    
     // draw editor info
     String editor = Translator.getString("text.editor[i18n]: Press 'E' to open the scenario editor");
     g2.drawString(editor, 5, 595);
