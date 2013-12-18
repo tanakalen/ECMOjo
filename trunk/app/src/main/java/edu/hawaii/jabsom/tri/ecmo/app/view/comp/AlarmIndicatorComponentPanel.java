@@ -166,7 +166,7 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
         g.drawImage(redAlertImage, 0, 0, this);
       }
       else {
-        g.drawImage(blackAlertImage, 0, 0, this);        
+        g.drawImage(blackAlertImage, 0, 0, this);
       }
       
       // play alarm
@@ -178,7 +178,7 @@ public class AlarmIndicatorComponentPanel extends ComponentPanel implements Runn
     }
     else {
       // draw green light
-      g.drawImage(greenAlertImage, 0, 0, this);      
+      g.drawImage(greenAlertImage, 0, 0, this);
       
       // stop the alarm
       alarmFx.pause();
