@@ -172,7 +172,6 @@
                   <include name="**/*.jar" />
               </fileset>
           </path>
-          <pathelement location="${java.home}/lib/jfxrt.jar" />
       </classpath>
     </javac>
     <!-- copy xml (hibernate) files -->
@@ -415,7 +414,6 @@
                applicationCategory="public.app-category.medical">
         <runtime dir="${env.JAVA_HOME}"/>
         <classpath dir="${structure.dir}/lib" includes="*.jar" />
-        <classpath  file="${resource.mac.jre}/lib/jfxrt.jar" />
         <option value="-Djava.library.path=$APP_ROOT/Contents/Java/" />
         <option value="-Duser.dir=$APP_ROOT/Contents/Java"/>
         <option value="-Dapple.laf.useScreenMenuBar=true"/>
@@ -644,7 +642,6 @@
     <!-- copy external jar files -->
     <copy todir="${build.app.dir}/lib">
         <fileset dir="${lib.project.dir}" includes="${library.files}" />
-        <fileset dir="${java.home}/lib" includes="jfxrt.jar" />
     </copy>
     <!-- copy project jar files -->
     <copy todir="${build.app.dir}/lib">
