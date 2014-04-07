@@ -56,7 +56,7 @@
     <property name="release.file" value="${basedir}/src/main/java/edu/hawaii/jabsom/tri/ecmo/app/ECMOAppRelease.java" />
     <filter token="release.version" value="${release.version}" />
     <filter token="release.time" value="${release.time}" />
-    <property name="library.files" value="browsercode.jar,jgoodies-forms-1.0.4.jar,swingx-0.9.4.jar,jl1.0.jar,mail.jar,activation.jar,pnuts-1.1.jar,jsyntaxpane-0.9.5-jre5-minimal.jar" />
+    <property name="library.files" value="browsercode.jar,jgoodies-forms-1.0.4.jar,swingx-0.9.4.jar,mail.jar,activation.jar,pnuts-1.1.jar,jsyntaxpane-0.9.5-jre5-minimal.jar" />
     <!-- Program Properties (leave as is if not needed) -->
     <property name="prg.memory" value="256" />
     <property name="prg.classfile" value="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp" />
@@ -114,7 +114,6 @@
     <!-- Properties for JRE bundling -->
     <property name="resource.mac.jre" value="${resource.dir}/jre/mac/jre/Contents/Home" />
     <property name="resource.win.jre" value="${resource.dir}/jre/win/jre" />
-    <property name="resource.win64.jre" value="${resource.dir}/jre/win64/jre" />
     <!-- Load additional ant tasks -->
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
     <taskdef name="jarbundler" classpath="${jarbundler.dir}/${jarbundler.ver}.jar" classname="net.sourceforge.jarbundler.JarBundler" />
@@ -160,14 +159,19 @@
   <!-- *********************************************************************** -->
   <target name="compile" depends="prepare">
     <!-- compile to dest directory -->
-    <javac srcdir="${build.src.dir}"
+    <javac fork="true"
+           executable="${env.JAVA_HOME}/bin/javac"
+           includeantruntime="false"
+           srcdir="${build.src.dir}"
            destdir="${build.dest.dir}"
            nowarn="on">
       <compilerarg value="-Xlint:deprecation" />
       <classpath>
-          <fileset dir="${lib.project.dir}">
-            <include name="**/*.jar" />
-          </fileset>
+          <path id="build.classpath">
+              <fileset dir="${lib.project.dir}">
+                  <include name="**/*.jar" />
+              </fileset>
+          </path>
       </classpath>
     </javac>
     <!-- copy xml (hibernate) files -->
@@ -318,7 +322,7 @@
     <mkdir dir="${build.libconf.dir}/temp" />
     <mkdir dir="${build.libconf.dir}/temp/conf" />
     <copy todir="${build.libconf.dir}/temp/conf">
-	  <!--<mapper type="regexp" from="${subdirs}" to="\3" />-->
+    <!--<mapper type="regexp" from="${subdirs}" to="\3" />-->
       <fileset dir="${conf.dir}" />
     </copy>
     <!-- Create conf jar -->
@@ -409,9 +413,7 @@
                signature="ECJO"
                applicationCategory="public.app-category.medical">
         <runtime dir="${env.JAVA_HOME}"/>
-        <classpath dir="${structure.dir}/lib">
-          <include name="**/*.jar" />
-        </classpath>
+        <classpath dir="${structure.dir}/lib" includes="*.jar" />
         <option value="-Djava.library.path=$APP_ROOT/Contents/Java/" />
         <option value="-Duser.dir=$APP_ROOT/Contents/Java"/>
         <option value="-Dapple.laf.useScreenMenuBar=true"/>
@@ -433,7 +435,7 @@
     <length property="dmac.size" mode="all">
       <fileset dir="${dist_macos}" />
     </length>
-	<echo message="dist_mac size: ${dmac.size}" />
+    <echo message="dist_mac size: ${dmac.size}" />
     <script language="javascript">
       <![CDATA[
         var length_bytes = project.getProperty("dmac.size");
@@ -639,7 +641,7 @@
           description="Create executable(s) of the software for platform testing.">
     <!-- copy external jar files -->
     <copy todir="${build.app.dir}/lib">
-      <fileset dir="${lib.project.dir}" includes="${library.files}" />
+        <fileset dir="${lib.project.dir}" includes="${library.files}" />
     </copy>
     <!-- copy project jar files -->
     <copy todir="${build.app.dir}/lib">
@@ -846,7 +848,7 @@ Content-Type: x-java-archive
     <!-- Copy .html for applet. -->
     <path id="applet.class.path">
       <fileset dir="${build.webstart.dir}/unpacked" includes="*.jar" />
-    </path>	
+    </path>
     <pathconvert property="applet.class.path.property" refid="applet.class.path" pathsep=",">
       <mapper type="flatten" />
     </pathconvert>
