@@ -1,5 +1,6 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
+import king.lib.util.Translator;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.InterventionLocation;
 
 /**
@@ -59,6 +60,6 @@ public class InterventionComponent extends Component {
    * @return  The name.
    */
   public String getName() {
-    return "Intervention";
+    return Translator.getString("label.Intervention[i18n]: Intervention");
   }
 }
