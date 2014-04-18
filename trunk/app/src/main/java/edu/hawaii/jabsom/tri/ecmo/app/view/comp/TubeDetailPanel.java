@@ -32,7 +32,7 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
 
   /** The detail image. */
   private Image detailImage = ImageLoader.getInstance().getImage(
-      Translator.getString("image.DetailTube[i18n]: conf/image/interface/game/Detail-Tube.png"));
+       "conf/image/interface/game/Detail-Tube.png");
   
   /** The info label. */
   private JLabel infoLabel;
@@ -64,7 +64,17 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
     // set layout and look
     setLayout(null);
     setOpaque(false);
-
+    
+    // Instruction label [i18n]
+    JLabel instructionLabel = new JLabel();
+    instructionLabel.setText(Translator.getString("label.TubeDetail[i18n]: "
+        + "<html>Click on each of the<br>bullets to verify the<br>circuit."));
+    instructionLabel.setFont(instructionLabel.getFont().deriveFont(Font.PLAIN, 12f));
+    instructionLabel.setForeground(Color.BLACK);
+    instructionLabel.setLocation(30, 18);
+    instructionLabel.setSize(140, 60);
+    add(instructionLabel);
+    
     Image changeCircuitNormalImage = ImageLoader.getInstance().getImage(
       "conf/image/interface/game/BtnLong.png");
     Image changeCircuitRolloverImage = ImageLoader.getInstance().getImage(
@@ -95,10 +105,10 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
     // add flash text
     infoLabel = new JLabel();
     infoLabel.setText(Translator.getString("label.LocOK[i18n]: Location OK!"));
-    infoLabel.setFont(infoLabel.getFont().deriveFont(Font.BOLD, 16f));
+    infoLabel.setFont(infoLabel.getFont().deriveFont(Font.BOLD, 14f));
     infoLabel.setForeground(new Color(0x00000000, true));
     infoLabel.setLocation(30, 90);
-    infoLabel.setSize(120, 20);
+    infoLabel.setSize(140, 20);
     add(infoLabel);
     
     // add the bullets (top left -> top right -> bottom right -> bottom left)
