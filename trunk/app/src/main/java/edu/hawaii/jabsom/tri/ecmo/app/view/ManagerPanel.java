@@ -1,11 +1,13 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.control.Manager;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ViewAction;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
@@ -18,6 +20,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.comp.DetailPanel.DetailActionListener
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.ComponentPanel.ComponentActionListener;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -38,7 +41,6 @@ public class ManagerPanel extends JPanel {
   /** The panel image. */
   private Image background = ImageLoader.getInstance().getImage(
       "conf/image/interface/game/Base.png");
-//      Translator.getString("image.gamebase[i18n]: conf/image/interface/game/Base.png"));
 
   /** The current detail panel. null for none. */
   private DetailPanel detailPanel;
@@ -124,6 +126,20 @@ public class ManagerPanel extends JPanel {
     
     // order components (drawn first)
     order(TubeComponentPanel.class);
+    
+    // label venous, pre, & post
+    TextLabel lblVenous = createTextLabels(
+        Translator.getString("label.Venous[i18n]: venous"),
+        12f, 530, 564);
+    add(lblVenous);
+    TextLabel lblPre = createTextLabels(
+        Translator.getString("label.Pre[i18n]: pre"),
+        12f, 524, 464);
+    add(lblPre);
+    TextLabel lblPost = createTextLabels(
+        Translator.getString("label.Post[i18n]: post"),
+        12f, 494, 404);
+    add(lblPost);
   }
 
   /**
@@ -140,7 +156,26 @@ public class ManagerPanel extends JPanel {
       }
     }
   }
-  
+
+  /**
+   * Private method to simplify & consolidate rendering config box text labels.
+   *
+   * @param text  String for TextLabel.
+   * @param fontSize  Size of font.
+   * @param x  X-coordinate.
+   * @param y  Y-coordinate.
+   * @return TextLabel object.
+   */
+  private TextLabel createTextLabels(String text, float fontSize, int x, int y) {
+    TextLabel label = new TextLabel(text);
+    label.setHorizontalAlignment(JLabel.LEFT);
+    label.setFont(label.getFont().deriveFont(Font.BOLD, fontSize));
+    label.setDrawBorder(false);
+    label.setLocation(x, y);
+    label.setSize(120, 45);
+    return label;
+  }
+
   /**
    * Paints this component.
    * 
