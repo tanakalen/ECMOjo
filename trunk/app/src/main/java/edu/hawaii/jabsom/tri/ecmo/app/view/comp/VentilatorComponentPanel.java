@@ -12,13 +12,14 @@ import java.text.DecimalFormat;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
 import king.lib.util.Translator;
-
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.VentilatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent.ConventionalSubtype;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.VentilatorComponent.HighFrequencySubtype;
@@ -125,9 +126,34 @@ public class VentilatorComponentPanel extends ComponentPanel implements Runnable
     selectionButton.setLocation(0, 0);
     selectionButton.setSize(315, 96);
     add(selectionButton);
+    
+    // add label
+    TextLabel lblVent = createTextLabels(
+        Translator.getString("label.Ventilator[i18n]: Ventilator"),
+        12f, 20, 0);
+    add(lblVent);
   }
 
   /**
+   * Private method to simplify & consolidate rendering config box text labels.
+   *
+   * @param text  String for TextLabel.
+   * @param fontSize  Size of font.
+   * @param x  X-coordinate.
+   * @param y  Y-coordinate.
+   * @return TextLabel object.
+   */
+  private TextLabel createTextLabels(String text, float fontSize, int x, int y) {
+    TextLabel label = new TextLabel(text);
+    label.setHorizontalAlignment(JLabel.LEFT);
+    label.setFont(label.getFont().deriveFont(Font.BOLD, fontSize));
+    label.setDrawBorder(false);
+    label.setLocation(x, y);
+    label.setSize(120, 45);
+    return label;
+  }
+
+ /**
    * Called when the component got updated.
    */
   public void handleUpdate() {
