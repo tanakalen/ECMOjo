@@ -140,7 +140,18 @@ public class ManagerPanel extends JPanel {
         Translator.getString("label.Post[i18n]: post"),
         12f, 494, 404);
     add(lblPost);
-  }
+    
+    // add label: Lab
+    TextLabel lblLab = createTextLabels(
+        Translator.getString("label.Lab[i18n]: Lab"),
+        24f, 2, 435);
+    lblLab.setBorderColor(Color.GRAY);
+    lblLab.setGradientTopColor(new Color(255, 204, 204));
+    lblLab.setGradientBottomColor(new Color(255, 192, 203));
+    lblLab.setDrawBorder(true);
+    lblLab.setDrawShadow(true);
+    add(lblLab);
+}
 
   /**
    * Orders a component and makes it drawn first.

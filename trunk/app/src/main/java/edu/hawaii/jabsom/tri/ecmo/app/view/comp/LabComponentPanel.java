@@ -98,9 +98,9 @@ public class LabComponentPanel extends ComponentPanel {
     });
     selectionButton.setLocation(0, 0);
     selectionButton.setSize(this.getWidth(), this.getHeight());
-    add(selectionButton); 
+    add(selectionButton);
   }
-  
+
   /**
    * Called when the component got updated.
    */
