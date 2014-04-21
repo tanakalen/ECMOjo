@@ -9,9 +9,11 @@ import java.awt.RenderingHints;
 import java.text.DecimalFormat;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 
 import king.lib.access.ImageLoader;
-
+import king.lib.util.Translator;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.VerticalLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.CDIMonitorComponent;
 
 /**
@@ -53,6 +55,20 @@ public class CDIMonitorComponentPanel extends ComponentPanel {
     
     // set layout
     setLayout(null);
+    
+    // add label "CDI Monitor"
+    String result = Translator.getString("label.CDIMonitor[i18n]: CDI Monitor");
+    //TODO: i18n vertical versus horizontal orientation
+    //if lang.locale isEastern: JLabel resultLabel = new TextLabel()
+    //else: // lang.local isWestern
+    JLabel resultLabel = new VerticalLabel();
+    resultLabel.setText(result);
+    resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 12f));
+    resultLabel.setForeground(Color.WHITE);
+    resultLabel.setHorizontalAlignment(JLabel.CENTER);
+    resultLabel.setLocation(273, 0);
+    resultLabel.setSize(15, 152);
+    add(resultLabel);
   }
 
   /**
