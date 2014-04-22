@@ -89,8 +89,7 @@ public class ResultStatePanel extends JPanel {
     //TODO: i18n vertical versus horizontal orientation
     //if lang.locale isEastern: JLabel resultLabel = new TextLabel()
     //else: // lang.local isWestern
-    JLabel resultLabel = new VerticalLabel();
-    resultLabel.setText(result);
+    JLabel resultLabel = new VerticalLabel(result, false);
     resultLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 72f));
     resultLabel.setForeground(Color.WHITE);
     resultLabel.setHorizontalAlignment(JLabel.CENTER);

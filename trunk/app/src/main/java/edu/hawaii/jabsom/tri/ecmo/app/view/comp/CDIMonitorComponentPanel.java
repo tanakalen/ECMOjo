@@ -9,9 +9,12 @@ import java.awt.RenderingHints;
 import java.text.DecimalFormat;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 
 import king.lib.access.ImageLoader;
-
+import king.lib.util.Translator;
+import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.VerticalLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.CDIMonitorComponent;
 
 /**
@@ -53,6 +56,28 @@ public class CDIMonitorComponentPanel extends ComponentPanel {
     
     // set layout
     setLayout(null);
+    
+    // add label "CDI Monitor"
+    String result = Translator.getString("label.CDIMonitor[i18n]: CDI Monitor");
+    // Render the rotated string, fragile custom hack
+    if (Configuration.getInstance().getLang().equals("ja")) {
+      VerticalLabel resultLabel = new VerticalLabel(result);
+      resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 12f));
+      resultLabel.setForeground(Color.WHITE);
+      resultLabel.setHorizontalAlignment(JLabel.LEFT);
+      resultLabel.setLocation(274, 0);
+      resultLabel.setSize(14, 152);
+      add(resultLabel);
+    }
+    else {
+      VerticalLabel resultLabel = new VerticalLabel(result, false);
+      resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 12f));
+      resultLabel.setForeground(Color.WHITE);
+      resultLabel.setHorizontalAlignment(JLabel.CENTER);
+      resultLabel.setLocation(273, 0);
+      resultLabel.setSize(15, 152);
+      add(resultLabel);
+    }
   }
 
   /**

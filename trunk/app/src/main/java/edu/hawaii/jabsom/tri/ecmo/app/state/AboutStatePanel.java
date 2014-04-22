@@ -123,7 +123,7 @@ public class AboutStatePanel extends JPanel {
     add(infoScroll);
     
     // add done button
-    Image okButtonImage = ImageLoader.getInstance().getImage("conf/gui/Btn-Ok.png");    
+    Image okButtonImage = ImageLoader.getInstance().getImage("conf/gui/Btn-Ok.png");
     Image okButtonRolloverImage = ImageLoader.getInstance().getImage("conf/gui/Btn-OkRol.png");
     Image okButtonSelectedImage = ImageLoader.getInstance().getImage("conf/gui/Btn-OkSel.png");
     ImageButton okButton = new ImageButton(okButtonImage, okButtonRolloverImage, okButtonSelectedImage);
