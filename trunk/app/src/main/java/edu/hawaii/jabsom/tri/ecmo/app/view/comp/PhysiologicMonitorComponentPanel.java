@@ -14,6 +14,7 @@ import king.lib.access.ImageLoader;
 import king.lib.out.Error;
 import king.lib.util.Translator;
 import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.VerticalLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PhysiologicMonitorComponent;
 
@@ -25,9 +26,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PhysiologicMonitorComponent;
  */
 public class PhysiologicMonitorComponentPanel extends ComponentPanel implements Runnable {
 
-  /** The panel image. */
-  private Image image = ImageLoader.getInstance().getImage("conf/image/interface/game/Mtr-Physiologic.png");
-
   /** The red alert image. */
   private Image redAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-RedSmall.png");
   /** The black alert image. */
@@ -36,6 +34,44 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel implements 
   /** The font color. */
   private final Color textColor = new Color(0.2f, 0.2f, 0.2f);
 
+  /** The Strings for monitor label values: 6 slots (3 left, 3 right). */
+  private String[] labels;
+  
+  /** X-coordinate for left column. */
+  private static final int LEFT_COLUMN_X = 23;
+  
+  /** X-coordinate for right column. */
+  private static final int RIGHT_COLUMN_X = 148;
+  
+  /** Y-coordinate for top row. */
+  private static final int TOP_ROW_Y = 20;
+  
+  /** Y-coordinate for middle row. */
+  private static final int MIDDLE_ROW_Y = 45;
+  
+  /** Y-coordinate for bottom row. */
+  private static final int BOTTOM_ROW_Y = 68;
+  
+  /** Array of x-coordinates for labels. */
+  private int[] lblX = {
+      LEFT_COLUMN_X,
+      LEFT_COLUMN_X,
+      LEFT_COLUMN_X,
+      RIGHT_COLUMN_X,
+      RIGHT_COLUMN_X,
+      RIGHT_COLUMN_X
+  };
+  
+  /** Array of y-coordinates for labels. */
+  private int[] lblY = {
+      TOP_ROW_Y,
+      MIDDLE_ROW_Y,
+      BOTTOM_ROW_Y,
+      TOP_ROW_Y,
+      MIDDLE_ROW_Y,
+      BOTTOM_ROW_Y
+  };
+  
   /** The component. */
   private PhysiologicMonitorComponent component;
   
@@ -80,7 +116,46 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel implements 
       resultLabel.setSize(15, 105);
       add(resultLabel);
     }
+    
+    // add monitor labels
+    labels = new String[] {
+        "label.MonitorTemp[i18n]: Temp",
+        "label.MonitorHR[i18n]: HR",
+        "label.MonitorBP[i18n]: BP",
+        "label.MonitorRR[i18n]: RR",
+        "label.MonitorO2Sat[i18n]: O2 sat",
+        "label.MonitorCVP[i18n]: CVP"
+    };
+    for (int i = 0; i < labels.length; i++) {
+      TextLabel lblValue = createTextLabels(
+          Translator.getString(labels[i]),
+          14f, lblX[i], lblY[i]);
+      lblValue.setGradientTopColor(new Color(204, 204, 204));
+      lblValue.setGradientBottomColor(new Color(204, 204, 204));
+      lblValue.setDrawBorder(true);
+      add(lblValue);
+    }
   }
+
+    /**
+     * Private method to simplify & consolidate rendering text labels.
+     *
+     * @param text  String for TextLabel.
+     * @param fontSize  Size of font.
+     * @param x  X-coordinate.
+     * @param y  Y-coordinate.
+     * @return TextLabel object.
+     */
+    private TextLabel createTextLabels(String text, float fontSize, int x, int y) {
+      TextLabel label = new TextLabel(text);
+      label.setHorizontalAlignment(JLabel.LEFT);
+      label.setFont(label.getFont().deriveFont(Font.BOLD, fontSize));
+      label.setBorderColor(new Color(0.0f, 0.0f, 0.0f, 0.25f));
+      label.setDrawBorder(false);
+      label.setLocation(x, y);
+      label.setSize(120, 45);
+      return label;
+    }
 
   /**
    * Called when the component got updated.
@@ -140,9 +215,6 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel implements 
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-
-    // draws the image
-    g.drawImage(image, 0, 0, this);
     
     // set antialised text
     Graphics2D g2 = (Graphics2D)g;
@@ -167,17 +239,18 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel implements 
       g.drawString(text, 88, 60);
     }
     
-    if (blink || ((!component.isDiastolicBloodPressureAlarm()) 
+    if (blink || ((!component.isDiastolicBloodPressureAlarm())
                   && (!component.isSystolicBloodPressureAlarm()))) {
       g.setFont(g.getFont().deriveFont(Font.BOLD, 12f));
       String text = String.valueOf((int)component.getSystolicBloodPressure()) + " / "
                   + String.valueOf((int)component.getDiastolicBloodPressure());
       g.drawString(text, 88, 77);
-      g.setFont(g.getFont().deriveFont(Font.PLAIN, 11f));
-      text = "Mean: " + String.valueOf((int)component.getMeanBloodPressure());
-      g.drawString(text, 88, 86);
+      g.setFont(g.getFont().deriveFont(Font.PLAIN, 10f));
+      text = Translator.getString("text.Mean[i18n]: Mean") + ": "
+             + String.valueOf((int)component.getMeanBloodPressure());
+      g.drawString(text, 88, 87);
     }
-  
+    
     g.setFont(g.getFont().deriveFont(Font.BOLD, 16f));
     if (blink || (!component.isRespiratoryRateAlarm())) {
       String text = String.valueOf((int)component.getRespiratoryRate());
@@ -200,8 +273,8 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel implements 
         g.drawImage(redAlertImage, 1, 3, this);
       }
       else {
-        g.drawImage(blackAlertImage, 1, 3, this);        
-      }      
+        g.drawImage(blackAlertImage, 1, 3, this);
+      }
     } 
   }
   
