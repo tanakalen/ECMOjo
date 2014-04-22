@@ -27,7 +27,7 @@ import javax.swing.plaf.basic.BasicLabelUI;
  * @since     October 16, 2007
  */
 public class VerticalLabel extends JLabel {
- 
+  
   /**
    * The vertical label class.
    */
@@ -36,6 +36,9 @@ public class VerticalLabel extends JLabel {
     /** True for clockwise. */
     protected boolean clockwise;
 
+    /** True for label to be read top to bottom. */
+    protected boolean topdown = false;
+
     /**
      * Constructor. 
      * 
@@ -43,6 +46,15 @@ public class VerticalLabel extends JLabel {
      */
     VerticalLabelUI(boolean clockwise) {
       this.clockwise = clockwise;
+    }
+
+    /**
+     * Set topdown boolean to be true (read label top to bottom) or not.
+     * 
+     * @param isTrue  True or false.
+     */
+    public void setTopDown(boolean isTrue) {
+      this.topdown = isTrue;
     }
 
     /**
@@ -108,15 +120,16 @@ public class VerticalLabel extends JLabel {
       TextLayout textLayout = new TextLayout(clippedText, g2.getFont(), fontRenderContext);
 
       AffineTransform tr = g2.getTransform();
-      if (clockwise) {
-        g2.rotate(Math.PI / 2);
-        g2.translate(0, -c.getWidth());
-      } 
-      else {
-        g2.rotate(-Math.PI / 2);
-        g2.translate(-c.getHeight(), 0);
+      if (!topdown) {
+        if (clockwise) {
+          g2.rotate(Math.PI / 2);
+          g2.translate(0, -c.getWidth());
+        } 
+        else {
+          g2.rotate(-Math.PI / 2);
+          g2.translate(-c.getHeight(), 0);
+        }
       }
-
       if (icon != null) {
         icon.paintIcon(c, g, paintIconR.x, paintIconR.y);
       }
@@ -124,39 +137,91 @@ public class VerticalLabel extends JLabel {
       if (text != null) {
         int textX = paintTextR.x;
         int textY = paintTextR.y + fm.getAscent();
-
-        if (label.isEnabled()) {
-          // Draws shadow
-          g2.setPaint(new Color(0.0f, 0.0f, 0.0f, 0.3f));
-          textLayout.draw(g2, textX - 3, textY + 3);
-          // Paints text
-          paintEnabledText(label, g, clippedText, textX, textY);
-        } 
+        
+        if (topdown) {
+          topDown(g, textX, textY, text);
+        }
         else {
-          // Draws shadow
-          g2.setPaint(new Color(0.0f, 0.0f, 0.0f, 0.3f));
-          textLayout.draw(g2, textX - 3, textY + 3);
-          // Paints text
-          paintDisabledText(label, g, clippedText, textX, textY);
+          if (label.isEnabled()) {
+            // Draws shadow
+            g2.setPaint(new Color(0.0f, 0.0f, 0.0f, 0.3f));
+            textLayout.draw(g2, textX - 3, textY + 3);
+            // Paints text
+            paintEnabledText(label, g, clippedText, textX, textY);
+          } 
+          else {
+            // Draws shadow
+            g2.setPaint(new Color(0.0f, 0.0f, 0.0f, 0.3f));
+            textLayout.draw(g2, textX - 3, textY + 3);
+            // Paints text
+            paintDisabledText(label, g, clippedText, textX, textY);
+          }
         }
       }
       g2.setTransform(tr);
     }
+    
+    /**
+     * Top to down: rotate displayed text and font to be read top to bottom.
+     * 
+     * @param g  Graphics.
+     * @param x  X-coordinate.
+     * @param y  Y-coordinate.
+     * @param label  String label to rotate.
+     */
+    private void topDown(Graphics g, double x, double y, String label) {
+      Graphics2D g2D = (Graphics2D)g;
+      Font theFont = g2D.getFont();
+      FontMetrics fm = g2D.getFontMetrics(theFont);
+      int fCharHeight = fm.getAscent() + fm.getDescent();
+//      int fDescent = fm.getDescent();
+      int len = label.length();
+      char[] data = new char[len];
+      int[] fCharWidths = new int[len];
+      String[] fCharStrings = new String[len];
+      label.getChars(0, len, data, 0);
+      int fWidth = 0; // find widest char
+      char ch;
+      for (int i = 0; i < len; i++) {
+        ch = data[i];
+        fCharStrings[i] = new String(data, i, 1);
+        fCharWidths[i] = fm.charWidth(ch);
+        if (fCharWidths[i] > fWidth) {
+          fWidth = fCharWidths[i];
+        }
+      }
+//      int fHeight = fCharHeight * len + fDescent;
+      // draw string by character top to bottom
+      g.setColor(getForeground());
+      g.setFont(theFont);
+      int yPos = (int)y + fCharHeight;
+      for (int i = 0; i < len; i++) {
+        g.drawString(fCharStrings[i], (int)x+((fWidth-fCharWidths[i])/2), yPos);
+        yPos += fCharHeight;
+      }
+    }
   }
-  
+
   /**
-   * Constructor for vertical label.
+   * Constructor for vertical top to bottom reading label.
+   * 
+   * @param text  String for vertical label.
    */
-  public VerticalLabel() {
-    this(false);
+  public VerticalLabel(String text) {
+    setText(text);
+    VerticalLabelUI topdownUI = new VerticalLabelUI(false);
+    topdownUI.setTopDown(true);
+    setUI(topdownUI);
   }
-  
+
   /**
    * Constructor for fancy label. Sets default appearance.
    * 
+   * @param text  String for vertical label.
    * @param clockwise  True for clockwise.
    */
-  public VerticalLabel(boolean clockwise) {
+  public VerticalLabel(String text, boolean clockwise) {
+    setText(text);
     // set vertical label ui
     setUI(new VerticalLabelUI(clockwise));
   }
@@ -171,6 +236,7 @@ public class VerticalLabel extends JLabel {
     g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                         RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     g2.setFont(g2.getFont().deriveFont(Font.BOLD));
+
     super.paintComponent(g);
   }
 }
