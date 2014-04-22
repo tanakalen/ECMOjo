@@ -82,7 +82,7 @@ public final class TextRenderer {
     if (shadow) {
       int offset = getOffset(g, text);
       g.translate(offset, offset);
-      g.setPaint(new Color(0.0f, 0.0f, 0.0f, 0.3f));
+      g.setPaint(new Color(0.0f, 0.0f, 0.0f, 0.45f));
       g.fill(outline);
       g.translate(-offset, -offset);
     }

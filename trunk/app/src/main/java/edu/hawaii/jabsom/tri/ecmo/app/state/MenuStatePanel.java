@@ -442,7 +442,9 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     TextLabel label = new TextLabel(text);
     label.setHorizontalAlignment(JLabel.LEFT);
     label.setFont(label.getFont().deriveFont(Font.BOLD, fontSize));
+    label.setBorderColor(new Color(0.0f, 0.0f, 0.0f, 0.25f));
     label.setDrawBorder(false);
+    label.setGradientTopColor(new Color(0.9f, 0.9f, 0.9f));
     label.setLocation(x, y);
     label.setSize(120, 45);
     return label;
