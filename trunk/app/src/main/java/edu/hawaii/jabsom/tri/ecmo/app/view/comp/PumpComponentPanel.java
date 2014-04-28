@@ -165,7 +165,7 @@ public class PumpComponentPanel extends ComponentPanel implements Runnable {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    // set antialised text
+    // set anti-aliased text
     Graphics2D g2 = (Graphics2D)g;
     g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
@@ -189,7 +189,7 @@ public class PumpComponentPanel extends ComponentPanel implements Runnable {
         g.drawImage(redAlertImage, 224, 0, this);
       }
       else {
-        g.drawImage(blackAlertImage, 224, 0, this);        
+        g.drawImage(blackAlertImage, 224, 0, this);
       }
     }
     else {
@@ -216,7 +216,7 @@ public class PumpComponentPanel extends ComponentPanel implements Runnable {
     }
     g2.rotate(-angle * Math.PI / 180.0, 162, 41);
     g2.drawImage(pumpImage, 130, 9, this);
-    g2.rotate(angle * Math.PI / 180.0, 162, 41);    
+    g2.rotate(angle * Math.PI / 180.0, 162, 41);
   }
   
   /**
