@@ -108,11 +108,14 @@
     <property name="dist_macos" value="${dist_macos_base}/${dist_name}" />
     <property name="jarbundler.ver" value="jarbundler-2.2.0" />
     <property name="jarbundler.dir" value="${resource.dir}/installer/${jarbundler.ver}" />
+    <property name="dist_win32_base" value="${dist.dir}/dist_win32" />
+    <property name="dist_win32" value="${dist_win32_base}/${dist_name}" />
     <property name="dist_win_base" value="${dist.dir}/dist_win" />
     <property name="dist_win" value="${dist_win_base}/${dist_name}" />
     <property name="launch4j.dir" value="${resource.dir}/installer/launch4j" />
     <!-- Properties for JRE bundling -->
     <property name="resource.mac.jre" value="${resource.dir}/jre/mac/jre/Contents/Home" />
+    <property name="resource.win32.jre" value="${resource.dir}/jre/win32/jre" />
     <property name="resource.win.jre" value="${resource.dir}/jre/win/jre" />
     <!-- Load additional ant tasks -->
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
@@ -508,6 +511,44 @@
     </launch4j>
   </target>
   <!-- *********************************************************************** -->
+  <target name="dist_win32">
+    <echo message="Base dir: ${basedir}" />
+    <echo message="Java home: ${java.home}" />
+    <property name="dist_win_app_name" value="${executable.file.longname}" />
+    <property name="dist_win32_app" value="${dist_win32}/${dist_win_app_name}" />
+    <copy todir="${dist_win32_app}">
+      <fileset dir="${structure.dir}">
+        <include name="lib/**" />
+        <include name="scenario/**" />
+        <include name="extra/**" />
+      </fileset>
+    </copy>
+    <copy todir="${dist_win32_app}/lib/jre">
+      <fileset dir="${resource.win32.jre}" />
+    </copy>
+    <launch4j bindir="${launch4j.dir}/bin">
+      <config jarPath="${dist_win32_app}/lib/ecmosim-app.jar"
+              dontWrapJar="true"
+              headerType="gui"
+              outfile="${dist_win32_app}/${executable.file.longname}.exe"
+              cmdLine="${executable.args}"
+              icon="${resource.dir}/installer/Icons/logo-32x32.ico">
+        <classPath mainClass="${executable.run}">
+          <cp>%EXEDIR%/lib/*.jar</cp>
+        </classPath>
+        <jre path="lib/jre"
+             minVersion="1.7.0"
+             initialHeapSize="${executable.memory}"
+             maxHeapSize="${executable.memory}">
+          <opt>-Xss8M</opt>
+          <opt>-Dlaunch4j.exedir="%EXEDIR%"</opt>
+          <opt>-Dlaunch4j.exefile="%EXEFILE%"</opt>
+          <opt>-Duser.dir="%EXEDIR%"</opt>
+        </jre>
+      </config>
+    </launch4j>
+  </target>
+  <!-- *********************************************************************** -->
   <target name="dist_src">
     <tar destfile="${dist_src_base}/${dist_name}.tar.gz"
          compression="gzip">
@@ -710,6 +751,11 @@
     <mkdir dir="${dist_macos_old}" />
     <copy file="LICENSE.txt" todir="${dist_macos}" />
     <copy file="README.txt" todir="${dist_macos}" />
+    <!-- Prepare Win32 dist directory -->
+    <delete dir="${dist_win32}" followsymlinks="false" />
+    <mkdir dir="${dist_win32}" />
+    <copy file="LICENSE.txt" todir="${dist_win32}" />
+    <copy file="README.txt" todir="${dist_win32}" />
     <!-- Prepare Win dist directory -->
     <delete dir="${dist_win}" followsymlinks="false" />
     <mkdir dir="${dist_win}" />
@@ -726,6 +772,7 @@
         <antcall>
           <target name="dist_macos_old" />
           <target name="dist_macos" />
+          <target name="dist_win32" />
           <target name="dist_win" />
           <param name="executable.file.longname" value="${exe.longname}" />
           <param name="executable.file.name" value="${exe.file}" />
@@ -738,6 +785,7 @@
     </for>
     <antcall target="dist_src" />
     <antcall target="dist_mac_dmg" />
+    <zip destfile="${dist_win32_base}/${dist_name}.zip" basedir="${dist_win32_base}/${dist_name}" />
     <zip destfile="${dist_win_base}/${dist_name}.zip" basedir="${dist_win_base}/${dist_name}" />
     <echo message="The ${name} distributions can be found in ${dist.dir}" />
   </target>
