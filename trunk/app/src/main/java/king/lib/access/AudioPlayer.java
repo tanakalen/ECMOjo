@@ -6,12 +6,7 @@ import javafx.scene.media.AudioClip;
 
 /**
  * Plays a sound. Internally used by AudioLoader. Audio player is for short sound and looping sound.
- * Conversion to JavaFX will allow removal of libraries:
- * <ul>
- *   <li>jl1.0.jar</li>
- *   <li>mp3spi1.9.2.jar</li>
- *   <li>tritonus_share.jar</li>
- * </ul>
+ * 
  * The following audio file formats are supported:
  * <ul>
  *   <li>wav</li>
