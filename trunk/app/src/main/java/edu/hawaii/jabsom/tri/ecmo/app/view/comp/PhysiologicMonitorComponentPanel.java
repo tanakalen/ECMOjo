@@ -102,8 +102,8 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel implements 
       resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 10f));
       resultLabel.setForeground(Color.WHITE);
       resultLabel.setHorizontalAlignment(JLabel.LEFT);
-      resultLabel.setLocation(275, 0);
-      resultLabel.setSize(13, 105);
+      resultLabel.setLocation(275, -7);
+      resultLabel.setSize(13, 110);
       add(resultLabel);
     }
     else {

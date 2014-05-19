@@ -110,10 +110,10 @@ public class CDIMonitorComponentPanel extends ComponentPanel {
     // Render the rotated string, fragile custom hack
     if (Configuration.getInstance().getLang().equals("ja")) {
       VerticalLabel resultLabel = new VerticalLabel(result);
-      resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 12f));
+      resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 10f));
       resultLabel.setForeground(Color.WHITE);
       resultLabel.setHorizontalAlignment(JLabel.LEFT);
-      resultLabel.setLocation(274, 0);
+      resultLabel.setLocation(274, 2);
       resultLabel.setSize(14, 152);
       add(resultLabel);
     }
