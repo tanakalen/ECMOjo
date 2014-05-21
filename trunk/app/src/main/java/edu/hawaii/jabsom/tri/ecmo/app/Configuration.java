@@ -81,13 +81,7 @@ public class Configuration {
     instance.loadConfiguration();
     
     // set the language
-    if ((lang.getLanguage().equals(Locale.JAPANESE)) || (appType == AppType.INFANT_JA)) {
-      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", Locale.JAPANESE));
-    }
-    else if (!lang.getLanguage().equals(new Locale("").getLanguage())
-        && (!lang.getLanguage().equals(Locale.ENGLISH))) {
-      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", lang));
-    }
+    Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", lang));
   }
 
   /**
