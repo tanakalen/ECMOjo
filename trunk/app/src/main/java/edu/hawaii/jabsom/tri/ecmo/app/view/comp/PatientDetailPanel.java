@@ -46,15 +46,20 @@ public class PatientDetailPanel extends DetailPanel {
     setLayout(null);
     setOpaque(false);
     
+    // Load Intervention button images
+    Image normalImage = ImageLoader.getInstance().getImage(
+        "conf/image/interface/game/BtnIntervention.png");
+    Image rolloverImage = ImageLoader.getInstance().getImage(
+        "conf/image/interface/game/BtnInterventionRol.png");
+    Image selectedImage = ImageLoader.getInstance().getImage(
+        "conf/image/interface/game/BtnInterventionSel.png");
+    
     // patient buttons and actions
-    Image suctionETTNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonSuctionETT[i18n]: conf/image/interface/game/Btn-SuctionETT.png"));
-    Image suctionETTRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonSuctionETTRol[i18n]: conf/image/interface/game/Btn-SuctionETTRol.png"));
-    Image suctionETTSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonSuctionETTSel[i18n]: conf/image/interface/game/Btn-SuctionETTSel.png"));
+    // Add Suction ETT button
     ImageButton suctionETTButton 
-      = new ImageButton(suctionETTNormalImage, suctionETTRolloverImage, suctionETTSelectedImage);
+        = new ImageButton(normalImage, rolloverImage, selectedImage);
+    suctionETTButton.setText(
+        Translator.getString("button.SuctionETT[i18n]: Suction ETT"));
     suctionETTButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         boolean problem = tubeComponent.isSuctionETT();
@@ -81,18 +86,12 @@ public class PatientDetailPanel extends DetailPanel {
     suctionETTButton.setLocation(22, 28);
     suctionETTButton.setSize(192, 32);
     add(suctionETTButton);
-  
-    Image checkCannulaSiteNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckCannulaSite[i18n]: " 
-            + "conf/image/interface/game/Btn-CheckCannulaSite.png"));
-    Image checkCannulaSiteRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckCannulaSiteRol[i18n]: " 
-            + "conf/image/interface/game/Btn-CheckCannulaSiteRol.png"));
-    Image checkCannulaSiteSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckCannulaSiteSel[i18n]: " 
-            + "conf/image/interface/game/Btn-CheckCannulaSiteSel.png"));
+    
+    // Add Check Cannula Site button
     ImageButton checkCannulaSiteButton 
-      = new ImageButton(checkCannulaSiteNormalImage, checkCannulaSiteRolloverImage, checkCannulaSiteSelectedImage);
+        = new ImageButton(normalImage, rolloverImage, selectedImage);
+    checkCannulaSiteButton.setText(
+        Translator.getString("button.CheckCannula[i18n]: Check Cannula Site"));
     checkCannulaSiteButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         boolean problem = tubeComponent.isBrokenCannula();
@@ -120,17 +119,11 @@ public class PatientDetailPanel extends DetailPanel {
     checkCannulaSiteButton.setSize(192, 32);
     add(checkCannulaSiteButton);
     
-    Image checkforBleedingNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckforBleeding[i18n]: "
-            + "conf/image/interface/game/Btn-CheckforBleeding.png"));
-    Image checkforBleedingRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckforBleedingRol[i18n]: "
-            + "conf/image/interface/game/Btn-CheckforBleedingRol.png"));
-    Image checkforBleedingSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckforBleedingSel[i18n]: "
-            + "conf/image/interface/game/Btn-CheckforBleedingSel.png"));
+    // Add Check for Bleeding button
     ImageButton checkforBleedingButton 
-      = new ImageButton(checkforBleedingNormalImage, checkforBleedingRolloverImage, checkforBleedingSelectedImage);
+        = new ImageButton(normalImage, rolloverImage, selectedImage);
+    checkforBleedingButton.setText(
+        Translator.getString("button.CheckBleed[i18n]: Check for Bleeding"));
     checkforBleedingButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         boolean problem = patient.isBleeding();
@@ -158,17 +151,11 @@ public class PatientDetailPanel extends DetailPanel {
     checkforBleedingButton.setSize(192, 32);
     add(checkforBleedingButton);
     
-    Image checkUrineOutputNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckUrineOutput[i18n]: "
-            + "conf/image/interface/game/Btn-CheckUrineOutput.png"));
-    Image checkUrineOutputRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckUrineOutputRol[i18n]: "
-            + "conf/image/interface/game/Btn-CheckUrineOutputRol.png"));
-    Image checkUrineOutputSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckUrineOutputSel[i18n]: "
-            + "conf/image/interface/game/Btn-CheckUrineOutputSel.png"));
+    // Add Check Urine Output button
     ImageButton checkUrineOutputButton
-      = new ImageButton(checkUrineOutputNormalImage, checkUrineOutputRolloverImage, checkUrineOutputSelectedImage);
+        = new ImageButton(normalImage, rolloverImage, selectedImage);
+    checkUrineOutputButton.setText(
+        Translator.getString("button.CheckUOP[i18n]: Check Urine Output"));
     checkUrineOutputButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         boolean problem = tubeComponent.isBrokenETT();
@@ -195,15 +182,12 @@ public class PatientDetailPanel extends DetailPanel {
     checkUrineOutputButton.setLocation(22, 124);
     checkUrineOutputButton.setSize(192, 32);
     add(checkUrineOutputButton);
-        
-    Image checkDiaperNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckDiaper[i18n]: conf/image/interface/game/Btn-CheckDiaper.png"));
-    Image checkDiaperRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckDiaperRol[i18n]: conf/image/interface/game/Btn-CheckDiaperRol.png"));
-    Image checkDiaperSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckDiaperSel[i18n]: conf/image/interface/game/Btn-CheckDiaperSel.png"));
+    
+    // Add Check Diaper button
     ImageButton checkDiaperButton
-      = new ImageButton(checkDiaperNormalImage, checkDiaperRolloverImage, checkDiaperSelectedImage);    
+      = new ImageButton(normalImage, rolloverImage, selectedImage);
+    checkDiaperButton.setText(
+        Translator.getString("button.CheckDiaper[i18n]: Check Diaper"));
     checkDiaperButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         // output dialog
@@ -222,14 +206,11 @@ public class PatientDetailPanel extends DetailPanel {
     checkDiaperButton.setSize(192, 32);
     add(checkDiaperButton);
     
-    Image checkSedationNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckSedation[i18n]: conf/image/interface/game/Btn-CheckSedation.png"));
-    Image checkSedationRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckSedationRol[i18n]: conf/image/interface/game/Btn-CheckSedationRol.png"));
-    Image checkSedationSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCheckSedationSel[i18n]: conf/image/interface/game/Btn-CheckSedationSel.png"));
-    ImageButton checkSedationButton = new ImageButton(checkSedationNormalImage
-        , checkSedationRolloverImage, checkSedationSelectedImage);    
+    // Add Check Sedation button
+    ImageButton checkSedationButton 
+        = new ImageButton(normalImage, rolloverImage, selectedImage);
+    checkSedationButton.setText(
+        Translator.getString("button.CheckSedation[i18n]: Check Sedation"));
     checkSedationButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         boolean sedated = patient.isSedated();
