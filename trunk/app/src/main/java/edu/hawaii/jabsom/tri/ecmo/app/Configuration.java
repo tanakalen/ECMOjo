@@ -75,7 +75,10 @@ public class Configuration {
     
     // set the language
     if ((l.equals(Locale.JAPANESE)) || (appType == AppType.INFANT_JA)) {
-      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", Locale.JAPANESE));
+      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", l));
+    }
+    else if (l.equals(new Locale("es"))) {
+      Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", l));
     }
   }
 
