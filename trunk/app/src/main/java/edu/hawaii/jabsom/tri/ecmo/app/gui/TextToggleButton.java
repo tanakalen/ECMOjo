@@ -5,6 +5,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 //import java.awt.Image;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
+
 import javax.swing.JToggleButton;
 
 /**
@@ -208,13 +215,6 @@ public class TextToggleButton extends JToggleButton {
     
     setText(this.text);
     
-//    // set the size based on image
-//    Dimension size = new Dimension(getWidth(this), getHeight(this));
-//    setSize(size);
-//    setPreferredSize(size);
-//    setMinimumSize(size);
-//    setMaximumSize(size);
-    
     // Enable rollover
     setRolloverEnabled(true);
   }
@@ -225,12 +225,10 @@ public class TextToggleButton extends JToggleButton {
    * @param g  Graphics context.
    */
   public void paintComponent(Graphics g) {
-    super.paintComponent(g);
+//    super.paintComponent(g);
    
     int width = getSize().width;
     int height = getSize().height;
-//    int imageWidth = this.pressed.getWidth(this);
-//    int imageHeight = this.pressed.getHeight(this);
     
     // highlight depending on rollover or button pressed
     if (isEnabled()) {
@@ -248,29 +246,47 @@ public class TextToggleButton extends JToggleButton {
     int x = (width - textWidth) / 2;
     int y = (height - textHeight) / 2 + ascent;
     
+    // Create outline
+    Graphics2D g2 = (Graphics2D)g;
+    // set antialiased
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING
+                     , RenderingHints.VALUE_ANTIALIAS_ON);
+    // and render
+    FontRenderContext fontRenderContext = g2.getFontRenderContext();
+    TextLayout textLayout = new TextLayout(text, g2.getFont(), fontRenderContext);
+    AffineTransform transform = AffineTransform.getTranslateInstance(x, y); // x is centered
+    Shape outline = textLayout.getOutline(transform);
+    
+//    // draw outlined text
+//    g2.setPaint(Color.WHITE);
+//    g2.fill(outline);
+//    g2.setPaint(Color.GRAY);
+//    g2.draw(outline);
+    
     if (model.isRollover()) {
       if (model.isSelected()) {
 //        g.drawImage(this.rolloverToggle, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-        g.setColor(this.rolloverToggle);
-        g.drawString(getText(), x, y + rolloverToggleYOffset);
+        g2.setColor(this.rolloverToggle);
+        g2.drawString(getText(), x, y + rolloverToggleYOffset);
       }
       else {
 //        g.drawImage(this.rolloverNonToggle, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-        g.setColor(this.rolloverNonToggle);
-        g.drawString(getText(), x, y + rolloverNonToggleYOffset);
+        g2.setColor(this.rolloverNonToggle);
+        g2.drawString(getText(), x, y + rolloverNonToggleYOffset);
       }
     }
     else if (model.isPressed() || isSelected()) {
 //      g.drawImage(this.pressed, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-      g.setColor(this.pressed);
-      g.drawString(getText(), x, y + pressedYOffset);
+      g2.setColor(this.pressed);
+      g2.drawString(getText(), x, y + pressedYOffset);
     }
     else {
       if (this.normal != null) {
 //        g.drawImage(this.normal, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-        g.setColor(this.normal);
+        g2.setColor(this.normal);
       }
-      g.drawString(getText(), x, y + normalYOffset);
+      // Draws text, normal color.
+      g2.drawString(getText(), x, y + normalYOffset);
     }
   }  
 }
