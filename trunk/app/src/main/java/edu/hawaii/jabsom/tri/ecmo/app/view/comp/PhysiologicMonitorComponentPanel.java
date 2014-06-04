@@ -8,10 +8,12 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
-
+import king.lib.util.Translator;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.VerticalLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PhysiologicMonitorComponent;
 
 /**
@@ -53,8 +55,21 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel implements 
     setLocation(0, 152);
     setSize(288, 105);
     
-    // set layout
     setLayout(null);
+    
+    // add label "Phy Monitor"
+    String result = Translator.getString("label.PhysMonitor[i18n]: Phy Monitor");
+    //TODO: i18n vertical versus horizontal orientation
+    //if lang.locale isEastern: JLabel resultLabel = new TextLabel()
+    //else: // lang.local isWestern
+    JLabel resultLabel = new VerticalLabel();
+    resultLabel.setText(result);
+    resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 12f));
+    resultLabel.setForeground(Color.WHITE);
+    resultLabel.setHorizontalAlignment(JLabel.CENTER);
+    resultLabel.setLocation(273, 0);
+    resultLabel.setSize(15, 105);
+    add(resultLabel);
   }
 
   /**
