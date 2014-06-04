@@ -1,0 +1,139 @@
+# Scenario Information
+name = Coming off Roller ECMO
+desc = Steps to emergently come off of ECLS support with roller pump.
+
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = *
+scenario-pump-type = roller
+scenario-vent-type = *
+
+# Goal Information
+goal = Tutorial
+tutorial-item1-text = ECMOism:  ECMO is 95% boredom, and 5% sheer terror.
+tutorial-item1-trigger = N/A
+tutorial-item2-text = You are now one elite 5% that will experience the terror of ECMO.  If you can't immediately see what's causing all the alarms, what should you do?
+tutorial-item2-trigger = N/A
+tutorial-item3-text = A circuit check.
+tutorial-item3-trigger = N/A
+tutorial-item4-text = Call for HELP!
+tutorial-item4-trigger = N/A
+tutorial-item5-text = You find a catastrophic problem, and you must come off ECMO.
+tutorial-item5-trigger = N/A
+tutorial-item6-text = Clamp the circuit!\n - Clamp Venous, Unclamp Bridge, Clamp Arterial
+tutorial-item6-trigger = Action:Tube:Clamped:true
+tutorial-item7-text = Increase the ventilator settings for additional support in respiratory cases. Click the [Emergency Vent] button. 
+tutorial-item7-trigger = Action:Ventilator:Emergency:on
+tutorial-item8-text = Please note in this simulation world, handbagging or institution of the emergency settings is accomplished in a single step.
+tutorial-item8-trigger = N/A
+tutorial-item9-text = Resuscitate the patient as needed.
+tutorial-item9-trigger = N/A
+tutorial-item10-text = Do you need a surgeon?
+tutorial-item10-trigger = N/A
+tutorial-item11-text = If it involves the cannulas, the answer is yes.
+tutorial-item11-trigger = N/A
+
+# Baseline Values
+baseline-sedated = true
+baseline-bleeding = false
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 180
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-urine-output = good
+baseline-suction-ETT = good
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 200
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 200
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-alarming = false
+
+# Patient Information
+patient-species = human
+patient-gender = male
+patient-age = 1
+patient-weight = 5
+patient-lung-function = bad
+patient-heart-function = good
+patient-sedated = true
+patient-bleeding = false
+patient-temperature = 37
+
+# Heater
+heater-temperature = 37
+heater-broken = false
+
+# Oxygenator
+oxygenator-total-sweep = 0.6
+oxygenator-fio2 = 0.5
+oxygenator-broken = false
+oxygenator-clotting = 0.0
+
+# Pump
+pump-on = true
+pump-flow = 0.6
+
+# Intervention
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
+
+# Tube
+tube-clamp-arterial-A = open
+tube-clamp-arterial-B = open
+tube-clamp-venous-A = open
+tube-clamp-venous-B = open
+tube-clamp-bridge = closed
+tube-bubbles-arterial = false
+tube-bubbles-venous = false
+tube-cannula-broken = false
+tube-cannula-status = 
+tube-cannula-problem-location = 
+tube-cannula-arterial-B = open
+tube-cannula-venous-B = open
+tube-cannula-premembrane-pressure = 
+tube-cannula-postmembrane-pressure = 
+tube-coagulopathy = false
+
+# ACT
+act-value = 
+
+# Lab Component
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
+#lab-component-chem
+lab-component-heme-fibrinogen = 
+lab-component-heme-platelets = 
+lab-component-heme-pt = 
+lab-component-heme-ptt = 
+
+# Imaging Component
+lab-img-xray = xr-none
+lab-img-us = us-none
+lab-img-echo = echo-none

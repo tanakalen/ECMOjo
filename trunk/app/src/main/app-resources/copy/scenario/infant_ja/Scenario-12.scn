@@ -1,0 +1,134 @@
+# Scenario Information
+name = 動脈カニューラの事故抜去
+desc = 5%の恐怖の時間 - 緊急にECMOを停止しなければならない4つの状況のひとつ
+
+# Scenario Parameters
+scenario-ecmo-mode = VA
+scenario-oxy-type = *
+scenario-pump-type = *
+scenario-vent-type = *
+
+# Goal Information
+goal = Tutorial
+tutorial-item1-text = ベッドサイドの看護士が患者評価をしていて、あなたは彼女のIDバッジが動脈カニューラの下にあるのに気がつきました。彼女は頭を上げた途端にバッジで動脈カニューラを抜去してしまいました。
+tutorial-item1-trigger = N/A
+tutorial-item2-text = 生理学的パラメーターの変化に気が付いてください。
+tutorial-item2-trigger = N/A
+tutorial-item3-text = あなた一人ではこの状況には対処できません。つまり、助けを呼ぶ。ECMOイズム: ECMOはチームで行うものです。
+tutorial-item3-trigger = N/A
+tutorial-item4-text = ベッドサイドでは、あなたはカニュレーション部位を圧迫します。
+tutorial-item4-trigger = N/A
+tutorial-item5-text = 回路をクランプします。\n ローラーポンプ: 脱血側回路をクランプして、ブリッジのクランプをはずして、最後に送血側回路をクランプします。\n　遠心ポンプ: 送血側回路をクランプして、ブリッジのクランプをはずして最後に脱血側回路をクランプします。
+tutorial-item5-trigger = Action:Tube:Clamped:true
+tutorial-item6-text = 呼吸器疾患ではさらに呼吸器条件を上げます。[緊急呼吸器設定]ボタンを押してください。
+tutorial-item6-trigger = Action:Ventilator:Emergency:on
+tutorial-item7-text = 必要に応じて患者を蘇生してください。
+tutorial-item7-trigger = N/A
+tutorial-item8-text = カニューラを再挿入するために外科医を呼ぶのを忘れないで下さい。
+tutorial-item8-trigger = N/A
+
+# Baseline Values
+baseline-sedated = true
+baseline-bleeding = false
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 180
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-urine-output = good
+baseline-suction-ETT = good
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 200
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 200
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-alarming = false
+
+# Patient Information
+patient-species = human
+patient-gender = male
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
+patient-heart-function = good
+patient-sedated = true
+patient-bleeding = true
+patient-blood-volume = 250
+patient-temperature = 37
+
+# Heater
+heater-temperature = 37
+heater-broken = false
+
+# Oxygenator
+oxygenator-total-sweep = 0.6
+oxygenator-fio2 = 0.5
+oxygenator-broken = false
+oxygenator-clotting = 0.0
+
+# Pump
+pump-on = true
+pump-flow = 0.6
+
+# Intervention
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
+
+# Tube
+tube-clamp-arterial-A = open
+tube-clamp-arterial-B = open
+tube-clamp-venous-A = open
+tube-clamp-venous-B = open
+tube-clamp-bridge = closed
+tube-bubbles-arterial = false
+tube-bubbles-venous = false
+tube-cannula-broken = true
+tube-cannula-status = kink
+tube-cannula-problem-location = arterial
+tube-cannula-arterial-B = open
+tube-cannula-venous-B = open
+tube-cannula-premembrane-pressure = 
+tube-cannula-postmembrane-pressure = 
+tube-coagulopathy = false
+
+# ACT
+act-value = 
+
+# Lab Component
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
+#lab-component-chem
+lab-component-heme-fibrinogen = 
+lab-component-heme-platelets = 
+lab-component-heme-pt = 
+lab-component-heme-ptt = 
+
+# Imaging Component
+lab-img-xray = xr-none
+lab-img-us = us-none
+lab-img-echo = echo-none
