@@ -144,7 +144,7 @@ public class ManagerPanel extends JPanel {
     // add label: Lab
     TextLabel lblLab = createTextLabels(
         Translator.getString("label.Lab[i18n]: Lab"),
-        24f, 2, 435);
+        24f, 2, 433);
     lblLab.setBorderColor(Color.GRAY);
     lblLab.setGradientTopColor(new Color(255, 204, 204));
     lblLab.setGradientBottomColor(new Color(255, 192, 203));
