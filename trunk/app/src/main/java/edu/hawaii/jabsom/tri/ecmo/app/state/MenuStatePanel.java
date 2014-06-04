@@ -101,9 +101,10 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     // add about button
     Image aboutNormalImage = ImageLoader.getInstance().getImage(
         "conf/image/interface/menu/BtnBig.png");
+    Image aboutRolloverImage = aboutNormalImage;
     Image aboutSelectedImage = ImageLoader.getInstance().getImage(
         "conf/image/interface/menu/BtnBigSel.png");
-    final ImageButton aboutButton = new ImageButton(aboutNormalImage, aboutNormalImage, aboutSelectedImage);
+    final ImageButton aboutButton = new ImageButton(aboutNormalImage, aboutRolloverImage, aboutSelectedImage);
     aboutButton.setText(
         Translator.getString("button.About[i18n]: About"));
     aboutButton.addActionListener(new ActionListener() {
@@ -112,7 +113,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
         state.aboutState();
       }      
     });
-    aboutButton.setLocation(570, 18);
+    aboutButton.setLocation(566, 22);
     aboutButton.setSize(120, 48);
     add(aboutButton);
     

@@ -105,7 +105,7 @@ public class ImageButton extends JButton {
     int textWidth = g.getFontMetrics().stringWidth(getText());
     int textHeight = g.getFontMetrics().getHeight();
     int ascent = g.getFontMetrics().getAscent();
-    int x = (width - textWidth) / 2;
+    int x = ((width - textWidth) / 2) - 2; // Image is 2px displace for shadow.
     int y = (height - textHeight) / 2 + ascent;
     
     // set antialised text
