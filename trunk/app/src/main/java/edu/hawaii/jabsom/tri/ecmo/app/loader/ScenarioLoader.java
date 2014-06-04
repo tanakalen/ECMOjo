@@ -94,7 +94,7 @@ public final class ScenarioLoader {
     BufferedReader reader = null;
     try {
       // open the reader
-      reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));    
+      reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 
       // read the scenario data
       Map<String, String> parameters = new HashMap<String, String>();
@@ -331,7 +331,7 @@ public final class ScenarioLoader {
       else {
         place = TubeComponent.problemLocation.none;
       }
-      tube.setBrokenCannula(Boolean.parseBoolean(parameters.get("tube-cannula-broken")), problem, place);      
+      tube.setBrokenCannula(Boolean.parseBoolean(parameters.get("tube-cannula-broken")), problem, place);
       tube.setArterialBOpen(TubeFunction.parse(parameters.get("tube-cannula-arterial-B")) == TubeFunction.OPEN);
       tube.setVenousBOpen(TubeFunction.parse(parameters.get("tube-cannula-venous-B")) == TubeFunction.OPEN);
       Double val = parseNum(parameters, "tube-cannula-premembrane-pressure");
@@ -357,7 +357,7 @@ public final class ScenarioLoader {
           tube.setPreMembranePressure(120);
         }
         else if (oxy.getOxyType() == OxyType.SILICONE) {
-          tube.setPreMembranePressure(220);            
+          tube.setPreMembranePressure(220);
         }
         else {
           //Error here if oxygenator not selected in scn file, however
@@ -369,7 +369,7 @@ public final class ScenarioLoader {
         tube.setPostMembranePressure(val);
       }
       tube.setVenousPressure(parseNum(parameters, "tube-cannula-venous-pressure"));
-      tube.setCoagulopathy(Boolean.parseBoolean(parameters.get("tube-coagulopathy")));      
+      tube.setCoagulopathy(Boolean.parseBoolean(parameters.get("tube-coagulopathy")));
       
       // Begin of normal initial labs displayed on start
       //act
@@ -394,7 +394,7 @@ public final class ScenarioLoader {
       //blood gas
       patient.setPH(Double.NaN);
       patient.setPCO2(Double.NaN);
-      patient.setPO2(Double.NaN);        
+      patient.setPO2(Double.NaN);
       LabComponent labComponent = null;
       for (Component component: equipment) {
         if (component instanceof LabComponent) {
@@ -434,7 +434,7 @@ public final class ScenarioLoader {
       // End of initial lab display
 
       // load scenario specific patient/lab values
-      patient.setAct(parseNum(parameters, "act-value"));        
+      patient.setAct(parseNum(parameters, "act-value"));
       patient.setPH(parseNum(parameters, "lab-component-abg-ph"));
       patient.setPCO2(parseNum(parameters, "lab-component-abg-pco2"));
       patient.setPO2(parseNum(parameters, "lab-component-abg-po2"));
@@ -456,7 +456,7 @@ public final class ScenarioLoader {
       String[] images;
       
       //cxr
-      HashMap<TubeComponent.Mode, String> cxrMap = new HashMap<Mode, String>();        
+      HashMap<TubeComponent.Mode, String> cxrMap = new HashMap<Mode, String>();
       images = parameters.get("lab-img-xray").split(",");
       for (int i = 0; i < images.length; i++) {
         String image = images[i];
@@ -471,7 +471,7 @@ public final class ScenarioLoader {
         else {
           XRayLabTest labTest = new XRayLabTest();
           labTest.setDescription("Chest, X-Ray");
-          labTest.setImageName(image + ".png");          
+          labTest.setImageName(image + ".png");
           labTest.setTime(0);
           imagingComponent.addResult(labTest);
         }
@@ -484,7 +484,7 @@ public final class ScenarioLoader {
         String image = images[i];
         UltrasoundLabTest labTest = new UltrasoundLabTest();
         labTest.setDescription("Head, US");
-        labTest.setImageName(image + ".png");          
+        labTest.setImageName(image + ".png");
         labTest.setTime(0);
         imagingComponent.addResult(labTest);
       }
@@ -500,14 +500,14 @@ public final class ScenarioLoader {
           }
           else if (image.contains("-vv-")) {
             echoMap.put(Mode.VV, image);
-          }            
+          }
         }
         else {
           EchoLabTest labTest = new EchoLabTest();
           labTest.setDescription("Echo");
-          labTest.setImageName(image + ".png");          
+          labTest.setImageName(image + ".png");
           labTest.setTime(0);
-          imagingComponent.addResult(labTest);            
+          imagingComponent.addResult(labTest);
         }
       }
       imagingComponent.putScenarioImaging("Echo", echoMap);
@@ -596,7 +596,7 @@ public final class ScenarioLoader {
    */
   public static void saveFile(OutputStream outputStream, ScenarioFile scenario) throws IOException {
     PrintWriter out = new PrintWriter(outputStream);
-    out.println(scenario.getParameters());    
+    out.println(scenario.getParameters());
     String code = scenario.getScript().getCode();
     out.println("script = " + encodeScript(code));
     out.close();

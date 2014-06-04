@@ -10,8 +10,6 @@ public enum AppType {
   
   /** ECMOjo Infant application. */
   INFANT("infant", "infant"), 
-  /** ECMOjo Infant application. */
-  INFANT_JA("infant_ja", "infant_ja"), 
   /** ECMOjo Adult application. */
   ADULT("adult", "adult");
   
