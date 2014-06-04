@@ -205,6 +205,7 @@
     <i18n dir="${build.dest.dir}"
           file="${conf.dir}/bundle/MessagesBundle.properties"
           prefix=""
+          strict="false"
           pattern="([a-z]+\.[A-Za-z0-9_]+)(\[i18n\]: )(.*)" />
   </target>  
   <!-- *********************************************************************** -->
