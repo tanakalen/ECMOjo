@@ -68,11 +68,17 @@ public class TutorialBox extends JPanel {
       ));
     CellConstraints cc = new CellConstraints();
     
-    // add the button
-    Image nextButtonImage = ImageLoader.getInstance().getImage("conf/gui/Btn-Next.png");    
-    Image nextButtonRolloverImage = ImageLoader.getInstance().getImage("conf/gui/Btn-NextRol.png");
-    Image nextButtonSelectedImage = ImageLoader.getInstance().getImage("conf/gui/Btn-NextSel.png");
-    button = new ImageButton(nextButtonImage, nextButtonRolloverImage, nextButtonSelectedImage);
+    // add the "next" button
+    // add about button
+    Image nextNormalImage = ImageLoader.getInstance().getImage(
+        "conf/gui/Btn.png");
+    Image nextRolloverImage = ImageLoader.getInstance().getImage(
+        "conf/gui/Btn.png");
+    Image nextSelectedImage = ImageLoader.getInstance().getImage(
+        "conf/gui/BtnSel.png");
+    button = new ImageButton(nextNormalImage, nextRolloverImage, nextSelectedImage);
+    button.setText(
+        Translator.getString("button.Next[i18n]: Next"));
     button.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         for (TutorialBoxListener listener: listeners) {

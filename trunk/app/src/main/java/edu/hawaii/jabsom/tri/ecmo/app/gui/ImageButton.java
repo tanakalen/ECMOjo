@@ -1,8 +1,13 @@
 package edu.hawaii.jabsom.tri.ecmo.app.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
+
 import javax.swing.JButton;
 
 /**
@@ -99,19 +104,28 @@ public class ImageButton extends JButton {
     int x = (width - textWidth) / 2;
     int y = (height - textHeight) / 2 + ascent;
     
+    // set antialised text
+    Graphics2D g2 = (Graphics2D)g;
+    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    
+    // text properties
+    g2.setFont(g.getFont().deriveFont(Font.BOLD));
+    g2.setColor(new Color(3, 174, 195)); // Or, webcolor (#03AEC3)
+    
     if (model.isPressed() || isSelected()) {
       g.drawImage(this.pressedImage, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-      g.drawString(getText(), x, y + pressedYOffset);
+      g2.drawString(getText(), x, y + pressedYOffset);
     }
     else if (model.isRollover()) {
       g.drawImage(this.rolloverImage, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-      g.drawString(getText(), x, y + rolloverYOffset);
+      g2.drawString(getText(), x, y + rolloverYOffset);
     }
     else {
       if (this.normalImage != null) {
         g.drawImage(this.normalImage, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
       }
-      g.drawString(getText(), x, y + normalYOffset);
+      g2.drawString(getText(), x, y + normalYOffset);
     }
   }  
 }
