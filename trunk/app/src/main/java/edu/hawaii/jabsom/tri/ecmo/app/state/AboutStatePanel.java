@@ -26,7 +26,7 @@ import king.lib.util.Translator;
 public class AboutStatePanel extends JPanel {
 
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/about/Base.jpg");
+  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/Background.png");
     
   /** The info text. */
 //  private final String infoText;

@@ -15,7 +15,7 @@ import king.lib.access.ImageLoader;
 public class LoadStatePanel extends JPanel implements Runnable {
 
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/load/Base.jpg");
+  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/LoadBase.png");
 
   /** The state. */
   private LoadState state;
