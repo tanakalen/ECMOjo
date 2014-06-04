@@ -43,8 +43,15 @@ public class Configuration {
   /** The application type. */
   private AppType appType;
   
-  /** The Unicode code for language two char. */
+  /** The Locale using ISO-639-1 code for language (two char). */
   private static Locale lang;
+  
+  /** Available language bundles. */
+  private static Locale[] availableLanguages = new Locale[]{
+//    new Locale("en"),
+    Locale.JAPANESE,
+    new Locale("es")
+  };
   
   /** True for admin. */
   private boolean admin;
@@ -163,12 +170,37 @@ public class Configuration {
   /**
    * Returns the configured language tagged 'LANG'.
    * 
-   * @return  The configuration language.
+   * @return  The configuration language using ISO-639-1 code for language (two char).
    */
   public String getLang() {
     return lang.toString();
   }
-
+  
+  /**
+   * Returns available languages for program.
+   * 
+   * @return  String[] of available languages.
+   */
+  public String[] getAvailableLanguages() {
+    String[] l = new String[availableLanguages.length];
+    int i = 0;
+    for (Locale language:availableLanguages) {
+      l[i] = language.getDisplayLanguage(lang);
+      i++;
+    }
+    return l;
+  }
+  
+  /**
+   * Sets the configured language from available languages by index.
+   * 
+   * @param index  The index for availableLanguages to switch to 0 being first.
+   */
+  public void setLang(int index) {
+    // Verify 2 char code?
+    lang = availableLanguages[index];
+  }
+  
   /**
    * Returns true for admin.
    *
