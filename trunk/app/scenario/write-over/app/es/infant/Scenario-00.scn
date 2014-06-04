@@ -10,7 +10,7 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bienvenido a la descripción general de ECMOjo
+tutorial-item1-text = Bienvenido/a a la descripción general de ECMOjo
 tutorial-item1-trigger = N/A
 tutorial-item2-text = El paciente que está conectado al circuito de ECMO se muestra en la parte inferior izquierda de la pantalla
 tutorial-item2-trigger = N/A
