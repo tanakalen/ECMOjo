@@ -61,8 +61,8 @@
     <property name="prg.memory" value="256" />
     <property name="prg.classfile" value="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp" />
     <property name="prg.exe0" value="ECMOjo Infant,ECMOjo-Infant,${prg.memory},${prg.classfile},infant" />
-    <property name="prg.exe1" value="ECMOjo Infant (Japanese),ECMOjo-Infant-JA,${prg.memory},${prg.classfile},infant_ja" />
-    <property name="executables.list" value="${prg.exe0}+${prg.exe1}"/>  <!-- ${prg.exe0}+${prg.exe1} ... -->
+    <!-- <property name="prg.exe1" value="ECMOjo Infant (Japanese),ECMOjo-Infant-JA,${prg.memory},${prg.classfile},infant_ja" /> -->
+    <property name="executables.list" value="${prg.exe0}"/>  <!-- ${prg.exe0}+${prg.exe1} ... -->
     <!-- Java Web Start properties (leave as is if not needed) -->
     <property name="keystore.alias" value="kalias" />
     <property name="keystore.file" value="${resource.dir}/jarsign/keystore" />
@@ -111,6 +111,10 @@
     <property name="dist_win_base" value="${dist.dir}/dist_win" />
     <property name="dist_win" value="${dist_win_base}/${dist_name}" />
     <property name="launch4j.dir" value="${resource.dir}/installer/launch4j" />
+    <!-- Properties for JRE bundling -->
+    <property name="resource.mac.jre" value="${resource.dir}/jre/mac/jre/Contents/Home" />
+    <property name="resource.win.jre" value="${resource.dir}/jre/win/jre" />
+    <property name="resource.win64.jre" value="${resource.dir}/jre/win64/jre" />
     <!-- Load additional ant tasks -->
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
     <taskdef name="jarbundler" classpath="${jarbundler.dir}/${jarbundler.ver}.jar" classname="net.sourceforge.jarbundler.JarBundler" />
@@ -457,6 +461,9 @@
         <include name="extra/**" />
       </fileset>
     </copy>
+    <copy todir="${dist_win_app}/lib/jre">
+      <fileset dir="${resource.win.jre}" />
+    </copy>
     <launch4j bindir="${launch4j.dir}/bin">
       <config jarPath="${dist_win_app}/lib/ecmosim-app.jar"
               dontWrapJar="true"
@@ -467,7 +474,7 @@
         <classPath mainClass="${executable.run}">
           <cp>%EXEDIR%/lib/*.jar</cp>
         </classPath>
-        <jre path="${java.home}/bin"
+        <jre path="lib/jre"
              minVersion="1.7.0"
              initialHeapSize="${executable.memory}"
              maxHeapSize="${executable.memory}">
