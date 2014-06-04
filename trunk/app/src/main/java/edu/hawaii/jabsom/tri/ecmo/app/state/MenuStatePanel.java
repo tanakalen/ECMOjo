@@ -295,7 +295,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     JLabel ventilatorCheckmark = new JLabel(disabled);
     ventilatorCheckmark.setSize(32, 32);
     ventilatorCheckmark.setLocation(0, 103);
-    componentSelectionPanel.add(ventilatorCheckmark);    
+    componentSelectionPanel.add(ventilatorCheckmark);
     
     // add scenario selection listener
     ScenarioSelectionListener scenarioSelectionListener = new ScenarioSelectionListener() {
@@ -444,6 +444,8 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     g.setColor(Color.DARK_GRAY);
 
     // draw editor info
+    // TODO: i18n this string editor:
+//  String editor = Translator.getString("text.editor[i18n]: Press 'E' to open the scenario editor."));
     String editor = "Press 'E' to open the scenario editor.";
     g.drawString(editor, 5, 595);
     

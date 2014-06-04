@@ -1,5 +1,6 @@
 package edu.hawaii.jabsom.tri.ecmo.app;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Locale;
@@ -86,7 +87,7 @@ public class Configuration {
    */
   public void loadConfiguration() {
     String applicationConfigFile = "Application.config";
-    String path = Access.getInstance().getScenarioDir() + "/" + applicationConfigFile;
+    String path = Access.getInstance().getScenarioDir() + File.separator + applicationConfigFile;
 
     // Preload last configuration
     try {
@@ -116,7 +117,7 @@ public class Configuration {
    */
   public void saveConfiguration() {
     String applicationConfigFile = "Application.config";
-    String path = Access.getInstance().getScenarioDir() + "/" + applicationConfigFile;
+    String path = Access.getInstance().getScenarioDir() + File.separator + applicationConfigFile;
 
     // store data
     try {
