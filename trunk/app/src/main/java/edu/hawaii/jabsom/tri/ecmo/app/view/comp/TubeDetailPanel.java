@@ -301,7 +301,7 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
     
     // draw oxygenator [i18n] label
     g2.setFont(new Font("default", Font.BOLD, 12));
-    rotateLabel(g, 203, 82, -(java.lang.Math.PI/4), 
+    rotateLabel(g, 203, 82, -(Math.PI/4), 
         Translator.getString("label.Oxygenator[i18n]: oxygenator"));
   }
 }
