@@ -1,16 +1,10 @@
 package edu.hawaii.jabsom.tri.ecmo.app.gui;
 
 import java.awt.Color;
-//import java.awt.Dimension;
 import java.awt.Graphics;
-//import java.awt.Image;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
 
 import javax.swing.JToggleButton;
 
@@ -41,7 +35,14 @@ public class TextToggleButton extends JToggleButton {
   private int rolloverToggleYOffset;
   /** The text y offset for pressed. */
   private int pressedYOffset;
-
+  
+  /** True to draw border. */
+  boolean drawBorder = false;
+  /** Border color. */
+  private Color borderColor = Color.GRAY;
+  /** True to draw shadow. */
+  boolean drawShadow = true;
+  
   /**
    * Builder for the button. Refer to Effective Java by Bloch.
    */
@@ -246,47 +247,57 @@ public class TextToggleButton extends JToggleButton {
     int x = (width - textWidth) / 2;
     int y = (height - textHeight) / 2 + ascent;
     
-    // Create outline
     Graphics2D g2 = (Graphics2D)g;
     // set antialiased
     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING
                      , RenderingHints.VALUE_ANTIALIAS_ON);
-    // and render
-    FontRenderContext fontRenderContext = g2.getFontRenderContext();
-    TextLayout textLayout = new TextLayout(text, g2.getFont(), fontRenderContext);
-    AffineTransform transform = AffineTransform.getTranslateInstance(x, y); // x is centered
-    Shape outline = textLayout.getOutline(transform);
-    
-//    // draw outlined text
-//    g2.setPaint(Color.WHITE);
-//    g2.fill(outline);
-//    g2.setPaint(Color.GRAY);
-//    g2.draw(outline);
+//    Paint fillPaint = new GradientPaint(0, 0, gradientTopColor
+//      , 0, getFont().getSize(), gradientBottomColor);
     
     if (model.isRollover()) {
       if (model.isSelected()) {
-//        g.drawImage(this.rolloverToggle, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-        g2.setColor(this.rolloverToggle);
-        g2.drawString(getText(), x, y + rolloverToggleYOffset);
+        if (drawBorder) {
+          TextRenderer.renderOutline(g2, text, x, y + rolloverToggleYOffset
+              , rolloverToggle, borderColor, drawShadow);
+        } 
+        else {
+          TextRenderer.renderOutline(g2, text, x, y + rolloverToggleYOffset
+              , rolloverToggle, null, drawShadow);
+        }
       }
       else {
-//        g.drawImage(this.rolloverNonToggle, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-        g2.setColor(this.rolloverNonToggle);
-        g2.drawString(getText(), x, y + rolloverNonToggleYOffset);
+        if (drawBorder) {
+          TextRenderer.renderOutline(g2, text, x, y + rolloverNonToggleYOffset
+              , rolloverNonToggle, borderColor, drawShadow);
+        } 
+        else {
+          TextRenderer.renderOutline(g2, text, x, y + rolloverNonToggleYOffset
+              , rolloverNonToggle, null, drawShadow);
+        }
       }
     }
     else if (model.isPressed() || isSelected()) {
-//      g.drawImage(this.pressed, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-      g2.setColor(this.pressed);
-      g2.drawString(getText(), x, y + pressedYOffset);
+      if (drawBorder) {
+        TextRenderer.renderOutline(g2, text, x, y + pressedYOffset
+            , pressed, borderColor, drawShadow);
+      } 
+      else {
+        TextRenderer.renderOutline(g2, text, x, y + pressedYOffset
+            , pressed, null, drawShadow);
+      }
     }
     else {
       if (this.normal != null) {
-//        g.drawImage(this.normal, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-        g2.setColor(this.normal);
-      }
       // Draws text, normal color.
-      g2.drawString(getText(), x, y + normalYOffset);
+        if (drawBorder) {
+          TextRenderer.renderOutline(g2, text, x, y + normalYOffset
+              , normal, borderColor, drawShadow);
+        } 
+        else {
+          TextRenderer.renderOutline(g2, text, x, y + normalYOffset
+              , normal, null, drawShadow);
+        }
+      }
     }
   }  
 }
