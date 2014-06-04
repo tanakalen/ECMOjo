@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 
 import king.lib.access.ImageLoader;
 import king.lib.util.Translator;
+import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.VerticalLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.CDIMonitorComponent;
 
@@ -58,17 +59,25 @@ public class CDIMonitorComponentPanel extends ComponentPanel {
     
     // add label "CDI Monitor"
     String result = Translator.getString("label.CDIMonitor[i18n]: CDI Monitor");
-    //TODO: i18n vertical versus horizontal orientation
-    //if lang.locale isEastern: JLabel resultLabel = new TextLabel()
-    //else: // lang.local isWestern
-    JLabel resultLabel = new VerticalLabel();
-    resultLabel.setText(result);
-    resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 12f));
-    resultLabel.setForeground(Color.WHITE);
-    resultLabel.setHorizontalAlignment(JLabel.CENTER);
-    resultLabel.setLocation(273, 0);
-    resultLabel.setSize(15, 152);
-    add(resultLabel);
+    // Render the rotated string, fragile custom hack
+    if (Configuration.getInstance().getLang().equals("ja")) {
+      VerticalLabel resultLabel = new VerticalLabel(result);
+      resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 12f));
+      resultLabel.setForeground(Color.WHITE);
+      resultLabel.setHorizontalAlignment(JLabel.LEFT);
+      resultLabel.setLocation(274, 0);
+      resultLabel.setSize(14, 152);
+      add(resultLabel);
+    }
+    else {
+      VerticalLabel resultLabel = new VerticalLabel(result, false);
+      resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 12f));
+      resultLabel.setForeground(Color.WHITE);
+      resultLabel.setHorizontalAlignment(JLabel.CENTER);
+      resultLabel.setLocation(273, 0);
+      resultLabel.setSize(15, 152);
+      add(resultLabel);
+    }
   }
 
   /**
