@@ -51,8 +51,8 @@ import king.lib.util.Translator;
 public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
 
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage(
-      Translator.getString("image.menubase[i18n]: conf/image/interface/menu/Base.png"));
+  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/menu/Base.png");
+//      Translator.getString("image.menubase[i18n]: conf/image/interface/menu/Base.png"));
 
   /** The state. */
   private MenuState state;
@@ -115,24 +115,6 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     aboutButton.setLocation(570, 18);
     aboutButton.setSize(120, 48);
     add(aboutButton);
-
-//    // add contact button
-//    Image contactNormalImage = ImageLoader.getInstance().getImage(
-//        Translator.getString("image.ButtonContact[i18n]: conf/image/interface/menu/Btn-Contact.png"));
-//    Image contactRolloverImage = ImageLoader.getInstance().getImage(
-//        Translator.getString("image.ButtonContactRol[i18n]: conf/image/interface/menu/Btn-ContactRol.png"));
-//    Image contactSelectedImage = ImageLoader.getInstance().getImage(
-//        Translator.getString("image.ButtonContactSel[i18n]: conf/image/interface/menu/Btn-ContactSel.png"));
-//    ImageButton contactButton = new ImageButton(contactNormalImage, contactRolloverImage, contactSelectedImage);
-//    contactButton.addActionListener(new ActionListener() {
-//      public void actionPerformed(ActionEvent arg0) {
-//        // and help
-//        state.contactState();
-//      }      
-//    });
-//    contactButton.setLocation(680, 18);
-//    contactButton.setSize(120, 48);
-//    add(contactButton);
     
     // add language select combobox
     String[] langStrings = Configuration.getInstance().getAvailableLanguages();
@@ -163,12 +145,8 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     // button group
     ButtonGroup buttonGroup = new ButtonGroup();
     
-    // add scenario toogle button
+    // add scenario toggle button
     String sScenario = Translator.getString("text.Scenario[i18n]: Scenario");
-    Image scenarioNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonScenario[i18n]: conf/image/interface/menu/Btn-Scenario.png"));
-    Image scenarioRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonScenarioRol[i18n]: conf/image/interface/menu/Btn-ScenarioRol.png"));
     TextToggleButton scenarioButton 
         = new TextToggleButton(sScenario, Color.WHITE, Color.GREEN, Color.WHITE);
     scenarioButton.addActionListener(new ActionListener() {
@@ -183,24 +161,21 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     add(scenarioButton);
     buttonGroup.add(scenarioButton);
 
-    // add simulation toogle button
-    Image simulNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonSimulation[i18n]: conf/image/interface/menu/Btn-Simulation.png"));
-    Image simulRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonSimulationRol[i18n]: conf/image/interface/menu/Btn-SimulationRol.png"));
-    ImageToggleButton simulButton 
-        = new ImageToggleButton(simulNormalImage, simulRolloverImage, simulNormalImage);
-    simulButton.addActionListener(new ActionListener() {
+    // add simulation toggle button
+    String sSimulation = Translator.getString("text.Simulation[i18n]: Simulation");
+    TextToggleButton simulationButton 
+        = new TextToggleButton(sSimulation, Color.WHITE, Color.GREEN, Color.WHITE);
+    simulationButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         // activate the correct panel
         simulationListPanel.setVisible(true);
         scenarioListPanel.setVisible(false);
       }
     });
-    simulButton.setSize(96, 40);
-    simulButton.setLocation(176, 130);
-    add(simulButton);
-    buttonGroup.add(simulButton);
+    simulationButton.setSize(96, 40);
+    simulationButton.setLocation(176, 130);
+    add(simulationButton);
+    buttonGroup.add(simulationButton);
    
     // add scenario list panel
     scenarioListPanel = new ScenarioListPanel(state.getScenarios());
@@ -258,20 +233,20 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     else {
       vaRadio.setSelected(true);
     }
-    // TODO: add text label for Mode button group
-//    TextLabel textLabelVV = new TextLabel(Translator.getString("label.modeVV[i18n]: Veno-venous"));
-//    textLabelVV.setHorizontalAlignment(JLabel.LEFT);
-//    textLabelVV.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f)); 
-//    textLabelVV.setLocation(32, 15);
-//    textLabelVV.setSize(120, 45);
-//    componentSelectionPanel.add(textLabelVV);
-//    TextLabel textLabelVA = new TextLabel(Translator.getString("label.modeVA[i18n]: Veno-arterial"));
-//    textLabelVA.setHorizontalAlignment(JLabel.LEFT);
-//    textLabelVA.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f)); 
-//    textLabelVA.setLocation(174, 15);
-//    textLabelVA.setSize(120, 45);
-//    componentSelectionPanel.add(textLabelVA);
-    
+    // add label: Mode VV or VA i18n
+    JLabel lblModeVV = new TextLabel(Translator.getString("label.ModeVV[i18n]: Veno-venous"));
+    lblModeVV.setHorizontalAlignment(JLabel.LEFT);
+    lblModeVV.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
+    lblModeVV.setLocation(32, 15);
+    lblModeVV.setSize(120, 45);
+    componentSelectionPanel.add(lblModeVV);
+    JLabel lblModeVA = new TextLabel(Translator.getString("label.ModeVA[i18n]: Veno-arterial"));
+    lblModeVA.setHorizontalAlignment(JLabel.LEFT);
+    lblModeVA.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
+    lblModeVA.setLocation(174, 15);
+    lblModeVA.setSize(120, 45);
+    componentSelectionPanel.add(lblModeVA);
+
     ButtonGroup oxygenatorButtonGroup = new ButtonGroup();
     Image sciMedRadioRolloverImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkRol.png");
@@ -299,6 +274,19 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     else {
       quadroxDRadio.setSelected(true);
     }
+    // add label: Oxygenator Silicon or PMP i18n
+    JLabel lblOxySil = new TextLabel(Translator.getString("label.OxySil[i18n]: Silicon"));
+    lblOxySil.setHorizontalAlignment(JLabel.LEFT);
+    lblOxySil.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
+    lblOxySil.setLocation(32, 48);
+    lblOxySil.setSize(120, 45);
+    componentSelectionPanel.add(lblOxySil);
+    JLabel lblOxyPMP = new TextLabel(Translator.getString("label.OxyPMP[i18n]: PMP"));
+    lblOxyPMP.setHorizontalAlignment(JLabel.LEFT);
+    lblOxyPMP.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
+    lblOxyPMP.setLocation(174, 48);
+    lblOxyPMP.setSize(120, 45);
+    componentSelectionPanel.add(lblOxyPMP);
     
     ButtonGroup pumpButtonGroup = new ButtonGroup();
     Image rollerRadioRolloverImage 
@@ -327,12 +315,38 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     else {
       centrifugalRadio.setSelected(true);
     }
-
+    // add label: Pump roller or centrifugal i18n
+    JLabel lblPumpRol = new TextLabel(Translator.getString("label.PumpRol[i18n]: Roller Pump"));
+    lblPumpRol.setHorizontalAlignment(JLabel.LEFT);
+    lblPumpRol.setFont(textLabel.getFont().deriveFont(Font.BOLD, 13f));
+    lblPumpRol.setLocation(30, 80);
+    lblPumpRol.setSize(120, 45);
+    componentSelectionPanel.add(lblPumpRol);
+    JLabel lblPumpCen = new TextLabel(Translator.getString("label.PumpCen[i18n]: Centrifugal"));
+    lblPumpCen.setHorizontalAlignment(JLabel.LEFT);
+    lblPumpCen.setFont(textLabel.getFont().deriveFont(Font.BOLD, 13f));
+    lblPumpCen.setLocation(174, 80);
+    lblPumpCen.setSize(120, 45);
+    componentSelectionPanel.add(lblPumpCen);
+    
     Icon disabled = new ImageIcon(ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkDis.png"));
     JLabel ventilatorCheckmark = new JLabel(disabled);
     ventilatorCheckmark.setSize(32, 32);
     ventilatorCheckmark.setLocation(0, 103);
     componentSelectionPanel.add(ventilatorCheckmark);
+    // add label: Ventilator conventional or HFOV i18n
+    JLabel lblVentCon = new TextLabel(Translator.getString("label.VentCon[i18n]: Conventional"));
+    lblVentCon.setHorizontalAlignment(JLabel.LEFT);
+    lblVentCon.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
+    lblVentCon.setLocation(30, 111);
+    lblVentCon.setSize(120, 45);
+    componentSelectionPanel.add(lblVentCon);
+    JLabel lblVentHFOV = new TextLabel(Translator.getString("label.VentHFOV[i18n]: HFOV"));
+    lblVentHFOV.setHorizontalAlignment(JLabel.LEFT);
+    lblVentHFOV.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
+    lblVentHFOV.setLocation(174, 111);
+    lblVentHFOV.setSize(120, 45);
+    componentSelectionPanel.add(lblVentHFOV);
     
     // add scenario selection listener
     ScenarioSelectionListener scenarioSelectionListener = new ScenarioSelectionListener() {
@@ -414,7 +428,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     boolean scenarioSelection = Configuration.getInstance().isSelectionScenarioTab();
     scenarioButton.setSelected(scenarioSelection);
     scenarioListPanel.setVisible(scenarioSelection);
-    simulButton.setSelected(!scenarioSelection);
+    simulationButton.setSelected(!scenarioSelection);
     simulationListPanel.setVisible(!scenarioSelection);
   }
   
