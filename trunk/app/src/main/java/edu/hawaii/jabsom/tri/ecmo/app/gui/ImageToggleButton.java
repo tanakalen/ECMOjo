@@ -102,7 +102,7 @@ public class ImageToggleButton extends JToggleButton {
    * @param g  Graphics context.
    */
   public void paintComponent(Graphics g) {
-    super.paintComponent(g);
+    //super.paintComponent(g);  //BUG: duplicates button text when uncommented.
    
     int width = getSize().width;
     int height = getSize().height;
