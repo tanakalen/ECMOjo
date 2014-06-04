@@ -1,15 +1,16 @@
 package edu.hawaii.jabsom.tri.ecmo.app.state;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.VerticalLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.report.ResultReporter;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -83,13 +84,15 @@ public class ResultStatePanel extends JPanel {
     add(infoArea);
     
     // output overall result
-    Image result = success ? ImageLoader.getInstance().getImage("conf/image/interface/result/success.png") 
-                           : ImageLoader.getInstance().getImage("conf/image/interface/result/failure.png");
-    JLabel resultLabel = new JLabel();
-    resultLabel.setVerticalAlignment(JLabel.CENTER);
+    String result = success ? Translator.getString("label.Success[i18n]: Success")
+                            : Translator.getString("label.Failure[i18n]: Failure");
+    JLabel resultLabel = new VerticalLabel();
+    resultLabel.setText(result);
+    resultLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 72f));
+    resultLabel.setForeground(Color.WHITE);
+    resultLabel.setHorizontalAlignment(JLabel.CENTER);
     resultLabel.setLocation(600, 100);
     resultLabel.setSize(200, 400);
-    resultLabel.setIcon(new ImageIcon(result));
     add(resultLabel);
     
     // add done button
