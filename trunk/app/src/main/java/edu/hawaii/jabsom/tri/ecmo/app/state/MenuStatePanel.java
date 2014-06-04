@@ -12,6 +12,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.ECMOAppRelease;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.TextToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioCreator;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
@@ -163,12 +164,13 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     ButtonGroup buttonGroup = new ButtonGroup();
     
     // add scenario toogle button
+    String sScenario = Translator.getString("text.Scenario[i18n]: Scenario");
     Image scenarioNormalImage = ImageLoader.getInstance().getImage(
         Translator.getString("image.ButtonScenario[i18n]: conf/image/interface/menu/Btn-Scenario.png"));
     Image scenarioRolloverImage = ImageLoader.getInstance().getImage(
         Translator.getString("image.ButtonScenarioRol[i18n]: conf/image/interface/menu/Btn-ScenarioRol.png"));
-    ImageToggleButton scenarioButton 
-        = new ImageToggleButton(scenarioNormalImage, scenarioRolloverImage, scenarioNormalImage);
+    TextToggleButton scenarioButton 
+        = new TextToggleButton(sScenario, Color.WHITE, Color.GREEN, Color.WHITE);
     scenarioButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         // activate the correct panel
@@ -215,7 +217,15 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     simulationListPanel.setSize(385, 460);
     simulationListPanel.setLocation(37, 110);
     add(simulationListPanel);
- 
+
+    // add label: ECMO Circuit i18n
+    JLabel lblCompSelPanel = new JLabel(Translator.getString("label.ECMOCircuit[i18n]: ECMO Circuit"));
+    lblCompSelPanel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
+    lblCompSelPanel.setForeground(Color.GRAY);
+    lblCompSelPanel.setLocation(458, 103);
+    lblCompSelPanel.setSize(150, 20);
+    add(lblCompSelPanel);
+
     // add component selection panel
     JPanel componentSelectionPanel = new JPanel();
     componentSelectionPanel.setOpaque(false);
