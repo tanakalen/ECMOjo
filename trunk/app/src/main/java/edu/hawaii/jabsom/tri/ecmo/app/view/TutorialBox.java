@@ -58,18 +58,17 @@ public class TutorialBox extends JPanel {
   /**
    * Constructor for panel. 
    */
-  public TutorialBox() {    
+  public TutorialBox() {
     // set look
     setOpaque(false);
     
     // no layout
-    setLayout(new FormLayout("4px, fill:360px, 2px, 75px, 8px"
-                           , "0px, fill:40px, 2px, 30px, 4px"
+    setLayout(new FormLayout("5px, fill:368px, 75px, 4px"  // 452px col: sp, text_w, button_w, sp
+                           , "3px, fill:51px, 30px"  // 84px row: sp, text_h, button_h
       ));
     CellConstraints cc = new CellConstraints();
     
     // add the "next" button
-    // add about button
     Image nextNormalImage = ImageLoader.getInstance().getImage(
         "conf/gui/Btn.png");
     Image nextRolloverImage = ImageLoader.getInstance().getImage(
@@ -86,7 +85,7 @@ public class TutorialBox extends JPanel {
         }
       }     
     });
-    add(button, cc.xy(4, 4));
+    add(button, cc.xy(3, 3));
     
     // add the text area
     textArea = new JTextArea();
@@ -95,12 +94,13 @@ public class TutorialBox extends JPanel {
     textArea.setEditable(false);
     textArea.setOpaque(false);
     textArea.setFont(textArea.getFont().deriveFont(Font.PLAIN, 12f));
-    textArea.setMargin(new Insets(5, 5, 5, 5));
+    textArea.setMargin(new Insets(5, 5, 7, 5));
     JScrollPane scrollPane = new JScrollPane(textArea);
     scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     scrollPane.setOpaque(false);
     scrollPane.getViewport().setOpaque(false);
-    add(textArea, cc.xywh(2, 2, 3, 3));  
+    scrollPane.setBorder(null);
+    add(scrollPane, cc.xywh(2, 2, 2, 1));
   }
   
   /**
