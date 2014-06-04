@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
+import king.lib.util.Translator;
+
 
 /**
  * The pressure monitor component for the patient. 
@@ -281,6 +283,6 @@ public class PressureMonitorComponent extends Component {
    * @return  The name.
    */
   public String getName() {
-    return "Pressure Monitor";
+    return Translator.getString("label.PressureMonitor[i18n]: Pressure Monitor");
   }
 }
