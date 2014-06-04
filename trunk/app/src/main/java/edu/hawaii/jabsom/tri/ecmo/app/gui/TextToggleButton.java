@@ -35,6 +35,117 @@ public class TextToggleButton extends JToggleButton {
   /** The text y offset for pressed. */
   private int pressedYOffset;
 
+  /**
+   * Builder for the button. Refer to Effective Java by Bloch.
+   */
+  public static class Builder {
+    /** The text string for button, required. */
+    private String text;
+    /** The color of text on button. */
+    private Color normal;
+    /** The color of text with rollover in non-toggle state. */
+    private Color rolloverNonToggle;
+    /** The color of text with rollover in toggle state. */
+    private Color rolloverToggle;
+    /** The color of text when pressed. */
+    private Color pressed;
+    
+    /**
+     * Builder constructor with requirement of String for button.
+     * @param item  Text for button.
+     */
+    public Builder(String item) {
+      this.text = item;
+    }
+    
+    /**
+     * Build optional text color.
+     * @param textColor  Color object for text.
+     * @return Builder
+     */
+    public Builder normal(Color textColor) {
+      this.normal = textColor;
+      return this;
+    }
+    
+    /**
+     * Build optional text color when roll over in non-toggle state.
+     * @param textColor  Color object for rollover of text in non-toggle state.
+     * @return Builder
+     */
+    public Builder rolloverNonToggle(Color textColor) {
+      this.rolloverNonToggle = textColor;
+      return this;
+    }
+    
+    /**
+     * Build optional text color when roll over in Toggle state.
+     * @param textColor  Color object for rollover of text in toggle state.
+     * @return Builder
+     */
+    public Builder rolloverToggle(Color textColor) {
+      this.rolloverToggle = textColor;
+      return this;
+    }
+    
+    /**
+     * Build optional text color when mouse rolled over.
+     * @param textColor  Color object for rollover of text.
+     * @return Builder
+     */
+    public Builder rollover(Color textColor) {
+      this.rolloverNonToggle = textColor;
+      this.rolloverToggle = textColor;
+      return this;
+    }
+    
+    /**
+     * Build optional text color when button pressed.
+     * @param textColor  Color object for pressed button.
+     * @return Builder
+     */
+    public Builder pressed(Color textColor) {
+      this.pressed = textColor;
+      return this;
+    }
+    
+    /**
+     * Lastly build function for Builder for TextToggleButton.
+     * @return TextToggleButton
+     */
+    public TextToggleButton build() {
+      return new TextToggleButton(this);
+    }
+  }
+  
+  /**
+   * Constructor using builder for the button.
+   * 
+   * @param b  The Builder class for button
+   */
+  private TextToggleButton(Builder b) {
+    this.text = b.text;
+    this.normal = b.normal;
+    this.rolloverNonToggle = b.rolloverNonToggle;
+    this.rolloverToggle = b.rolloverToggle;
+    this.pressed = b.pressed;
+    
+    this.normalYOffset = 0;
+    this.rolloverNonToggleYOffset = 0;
+    this.rolloverToggleYOffset = 0;
+    this.pressedYOffset = 0;
+    
+    // set transparent
+    setOpaque(false);
+    setBorderPainted(false);
+    
+    setText(this.text);
+    
+    // Enable rollover
+    setRolloverEnabled(true);
+    
+    //    this(b.text, b.normal, b.rolloverNonToggle, b.rolloverToggle, b.pressed);
+  }
   
   /**
    * Constructor for the button.
