@@ -230,6 +230,7 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     selectionButton = new ImageToggleButton(normalImage, normalImage, selectedImage, selectedImage);
     selectionButton.setText(
         Translator.getString("button.CircuitCheck[i18n]: Circuit Check"));
+    selectionButton.setForeground(Color.WHITE);
     selectionButton.setToolTipText(component.getName());
     selectionButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
