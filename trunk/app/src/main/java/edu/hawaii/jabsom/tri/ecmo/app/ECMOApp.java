@@ -5,6 +5,7 @@ import king.lib.access.AccessException;
 import king.lib.access.ImageLoader;
 
 import java.awt.Color;
+
 import javax.swing.JApplet;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
@@ -16,6 +17,7 @@ import king.lib.out.ErrorOutputUnit;
 import king.lib.out.FileOutputUnit;
 import king.lib.out.Info;
 import king.lib.out.MultiOutputUnit;
+import king.lib.util.Translator;
 
 import java.awt.BorderLayout;
 import java.io.IOException;
@@ -65,7 +67,9 @@ public final class ECMOApp extends JApplet {
     }
     
     // output release
-    Info.out("Release Version: " + ECMOAppRelease.getReleaseVersion() + " | " + ECMOAppRelease.getReleaseTime());
+    Info.out(Translator.getString("text.ReleaseVersion[i18n]: Release Version") 
+        + ": " + ECMOAppRelease.getReleaseVersion() 
+        + " | " + ECMOAppRelease.getReleaseTime());
     
     // set look and feel
     try {
@@ -150,7 +154,7 @@ public final class ECMOApp extends JApplet {
          
          // window
          JFrame window = new JFrame();
-         window.setTitle("ECMOjo Simulator");
+         window.setTitle("ECMOjo");
          window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          window.setIconImage(ImageLoader.getInstance().getImage("conf/logo/window-icon.gif"));
          
