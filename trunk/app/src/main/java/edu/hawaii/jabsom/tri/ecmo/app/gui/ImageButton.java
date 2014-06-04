@@ -43,7 +43,7 @@ public class ImageButton extends JButton {
    * @param pressedImage  The image for the pressed state.
    */
   public ImageButton(Image normalImage, Image rolloverImage, Image pressedImage) {
-    this(normalImage, 0, rolloverImage, 0, pressedImage, 2);
+    this(normalImage, -2, rolloverImage, -2, pressedImage, 0);
   }
   
   /**
