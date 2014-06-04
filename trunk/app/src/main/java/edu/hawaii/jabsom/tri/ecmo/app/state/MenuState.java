@@ -63,10 +63,14 @@ public class MenuState extends State {
     
     // parse scenario files with given prefix
     LocalHookup hookup = LocalHookup.getInstance();
-    String path = Configuration.getInstance().getAppType().getName();
-    String post = Configuration.getInstance().getLang();
-    if (!post.equals("") && !post.equals("en")) { // Handles blank and en ISO code in config
-      path = path + "_" + post;
+    String appName = Configuration.getInstance().getAppType().getName();
+    String langCode = Configuration.getInstance().getLang();
+    String path = "";
+    if (langCode.equals("")) {
+      path = "en" + File.separator + appName;
+    }
+    else {
+      path = langCode + File.separator + appName;
     }
     String[] files = hookup.getFiles(Access.getInstance().getScenarioDir() + File.separator + path);
     for (String file: files) {
