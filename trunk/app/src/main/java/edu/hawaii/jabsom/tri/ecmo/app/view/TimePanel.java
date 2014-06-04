@@ -109,7 +109,7 @@ public class TimePanel extends JPanel implements Runnable {
 
     // only show when we have a baseline type goal
     if (game.getGoal() instanceof BaselineGoal) {
-      String sBaseline = Translator.getString("label.Baseline[i18n]: BASELINE");
+      String sBaseline = Translator.getString("text.Baseline[i18n]: BASELINE");
       BaselineGoal goal = (BaselineGoal)game.getGoal();
       boolean blink = (((System.nanoTime()) / 500000000) % 2) == 0;
       
