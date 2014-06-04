@@ -32,6 +32,9 @@ Credits
 * Kent Kelly, CCP, Advisor
 * Melody Kilcommons, RNC, Advisor
 * John Lutz, Advisor
+* Takanari Ikeyama, MD, Translation (Japanese)
+* Yuko Shiima, MD, Translation (Japanese)
+* Felipe Amaya, Translation (Spanish)
 
 
 Acknowledgement
@@ -50,7 +53,7 @@ Installation
   Unzip file. Copy specific application directory to desired location. Double-click application exe file.
 
 **Mac:**  
-  Double-click (ECMOjo).dmg. Copy specific application to desired location. Debug app bundle with:
+  Double-click (ECMOjo).dmg. Copy to desired location. Debug app bundle with:  
     `export JAVA_LAUNCHER_VERBOSE=1`  
     `cd (ECMOjo).app`  
     `Contents/MacOS/JavaAppLauncher`  
