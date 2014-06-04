@@ -135,20 +135,24 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     
     // add language select combobox
     String[] langStrings = Configuration.getInstance().getAvailableLanguages();
-    
+    String currentLanguage = Configuration.getInstance().getConfiguredLanguage();
+    int currentLanguageIndex = 0;
+    for (String language:langStrings) {
+      if (currentLanguage.equals(language)) {
+        break;
+      }
+      currentLanguageIndex++;
+    }
     JComboBox<String> langList = new JComboBox<String>(langStrings);
-    langList.setSelectedIndex(0);
+    langList.setSelectedIndex(currentLanguageIndex);
 //    ComboBoxRenderer renderer = new ComboBoxRenderer();
-//    renderer.setPreferredSize(new Dimension(120, 48));
 //    langList.setRenderer(renderer);
-//    langList.setMaximumRowCount(3);
     langList.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         JComboBox cb = (JComboBox)e.getSource();
         int selected = (int)cb.getSelectedIndex();
-        String lang = (String)cb.getSelectedItem();
-        System.out.println(lang);
         Configuration.getInstance().setLang(selected);
+        state.menuState();
       }
     });
     langList.setLocation(680, 18);

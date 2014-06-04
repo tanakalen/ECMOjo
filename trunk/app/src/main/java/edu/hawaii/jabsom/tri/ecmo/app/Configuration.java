@@ -48,7 +48,7 @@ public class Configuration {
   
   /** Available language bundles. */
   private static Locale[] availableLanguages = new Locale[]{
-//    new Locale("en"),
+    Locale.ENGLISH,
     Locale.JAPANESE,
     new Locale("es")
   };
@@ -84,7 +84,8 @@ public class Configuration {
     if (appType == AppType.INFANT_JA) {
       Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", Locale.JAPANESE));
     }
-    else if (!lang.getLanguage().equals(new Locale("").getLanguage())) {
+    else if (!lang.getLanguage().equals(new Locale("").getLanguage())
+        && (!lang.getLanguage().equals(Locale.ENGLISH))) {
       Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", lang));
     }
   }
@@ -177,6 +178,15 @@ public class Configuration {
   }
   
   /**
+   * Returns the configured language tagged 'LANG'.
+   * 
+   * @return  The configuration language as string of displayed name.
+   */
+  public String getConfiguredLanguage() {
+    return lang.getDisplayLanguage(lang);
+  }
+  
+  /**
    * Returns available languages for program.
    * 
    * @return  String[] of available languages.
@@ -199,6 +209,7 @@ public class Configuration {
   public void setLang(int index) {
     // Verify 2 char code?
     lang = availableLanguages[index];
+    Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", lang));
   }
   
   /**
