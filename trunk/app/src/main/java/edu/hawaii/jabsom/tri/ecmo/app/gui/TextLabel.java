@@ -33,7 +33,6 @@ public class TextLabel extends JLabel {
   /** True to draw border. */
   boolean drawBorder = true;
   
-  
   /**
    * Constructor for text label.
    */
@@ -152,8 +151,8 @@ public class TextLabel extends JLabel {
     Toolkit tk = Toolkit.getDefaultToolkit();
     Map desktopHints = (Map)(tk.getDesktopProperty("awt.font.desktophints"));
     Graphics2D g2 = (Graphics2D)g;
-
-    if(desktopHints != null) {
+    
+    if (desktopHints != null) {
         g2.addRenderingHints(desktopHints);
     }
     g.setFont(getFont()); 

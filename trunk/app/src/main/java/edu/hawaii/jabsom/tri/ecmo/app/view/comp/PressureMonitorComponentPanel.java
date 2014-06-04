@@ -11,11 +11,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
-
+import king.lib.util.Translator;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PressureMonitorComponent;
 
 /**
@@ -48,7 +50,7 @@ public class PressureMonitorComponentPanel extends ComponentPanel implements Run
   private PressureMonitorComponent component;
 
   /** The selection button. */
-  private AbstractButton selectionButton;  
+  private AbstractButton selectionButton;
 
   /** The updater thread. */
   private Thread thread;
@@ -81,6 +83,40 @@ public class PressureMonitorComponentPanel extends ComponentPanel implements Run
     selectionButton.setLocation(0, 0);
     selectionButton.setSize(132, 154);
     add(selectionButton);
+    
+    // add labels: venous, pre, & post
+    TextLabel lblVenous = createTextLabels(
+        Translator.getString("label.PressureMonitorVenous[i18n]: veno"),
+        8f, 7, 25);
+    add(lblVenous);
+    TextLabel lblPre = createTextLabels(
+        Translator.getString("label.PressureMonitorPre[i18n]: pre"),
+        8f, 7, 65);
+    add(lblPre);
+    TextLabel lblPost = createTextLabels(
+        Translator.getString("label.PressureMonitorPost[i18n]: post"),
+        8f, 7, 105);
+    add(lblPost);
+  }
+
+  /**
+   * Private method to simplify & consolidate rendering config box text labels.
+   *
+   * @param text  String for TextLabel.
+   * @param fontSize  Size of font.
+   * @param x  X-coordinate.
+   * @param y  Y-coordinate.
+   * @return TextLabel object.
+   */
+  private TextLabel createTextLabels(String text, float fontSize, int x, int y) {
+    TextLabel label = new TextLabel(text);
+    label.setHorizontalAlignment(JLabel.CENTER);
+    label.setFont(label.getFont().deriveFont(Font.BOLD, fontSize));
+    label.setDrawShadow(true);
+    label.setDrawBorder(false);
+    label.setLocation(x, y);
+    label.setSize(30, 15);
+    return label;
   }
 
   /**
@@ -151,8 +187,8 @@ public class PressureMonitorComponentPanel extends ComponentPanel implements Run
         g.drawImage(redAlertImage, 14, 33, this);
       }
       else {
-        g.drawImage(blackAlertImage, 14, 33, this);        
-      }      
+        g.drawImage(blackAlertImage, 14, 33, this);
+      }
     }
     else if (component.isVenousPressureWarning()){
       // draw blinking yellow light
@@ -160,8 +196,8 @@ public class PressureMonitorComponentPanel extends ComponentPanel implements Run
         g.drawImage(yellowAlertImage, 14, 33, this);
       }
       else {
-        g.drawImage(blackAlertImage, 14, 33, this);        
-      }      
+        g.drawImage(blackAlertImage, 14, 33, this);
+      }
     }
     
     if (component.isPreMembranePressureAlarm()){
@@ -170,8 +206,8 @@ public class PressureMonitorComponentPanel extends ComponentPanel implements Run
         g.drawImage(redAlertImage, 14, 73, this);
       }
       else {
-        g.drawImage(blackAlertImage, 14, 73, this);        
-      }      
+        g.drawImage(blackAlertImage, 14, 73, this);
+      }
     }
     else if (component.isPreMembranePressureWarning()){
       // draw blinking yellow light
@@ -179,8 +215,8 @@ public class PressureMonitorComponentPanel extends ComponentPanel implements Run
         g.drawImage(yellowAlertImage, 14, 73, this);
       }
       else {
-        g.drawImage(blackAlertImage, 14, 73, this);        
-      }      
+        g.drawImage(blackAlertImage, 14, 73, this);
+      }
     }
     
     if (component.isPostMembranePressureAlarm()){
@@ -189,8 +225,8 @@ public class PressureMonitorComponentPanel extends ComponentPanel implements Run
         g.drawImage(redAlertImage, 14, 113, this);
       }
       else {
-        g.drawImage(blackAlertImage, 14, 113, this);        
-      }      
+        g.drawImage(blackAlertImage, 14, 113, this);
+      }
     }
     else if (component.isPostMembranePressureWarning()){
       // draw blinking yellow light
@@ -198,8 +234,8 @@ public class PressureMonitorComponentPanel extends ComponentPanel implements Run
         g.drawImage(yellowAlertImage, 14, 113, this);
       }
       else {
-        g.drawImage(blackAlertImage, 14, 113, this);        
-      }      
+        g.drawImage(blackAlertImage, 14, 113, this);
+      }
     }
     
     // draw text for max and min
