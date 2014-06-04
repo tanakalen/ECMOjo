@@ -5,15 +5,19 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.JLabel;
 
 import king.lib.access.ImageLoader;
 import king.lib.util.Translator;
-
+import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.CircuitChangeAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
@@ -27,6 +31,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
  *
  * @author Christoph Aschwanden
  * @since October 28, 2009
+ */
+/**
+ * @author tanaka
+ *
  */
 public class TubeDetailPanel extends DetailPanel implements Runnable {
 
@@ -69,10 +77,10 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
     JLabel instructionLabel = new JLabel();
     instructionLabel.setText(Translator.getString("label.TubeDetail[i18n]: "
         + "<html>Click on each of the<br>bullets to verify the<br>circuit."));
-    instructionLabel.setFont(instructionLabel.getFont().deriveFont(Font.PLAIN, 12f));
+    instructionLabel.setFont(instructionLabel.getFont().deriveFont(Font.BOLD, 12f));
     instructionLabel.setForeground(Color.BLACK);
     instructionLabel.setLocation(30, 18);
-    instructionLabel.setSize(140, 60);
+    instructionLabel.setSize(160, 70);
     add(instructionLabel);
     
     Image changeCircuitNormalImage = ImageLoader.getInstance().getImage(
@@ -186,7 +194,36 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
     add(bulletButton);
     return bulletButton;
   }
+
   
+  /**
+   * Rotates text for display.
+   * 
+   * @param g  The graphics environment.
+   * @param x  The x position.
+   * @param y  The y position.
+   * @param theta  The angle of rotation in radians (pi/2 = 180 deg).
+   * @param label  The text for the label.
+   */
+  private void rotateLabel(Graphics g, double x, double y, double theta, String label) {
+    Graphics2D g2D = (Graphics2D)g;
+    AffineTransform original = g2D.getTransform();
+    FontRenderContext frc = g2D.getFontRenderContext();
+    GlyphVector gv = g2D.getFont().createGlyphVector(frc, label);
+    Rectangle bounds = gv.getPixelBounds(frc, (float)x, (float)y);
+    AffineTransform at = new AffineTransform();
+    at.rotate(theta, x+(bounds.width/2), y+(bounds.height/2));
+    g2D.setTransform(at);
+    // Render the rotated string, fragile custom hack
+    if (Configuration.getInstance().getLang().equals("ja")) {
+      g2D.drawString(label, (int)(x+15), (int)(y+15));
+    }
+    else {
+      g2D.drawString(label, (int)x, (int)y);
+    }
+    g2D.setTransform(original);
+}
+
   /**
    * Called when this panel is added.
    */
@@ -261,5 +298,10 @@ public class TubeDetailPanel extends DetailPanel implements Runnable {
 
     // draw base
     g2.drawImage(detailImage, 0, 0, this);
+    
+    // draw oxygenator [i18n] label
+    g2.setFont(new Font("default", Font.BOLD, 12));
+    rotateLabel(g, 203, 82, -(java.lang.Math.PI/4), 
+        Translator.getString("label.Oxygenator[i18n]: oxygenator"));
   }
 }
