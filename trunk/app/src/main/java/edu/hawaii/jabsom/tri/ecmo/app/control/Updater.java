@@ -226,7 +226,7 @@ public final class Updater {
         }
         else {
           // Change in venous pressure by 2 increase/decrease by 10%
-          pump.setFlow(pump.getFlow() * (1 + (diffVenousPressure * 0.05)));            
+          pump.setFlow(pump.getFlow() * (1 + (diffVenousPressure * 0.05)));
         }
       }
       // change in pump flow changes post-membrane CO2
@@ -319,7 +319,7 @@ public final class Updater {
           if (tube.getCannlaProblemLocation() == TubeComponent.problemLocation.arterial) {
             if (tube.getPreMembranePressure() > 750) {
               tube.setPreMembranePressure(750.0);
-              tube.setPostMembranePressure(750.0);              
+              tube.setPostMembranePressure(750.0);
             }
             else {
               tube.setPreMembranePressure(tube.getPreMembranePressure() + 0.03);
@@ -384,7 +384,7 @@ public final class Updater {
               // Else if roller pump, air in venous line.
               if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0.0))) {
                 tube.setVenousBubbles(true);
-              }   
+              }
             }
           }
           else { //cephalad,none
@@ -419,7 +419,7 @@ public final class Updater {
       bubbleDetector.setAlarm(tube.isArterialBubbles());
 
       // update equipment (CDI monitor) note CDI is in line post-oxygenator
-      cdiMonitor.setSaO2(tube.getSaO2());      
+      cdiMonitor.setSaO2(tube.getSaO2());
       cdiMonitor.setSvO2(tube.getSvO2());
       cdiMonitor.setTemperature(heater.getTemperature());
       cdiMonitor.setHct(patient.getHct());
@@ -484,11 +484,11 @@ public final class Updater {
       // update equipment (ventilator)
       // TODO: What happens when on emergency ventilator and on ECMO?
       if (ventilator.isEmergencyFuction()) {
-        if (ventilator.getName().equals("High Frequency Ventilator")) {
+        if (ventilator.getSubtype() instanceof VentilatorComponent.HighFrequencySubtype) {
           patient.setRespiratoryRate(0);
           ventilator.setFiO2(1.0);
         }
-        if (ventilator.getName().equals("Conventional Ventilator")) {
+        if (ventilator.getSubtype() instanceof VentilatorComponent.ConventionalSubtype) {
           patient.setRespiratoryRate(50);
           ((ConventionalSubtype) ventilator.getSubtype()).setRate(50);
           ((ConventionalSubtype) ventilator.getSubtype()).setPip(40);
@@ -496,7 +496,7 @@ public final class Updater {
         }
       }
       else {
-        if (ventilator.getName().equals("Conventional Ventilator")) {
+        if (ventilator.getSubtype() instanceof VentilatorComponent.ConventionalSubtype) {
           patient.setRespiratoryRate(12);
           ((ConventionalSubtype) ventilator.getSubtype()).setRate(12);
           ((ConventionalSubtype) ventilator.getSubtype()).setPip(25);
