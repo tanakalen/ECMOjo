@@ -773,7 +773,7 @@ public final class Updater {
           // pump flow to patient and tube SvO2
           try{ 
             double tubeSvO2 = Mediator.flowToSvO2(mode, pumpFlow, patient);
-            tube.setSvO2(tubeSvO2); 
+            tube.setSvO2(tubeSvO2);
           }
           catch (Exception e) {
             // something wrong
@@ -818,7 +818,7 @@ public final class Updater {
       }
       
       // and return if goal is reached
-      return goal.isReached(game);  
+      return goal.isReached(game);
     }
     else {
       return true;
@@ -889,7 +889,7 @@ public final class Updater {
     else if (!tube.isArterialBOpen() && tube.isVenousBOpen() && !tube.isBridgeOpen()) {
       if (pump.isOn() && (pump.getFlow() > 0.0)) {
         tube.setPreMembranePressure(500.0);
-        tube.setPostMembranePressure(500.0);              
+        tube.setPostMembranePressure(500.0);
 
         if (pump.getPumpType() == PumpType.ROLLER) {
           oxygenator.setBroken(true);
@@ -934,8 +934,8 @@ public final class Updater {
       patient.setPO2(patient.getPO2() > 30 ? patient.getPO2() - 0.001 : 30);
     }
     // Arterial: Open, Venous: Closed, Bridge: Closed
-    else if (tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {      
-      // If roller pump then premembrane = mean BP, else if centrifugal then premembrane decreases by 35. 
+    else if (tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {
+      // If roller pump then premembrane = mean BP, else if centrifugal then premembrane decreases by 35.
       if (pump.getPumpType() == PumpType.ROLLER) {
         tube.setPreMembranePressure(physiologicMonitor.getMeanBloodPressure());
       }
@@ -943,7 +943,7 @@ public final class Updater {
         tube.setPreMembranePressure(115);
       } 
       
-      // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2. 
+      // If both roller and silicon (SciMed) add another decrease of 10%. Venous pressure increases by 2.
       if (pump.getPumpType() == PumpType.ROLLER && oxygenator.getOxyType() == OxyType.SILICONE) {
         tube.setPreMembranePressure(115*0.9);
         tube.setVenousPressure(tube.getVenousPressure() + 0.001);
@@ -971,7 +971,7 @@ public final class Updater {
     // Arterial: Closed, Venous: Closed, Bridge: Closed
     else if (!tube.isArterialBOpen() && !tube.isVenousBOpen() && !tube.isBridgeOpen()) {
       tube.setPreMembranePressure(750.0);
-      tube.setPostMembranePressure(750.0);              
+      tube.setPostMembranePressure(750.0);
       // Massively bloody explosion with lots of alarms and noise. 
       // If roller pump then "God of War" blood shower. 
       if ((pump.getPumpType() == PumpType.ROLLER) && (pump.isOn() && (pump.getFlow() > 0))) {
@@ -1022,7 +1022,7 @@ public final class Updater {
           life = 0.0;
         }
         patient.setLife(life);
-      }          
+      }
     }
     else {
       if ((patient.getHeartFunction() == Patient.HeartFunction.GOOD) 
