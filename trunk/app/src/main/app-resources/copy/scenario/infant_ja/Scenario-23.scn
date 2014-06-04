@@ -1,0 +1,139 @@
+# Scenario Information
+name = 人工肺の不全
+desc = 人工肺不全の同定
+
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = *
+scenario-pump-type = *
+scenario-vent-type = *
+
+# Goal Information
+goal = Tutorial
+tutorial-item1-text = 人工肺は凝固因子の"ブラックホール"となることがあります。
+tutorial-item1-trigger = N/A
+tutorial-item2-text = この人工肺は問題を生じ始めています。あなたは警告のサインを見つけることができますか。
+tutorial-item2-trigger = N/A
+tutorial-item3-text = 圧モニターが変化しています: 脱血圧が高くなり、膜間差圧がより高くなっています。
+tutorial-item3-trigger = N/A
+tutorial-item4-text = 血算の検査結果も変化しています: 血小板、フィブリノゲンが減少。ACT, PTT, PT値が延長。
+tutorial-item4-trigger = N/A
+tutorial-item5-text = 膜の後で血液ガスの結果とスウィープガスの設定は以下です: a)　動脈血中酸素分圧PaO2と動脈血中二酸化炭素分圧PaCO2のわずかな上昇 b) スウィープガスが高く設定されています。
+tutorial-item5-trigger = N/A
+tutorial-item6-text = 血液製剤を投与しましたが、検査値は改善しません。
+tutorial-item6-trigger = N/A
+tutorial-item7-text = 人工肺の中に血栓があって血液製剤を消費しているようです。この時点でどうしますか？
+tutorial-item7-trigger = N/A
+tutorial-item8-text = 即座に人工肺を交換します。ECMOイズム: 今時間がないように（ECMOにも）あまり時間がない。
+tutorial-item8-trigger = N/A
+tutorial-item9-text = [回路チェック]ボタンをクリックして、次に[回路交換]ボタンをクリックして下さい。
+tutorial-item9-trigger = Action:Tube:replace
+tutorial-item10-text = 指示通りにECMO流量を600mL/min以上に増加して下さい。
+tutorial-item10-trigger = Action:Pump:flow:>0.59
+tutorial-item11-text = 回路交換に成功して、問題を解決しました！！
+tutorial-item11-trigger = N/A
+
+# Baseline Values
+baseline-sedated = true
+baseline-bleeding = false
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 180
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-urine-output = good
+baseline-suction-ETT = good
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 200
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 200
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-alarming = false
+
+# Patient Information
+patient-species = human
+patient-gender = male
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
+patient-heart-function = good
+patient-sedated = true
+patient-bleeding = false
+patient-temperature = 37
+
+# Heater
+heater-temperature = 37
+heater-broken = false
+
+# Oxygenator
+oxygenator-total-sweep = 2.3
+oxygenator-fio2 = 0.85
+oxygenator-broken = false
+oxygenator-clotting = 3.0
+
+# Pump
+pump-on = true
+pump-flow = 0.6
+
+# Intervention
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
+
+# Tube
+tube-clamp-arterial-A = open
+tube-clamp-arterial-B = open
+tube-clamp-venous-A = open
+tube-clamp-venous-B = open
+tube-clamp-bridge = closed
+tube-bubbles-arterial = false
+tube-bubbles-venous = false
+tube-cannula-broken = false
+tube-cannula-status = 
+tube-cannula-problem-location = 
+tube-cannula-arterial-B = open
+tube-cannula-venous-B = open
+tube-cannula-premembrane-pressure = 200
+tube-cannula-postmembrane-pressure = 150
+tube-coagulopathy = false
+
+# ACT
+act-value = 220
+
+# Lab Component
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
+#lab-component-chem
+lab-component-heme-fibrinogen = 100
+lab-component-heme-platelets = 50
+lab-component-heme-pt = 18
+lab-component-heme-ptt = 100
+
+# Imaging Component
+lab-img-xray = xr-none
+lab-img-us = us-none
+lab-img-echo = echo-none
