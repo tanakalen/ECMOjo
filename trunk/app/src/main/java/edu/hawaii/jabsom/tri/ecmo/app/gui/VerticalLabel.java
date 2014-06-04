@@ -39,6 +39,9 @@ public class VerticalLabel extends JLabel {
     /** True for label to be read top to bottom. */
     protected boolean topdown = false;
 
+    /** Shadow color. */
+    private Color shadowColor = new Color(0.0f, 0.0f, 0.0f, 0.3f);
+
     /**
      * Constructor. 
      * 
@@ -144,14 +147,14 @@ public class VerticalLabel extends JLabel {
         else {
           if (label.isEnabled()) {
             // Draws shadow
-            g2.setPaint(new Color(0.0f, 0.0f, 0.0f, 0.3f));
+            g2.setPaint(shadowColor);
             textLayout.draw(g2, textX - 3, textY + 3);
             // Paints text
             paintEnabledText(label, g, clippedText, textX, textY);
           } 
           else {
             // Draws shadow
-            g2.setPaint(new Color(0.0f, 0.0f, 0.0f, 0.3f));
+            g2.setPaint(shadowColor);
             textLayout.draw(g2, textX - 3, textY + 3);
             // Paints text
             paintDisabledText(label, g, clippedText, textX, textY);
@@ -192,10 +195,12 @@ public class VerticalLabel extends JLabel {
       }
 //      int fHeight = fCharHeight * len + fDescent;
       // draw string by character top to bottom
-      g.setColor(getForeground());
       g.setFont(theFont);
       int yPos = (int)y + fCharHeight;
       for (int i = 0; i < len; i++) {
+        g.setColor(shadowColor);
+        g.drawString(fCharStrings[i], (int)x+((fWidth-fCharWidths[i])/2) + 3, yPos + 3);
+        g.setColor(getForeground());
         g.drawString(fCharStrings[i], (int)x+((fWidth-fCharWidths[i])/2), yPos);
         yPos += fCharHeight;
       }

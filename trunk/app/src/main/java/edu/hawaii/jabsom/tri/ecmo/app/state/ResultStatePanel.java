@@ -3,6 +3,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.state;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.VerticalLabel;
@@ -86,16 +87,24 @@ public class ResultStatePanel extends JPanel {
     // output overall result
     String result = success ? Translator.getString("label.Success[i18n]: Success")
                             : Translator.getString("label.Failure[i18n]: Failure");
-    //TODO: i18n vertical versus horizontal orientation
-    //if lang.locale isEastern: JLabel resultLabel = new TextLabel()
-    //else: // lang.local isWestern
-    JLabel resultLabel = new VerticalLabel(result, false);
-    resultLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 72f));
-    resultLabel.setForeground(Color.WHITE);
-    resultLabel.setHorizontalAlignment(JLabel.CENTER);
-    resultLabel.setLocation(600, 100);
-    resultLabel.setSize(200, 400);
-    add(resultLabel);
+    if (Configuration.getInstance().getLang().equals("ja")) {
+      VerticalLabel resultLabel = new VerticalLabel(result);
+      resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 72f));
+      resultLabel.setForeground(Color.WHITE);
+      resultLabel.setHorizontalAlignment(JLabel.LEFT);
+      resultLabel.setLocation(600, 100);
+      resultLabel.setSize(200, 400);
+      add(resultLabel);
+    }
+    else {
+      JLabel resultLabel = new VerticalLabel(result, false);
+      resultLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 72f));
+      resultLabel.setForeground(Color.WHITE);
+      resultLabel.setHorizontalAlignment(JLabel.CENTER);
+      resultLabel.setLocation(600, 100);
+      resultLabel.setSize(200, 400);
+      add(resultLabel);
+    }
     
     // add done button
     Image okButtonImage = ImageLoader.getInstance().getImage("conf/gui/Btn-Ok.png");    
