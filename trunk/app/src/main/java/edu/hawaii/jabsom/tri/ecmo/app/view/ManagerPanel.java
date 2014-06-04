@@ -172,8 +172,8 @@ public class ManagerPanel extends JPanel {
     String lblBubDet = Translator.getString("label.BubbleDet[i18n]: Bubble Det.");
     g2.drawString(lblBubDet, centerStringX(g2, lblBubDet, 466), 523);
     // label pump controls
-    String lblPumpCtl = Translator.getString("label.PumpControls[i18n]: Pump\nControls");
-    g2.drawString(lblPumpCtl, 750, 585);
+    String lblPumpCtl = Translator.getString("label.PumpControls[i18n]: Pump Controls");
+    g2.drawString(lblPumpCtl, centerStringX(g2, lblPumpCtl, 704), 500);
   }
   
   /**
