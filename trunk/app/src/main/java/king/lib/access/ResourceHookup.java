@@ -57,6 +57,22 @@ public final class ResourceHookup extends Hookup {
     }
   }
  
+  /**
+   * Returns the media for a certain path.
+   * 
+   * @param path  Path and name to the media.
+   * @return      The requested media or null if it couldn't be found.
+   */
+  URL getMedia(String path) {
+    URL url = classLoader.getResource(path);
+    if (url == null) {
+      return null;
+    }
+    else {
+      return url;
+    }
+  }
+ 
   /** 
    * Gets the input stream for a given path.
    * 
