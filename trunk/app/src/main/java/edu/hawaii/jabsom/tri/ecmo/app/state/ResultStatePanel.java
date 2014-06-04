@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.InternetTextPane;
+import king.lib.util.Translator;
 
 /**
  * The result state panel. 
@@ -46,7 +47,7 @@ public class ResultStatePanel extends JPanel {
     setLayout(null);
     
     // add text label
-    TextLabel textLabel = new TextLabel("ECMO Results");
+    TextLabel textLabel = new TextLabel(Translator.getString("title.ECMOResults[i18n]: ECMO Results"));
     textLabel.setHorizontalAlignment(JLabel.CENTER);
     textLabel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 36f)); 
     textLabel.setLocation(100, 16);
