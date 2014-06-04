@@ -6,6 +6,8 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.Toolkit;
+import java.util.Map;
 
 import javax.swing.JLabel;
 
@@ -27,6 +29,9 @@ public class TextLabel extends JLabel {
   
   /** True to draw a shadow. */
   boolean drawShadow = true;
+  
+  /** True to draw border. */
+  boolean drawBorder = true;
   
   
   /**
@@ -73,6 +78,15 @@ public class TextLabel extends JLabel {
    */
   public void setDrawShadow(boolean drawShadow) {
     this.drawShadow = drawShadow;
+  }
+
+  /**
+   * True to draw border.
+   *
+   * @param drawBorder  True to draw border.
+   */
+  public void setDrawBorder(boolean drawBorder) {
+    this.drawBorder = drawBorder;
   }
 
   /**
@@ -135,7 +149,13 @@ public class TextLabel extends JLabel {
    * @param g  Where to write the text to.
    */ 
   public void paintComponent(Graphics g) {
+    Toolkit tk = Toolkit.getDefaultToolkit();
+    Map desktopHints = (Map)(tk.getDesktopProperty("awt.font.desktophints"));
     Graphics2D g2 = (Graphics2D)g;
+
+    if(desktopHints != null) {
+        g2.addRenderingHints(desktopHints);
+    }
     g.setFont(getFont()); 
     String text = getText();
     int textWidth = TextRenderer.renderWidth(g2, text);
@@ -149,6 +169,11 @@ public class TextLabel extends JLabel {
     int y = g.getFontMetrics().getAscent();
     Paint fillPaint = new GradientPaint(0, 0, gradientTopColor
                                       , 0, getFont().getSize(), gradientBottomColor);
-    TextRenderer.renderOutline(g2, text, x, y, fillPaint, borderColor, drawShadow);
+    if (drawBorder) {
+      TextRenderer.renderOutline(g2, text, x, y, fillPaint, borderColor, drawShadow);
+    } 
+    else {
+      TextRenderer.renderOutline(g2, text, x, y, fillPaint, null, drawShadow);
+    }
   }
 }
