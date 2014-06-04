@@ -5,6 +5,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
 
 import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.ECMOAppRelease;
@@ -112,25 +113,45 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     });
     aboutButton.setLocation(570, 18);
     aboutButton.setSize(120, 48);
-    add(aboutButton);    
+    add(aboutButton);
 
-    // add contact button
-    Image contactNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonContact[i18n]: conf/image/interface/menu/Btn-Contact.png"));
-    Image contactRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonContactRol[i18n]: conf/image/interface/menu/Btn-ContactRol.png"));
-    Image contactSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonContactSel[i18n]: conf/image/interface/menu/Btn-ContactSel.png"));
-    ImageButton contactButton = new ImageButton(contactNormalImage, contactRolloverImage, contactSelectedImage);
-    contactButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent arg0) {
-        // and help
-        state.contactState();
-      }      
+//    // add contact button
+//    Image contactNormalImage = ImageLoader.getInstance().getImage(
+//        Translator.getString("image.ButtonContact[i18n]: conf/image/interface/menu/Btn-Contact.png"));
+//    Image contactRolloverImage = ImageLoader.getInstance().getImage(
+//        Translator.getString("image.ButtonContactRol[i18n]: conf/image/interface/menu/Btn-ContactRol.png"));
+//    Image contactSelectedImage = ImageLoader.getInstance().getImage(
+//        Translator.getString("image.ButtonContactSel[i18n]: conf/image/interface/menu/Btn-ContactSel.png"));
+//    ImageButton contactButton = new ImageButton(contactNormalImage, contactRolloverImage, contactSelectedImage);
+//    contactButton.addActionListener(new ActionListener() {
+//      public void actionPerformed(ActionEvent arg0) {
+//        // and help
+//        state.contactState();
+//      }      
+//    });
+//    contactButton.setLocation(680, 18);
+//    contactButton.setSize(120, 48);
+//    add(contactButton);
+    
+    // add language select combobox
+    String[] langStrings = {"English", "Japanese", "Spanish"};
+    
+    JComboBox<String> langList = new JComboBox<String>(langStrings);
+    langList.setSelectedIndex(0);
+//    ComboBoxRenderer renderer = new ComboBoxRenderer();
+//    renderer.setPreferredSize(new Dimension(120, 48));
+//    langList.setRenderer(renderer);
+//    langList.setMaximumRowCount(3);
+    langList.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        JComboBox cb = (JComboBox)e.getSource();
+        String lang = (String)cb.getSelectedItem();
+        System.out.println(lang);
+      }
     });
-    contactButton.setLocation(680, 18);
-    contactButton.setSize(120, 48);
-    add(contactButton);    
+    langList.setLocation(680, 18);
+    langList.setSize(120, 48);
+    add(langList);
     
     // button group
     ButtonGroup buttonGroup = new ButtonGroup();
