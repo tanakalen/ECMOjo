@@ -155,8 +155,8 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
         state.menuState();
       }
     });
-    langList.setLocation(680, 18);
-    langList.setSize(120, 48);
+    langList.setLocation(690, 30);
+    langList.setSize(100, 30);
     add(langList);
     
     // button group
