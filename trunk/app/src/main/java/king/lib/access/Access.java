@@ -22,7 +22,7 @@ public abstract class Access {
    */
   public static void init() throws AccessException {
     // find access based on type
-    if (System.getProperty("webstart") != null) {
+    if (System.getProperty("jnlp.webstart") != null) {
       access = new AccessWebstart();
     }
     else {

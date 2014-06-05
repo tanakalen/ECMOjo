@@ -34,7 +34,7 @@
 <table border="0" cellspacing="0" cellpadding="0" height="100%" height="38"><tr height="38">
   <td width="224">&nbsp;</td>
   <td><a href="index.php" class="menubutton">Home</a></td>
-  <td><a href="webstart/ECMOjo.jnlp" class="menubutton">Online Demo</a></td>
+  <td><a href="webstart/ECMOjo-Infant.jnlp" class="menubutton">Online Demo</a></td>
   <td><a href="about.php" class="menubutton">About</a></td>
 </tr></table>
 <!-- H-MENU end -->
@@ -89,7 +89,7 @@
     <br>
     <div style="font-size: 14px; border-bottom: 1px solid #b0b0b0">Spotlight</div>
     <div class="spotlight" style="margin-top: 5px">
-      <a href="webstart/ECMOjo.jnlp" class="spotlight">&raquo; PLAY ONLINE</a>
+      <a href="webstart/ECMOjo-Infant.jnlp" class="spotlight">&raquo; PLAY ONLINE</a>
       <a href="download.php" class="spotlight">&raquo; DOWNLOAD</a>
     </div>
     <br>

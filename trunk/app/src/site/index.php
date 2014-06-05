@@ -32,6 +32,7 @@
 
 <h1>News & Updates</h1>
 <ul>
+  <li><strong>June 4, 2014</strong> - Version 2.4.1 available for download /w Spanish (Windows, Mac, Source).
   <li><strong>May 6, 2012</strong> - Version 2.4 available for download /w Japanese (Windows, Mac, Source).
   <li><strong>January 19, 2011</strong> - Version 2.3.1 available for download /w Japanese (Windows, Mac, Linux).
   <li><strong>September 30, 2010</strong> - Version 2.3.0 available for download (Windows, Mac, Linux).
