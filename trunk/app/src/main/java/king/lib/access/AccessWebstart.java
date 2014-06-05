@@ -41,12 +41,12 @@ public class AccessWebstart extends Access {
   public AccessWebstart() throws AccessException {
     // find the scenario dir
     this.scenarioDir = System.getProperty("user.home") 
-                     + "/" + System.getProperty("webstart.dir")
-                     + "/" + "scenario";
+                     + File.separator + System.getProperty("jnlp.webstart.dir")
+                     + File.separator + "scenario";
     this.extraDir = System.getProperty("user.home") 
-                     + "/" + System.getProperty("webstart.dir")
-                     + "/" + "extra";
-    this.extraRemoteDir = System.getProperty("webstart.extra.dir");
+                     + File.separator + System.getProperty("jnlp.webstart.dir")
+                     + File.separator + "extra";
+    this.extraRemoteDir = System.getProperty("jnlp.webstart.extra.dir");
       
     // create extra dir
     File extraDir = new File(this.extraDir);
@@ -61,7 +61,6 @@ public class AccessWebstart extends Access {
       // If no input stream, then there is no scenario.zip to be deployed!
       return;
     }
- 
     // unzip scenario file to local file system
     try {
       ZipInputStream zis = new ZipInputStream(new BufferedInputStream(inputStream));

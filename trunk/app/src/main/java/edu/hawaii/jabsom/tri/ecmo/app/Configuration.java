@@ -43,8 +43,8 @@ public class Configuration {
   /** The application type. */
   private AppType appType;
   
-  /** The Locale using ISO-639-1 code for language (two char). */
-  private static Locale lang;
+  /** The Locale using ISO-639-1 code for language (two char). Default is English. */
+  private static Locale lang = Locale.ENGLISH;
   
   /** Available language bundles. */
   private static Locale[] availableLanguages = new Locale[]{

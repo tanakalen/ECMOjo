@@ -43,12 +43,12 @@ public class AccessApplet extends Access {
     
     // find the scenario dir
     this.scenarioDir = System.getProperty("user.home") 
-                     + "/" + applet.getParameter("webstart.dir")
-                     + "/" + "scenario";
+                     + File.separator + applet.getParameter("jnlp.webstart.dir")
+                     + File.separator + "scenario";
     this.extraDir = System.getProperty("user.home") 
-                     + "/" + applet.getParameter("webstart.dir")
-                     + "/" + "extra";
-    this.extraRemoteDir = applet.getParameter("webstart.extra.dir");
+                     + File.separator + applet.getParameter("jnlp.webstart.dir")
+                     + File.separator + "extra";
+    this.extraRemoteDir = applet.getParameter("jnlp.webstart.extra.dir");
     
     // create extra dir
     File extraDir = new File(this.extraDir);
