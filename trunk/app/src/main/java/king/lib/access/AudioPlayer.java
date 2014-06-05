@@ -1,50 +1,29 @@
 package king.lib.access;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import java.net.URL;
 
-import com.sun.media.sound.AiffFileReader;
-import com.sun.media.sound.AuFileReader;
-import com.sun.media.sound.WaveFileReader;
-import king.lib.out.Error;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-//TODO: JavaFX imports
-// import javafx.scene.media.Media;
-// import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.AudioClip;
 
 /**
  * Plays a sound. Internally used by AudioLoader. Audio player is for short sound and looping sound.
- * Conversion to Java 7 FX will allow removal of libraries:
- * <ul>
- *   <li>jl1.0.jar</li>
- *   <li>mp3spi1.9.2.jar</li>
- *   <li>tritonus_share.jar</li>
- * </ul>
+ * 
  * The following audio file formats are supported:
  * <ul>
  *   <li>wav</li>
  *   <li>aiff</li>
- *   <li>au</li>
  *   <li>mp3</li>
- *   <li>future: fxm, flv, mp4</li>
+ *   <li>fxm, flv, mp4</li>
  * </ul>
  *
  * @author    king 
- * @since     March 23, 2004
+ * @since     December 14, 2013
  */
 public final class AudioPlayer {
 
-  /** The samples to play. */
-  private AudioInputStream audioStream;
-  /** The clip to play. */
-  private Clip clip;
+  /** The JavaFX clip to play. */
+  private AudioClip myClip;
+  /** The JavaFX clip URL. */
+  private URL url;
   
   /** True for looping. Defaults to false. */
   private boolean looping = false;
@@ -52,14 +31,15 @@ public final class AudioPlayer {
   private float speed = 1.0f;
   /** The playing flag. */
   private boolean playing = false;
-    
+  
   /**
-   * Constructor for player.
+   * Constructor for player using JavaFX.
    * 
-   * @param audioStream   Where the audio data resides.
+   * @param url   Where the audio data resides.
    */
-  private AudioPlayer(AudioInputStream audioStream) {
-    this.audioStream = audioStream;
+  private AudioPlayer(URL url) {
+      this.url = url;
+      this.myClip = new AudioClip(url.toExternalForm());
   }
   
   /**
@@ -69,90 +49,11 @@ public final class AudioPlayer {
    * @return  The audio player.
    */
   public static AudioPlayer create(String path) {
-    return AudioPlayer.create(path, ResourceHookup.getInstance());
+    ResourceHookup hookup = ResourceHookup.getInstance();
+    URL url = hookup.getMedia(path);
+    return new AudioPlayer(url);
   }
   
-  /**
-   * Returns a new audio player for the given path and hookup.
-   * 
-   * @param path  The path.
-   * @param hookup  The hookup.
-   * @return  The audio player.
-   */
-  public static AudioPlayer create(String path, Hookup hookup) {
-    try {
-      // open stream to sound file
-      InputStream inputStream = hookup.getInputStream(path);
-      
-      //JavaFX Media and MediaPlayer
-      //try {
-      //  media = new Media(inputStream)
-      //  try {
-      //    mediaPlayer = new MediaPlayer(media)
-      //  } catch (Exception MediaPlayerException) {
-      //    // Handle exception in MediaPlayer constructor.
-      //  }
-      //} catch (Exception mediaException) {
-      //  // Handle exception in Media constructor.
-      //
-      
-      // *** HACK START
-      // *** Only audioStream = AudioSystem.getAudioInputStream(inputStream); 
-      // *** does not work, WAV files are not loaded correctly because of mp3spi1.9.2.jar
-      AudioInputStream audioStream;
-      if (path.endsWith(".mp3")) {
-        audioStream = AudioSystem.getAudioInputStream(inputStream);
-      }
-      else if (path.endsWith(".wav")) {
-        WaveFileReader reader = new WaveFileReader();
-        audioStream = reader.getAudioInputStream(inputStream);
-      }
-      else if ((path.endsWith(".aif")) || (path.endsWith(".aiff"))) {
-        AiffFileReader reader = new AiffFileReader();
-        audioStream = reader.getAudioInputStream(inputStream);
-      }
-      else if (path.endsWith(".au")) {
-        AuFileReader reader = new AuFileReader();
-        audioStream = reader.getAudioInputStream(inputStream);
-      }
-      else {
-        // the default!
-        audioStream = AudioSystem.getAudioInputStream(inputStream);
-      }
-      // *** HACK END
-
-      // get audio format
-      AudioFormat audioFormat = audioStream.getFormat();
-
-      // convert, so sound can be played
-      if (path.endsWith(".mp3")) {
-        if (audioFormat.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
-          AudioFormat newFormat = new AudioFormat(
-            AudioFormat.Encoding.PCM_SIGNED, 
-            audioFormat.getSampleRate(),
-            16,
-            audioFormat.getChannels(),
-            audioFormat.getChannels() * 2,
-            audioFormat.getSampleRate(),
-            false);
-          AudioInputStream newStream = AudioSystem.getAudioInputStream(newFormat, audioStream);
-          audioFormat = newFormat;
-          audioStream = newStream;
-        }      
-      }
-      // Create new player
-      return new AudioPlayer(audioStream);
-    }
-    catch (UnsupportedAudioFileException e) {
-      Error.out(e);
-      return null;
-    }
-    catch (IOException e) {
-      Error.out(e);
-      return null;
-    }
-  }
-
   /**
    * Returns the speed.
    *
@@ -190,33 +91,16 @@ public final class AudioPlayer {
   }
 
   /**
-   * Plays a song.
+   * Plays the sound.
    */
   public void play() {
     // Play the file
-    if (audioStream == null) {
-      return;
-    }    
-    try {
-      if (clip == null) {
-        clip = AudioSystem.getClip();
-        clip.open(audioStream);
-      }
-      if (!playing) {
-        if (looping) {
-          clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } 
-        else {
-          clip.start();
-        }
-        playing = true;
-      }
-    }
-    catch (LineUnavailableException e) {
-      Error.out(e);
-    }
-    catch (IOException e) {
-      Error.out(e);
+    if (!playing) {
+      if (looping) {
+        myClip.setCycleCount(AudioClip.INDEFINITE);
+      } 
+      playing = true;
+      myClip.play();
     }
   }
 
@@ -225,11 +109,9 @@ public final class AudioPlayer {
    */
   public void pause() {
     // Pause
-    if (clip != null) {
-      if (clip.isRunning()) {
-        clip.stop();
-        playing = false;
-      }
+    if (playing) {
+      myClip.stop();
+      playing = false;
     }
   }
 
@@ -238,16 +120,10 @@ public final class AudioPlayer {
    */
   public void stop() {
     // Stop
-    if (clip != null) {
-      if (clip.isRunning()) {
-        clip.stop();
-        playing = false;
-        clip.setFramePosition(0);
-      }
-      clip.drain();
-      clip.close();
+    if (playing) {
+      myClip.stop();
+      playing = false;
     }
-    clip = null;
   }
   
 }

@@ -9,13 +9,15 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JLabel;
+
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
 import king.lib.util.Translator;
-
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.KillAction;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.PressureMonitorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PressureMonitorComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogOption;
@@ -30,10 +32,9 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.StandardDialog.DialogType;
 public class PressureMonitorDetailPanel extends DetailPanel implements Runnable {
 
   /** The detail image. */
-  private Image detailImage 
+  private Image detailImage
     = ImageLoader.getInstance().getImage(
-        Translator.getString(
-          "image.DetailPressureMonitor[i18n]: conf/image/interface/game/Detail-PressureMonitor.png"));
+        "conf/image/interface/game/Detail-PressureMonitor.png");
 
   /** The red alert image. */
   private Image redAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-RedMedium.png");
@@ -71,6 +72,20 @@ public class PressureMonitorDetailPanel extends DetailPanel implements Runnable 
     // set layout and look
     setLayout(null);
     setOpaque(false);
+
+    // add labels for ven, pre, & post
+    TextLabel lblVenous = createTextLabels(
+        Translator.getString("label.PressureMonitorVenous[i18n]: veno"),
+        12f, 20, 50);
+    add(lblVenous);
+    TextLabel lblPre = createTextLabels(
+        Translator.getString("label.PressureMonitorPre[i18n]: pre"),
+        12f, 20, 130);
+    add(lblPre);
+    TextLabel lblPost = createTextLabels(
+        Translator.getString("label.PressureMonitorPost[i18n]: post"),
+        12f, 20, 210);
+    add(lblPost);
 
     // adjustment value
     final double increment = 5;
@@ -357,6 +372,26 @@ public class PressureMonitorDetailPanel extends DetailPanel implements Runnable 
     incMin3Button.setLocation(200, 229);
     incMin3Button.setSize(24, 24);
     add(incMin3Button);    
+  }
+
+  /**
+   * Private method to simplify & consolidate rendering config box text labels.
+   *
+   * @param text  String for TextLabel.
+   * @param fontSize  Size of font.
+   * @param x  X-coordinate.
+   * @param y  Y-coordinate.
+   * @return TextLabel object.
+   */
+  private TextLabel createTextLabels(String text, float fontSize, int x, int y) {
+    TextLabel label = new TextLabel(text);
+    label.setHorizontalAlignment(JLabel.CENTER);
+    label.setFont(label.getFont().deriveFont(Font.BOLD, fontSize));
+    label.setDrawShadow(true);
+    label.setDrawBorder(false);
+    label.setLocation(x, y);
+    label.setSize(60, 25);
+    return label;
   }
 
   /**

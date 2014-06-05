@@ -222,14 +222,15 @@ public class TubeComponentPanel extends ComponentPanel implements Runnable {
     selectionClampButton5.setSize(32, 52);
     add(selectionClampButton5); 
     
-    // add toggle button
+    // add toggle button Circuit Check
     Image normalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCircuitCheck[i18n]: conf/image/interface/game/Btn-CircuitCheck.png"));
-    Image rolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCircuitCheckRol[i18n]: conf/image/interface/game/Btn-CircuitCheckRol.png"));
+        "conf/image/interface/game/BtnCircuitCheck.png");
     Image selectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonCircuitCheckSel[i18n]: conf/image/interface/game/Btn-CircuitCheckSel.png"));
-    selectionButton = new ImageToggleButton(normalImage, rolloverImage, selectedImage, selectedImage);
+        "conf/image/interface/game/BtnCircuitCheckSel.png");
+    selectionButton = new ImageToggleButton(normalImage, normalImage, selectedImage, selectedImage);
+    selectionButton.setText(
+        Translator.getString("button.CircuitCheck[i18n]: Circuit Check"));
+    selectionButton.setForeground(Color.WHITE);
     selectionButton.setToolTipText(component.getName());
     selectionButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {

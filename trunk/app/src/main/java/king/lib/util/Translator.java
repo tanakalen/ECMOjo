@@ -64,7 +64,7 @@ public final class Translator {
   public static String getString(String key) {
     String value = key;
     try {
-      if (key.matches("([a-z]+\\.[A-Za-z0-9]+)(\\[i18n\\]: )(.*)")) {
+      if (key.matches("(?s)([a-z]+\\.[A-Za-z0-9_]+)(\\[i18n\\]: )(.*)")) {
         // get the correct parts
         value = key.substring(key.indexOf(":") + 2);
         key = key.substring(0, key.indexOf("["));

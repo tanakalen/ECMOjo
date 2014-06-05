@@ -1,0 +1,146 @@
+# Scenario Information
+name = Falla en el circuito
+desc = Sucesos asociados con una falla en el circuito
+
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = *
+scenario-pump-type = *
+scenario-vent-type = *
+
+# Goal Information
+goal = Tutorial
+tutorial-item1-text = Uno de los fines del chequeo del circuito es buscar desagradables coágulos que crecen silenciosamente en el circuito
+tutorial-item1-trigger = N/A
+tutorial-item2-text = ¿Dónde están las zonas comunes para que estos coágulos se formen?
+tutorial-item2-trigger = N/A
+tutorial-item3-text = Los coágulos pueden formarse en el oxigenador, intercambiador de calentador (si aplica), conectores y puentes.
+tutorial-item3-trigger = N/A
+tutorial-item4-text = Revisemos los valores de laboratorio del ACT (Tiempo activado de coagulación) y de Hemoglobina. Haz clic en el botón de laboratorio [HGB]
+tutorial-item4-trigger = Action:View:LabTest:HematologyLabTest
+tutorial-item5-text = Tenga en cuenta la disminución en las plaquetas, así como el fibrinógeno y el aumento de la ACT (Tiempo activado de coagulación), PTT (Tiempo parcial de tromboplastina) y PT (Tiempo de protombina)
+tutorial-item5-trigger = N/A
+tutorial-item6-text = Estás dando productos sanguíneos, pero los valores de laboratorio no se corrigen
+tutorial-item6-trigger = N/A
+tutorial-item7-text = Parece que el circuito está consumiendo productos sanguíneos. ¿Qué recomendarias en este momento?
+tutorial-item7-trigger = N/A
+tutorial-item8-text = Considera cambiar el circuito. Selecciona el botón [Chequeo del circuito] y haz clic en [Cambiar el circuito].
+tutorial-item8-trigger = Action:Tube:replace
+tutorial-item9-text = Continua, y aumenta el flujo según las indicaciones, a por lo menos 600mL/min.
+tutorial-item9-trigger = Action:Pump:flow:>0.599
+tutorial-item10-text = Si la valoración fue correcta, los valores de laboratorio se normalizarán.
+tutorial-item10-trigger = N/A
+tutorial-item11-text = Revisemos los valores de laboratorio de Hemoglobina. Haz clic en el botón de laboratorio [HBG]. Luego haz clic en el botón [Lab]
+tutorial-item11-trigger = Action:View:LabTest:HematologyLabTest
+tutorial-item12-text = Fíjate en la mejora en las plaquetas, fibrinógeno, y PTT (Tiempo parcial de tromboplastina)
+tutorial-item12-trigger = N/A
+tutorial-item13-text = Revisa nuevamente los valores de laboratorio del ACT (Tiempo activado de coagulación). Haz clic en el botón de laboratorio [ACT]. Luego haz clic en el botón [Lab].
+tutorial-item13-trigger = Action:ACTRequest
+tutorial-item14-text = Nota la mejora en el ACT (Tiempo activado de coagulación)
+tutorial-item14-trigger = N/A
+
+
+# Baseline Values
+baseline-sedated = true
+baseline-bleeding = false
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 180
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-urine-output = good
+baseline-suction-ETT = good
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 200
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 200
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-alarming = false
+
+# Patient Information
+patient-species = human
+patient-gender = male
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
+patient-heart-function = good
+patient-sedated = true
+patient-bleeding = false
+patient-temperature = 37
+
+# Heater
+heater-temperature = 37
+heater-broken = false
+
+# Oxygenator
+oxygenator-total-sweep = 0.6
+oxygenator-fio2 = 0.5
+oxygenator-broken = false
+oxygenator-clotting = 0.0
+
+# Pump
+pump-on = true
+pump-flow = 0.6
+
+# Intervention
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
+
+# Tube
+tube-clamp-arterial-A = open
+tube-clamp-arterial-B = open
+tube-clamp-venous-A = open
+tube-clamp-venous-B = open
+tube-clamp-bridge = closed
+tube-bubbles-arterial = false
+tube-bubbles-venous = false
+tube-cannula-broken = false
+tube-cannula-status = 
+tube-cannula-problem-location = 
+tube-cannula-arterial-B = open
+tube-cannula-venous-B = open
+tube-cannula-premembrane-pressure = 
+tube-cannula-postmembrane-pressure = 
+tube-coagulopathy = true
+
+# ACT
+act-value = 200
+
+# Lab Component
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
+#lab-component-chem
+lab-component-heme-fibrinogen = 80
+lab-component-heme-platelets = 50
+lab-component-heme-pt = 18
+lab-component-heme-ptt = 200
+
+# Imaging Component
+lab-img-xray = xr-none
+lab-img-us = us-none
+lab-img-echo = echo-none

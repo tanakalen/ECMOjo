@@ -1,11 +1,13 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
 import edu.hawaii.jabsom.tri.ecmo.app.control.Manager;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.ViewAction;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
@@ -17,8 +19,12 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.comp.TubeComponentPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.DetailPanel.DetailActionListener;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.ComponentPanel.ComponentActionListener;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
@@ -34,7 +40,7 @@ public class ManagerPanel extends JPanel {
 
   /** The panel image. */
   private Image background = ImageLoader.getInstance().getImage(
-      Translator.getString("image.gamebase[i18n]: conf/image/interface/game/Base.png"));
+      "conf/image/interface/game/Base.png");
 
   /** The current detail panel. null for none. */
   private DetailPanel detailPanel;
@@ -120,7 +126,32 @@ public class ManagerPanel extends JPanel {
     
     // order components (drawn first)
     order(TubeComponentPanel.class);
-  }
+    
+    // label venous, pre, & post
+    TextLabel lblVenous = createTextLabels(
+        Translator.getString("label.Venous[i18n]: venous"),
+        12f, 530, 564);
+    add(lblVenous);
+    TextLabel lblPre = createTextLabels(
+        Translator.getString("label.Pre[i18n]: pre"),
+        12f, 524, 464);
+    add(lblPre);
+    TextLabel lblPost = createTextLabels(
+        Translator.getString("label.Post[i18n]: post"),
+        12f, 494, 404);
+    add(lblPost);
+    
+    // add label: Lab
+    TextLabel lblLab = createTextLabels(
+        Translator.getString("label.Lab[i18n]: Lab"),
+        24f, 2, 433);
+    lblLab.setBorderColor(Color.GRAY);
+    lblLab.setGradientTopColor(new Color(255, 204, 204));
+    lblLab.setGradientBottomColor(new Color(255, 192, 203));
+    lblLab.setDrawBorder(true);
+    lblLab.setDrawShadow(true);
+    add(lblLab);
+}
 
   /**
    * Orders a component and makes it drawn first.
@@ -136,7 +167,26 @@ public class ManagerPanel extends JPanel {
       }
     }
   }
-  
+
+  /**
+   * Private method to simplify & consolidate rendering config box text labels.
+   *
+   * @param text  String for TextLabel.
+   * @param fontSize  Size of font.
+   * @param x  X-coordinate.
+   * @param y  Y-coordinate.
+   * @return TextLabel object.
+   */
+  private TextLabel createTextLabels(String text, float fontSize, int x, int y) {
+    TextLabel label = new TextLabel(text);
+    label.setHorizontalAlignment(JLabel.LEFT);
+    label.setFont(label.getFont().deriveFont(Font.BOLD, fontSize));
+    label.setDrawBorder(false);
+    label.setLocation(x, y);
+    label.setSize(120, 45);
+    return label;
+  }
+
   /**
    * Paints this component.
    * 
@@ -144,6 +194,46 @@ public class ManagerPanel extends JPanel {
    */
   public void paintComponent(Graphics g) {
     // draws the image as background
-    g.drawImage(background, 0, 0, this);    
+    g.drawImage(background, 0, 0, this);
+    
+    // set antialised text
+    Graphics2D g2 = (Graphics2D)g;
+    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    
+    // text properties
+    g2.setFont(g.getFont().deriveFont(10f));
+    g2.setColor(Color.DARK_GRAY);
+    
+    // label pressure monitor
+    String lblPresMon = Translator.getString("label.PressureMonitor[i18n]: Pressure Monitor");
+    g2.drawString(lblPresMon, centerStringX(g2, lblPresMon, 704), 100);
+    // label heater controls
+    String lblHeatCon = Translator.getString("label.HeaterControls[i18n]: Heater Controls");
+    g2.drawString(lblHeatCon, centerStringX(g2, lblHeatCon, 710), 252);
+    // label gas blender
+    String lblGasBlen = Translator.getString("label.GasBlender[i18n]: Gas Blender");
+    g2.drawString(lblGasBlen, centerStringX(g2, lblGasBlen, 728), 337);
+    // label bubble detector
+    String lblBubDet = Translator.getString("label.BubbleDet[i18n]: Bubble Det.");
+    g2.drawString(lblBubDet, centerStringX(g2, lblBubDet, 466), 523);
+    // label pump controls
+    String lblPumpCtl = Translator.getString("label.PumpControls[i18n]: Pump Controls");
+    g2.drawString(lblPumpCtl, centerStringX(g2, lblPumpCtl, 704), 500);
+  }
+  
+  /**
+   * Helper function for centering labels passing in x-position center.
+   * 
+   * @param g2d  The {@link Graphics2D} environment.
+   * @param s  The string to center.
+   * @param xPos  The x-position as int for current center point.
+   * @return int for starting position to draw string.
+   */
+  private int centerStringX(Graphics2D g2d, String s, int xPos) {
+    int stringLen = (int)
+        g2d.getFontMetrics().getStringBounds(s, g2d).getWidth();
+    int start = stringLen/2;
+    return xPos - start;
   }
 }

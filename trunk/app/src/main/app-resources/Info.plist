@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+  <dict>
+    <key>CFBundleName</key>
+	<string>${bundleName}</string>
+    <key>CFBundleShortVersionString</key>
+    <string>2.4.0</string>
+    <key>CFBundleGetInfoString</key>
+    <string>ECMOjo Infant 2.4.0 (build: 2012-06-09.2200) application (c) 2012</string>
+    <key>CFBundleAllowMixedLocalizations</key>
+    <string>false</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleExecutable</key>
+    <string>JavaApplicationStub</string>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleSignature</key>
+    <string>ECJO</string>
+    <key>CFBundleIconFile</key>
+	<string>${iconFile}</string>
+    <key>CFBundleIdentifier</key>
+    <string>edu.hawaii.jabsom.tri.ecmo.app.ECMOApp</string>
+    <key>Java</key>
+    <dict>
+      <key>MainClass</key>
+	  <string>${mainClass}</string>
+      <key>JVMVersion</key>
+      <string>1.5+</string>
+	  <key>ClassPath</key>
+	  ${classpath}
+	  <key>VMOptions</key>
+	  <array>
+		  <string>-Xms256m</string>
+		  <string>-Xmx256m</string>
+		  <string>-Xss8M</string>
+      </array>
+      <key>Arguments</key>
+      <string>infant</string>
+    </dict>
+  </dict>
+</plist>

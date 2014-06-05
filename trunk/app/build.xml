@@ -2,7 +2,7 @@
 <project name="ECMOjo" default="webstart" basedir=".">
   <target name="globals">
     <!-- Globals for projects -->
-    <property name="global.release.version" value="2.4.0" />
+    <property name="global.release.version" value="2.4.1" />
   </target> 
   <!-- *********************************************************************** -->
   <target name="pre-init">
@@ -19,8 +19,12 @@
     <property name="release.time" value="${YEARSTAMP}-${MONTHSTAMP}-${DAYSTAMP}.${MINUTESTAMP}" />
     <!-- Global directories -->
     <property name="src.dir" value="src" />
+    <property name="src.main.dir" value="${src.dir}/main/java" />
+    <property name="src.test.dir" value="${src.dir}/test/java" />
     <property name="conf.dir" value="${src.dir}/main/resources/conf" />
     <property name="resource.dir" value="resource" />
+    <property name="resources.dir" value="${src.dir}/main/resources" />
+    <property name="app-resources.dir" value="${src.dir}/main/app-resources" />
     <property name="scenario.dir" value="scenario" />
     <property name="extra.dir" value="extra" />
     <property name="doc.dir" value="doc" />
@@ -56,13 +60,13 @@
     <property name="release.file" value="${basedir}/src/main/java/edu/hawaii/jabsom/tri/ecmo/app/ECMOAppRelease.java" />
     <filter token="release.version" value="${release.version}" />
     <filter token="release.time" value="${release.time}" />
-    <property name="library.files" value="browsercode.jar,jgoodies-forms-1.0.4.jar,swingx-0.9.4.jar,jl1.0.jar,mail.jar,activation.jar,pnuts-1.1.jar,jsyntaxpane-0.9.5-jre5-minimal.jar" />
+    <property name="library.files" value="browsercode.jar,jgoodies-forms-1.0.4.jar,swingx-0.9.4.jar,mail.jar,activation.jar,pnuts-1.1.jar,jsyntaxpane-0.9.5-jre5-minimal.jar" />
     <!-- Program Properties (leave as is if not needed) -->
     <property name="prg.memory" value="256" />
     <property name="prg.classfile" value="edu.hawaii.jabsom.tri.ecmo.app.ECMOApp" />
     <property name="prg.exe0" value="ECMOjo Infant,ECMOjo-Infant,${prg.memory},${prg.classfile},infant" />
-    <property name="prg.exe1" value="ECMOjo Infant (Japanese),ECMOjo-Infant-JA,${prg.memory},${prg.classfile},infant_ja" />
-    <property name="executables.list" value="${prg.exe0}+${prg.exe1}"/>  <!-- ${prg.exe0}+${prg.exe1} ... -->
+    <!-- <property name="prg.exe1" value="ECMOjo Infant (Japanese),ECMOjo-Infant-JA,${prg.memory},${prg.classfile},infant_ja" /> -->
+    <property name="executables.list" value="${prg.exe0}"/>  <!-- ${prg.exe0}+${prg.exe1} ... -->
     <!-- Java Web Start properties (leave as is if not needed) -->
     <property name="keystore.alias" value="kalias" />
     <property name="keystore.file" value="${resource.dir}/jarsign/keystore" />
@@ -104,16 +108,19 @@
     <property name="dist_src_base" value="${dist.dir}/dist_src" />
     <property name="dist_src" value="${dist_src_base}/${dist_name}" />
     <property name="dist_macos_base" value="${dist.dir}/dist_macos" />
-    <property name="dist_macos_old" value="${dist_macos_base}/old/${dist_name}" />
     <property name="dist_macos" value="${dist_macos_base}/${dist_name}" />
-    <property name="jarbundler.ver" value="jarbundler-2.2.0" />
-    <property name="jarbundler.dir" value="${resource.dir}/installer/${jarbundler.ver}" />
+    <property name="dist_win32_base" value="${dist.dir}/dist_win32" />
+    <property name="dist_win32" value="${dist_win32_base}/${dist_name}" />
     <property name="dist_win_base" value="${dist.dir}/dist_win" />
     <property name="dist_win" value="${dist_win_base}/${dist_name}" />
-    <property name="launch4j.dir" value="${resource.dir}/installer/launch4j" />
+    <property name="scripts.dir" value="${src.dir}/main/scripts" />
+    <property name="launch4j.dir" value="${app-resources.dir}/launch4j" />
+    <!-- Properties for JRE bundling -->
+    <property name="resource.mac.jre" value="${resource.dir}/jre/mac/jre/Contents/Home" />
+    <property name="resource.win32.jre" value="${resource.dir}/jre/win32/jre" />
+    <property name="resource.win.jre" value="${resource.dir}/jre/win/jre" />
     <!-- Load additional ant tasks -->
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${lib.ant.dir}/ant-contrib-1.0b1.jar" />
-    <taskdef name="jarbundler" classpath="${jarbundler.dir}/${jarbundler.ver}.jar" classname="net.sourceforge.jarbundler.JarBundler" />
     <taskdef name="launch4j" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" classname="net.sf.launch4j.ant.Launch4jTask" />
     <taskdef name="bundleapp" classpath="${lib.ant.dir}/appbundler-1.0.jar" classname="com.oracle.appbundler.AppBundlerTask" />
     <!-- Jakarta-Tomcat (Catalina) - ant tasks -->
@@ -156,14 +163,19 @@
   <!-- *********************************************************************** -->
   <target name="compile" depends="prepare">
     <!-- compile to dest directory -->
-    <javac srcdir="${build.src.dir}"
+    <javac fork="true"
+           executable="${env.JAVA_HOME}/bin/javac"
+           includeantruntime="false"
+           srcdir="${build.src.dir}"
            destdir="${build.dest.dir}"
            nowarn="on">
       <compilerarg value="-Xlint:deprecation" />
       <classpath>
-          <fileset dir="${lib.project.dir}">
-            <include name="**/*.jar" />
-          </fileset>
+          <path id="build.classpath">
+              <fileset dir="${lib.project.dir}">
+                  <include name="**/*.jar" />
+              </fileset>
+          </path>
       </classpath>
     </javac>
     <!-- copy xml (hibernate) files -->
@@ -179,7 +191,7 @@
   <target name="checkstyle" depends="compile">
     <taskdef resource="checkstyletask.properties" classpath="${lib.ant.dir}/checkstyle-all-4.2.jar"/>
     <!-- checkstyle now: take out: <module name="RedundantThrows"/> because it crashes checkstyle. -->
-    <checkstyle config="${resource.dir}/Checkstyle/Checkstyle.xml">
+    <checkstyle config="${resources.dir}/Checkstyle/Checkstyle.xml">
       <classpath>
         <pathelement location="${build.dest.dir}" />
         <fileset dir="${lib.project.dir}">
@@ -197,7 +209,8 @@
     <i18n dir="${build.dest.dir}"
           file="${conf.dir}/bundle/MessagesBundle.properties"
           prefix=""
-          pattern="([a-z]+\.[A-Za-z0-9]+)(\[i18n\]: )(.*)" />
+          strict="false"
+          pattern="([a-z]+\.[A-Za-z0-9_]+)(\[i18n\]: )(.*)" />
   </target>  
   <!-- *********************************************************************** -->
   <target name="test" depends="libconf, i18n"
@@ -270,7 +283,7 @@
     <mkdir dir="${build.api.dir}" />
     <!-- copy images -->
     <copy todir="${build.api.dir}">
-      <fileset dir="${resource.dir}/overview" includes="images/*.jpg,images/*.gif"/>
+      <fileset dir="${resources.dir}/overview" includes="images/*.jpg,images/*.gif"/>
     </copy>
     <!-- create javadoc -->
     <javadoc packagenames="**.*"
@@ -282,7 +295,7 @@
              use="true"
              package="true"
              splitindex="true"
-             overview="${resource.dir}/overview/overview.html"
+             overview="${resources.dir}/overview/overview.html"
              noindex="false"
              windowtitle="${name} ${release.version} API"
              doctitle="${name} ${release.version} API" />
@@ -314,7 +327,7 @@
     <mkdir dir="${build.libconf.dir}/temp" />
     <mkdir dir="${build.libconf.dir}/temp/conf" />
     <copy todir="${build.libconf.dir}/temp/conf">
-	  <!--<mapper type="regexp" from="${subdirs}" to="\3" />-->
+    <!--<mapper type="regexp" from="${subdirs}" to="\3" />-->
       <fileset dir="${conf.dir}" />
     </copy>
     <!-- Create conf jar -->
@@ -355,37 +368,6 @@
       message="${jreloc} -Duser.dir=${usrdir} -Xms${executable.memory}m -Xmx${executable.memory}m -cp ${bat.classpath} ${executable.run} ${executable.args}" />
     <chmod file="${structure.dir}/${executable.file.name}.bat" perm="ug+rx" />
   </target>
-<!-- *********************************************************************** -->
-  <target name="dist_macos_old">
-    <property name="dist_macos_old_app_name" value="${executable.file.longname}.app" />
-    <property name="dist_macos_old_app" value="${dist_macos_old}/${dist_macos_old_app_name}" />
-    <property name="dist_macos_old_contents" value="${dist_macos_old_app}/Contents" />
-    <property name="dist_macos_old_info" value="${dist_macos_old_contents}/Info.plist" />
-    <jarbundler dir="${dist_macos_old}"
-                name="${executable.file.longname}"
-                mainclass="${executable.run}"
-                icon="logo-128x128.icns"
-                version="${release.version}"
-                infostring="${executable.file.longname} ${release.version} (build: ${release.time}) application (c) ${YEARSTAMP}"
-                shortname="ECMOjo"
-                bundleid="${executable.run}"
-                signature="ECJO"
-                jvmversion="1.4+"
-                vmoptions="-Xms${executable.memory}m -Xmx${executable.memory}m -Xss8M -Duser.dir=$APP_PACKAGE/Contents/Resources/Java"
-                arguments="${executable.args}"
-                workingdirectory="$APP_PACKAGE/Contents/Resources/Java">
-      <jarfileset dir="${structure.dir}/lib">
-        <include name="**/*.jar" />
-      </jarfileset>
-    </jarbundler>
-    <copy file="${resource.dir}/installer/Icons/logo-128x128.icns" todir="${dist_macos_old_contents}/Resources" />
-    <copy todir="${dist_macos_old_contents}/Resources/Java">
-      <fileset dir="${structure.dir}">
-        <include name="scenario/**" />
-        <include name="extra/**" />
-      </fileset>
-    </copy>
-  </target>
   <!-- *********************************************************************** -->
   <target name="dist_macos">
     <echo message="Java home: ${java.home}" />
@@ -400,14 +382,12 @@
                identifier="${executable.run}"
                mainclassname="${executable.run}"
                shortversion="${release.version}"
-               icon="${resource.dir}/installer/Icons/logo-128x128.icns"
+               icon="${app-resources.dir}/Icons/logo-128x128.icns"
                copyright="${executable.file.longname} ${release.version} (build: ${release.time}) application (c) ${YEARSTAMP}"
                signature="ECJO"
                applicationCategory="public.app-category.medical">
         <runtime dir="${env.JAVA_HOME}"/>
-        <classpath dir="${structure.dir}/lib">
-          <include name="**/*.jar" />
-        </classpath>
+        <classpath dir="${structure.dir}/lib" includes="*.jar" />
         <option value="-Djava.library.path=$APP_ROOT/Contents/Java/" />
         <option value="-Duser.dir=$APP_ROOT/Contents/Java"/>
         <option value="-Dapple.laf.useScreenMenuBar=true"/>
@@ -429,7 +409,7 @@
     <length property="dmac.size" mode="all">
       <fileset dir="${dist_macos}" />
     </length>
-	<echo message="dist_mac size: ${dmac.size}" />
+    <echo message="dist_mac size: ${dmac.size}" />
     <script language="javascript">
       <![CDATA[
         var length_bytes = project.getProperty("dmac.size");
@@ -441,7 +421,7 @@
     <!-- Create compressed disk image -->
     <exec dir="." executable="/bin/bash">
       <arg value="-c" />
-      <arg value="${jarbundler.dir}/mkdmg.sh ${dist_macos} ${dist_macos_base} ${dist_name} ${dmac.size.mb}" />
+      <arg value="${scripts.dir}/mkdmg.sh ${dist_macos} ${dist_macos_base} ${dist_name} ${dmac.size.mb}" />
     </exec>
   </target>
   <!-- *********************************************************************** -->
@@ -457,17 +437,20 @@
         <include name="extra/**" />
       </fileset>
     </copy>
+    <copy todir="${dist_win_app}/lib/jre">
+      <fileset dir="${resource.win.jre}" />
+    </copy>
     <launch4j bindir="${launch4j.dir}/bin">
       <config jarPath="${dist_win_app}/lib/ecmosim-app.jar"
               dontWrapJar="true"
               headerType="gui"
               outfile="${dist_win_app}/${executable.file.longname}.exe"
               cmdLine="${executable.args}"
-              icon="${resource.dir}/installer/Icons/logo-32x32.ico">
+              icon="${app-resources.dir}/Icons/logo-32x32.ico">
         <classPath mainClass="${executable.run}">
           <cp>%EXEDIR%/lib/*.jar</cp>
         </classPath>
-        <jre path="${java.home}/bin"
+        <jre path="lib/jre"
              minVersion="1.7.0"
              initialHeapSize="${executable.memory}"
              maxHeapSize="${executable.memory}">
@@ -494,6 +477,44 @@
           <launcherErr>Error with Launch4j</launcherErr>
         </messages>
         -->
+      </config>
+    </launch4j>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="dist_win32">
+    <echo message="Base dir: ${basedir}" />
+    <echo message="Java home: ${java.home}" />
+    <property name="dist_win_app_name" value="${executable.file.longname}" />
+    <property name="dist_win32_app" value="${dist_win32}/${dist_win_app_name}" />
+    <copy todir="${dist_win32_app}">
+      <fileset dir="${structure.dir}">
+        <include name="lib/**" />
+        <include name="scenario/**" />
+        <include name="extra/**" />
+      </fileset>
+    </copy>
+    <copy todir="${dist_win32_app}/lib/jre">
+      <fileset dir="${resource.win32.jre}" />
+    </copy>
+    <launch4j bindir="${launch4j.dir}/bin">
+      <config jarPath="${dist_win32_app}/lib/ecmosim-app.jar"
+              dontWrapJar="true"
+              headerType="gui"
+              outfile="${dist_win32_app}/${executable.file.longname}.exe"
+              cmdLine="${executable.args}"
+              icon="${app-resources.dir}/Icons/logo-32x32.ico">
+        <classPath mainClass="${executable.run}">
+          <cp>%EXEDIR%/lib/*.jar</cp>
+        </classPath>
+        <jre path="lib/jre"
+             minVersion="1.7.0"
+             initialHeapSize="${executable.memory}"
+             maxHeapSize="${executable.memory}">
+          <opt>-Xss8M</opt>
+          <opt>-Dlaunch4j.exedir="%EXEDIR%"</opt>
+          <opt>-Dlaunch4j.exefile="%EXEFILE%"</opt>
+          <opt>-Duser.dir="%EXEDIR%"</opt>
+        </jre>
       </config>
     </launch4j>
   </target>
@@ -632,7 +653,7 @@
           description="Create executable(s) of the software for platform testing.">
     <!-- copy external jar files -->
     <copy todir="${build.app.dir}/lib">
-      <fileset dir="${lib.project.dir}" includes="${library.files}" />
+        <fileset dir="${lib.project.dir}" includes="${library.files}" />
     </copy>
     <!-- copy project jar files -->
     <copy todir="${build.app.dir}/lib">
@@ -660,7 +681,7 @@
     </copy>
     <!-- Copy license file -->
     <copy file="LICENSE.txt" todir="${build.app.dir}" />
-    <copy file="README.txt" todir="${build.app.dir}" />
+    <copy file="README.md" todir="${build.app.dir}" />
     <!-- Determine build platform [windows, mac, unix] -->
     <condition property="os.target.name" value="windows">
         <os family="windows" />
@@ -697,14 +718,18 @@
     <!-- Prepare Mac dist directory -->
     <delete dir="${dist_macos}" followsymlinks="false" />
     <mkdir dir="${dist_macos}" />
-    <mkdir dir="${dist_macos_old}" />
     <copy file="LICENSE.txt" todir="${dist_macos}" />
-    <copy file="README.txt" todir="${dist_macos}" />
+    <copy file="README.md" todir="${dist_macos}" />
+    <!-- Prepare Win32 dist directory -->
+    <delete dir="${dist_win32}" followsymlinks="false" />
+    <mkdir dir="${dist_win32}" />
+    <copy file="LICENSE.txt" todir="${dist_win32}" />
+    <copy file="README.md" todir="${dist_win32}" />
     <!-- Prepare Win dist directory -->
     <delete dir="${dist_win}" followsymlinks="false" />
     <mkdir dir="${dist_win}" />
     <copy file="LICENSE.txt" todir="${dist_win}" />
-    <copy file="README.txt" todir="${dist_win}" />
+    <copy file="README.md" todir="${dist_win}" />
     <!-- Create executable files. -->
     <for list="${executables.list}" param="executable" delimiter="+">
       <sequential>
@@ -714,8 +739,8 @@
         <propertyregex property="exe.class" select="\4" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
         <propertyregex property="exe.args" select="\5" input="@{executable}" regexp="([^,]*),([^,]*),([^,]*),([^,]*),([^,]*)" override="yes"/>
         <antcall>
-          <target name="dist_macos_old" />
           <target name="dist_macos" />
+          <target name="dist_win32" />
           <target name="dist_win" />
           <param name="executable.file.longname" value="${exe.longname}" />
           <param name="executable.file.name" value="${exe.file}" />
@@ -728,6 +753,7 @@
     </for>
     <antcall target="dist_src" />
     <antcall target="dist_mac_dmg" />
+    <zip destfile="${dist_win32_base}/${dist_name}.zip" basedir="${dist_win32_base}/${dist_name}" />
     <zip destfile="${dist_win_base}/${dist_name}.zip" basedir="${dist_win_base}/${dist_name}" />
     <echo message="The ${name} distributions can be found in ${dist.dir}" />
   </target>
@@ -815,10 +841,10 @@ Content-Type: x-java-archive
         </echo>
       </sequential>
     </for>
-    <copy file="${resource.dir}/webstart/.htaccess" todir="${build.webstart.dir}" />
+    <copy file="${src.main.dir}/webapp/webstart/.htaccess" todir="${build.webstart.dir}" />
     <!-- Copy logo and required runtime version for installer -->
-    <copy file="${resource.dir}/webstart/webstart-logo.gif" todir="${build.webstart.dir}" />
-    <copy file="${resource.dir}/webstart/RequiredWebstartRunner.version" todir="${build.webstart.dir}" />
+    <copy file="${src.main.dir}/webapp/webstart/webstart-logo.gif" todir="${build.webstart.dir}" />
+    <copy file="${src.main.dir}/webapp/webstart/RequiredWebstartRunner.version" todir="${build.webstart.dir}" />
     <!-- Create jnlp files for web start. -->
     <taskdef classpath="${lib.ant.dir}/roxes-ant-tasks-1.2-2004-01-30.jar" resource="com/roxes/tools/ant/taskdefs.properties" />
     <for list="${executables.list}" param="executable" delimiter="+">
@@ -839,11 +865,11 @@ Content-Type: x-java-archive
     <!-- Copy .html for applet. -->
     <path id="applet.class.path">
       <fileset dir="${build.webstart.dir}/unpacked" includes="*.jar" />
-    </path>	
+    </path>
     <pathconvert property="applet.class.path.property" refid="applet.class.path" pathsep=",">
       <mapper type="flatten" />
     </pathconvert>
-    <copy file="${resource.dir}/webstart/applet.inc" todir="${build.webstart.dir}" overwrite="true">
+    <copy file="${src.main.dir}/webapp/webstart/applet.inc" todir="${build.webstart.dir}" overwrite="true">
       <filterset>
         <filter token="applet.class.main" value="${prg.classfile}" />
         <filter token="applet.class.codebase" value="${webstart.url}/webstart/unpacked" />
@@ -858,7 +884,7 @@ Content-Type: x-java-archive
       </filterset>
     </copy>
     <copy todir="${build.webstart.dir}">
-      <fileset dir="${resource.dir}/webstart" includes="jquery*,applet*" />
+      <fileset dir="${src.main.dir}/webapp/webstart" includes="jquery*,applet*" />
     </copy>  
     <!-- Output info -->
     <echo message="The ${name} Web Start Application can be found in ${build.webstart.dir}"/>  </target>

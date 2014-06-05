@@ -1,10 +1,10 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view.comp;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
@@ -14,7 +14,6 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTest;
-
 import king.lib.access.ImageLoader;
 import king.lib.util.Translator;
 
@@ -27,7 +26,7 @@ import king.lib.util.Translator;
 public class LabComponentPanel extends ComponentPanel {
   
   /** The selection button. */
-  private AbstractButton selectionButton;
+  private ImageToggleButton selectionButton;
 
   
   /**
@@ -48,47 +47,49 @@ public class LabComponentPanel extends ComponentPanel {
     Image normalImage;
     Image rolloverImage;
     Image selectedImage;
+    String text;
     Class<? extends LabTest> labTest = component.getLabTest();
     if (labTest.equals(BloodGasLabTest.class)) {
-      normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Abg.png");
-      rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-AbgRol.png");
-      selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-AbgSel.png");
+      normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3.png");
+      rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3Rol.png");
+      selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3Sel.png");
+      text = Translator.getString("button.ABG[i18n]: ABG");
       setLocation(0, 464);
+      setSize(40, 24);
     }
     else if (labTest.equals(ChemistryLabTest.class)) {
-      normalImage = ImageLoader.getInstance().getImage(
-          Translator.getString("image.ButtonChem[i18n]: conf/image/interface/game/Btn-Chem.png"));
-      rolloverImage = ImageLoader.getInstance().getImage(
-          Translator.getString("image.ButtonChemRol[i18n]: conf/image/interface/game/Btn-ChemRol.png"));
-      selectedImage = ImageLoader.getInstance().getImage(
-          Translator.getString("image.ButtonChemSel[i18n]: conf/image/interface/game/Btn-ChemSel.png"));
+      normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4.png");
+      rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4Rol.png");
+      selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4Sel.png");
+      text = Translator.getString("button.CHEM[i18n]: CHEM");
       setLocation(0, 488);
+      setSize(48, 24);
     }
     else if (labTest.equals(HematologyLabTest.class)) {
-      normalImage = ImageLoader.getInstance().getImage(
-          Translator.getString("image.ButtonHeme[i18n]: conf/image/interface/game/Btn-Heme.png"));
-      rolloverImage = ImageLoader.getInstance().getImage(
-          Translator.getString("image.ButtonHemeRol[i18n]: conf/image/interface/game/Btn-HemeRol.png"));
-      selectedImage = ImageLoader.getInstance().getImage(
-          Translator.getString("image.ButtonHemeSel[i18n]: conf/image/interface/game/Btn-HemeSel.png"));
+      normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4.png");
+      rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4Rol.png");
+      selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4Sel.png");
+      text = Translator.getString("button.HEME[i18n]: HEME");
       setLocation(0, 512);
+      setSize(48, 24);
     }
     else if (labTest.equals(ImagingLabTest.class)) {
-      normalImage = ImageLoader.getInstance().getImage(
-          Translator.getString("image.ButtonImg[i18n]: conf/image/interface/game/Btn-Img.png"));
-      rolloverImage = ImageLoader.getInstance().getImage(
-          Translator.getString("image.ButtonImgRol[i18n]: conf/image/interface/game/Btn-ImgRol.png"));
-      selectedImage = ImageLoader.getInstance().getImage(
-          Translator.getString("image.ButtonImgSel[i18n]: conf/image/interface/game/Btn-ImgSel.png"));
+      normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3.png");
+      rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3Rol.png");
+      selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3Sel.png");
+      text = Translator.getString("button.IMG[i18n]: IMG");
       setLocation(0, 536);
+      setSize(40, 24);
     }
     else {
       throw new RuntimeException("Lab test not defined: " + labTest);
     }
-    setSize(48, 24);
-
+    
     // add button
     selectionButton = new ImageToggleButton(normalImage, rolloverImage, selectedImage, selectedImage);
+    selectionButton.setText(text);
+    selectionButton.setForeground(Color.RED);
+    selectionButton.setRolloverColor(Color.GREEN);
     selectionButton.setToolTipText(component.getName());
     selectionButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
@@ -96,10 +97,10 @@ public class LabComponentPanel extends ComponentPanel {
       }
     });
     selectionButton.setLocation(0, 0);
-    selectionButton.setSize(48, 24);
-    add(selectionButton); 
+    selectionButton.setSize(this.getWidth(), this.getHeight());
+    add(selectionButton);
   }
-  
+
   /**
    * Called when the component got updated.
    */

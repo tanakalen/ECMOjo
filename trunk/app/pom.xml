@@ -7,7 +7,7 @@
   <!-- The Basics -->
   <groupId>edu.hawaii.jabsom.tri</groupId>
   <artifactId>ECMOjo</artifactId>
-  <version>2.4.0</version>
+  <version>2.4.1</version>
   <url>http://ecmojo.sourceforge.net</url>
 
   <!-- The Properties -->
@@ -173,7 +173,6 @@
             <phase>package</phase>
             <configuration>
 				<target>
-					<property name="build.compiler" value="extJavac"/>
 				  <!-- Use existing ant buildfile -->
 				  <ant antfile="${basedir}/build.xml">
 				    <target name="dist" />
@@ -226,7 +225,7 @@
 			<fileSet>
 			  <directory>${basedir}</directory>
 			  <includes>
-				<include>README.txt</include>
+				<include>README.md</include>
 				<include>LICENSE.txt</include>
 			  </includes>
 		    </fileSet>

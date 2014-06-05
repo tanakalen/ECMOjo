@@ -1,0 +1,6 @@
+This product includes software developed by :
+ - JGoodies under BSD open source license
+ - PNuts under Sun Public License
+ - jsyntaxpane under Apache License 2.0
+ - Swinglabs swingx subproject under LGPL-2.1
+

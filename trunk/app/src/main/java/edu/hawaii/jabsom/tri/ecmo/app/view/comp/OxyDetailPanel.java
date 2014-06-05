@@ -10,13 +10,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
+import javax.swing.JLabel;
+
 import king.lib.access.ImageLoader;
 import king.lib.out.Error;
 import king.lib.util.Translator;
-
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.OxygenatorAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.KnobButton;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.KnobButton.RotationListener;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.OxygenatorComponent;
 
@@ -30,7 +32,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
 
   /** The detail image. */
   private Image detailImage = ImageLoader.getInstance().getImage(
-      Translator.getString("image.DetailOxygenator[i18n]: conf/image/interface/game/Detail-Oxygenator.png"));
+      "conf/image/interface/game/Detail-Oxygenator.png");
   
   /** The red alert image. */
   private Image redAlertImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Alrt-RedMedium.png");
@@ -173,7 +175,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     
     // add knob button
     Image knobImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-KnobBase.png");
-    Image dialImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-KnobDial.png");    
+    Image dialImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-KnobDial.png");
     Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-KnobRollover.png");
     KnobButton knobButton = new KnobButton(knobImage, dialImage, rolloverImage, 1, 18);
     knobButton.addRotationListener(new RotationListener() {
@@ -181,7 +183,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
         double value = (angle - (Math.PI / 4)) / (Math.PI * 6 / 4);
         OxygenatorAction action = new OxygenatorAction();
         action.setTotalSweepInteger(component.getTotalSweepInteger());
-        action.setTotalSweepDecimal(component.getTotalSweepDecimal());          
+        action.setTotalSweepDecimal(component.getTotalSweepDecimal());
         action.setFiO2(value);
         repaint();
         notifyActionListeners(action);
@@ -192,7 +194,33 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     knobButton.setMaxAngle(Math.PI * 7 / 4);
     knobButton.setLocation(73, 162);
     knobButton.setSize(96, 96);
-    add(knobButton);     
+    add(knobButton);
+    
+    // add label for total sweep
+    TextLabel lblToSweep = createTextLabels(
+        Translator.getString("label.ToSweep[i18n]: Total Sweep"),
+        8f, 182, 217);
+    add(lblToSweep);
+  }
+
+  /**
+   * Private method to simplify & consolidate rendering text labels.
+   *
+   * @param text  String for TextLabel.
+   * @param fontSize  Size of font.
+   * @param x  X-coordinate.
+   * @param y  Y-coordinate.
+   * @return TextLabel object.
+   */
+  private TextLabel createTextLabels(String text, float fontSize, int x, int y) {
+    TextLabel label = new TextLabel(text);
+    label.setHorizontalAlignment(JLabel.CENTER);
+    label.setFont(label.getFont().deriveFont(Font.BOLD, fontSize));
+    label.setDrawShadow(true);
+    label.setDrawBorder(false);
+    label.setLocation(x, y);
+    label.setSize(60, 25);
+    return label;
   }
 
   /**
@@ -244,7 +272,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
       }
     }
   }
-  
+
   /**
    * Paints this component.
    * 
@@ -253,7 +281,7 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-
+    
     // set antialised text
     Graphics2D g2 = (Graphics2D)g;
     g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -266,8 +294,8 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     g.drawImage(bottomBarImage, 188, 182, this);
     int totalSweepIntegerBarTopHeight = (int) component.getTotalSweep() * 15;
     for (int i = 0; i < (totalSweepIntegerBarTopHeight - 2); i++) {
-      g.drawImage(middleBarImage, 188, 181 - i, this); 
-    }  
+      g.drawImage(middleBarImage, 188, 181 - i, this);
+    }
     g.drawImage(topBarImage, 188, 180 - totalSweepIntegerBarTopHeight, this);
     
     // total sweep decimal bar
@@ -278,15 +306,15 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
       g.drawImage(middleBarImage, 228, 181 - i, this);    
     }
     g.drawImage(topBarImage, 228, 180 - totalSweepDecimalBarTopHeight, this);
-
+    
     // draw blinking red light if there is an alarm
     if (component.isAlarm()){
       if ((((System.nanoTime()) / 500000000) % 2) == 0) {
         g.drawImage(redAlertImage, 136, 31, this);
       }
       else {
-        g.drawImage(blackAlertImage, 136, 31, this);        
-      }      
+        g.drawImage(blackAlertImage, 136, 31, this);
+      }
     }
     
     // set text properties
@@ -298,7 +326,6 @@ public class OxyDetailPanel extends DetailPanel implements Runnable {
     String text = Math.round(value * 100) + "%";
     g.drawString(text, 54, 130);
     
-
     g.setFont(g.getFont().deriveFont(Font.BOLD, 15f));
     value = component.getTotalSweep();
     text = Translator.getString("text.Sweep[i18n]: Sweep") + ": "

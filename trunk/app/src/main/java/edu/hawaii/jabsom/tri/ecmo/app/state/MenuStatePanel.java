@@ -5,12 +5,14 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
 
 import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.ECMOAppRelease;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.TextLabel;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.TextToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioCreator;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Scenario;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Equipment;
@@ -32,10 +34,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
-import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Map;
 
 import king.lib.access.ImageLoader;
 import king.lib.util.Translator;
@@ -49,8 +52,7 @@ import king.lib.util.Translator;
 public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
 
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage(
-      Translator.getString("image.menubase[i18n]: conf/image/interface/menu/Base.png"));
+  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/menu/Base.png");
 
   /** The state. */
   private MenuState state;
@@ -98,50 +100,60 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     
     // add about button
     Image aboutNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonAbout[i18n]: conf/image/interface/menu/Btn-About.png"));
-    Image aboutRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonAboutRol[i18n]: conf/image/interface/menu/Btn-AboutRol.png"));
+        "conf/image/interface/menu/BtnBig.png");
+    Image aboutRolloverImage = aboutNormalImage;
     Image aboutSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonAboutSel[i18n]: conf/image/interface/menu/Btn-AboutSel.png"));
+        "conf/image/interface/menu/BtnBigSel.png");
     final ImageButton aboutButton = new ImageButton(aboutNormalImage, aboutRolloverImage, aboutSelectedImage);
+    aboutButton.setText(
+        Translator.getString("button.About[i18n]: About"));
     aboutButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         // and help
         state.aboutState();
       }      
     });
-    aboutButton.setLocation(570, 18);
+    aboutButton.setLocation(566, 22);
     aboutButton.setSize(120, 48);
-    add(aboutButton);    
-
-    // add contact button
-    Image contactNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonContact[i18n]: conf/image/interface/menu/Btn-Contact.png"));
-    Image contactRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonContactRol[i18n]: conf/image/interface/menu/Btn-ContactRol.png"));
-    Image contactSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonContactSel[i18n]: conf/image/interface/menu/Btn-ContactSel.png"));
-    ImageButton contactButton = new ImageButton(contactNormalImage, contactRolloverImage, contactSelectedImage);
-    contactButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent arg0) {
-        // and help
-        state.contactState();
-      }      
+    add(aboutButton);
+    
+    // add language select combobox
+    String[] langStrings = Configuration.getInstance().getAvailableLanguages();
+    String currentLanguage = Configuration.getInstance().getConfiguredLanguage();
+    int currentLanguageIndex = 0;
+    for (String language:langStrings) {
+      if (currentLanguage.equals(language)) {
+        break;
+      }
+      currentLanguageIndex++;
+    }
+    JComboBox<String> langList = new JComboBox<String>(langStrings);
+    langList.setSelectedIndex(currentLanguageIndex);
+//    ComboBoxRenderer renderer = new ComboBoxRenderer();
+//    langList.setRenderer(renderer);
+    langList.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        JComboBox cb = (JComboBox)e.getSource();
+        int selected = (int)cb.getSelectedIndex();
+        Configuration.getInstance().setLang(selected);
+        state.menuState();
+      }
     });
-    contactButton.setLocation(680, 18);
-    contactButton.setSize(120, 48);
-    add(contactButton);    
+    langList.setLocation(690, 30);
+    langList.setSize(100, 30);
+    add(langList);
     
     // button group
     ButtonGroup buttonGroup = new ButtonGroup();
     
-    // add scenario toogle button
-    Image scenarioNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonScenario[i18n]: conf/image/interface/menu/Btn-Scenario.png"));
-    Image scenarioRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonScenarioRol[i18n]: conf/image/interface/menu/Btn-ScenarioRol.png"));
-    ImageToggleButton scenarioButton 
-        = new ImageToggleButton(scenarioNormalImage, scenarioRolloverImage, scenarioNormalImage);
+    // add scenario toggle button
+    String sScenario = Translator.getString("text.Scenario[i18n]: Scenario");
+    TextToggleButton scenarioButton 
+          = new TextToggleButton.Builder(sScenario).
+                                 normal(Color.WHITE).
+                                 rollover(Color.GREEN).
+                                 pressed(Color.WHITE).build();
+    scenarioButton.setFont(scenarioButton.getFont().deriveFont(Font.BOLD, 12f)); 
     scenarioButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         // activate the correct panel
@@ -154,24 +166,25 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     add(scenarioButton);
     buttonGroup.add(scenarioButton);
 
-    // add simulation toogle button
-    Image simulNormalImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonSimulation[i18n]: conf/image/interface/menu/Btn-Simulation.png"));
-    Image simulRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonSimulationRol[i18n]: conf/image/interface/menu/Btn-SimulationRol.png"));
-    ImageToggleButton simulButton 
-        = new ImageToggleButton(simulNormalImage, simulRolloverImage, simulNormalImage);
-    simulButton.addActionListener(new ActionListener() {
+    // add simulation toggle button
+    String sSimulation = Translator.getString("text.Simulation[i18n]: Simulation");
+    TextToggleButton simulationButton 
+          = new TextToggleButton.Builder(sSimulation).
+                                 normal(Color.WHITE).
+                                 rollover(Color.GREEN).
+                                 pressed(Color.WHITE).build();
+    simulationButton.setFont(simulationButton.getFont().deriveFont(Font.BOLD, 12f)); 
+    simulationButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         // activate the correct panel
         simulationListPanel.setVisible(true);
         scenarioListPanel.setVisible(false);
       }
     });
-    simulButton.setSize(96, 40);
-    simulButton.setLocation(176, 130);
-    add(simulButton);
-    buttonGroup.add(simulButton);
+    simulationButton.setSize(96, 40);
+    simulationButton.setLocation(176, 130);
+    add(simulationButton);
+    buttonGroup.add(simulationButton);
    
     // add scenario list panel
     scenarioListPanel = new ScenarioListPanel(state.getScenarios());
@@ -188,7 +201,15 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     simulationListPanel.setSize(385, 460);
     simulationListPanel.setLocation(37, 110);
     add(simulationListPanel);
- 
+
+    // add label: ECMO Circuit i18n
+    JLabel lblCompSelPanel = new JLabel(Translator.getString("label.ECMOCircuit[i18n]: ECMO Circuit"));
+    lblCompSelPanel.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f));
+    lblCompSelPanel.setForeground(Color.GRAY);
+    lblCompSelPanel.setLocation(458, 103);
+    lblCompSelPanel.setSize(150, 20);
+    add(lblCompSelPanel);
+
     // add component selection panel
     JPanel componentSelectionPanel = new JPanel();
     componentSelectionPanel.setOpaque(false);
@@ -221,20 +242,16 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     else {
       vaRadio.setSelected(true);
     }
-    // TODO: add text label for Mode button group
-//    TextLabel textLabelVV = new TextLabel(Translator.getString("label.modeVV[i18n]: Veno-venous"));
-//    textLabelVV.setHorizontalAlignment(JLabel.LEFT);
-//    textLabelVV.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f)); 
-//    textLabelVV.setLocation(32, 15);
-//    textLabelVV.setSize(120, 45);
-//    componentSelectionPanel.add(textLabelVV);
-//    TextLabel textLabelVA = new TextLabel(Translator.getString("label.modeVA[i18n]: Veno-arterial"));
-//    textLabelVA.setHorizontalAlignment(JLabel.LEFT);
-//    textLabelVA.setFont(textLabel.getFont().deriveFont(Font.BOLD, 14f)); 
-//    textLabelVA.setLocation(174, 15);
-//    textLabelVA.setSize(120, 45);
-//    componentSelectionPanel.add(textLabelVA);
-    
+    // add label: Mode VV or VA i18n
+    TextLabel lblModeVV = createTextLabels(
+        Translator.getString("label.ModeVV[i18n]: Veno-venous"),
+        14f, 32, 15);
+    componentSelectionPanel.add(lblModeVV);
+    TextLabel lblModeVA = createTextLabels(
+        Translator.getString("label.ModeVA[i18n]: Veno-arterial"),
+        14f, 174, 15);
+    componentSelectionPanel.add(lblModeVA);
+
     ButtonGroup oxygenatorButtonGroup = new ButtonGroup();
     Image sciMedRadioRolloverImage 
       = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkRol.png");
@@ -254,7 +271,7 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     quadroxDRadio.setOpaque(false);
     quadroxDRadio.setSize(32, 32);
     quadroxDRadio.setLocation(142, 39);
-    componentSelectionPanel.add(quadroxDRadio);    
+    componentSelectionPanel.add(quadroxDRadio);
     oxygenatorButtonGroup.add(quadroxDRadio);
     if (Configuration.getInstance().isSelectionSiliconeOxygenator()) {
       siliconeRadio.setSelected(true);
@@ -262,6 +279,15 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     else {
       quadroxDRadio.setSelected(true);
     }
+    // add label: Oxygenator Silicon or PMP i18n
+    TextLabel lblOxySil = createTextLabels(
+        Translator.getString("label.OxySil[i18n]: Silicon"),
+        14f, 32, 48);
+    componentSelectionPanel.add(lblOxySil);
+    TextLabel lblOxyPMP = createTextLabels(
+        Translator.getString("label.OxyPMP[i18n]: PMP"),
+        14f, 174, 48);
+    componentSelectionPanel.add(lblOxyPMP);
     
     ButtonGroup pumpButtonGroup = new ButtonGroup();
     Image rollerRadioRolloverImage 
@@ -290,12 +316,34 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     else {
       centrifugalRadio.setSelected(true);
     }
-
+    // add label: Pump roller or centrifugal i18n
+    TextLabel lblPumpRol = createTextLabels(
+        Translator.getString("label.PumpRol[i18n]: Roller Pump"),
+        13f, 30, 80);
+    componentSelectionPanel.add(lblPumpRol);
+    TextLabel lblPumpCen = createTextLabels(
+        Translator.getString("label.Centrifugal[i18n]: Centrifugal"),
+        13f, 174, 80);
+    componentSelectionPanel.add(lblPumpCen);
+    
     Icon disabled = new ImageIcon(ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-CheckmarkDis.png"));
     JLabel ventilatorCheckmark = new JLabel(disabled);
     ventilatorCheckmark.setSize(32, 32);
     ventilatorCheckmark.setLocation(0, 103);
-    componentSelectionPanel.add(ventilatorCheckmark);    
+    componentSelectionPanel.add(ventilatorCheckmark);
+    // add label: Ventilator conventional or HFOV i18n
+    TextLabel lblVentCon = createTextLabels(
+        Translator.getString("label.VentCon[i18n]: Conventional"),
+        14f, 30, 111);
+    lblVentCon.setGradientTopColor(Color.GRAY);
+    lblVentCon.setGradientBottomColor(Color.GRAY);
+    componentSelectionPanel.add(lblVentCon);
+    TextLabel lblVentHFOV = createTextLabels(
+        Translator.getString("label.VentHFOV[i18n]: HFOV"),
+        14f, 174, 111);
+    lblVentHFOV.setGradientTopColor(Color.GRAY);
+    lblVentHFOV.setGradientBottomColor(Color.GRAY);
+    componentSelectionPanel.add(lblVentHFOV);
     
     // add scenario selection listener
     ScenarioSelectionListener scenarioSelectionListener = new ScenarioSelectionListener() {
@@ -377,8 +425,29 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     boolean scenarioSelection = Configuration.getInstance().isSelectionScenarioTab();
     scenarioButton.setSelected(scenarioSelection);
     scenarioListPanel.setVisible(scenarioSelection);
-    simulButton.setSelected(!scenarioSelection);
+    simulationButton.setSelected(!scenarioSelection);
     simulationListPanel.setVisible(!scenarioSelection);
+  }
+  
+  /**
+   * Private method to simplify & consolidate rendering config box text labels.
+   *
+   * @param text  String for TextLabel.
+   * @param fontSize  Size of font.
+   * @param x  X-coordinate.
+   * @param y  Y-coordinate.
+   * @return TextLabel object.
+   */
+  private TextLabel createTextLabels(String text, float fontSize, int x, int y) {
+    TextLabel label = new TextLabel(text);
+    label.setHorizontalAlignment(JLabel.LEFT);
+    label.setFont(label.getFont().deriveFont(Font.BOLD, fontSize));
+    label.setBorderColor(new Color(0.0f, 0.0f, 0.0f, 0.25f));
+    label.setDrawBorder(false);
+    label.setGradientTopColor(new Color(0.9f, 0.9f, 0.9f));
+    label.setLocation(x, y);
+    label.setSize(120, 45);
+    return label;
   }
   
   /**
@@ -435,21 +504,25 @@ public class MenuStatePanel extends JPanel implements KeyEventDispatcher {
     g.drawImage(background, 0, 0, this);
     
     // set antialised text
+    Toolkit tk = Toolkit.getDefaultToolkit();
+    Map desktopHints = (Map)(tk.getDesktopProperty("awt.font.desktophints"));
     Graphics2D g2 = (Graphics2D)g;
-    g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    if(desktopHints != null) {
+        g2.addRenderingHints(desktopHints);
+    }
     
     // text properties
-    g.setFont(g.getFont().deriveFont(10f));
-    g.setColor(Color.DARK_GRAY);
-
+    g2.setFont(g.getFont().deriveFont(10f));
+    g2.setColor(Color.DARK_GRAY);
+    
     // draw editor info
-    String editor = "Press 'E' to open the scenario editor.";
-    g.drawString(editor, 5, 595);
+    String editor = Translator.getString("text.editor[i18n]: Press 'E' to open the scenario editor");
+    g2.drawString(editor, 5, 595);
     
     // draw the release info
-    String release = "Release Version: " + ECMOAppRelease.getReleaseVersion() + " | " + ECMOAppRelease.getReleaseTime();
+    String release = Translator.getString("text.ReleaseVersion[i18n]: Release Version")
+        + ": " + ECMOAppRelease.getReleaseVersion() + " | " + ECMOAppRelease.getReleaseTime();
     int width = g.getFontMetrics().stringWidth(release);
-    g.drawString(release, 800 - width - 5, 595);
+    g2.drawString(release, 800 - width - 5, 595);
   }
 }

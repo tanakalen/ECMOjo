@@ -26,7 +26,7 @@ import king.lib.util.Translator;
 public class AboutStatePanel extends JPanel {
 
   /** The panel image. */
-  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/about/Base.jpg");
+  private Image background = ImageLoader.getInstance().getImage("conf/image/interface/Background.png");
     
   /** The info text. */
 //  private final String infoText;
@@ -75,7 +75,7 @@ public class AboutStatePanel extends JPanel {
             + "<h1>Credits</h1>"
             + "Lawrence P. Burgess, MD, Principal Investigator<br>"
             + "Mark T. Ogino, MD, Project Manager<br>"
-            + "Christoph Aschwanden, PhD, Lead Developer<br>"
+            + "Christoph Aschwanden, PhD, Developer<br>"
             + "Kin Lik Wang (Alex), Developer<br>"
             + "Len Y. Tanaka, MD, Developer<br>"
             + "Kaleiohu Lee, Artist<br>"
@@ -85,11 +85,40 @@ public class AboutStatePanel extends JPanel {
             + "Kent Kelly, CCP, Advisor<br>"
             + "Melody Kilcommons, RNC, Advisor<br>"
             + "John Lutz, Advisor<br>"
+            + "Takanari Ikeyama, MD, Translation (Japanese)<br>"
+            + "Yuko Shiima, MD, Translation (Japanese)<br>"
+            + "Felipe Amaya, Translation (Spanish)<br>"
             + "<br>"
-            + "<h1>Acknowledgement</h1>"
+            + "<h1>Acknowledgment</h1>"
             + "This project has been supported by grant No. W81XWH-06-2-0061 awarded by Department of Defense (DoD), "
-            + "United States of America.<br>"
+            + "United States of America.<br><br>"
             )
+        + "<h1>General Feedback</h1>"  
+        + "For general feedback and feature requests, contact the various team members via email or join our "
+        + "discussion forum:<br>"
+        + " - <a href=\"http://sourceforge.net/projects/ecmojo/forums/forum/874361\">Open Discussion &amp; "
+        + " Feature Requests</a><br>"
+        + " - <a href=\"http://ecmojo.sourceforge.net/about.php\">Contact List</a><br>"
+        + "<br>"
+        + "<h1>Bug Reports &amp; Support</h1>"  
+        + "For bug reports and support, visit the technical support forum, contact us via email or submit "
+        + "problems to our bug tracker:<br>"
+        + " - <a href=\"https://sourceforge.net/projects/ecmojo/forums/forum/874362\">Technical Support</a><br>"
+        + " - <a href=\"https://sourceforge.net/tracker/?func=browse&group_id=241657&atid=1116905\">Bug Tracker</a><br>"
+        + " - Email: <a href=\"mailto:808ecmojo@gmail.com\">808ecmojo@gmail.com</a><br>"
+        + "<br>"
+        + "<h1>Contribute</h1>"  
+        + "ECMOjo is open source software hosted on SourceForge. Contact us to join the effort:<br>"
+        + " - <a href=\"https://sourceforge.net/projects/ecmojo/forums/forum/874363\">Developers Forum</a><br>"
+        + " - Email: <a href=\"mailto:808ecmojo@gmail.com\">808ecmojo@gmail.com</a><br>"
+        + "<br>"
+        + "<h1>Website &amp; Email</h1>"
+        + "Visit our website: "
+        + "<a href=\"http://ecmojo.sourceforge.net\">http://ecmojo.sourceforge.net</a><br>"
+        + "Contact us at: "
+        + "<a href=\"mailto:808ecmojo@gmail.com\">808ecmojo@gmail.com</a><br>"
+        + "<a href=\"http://ecmojo.sourceforge.net\">"
+        + "<img src=\"http://ecmojo.sourceforge.net/image/interface/minilogo.png\"></a><br>"
     );
     JScrollPane infoScroll = new JScrollPane(infoArea);
     infoScroll.setLocation(15, 95);
@@ -97,7 +126,7 @@ public class AboutStatePanel extends JPanel {
     add(infoScroll);
     
     // add done button
-    Image okButtonImage = ImageLoader.getInstance().getImage("conf/gui/Btn-Ok.png");    
+    Image okButtonImage = ImageLoader.getInstance().getImage("conf/gui/Btn-Ok.png");
     Image okButtonRolloverImage = ImageLoader.getInstance().getImage("conf/gui/Btn-OkRol.png");
     Image okButtonSelectedImage = ImageLoader.getInstance().getImage("conf/gui/Btn-OkSel.png");
     ImageButton okButton = new ImageButton(okButtonImage, okButtonRolloverImage, okButtonSelectedImage);

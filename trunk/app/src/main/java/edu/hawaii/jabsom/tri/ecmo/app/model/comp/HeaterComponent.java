@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
+import king.lib.util.Translator;
+
 
 /**
  * The heater component. 
@@ -68,6 +70,6 @@ public class HeaterComponent extends Component {
    * @return  The name.
    */
   public String getName() {
-    return "Heater";
+    return Translator.getString("text.Heater[i18n]: Heater");
   }
 }

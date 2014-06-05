@@ -1,8 +1,10 @@
 package edu.hawaii.jabsom.tri.ecmo.app.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+
 import javax.swing.JToggleButton;
 
 /**
@@ -30,7 +32,9 @@ public class ImageToggleButton extends JToggleButton {
   private int rolloverToggleYOffset;
   /** The text y offset for pressed. */
   private int pressedYOffset;
-
+  
+  /** The color of text for rollover. */
+  private Color rolColor;
   
   /**
    * Constructor for the button.
@@ -95,14 +99,23 @@ public class ImageToggleButton extends JToggleButton {
     // Enable rollover
     setRolloverEnabled(true);
   }
-
+  
+  /**
+   * Sets Rollover color.
+   * 
+   * @param color  Color of rollover text.
+   */
+  public void setRolloverColor(Color color) {
+    rolColor = color;
+  }
+  
   /**
    * Draws this component.
    *
    * @param g  Graphics context.
    */
   public void paintComponent(Graphics g) {
-    super.paintComponent(g);
+    //super.paintComponent(g);  //BUG: duplicates button text when uncommented.
    
     int width = getSize().width;
     int height = getSize().height;
@@ -126,10 +139,12 @@ public class ImageToggleButton extends JToggleButton {
     if (model.isRollover()) {
       if (model.isSelected()) {
         g.drawImage(this.rolloverToggleImage, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
+        g.setColor(rolColor);
         g.drawString(getText(), x, y + rolloverToggleYOffset);
       }
       else {
         g.drawImage(this.rolloverNonToggleImage, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
+        g.setColor(rolColor);
         g.drawString(getText(), x, y + rolloverNonToggleYOffset);
       }
     }

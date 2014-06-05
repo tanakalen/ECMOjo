@@ -9,7 +9,7 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 
 import king.lib.out.Error;
-
+import king.lib.util.Translator;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 
@@ -109,21 +109,22 @@ public class TimePanel extends JPanel implements Runnable {
 
     // only show when we have a baseline type goal
     if (game.getGoal() instanceof BaselineGoal) {
+      String sBaseline = Translator.getString("text.Baseline[i18n]: BASELINE");
       BaselineGoal goal = (BaselineGoal)game.getGoal();
       boolean blink = (((System.nanoTime()) / 500000000) % 2) == 0;
       
       // draw depending on state
       if (goal.isInit(game)) {
         // blink "BASELINE" as needed
-        g.setFont(g.getFont().deriveFont(Font.BOLD, 32f));        
+        g.setFont(g.getFont().deriveFont(Font.BOLD, 32f));
         if (blink) {
           g.setColor(Color.GRAY);
-          g.drawString("BASELINE", 39, 32);
-          g.drawString("BASELINE", 41, 32);
-          g.drawString("BASELINE", 39, 34);
-          g.drawString("BASELINE", 41, 34);
+          g.drawString(sBaseline, 39, 32);
+          g.drawString(sBaseline, 41, 32);
+          g.drawString(sBaseline, 39, 34);
+          g.drawString(sBaseline, 41, 34);
           g.setColor(Color.YELLOW);
-          g.drawString("BASELINE", 40, 33);
+          g.drawString(sBaseline, 40, 33);
           g.setColor(textColor);
         }       
         
@@ -133,7 +134,10 @@ public class TimePanel extends JPanel implements Runnable {
         if (timeLeft < 0) {
           timeLeft = 0;
         }
-        g.drawString("Time to Scenario Start: " + timeLeft + "s", 40, 60);
+        String sStart = Translator.getString("text.Time2Start[i18n]: Time to Scenario Start")
+                      + ": " + timeLeft
+                      + Translator.getString("label.Sec[i18n]: s");
+        g.drawString(sStart, 40, 60);
       }
       else {
         // draw time left when scenario ends
@@ -145,9 +149,12 @@ public class TimePanel extends JPanel implements Runnable {
         int hours = timeLeft / 3600;
         int minutes = (timeLeft / 60) % 60;
         int seconds = timeLeft % 60;
+        //TODO: Localization for time?
         String text = hours + ":" + ((minutes < 10) ? "0" : "") + minutes
                             + ":" + ((seconds < 10) ? "0" : "") + seconds;
-        g.drawString("Time Left: " + text, 163, 43);
+        String sTimeLeft = Translator.getString("text.TimeLeft[i18n]: Time Left")
+                         + ": ";
+        g.drawString(sTimeLeft + text, 163, 43);
       }
     }
   }
