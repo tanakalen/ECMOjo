@@ -73,28 +73,10 @@ public final class ECMOApp extends JApplet {
     
     // set look and feel
     try {
-      if ((System.getProperty("os.name").equals("Mac OS X"))
-        && (System.getProperty("os.version").startsWith("10.4"))) {
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); // lt_add: broken mac LAF
-      }
-      else {
-        UIManager.setLookAndFeel(new GameLookAndFeel());
-      }
+      UIManager.setLookAndFeel(new GameLookAndFeel());
     }
     catch (UnsupportedLookAndFeelException e) {
       Error.out(e);
-    }
-    catch (ClassNotFoundException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (InstantiationException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (IllegalAccessException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
     }
 
     // tooltip shows faster and longer
