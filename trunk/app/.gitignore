@@ -5,4 +5,6 @@
 *.war
 *.ear
 
-resource/jre
+jre
+dist.properties
+*keepsecret*
