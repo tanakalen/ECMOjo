@@ -956,4 +956,12 @@ Content-Type: x-java-archive
   <target name="webapp-stop" description="webapp: Stop the Web Application" depends="post-init">
     <stop url="${webapp.manager.url}" username="${webapp.username}" password="${webapp.password}" path="/${webapp.name}" />
   </target>
+  <!-- *********************************************************************** -->
+  <target name="usage">
+    <echo message="  Execute 'ant -projecthelp' for build file help."/>
+    <echo message="  Execute 'ant -help' for Ant help."/>
+  </target>
+  <!-- *********************************************************************** -->
+  <target name="help" depends="usage">
+  </target>
 </project>
