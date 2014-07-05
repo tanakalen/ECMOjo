@@ -107,7 +107,7 @@ public class CDIMonitorComponentPanel extends ComponentPanel {
     
     // add label "CDI Monitor"
     String result = Translator.getString("label.CDIMonitor[i18n]: CDI Monitor");
-    // Render the rotated string, fragile custom hack
+    // TODO: Render the rotated string, fragile custom hack
     if (Configuration.getInstance().getLang().equals("ja")) {
       VerticalLabel resultLabel = new VerticalLabel(result);
       resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 10f));

@@ -96,7 +96,7 @@ public class PhysiologicMonitorComponentPanel extends ComponentPanel implements 
     
     // add label "Phy Monitor"
     String result = Translator.getString("label.PhysMonitor[i18n]: Phy Monitor");
-    // Render the rotated string, fragile custom hack
+    // TODO: Render the rotated string, fragile custom hack
     if (Configuration.getInstance().getLang().equals("ja")) {
       VerticalLabel resultLabel = new VerticalLabel(result);
       resultLabel.setFont(resultLabel.getFont().deriveFont(Font.BOLD, 10f));
