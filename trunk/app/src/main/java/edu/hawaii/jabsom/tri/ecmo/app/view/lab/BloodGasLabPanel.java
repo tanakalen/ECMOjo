@@ -26,18 +26,18 @@ import org.jdesktop.swingx.JXTable;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList.LabTestListener;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabList.LabTestListener;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.LabDetailPanel;
 
 /**
- * The chemistry lab test panel. 
+ * The blood gas lab test panel. 
  *
  * @author   Christoph Aschwanden
  * @since    October 7, 2008
  */
-public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestListener {
-
+public class BloodGasLabPanel extends LabDetailPanel implements LabTestListener {
+  
   /** The lab component. */
   private LabComponent component;
   
@@ -47,17 +47,18 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
   /** The table. */
   private JXTable table;
   
+  
   /**
    * Default constructor.
    * 
    * @param component  The component
    */
-  public ChemistryLabTestPanel(final LabComponent component) {
+  public BloodGasLabPanel(final LabComponent component) {
     super(component);
     this.component = component;
     
     // add title
-    JLabel titleLabel = new JLabel(Translator.getString("title.Chemistry[i18n]: Chemistry"));
+    JLabel titleLabel = new JLabel("Blood Gas");
     titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
@@ -71,25 +72,24 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
         "conf/image/interface/game/BtnSmallSel.png");
     
     // add lab request button
-    ImageButton requestButton 
+    ImageButton requestButton
       = new ImageButton(requestButtonImage, requestButtonRolloverImage, requestButtonSelectedImage);
     requestButton.setText(
         Translator.getString("button.newLab[i18n]: Lab"));
     requestButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
-        action.setLabTest(ChemistryLabTest.class);
+        action.setLabTest(BloodGasLab.class);
         notifyActionListeners(action);
       }    
     });
     requestButton.setLocation(173, 34);
     requestButton.setSize(54, 22);
     add(requestButton);
-
+    
     // add table with values
     tableModel = new DefaultTableModel() {
       private DecimalFormat labHundredthsFormatter = new DecimalFormat("###.00");
-      private DecimalFormat labTenthsFormatter = new DecimalFormat("###.0");
       private DecimalFormat labFormatter = new DecimalFormat("###");
       public int getColumnCount() {
         int size = component.getResults().size();
@@ -99,8 +99,8 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
         return size + 1;
       }
       public int getRowCount() {
-        // chemistry has 5 values!
-        return 5;
+        // blood gas has 5 values and 1 type (location)
+        return 6;
       }
       public String getColumnName(int col) {
         if (col == 0) {
@@ -120,15 +120,17 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
         if (col == 0) {
           switch (row) {
             case 0:
-              return "Na";
+              return "Type";
             case 1:
-              return "K";
+              return "pH";
             case 2:
-              return "iCa";
+              return "PCO2";
             case 3:
-              return "Gluc";
+              return "PO2";
             case 4:
-              return "Lactate";
+              return "HCO3";
+            case 5:
+              return "BE";
             default:
               // error condition
               return null;
@@ -139,17 +141,17 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
           if (col <= size) {
             switch (row) {
               case 0:
-                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getNa());
+                return ((BloodGasLab)component.getResults().get(size - col)).getBloodGasType().getName();
               case 1:
-                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getK());
+                return labHundredthsFormatter.format(((BloodGasLab)component.getResults().get(size - col)).getPH());
               case 2:
-                return labHundredthsFormatter.format(((ChemistryLabTest)component.getResults().get(size 
-                    - col)).getIonCa());
+                return labFormatter.format(((BloodGasLab)component.getResults().get(size - col)).getPCO2());
               case 3:
-                return labFormatter.format(((ChemistryLabTest)component.getResults().get(size - col)).getGluc());
+                return labFormatter.format(((BloodGasLab)component.getResults().get(size - col)).getPO2());
               case 4:
-                return labTenthsFormatter.format(((ChemistryLabTest)component.getResults().get(size 
-                    - col)).getLactate());
+                return labFormatter.format(((BloodGasLab)component.getResults().get(size - col)).getHCO3());
+              case 5:
+                return labFormatter.format(((BloodGasLab)component.getResults().get(size - col)).getBE());
               default:
                 // error condition
                 return null;
@@ -166,6 +168,8 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
               case 3:
                 return "N/A";
               case 4:
+                return "N/A";
+              case 5:
                 return "N/A";
               default:
                 // error condition
@@ -245,7 +249,7 @@ public class ChemistryLabTestPanel extends LabDetailPanel implements LabTestList
           Object value, boolean isSelected, boolean hasFocus, int row,
           int column) {
         setBorder(UIManager.getBorder("TableHeader.cellBorder"));
-        setHorizontalAlignment(JLabel.CENTER);   
+        setHorizontalAlignment(JLabel.CENTER);
         setFont(getFont().deriveFont(Font.BOLD));
         setText((value == null) ? "" : value.toString());
         return this;

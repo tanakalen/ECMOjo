@@ -41,11 +41,11 @@ import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.LinkButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.RolloverTable;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList.LabTestListener;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabList.LabTestListener;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.LabDetailPanel;
 import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.AbstractDialog;
 
@@ -55,7 +55,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.view.dialog.AbstractDialog;
  * @author   Christoph Aschwanden
  * @since    October 7, 2008
  */
-public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListener {
+public class ImagingLabPanel extends LabDetailPanel implements LabTestListener {
 
   /** The lab component. */
   private LabComponent component;
@@ -71,7 +71,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
    * 
    * @param component  The component
    */
-  public ImagingLabTestPanel(final LabComponent component) {
+  public ImagingLabPanel(final LabComponent component) {
     super(component);
     this.component = component;
     
@@ -104,7 +104,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
     echoButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
-        action.setLabTest(EchoLabTest.class);
+        action.setLabTest(EchoLab.class);
         notifyActionListeners(action);
       }    
     });
@@ -120,7 +120,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
     ultraButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
-        action.setLabTest(UltrasoundLabTest.class);
+        action.setLabTest(UltrasoundLab.class);
         notifyActionListeners(action);
       }    
     });
@@ -136,7 +136,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
     xrayButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
-        action.setLabTest(XRayLabTest.class);
+        action.setLabTest(XRayLab.class);
         notifyActionListeners(action);
       }    
     });
@@ -168,10 +168,10 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
       public Object getValueAt(int row, int col) {
         int index = component.getResults().size() - 1;
         if (col == 0) {
-          return ((ImagingLabTest)component.getResults().get(index - row));
+          return ((ImagingLab)component.getResults().get(index - row));
         }
         else if (col == 1) {
-          return ((ImagingLabTest)component.getResults().get(index - row)).getTime();
+          return ((ImagingLab)component.getResults().get(index - row)).getTime();
         }
         else {
           // error condition
@@ -220,7 +220,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
       private JPanel actionPanel;
       
       /** The lab test associated. */
-      private ImagingLabTest labTest;
+      private ImagingLab labTest;
       
       /** The link button. */
       private LinkButton viewButton;
@@ -247,7 +247,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
         viewButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
             // get the lab test image
-            ImagingLabTest labTest = (ImagingLabTest)getCellEditorValue();
+            ImagingLab labTest = (ImagingLab)getCellEditorValue();
             Image img = ImageLoader.getInstance().getImage("conf/image/interface/game/lab/" + labTest.getImageName());
 
             // shrink image as need
@@ -287,7 +287,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
             imageLabel.setSize(img.getWidth(null), img.getHeight(null));
             
             // open dialog           
-            imageDialog = new AbstractDialog(ImagingLabTestPanel.this) {
+            imageDialog = new AbstractDialog(ImagingLabPanel.this) {
               // not used
             };
             
@@ -304,12 +304,12 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
             imageDialog.setUndecorated(true);
             imageDialog.setSize(700, 500);
             imageDialog.pack();
-            imageDialog.setLocationRelativeTo(JOptionPane.getFrameForComponent(ImagingLabTestPanel.this));
+            imageDialog.setLocationRelativeTo(JOptionPane.getFrameForComponent(ImagingLabPanel.this));
             imageDialog.addMouseListener(new MouseAdapter() {
               public void mousePressed(MouseEvent event) {
                 imageDialog.setVisible(false);
                 imageDialog.dispose();
-                JOptionPane.getFrameForComponent(ImagingLabTestPanel.this).repaint();
+                JOptionPane.getFrameForComponent(ImagingLabPanel.this).repaint();
               }
             });
             imageDialog.setVisible(true);
@@ -333,7 +333,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
       public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected
                                                    , boolean hasFocus, int row, int column) {
         // set data
-        labTest = (ImagingLabTest)value;
+        labTest = (ImagingLab)value;
         viewButton.setText(labTest.getDescription());
         
         return actionPanel;
@@ -352,7 +352,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
       public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected
                                                  , int row, int col) {
         // set data
-        labTest = (ImagingLabTest)value;
+        labTest = (ImagingLab)value;
         viewButton.setText(labTest.getDescription());
         
         return actionPanel;

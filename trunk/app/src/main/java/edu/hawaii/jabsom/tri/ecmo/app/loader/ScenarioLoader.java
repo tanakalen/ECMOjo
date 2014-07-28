@@ -41,13 +41,13 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.SimulationGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.TutorialGoal.Item;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLab;
 
 import king.lib.out.Error;
 import king.lib.script.model.Language;
@@ -398,7 +398,7 @@ public final class ScenarioLoader {
       LabComponent labComponent = null;
       for (Component component: equipment) {
         if (component instanceof LabComponent) {
-          if (((LabComponent)component).getLabTest().isAssignableFrom(BloodGasLabTest.class)) {
+          if (((LabComponent)component).getLabTest().isAssignableFrom(BloodGasLab.class)) {
             labComponent = (LabComponent)component;
           }
         }
@@ -409,7 +409,7 @@ public final class ScenarioLoader {
       //chemistry
       for (Component component: equipment) {
         if (component instanceof LabComponent) {
-          if (((LabComponent)component).getLabTest().isAssignableFrom(ChemistryLabTest.class)) {
+          if (((LabComponent)component).getLabTest().isAssignableFrom(ChemistryLab.class)) {
             labComponent = (LabComponent)component;
           }
         }
@@ -424,7 +424,7 @@ public final class ScenarioLoader {
       patient.setPtt(Double.NaN);
       for (Component component: equipment) {
         if (component instanceof LabComponent) {
-          if (((LabComponent)component).getLabTest().isAssignableFrom(HematologyLabTest.class)) {
+          if (((LabComponent)component).getLabTest().isAssignableFrom(HematologyLab.class)) {
             labComponent = (LabComponent)component;
           }
         }
@@ -448,7 +448,7 @@ public final class ScenarioLoader {
       LabComponent imagingComponent = null;
       for (Component component: equipment) {
         if (component instanceof LabComponent) {
-          if (((LabComponent)component).getLabTest().isAssignableFrom(ImagingLabTest.class)) {
+          if (((LabComponent)component).getLabTest().isAssignableFrom(ImagingLab.class)) {
             imagingComponent = (LabComponent)component;
           }
         }
@@ -469,7 +469,7 @@ public final class ScenarioLoader {
           }
         }
         else {
-          XRayLabTest labTest = new XRayLabTest();
+          XRayLab labTest = new XRayLab();
           labTest.setDescription("Chest, X-Ray");
           labTest.setImageName(image + ".png");
           labTest.setTime(0);
@@ -482,7 +482,7 @@ public final class ScenarioLoader {
       images = parameters.get("lab-img-us").split(",");
       for (int i = 0; i < images.length; i++) {
         String image = images[i];
-        UltrasoundLabTest labTest = new UltrasoundLabTest();
+        UltrasoundLab labTest = new UltrasoundLab();
         labTest.setDescription("Head, US");
         labTest.setImageName(image + ".png");
         labTest.setTime(0);
@@ -503,7 +503,7 @@ public final class ScenarioLoader {
           }
         }
         else {
-          EchoLabTest labTest = new EchoLabTest();
+          EchoLab labTest = new EchoLab();
           labTest.setDescription("Echo");
           labTest.setImageName(image + ".png");
           labTest.setTime(0);

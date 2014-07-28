@@ -9,11 +9,11 @@ import javax.swing.ButtonGroup;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.Lab;
 import king.lib.access.ImageLoader;
 import king.lib.util.Translator;
 
@@ -48,8 +48,8 @@ public class LabComponentPanel extends ComponentPanel {
     Image rolloverImage;
     Image selectedImage;
     String text;
-    Class<? extends LabTest> labTest = component.getLabTest();
-    if (labTest.equals(BloodGasLabTest.class)) {
+    Class<? extends Lab> labTest = component.getLabTest();
+    if (labTest.equals(BloodGasLab.class)) {
       normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3.png");
       rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3Rol.png");
       selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3Sel.png");
@@ -57,7 +57,7 @@ public class LabComponentPanel extends ComponentPanel {
       setLocation(0, 464);
       setSize(40, 24);
     }
-    else if (labTest.equals(ChemistryLabTest.class)) {
+    else if (labTest.equals(ChemistryLab.class)) {
       normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4.png");
       rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4Rol.png");
       selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4Sel.png");
@@ -65,7 +65,7 @@ public class LabComponentPanel extends ComponentPanel {
       setLocation(0, 488);
       setSize(48, 24);
     }
-    else if (labTest.equals(HematologyLabTest.class)) {
+    else if (labTest.equals(HematologyLab.class)) {
       normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4.png");
       rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4Rol.png");
       selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn4Sel.png");
@@ -73,7 +73,7 @@ public class LabComponentPanel extends ComponentPanel {
       setLocation(0, 512);
       setSize(48, 24);
     }
-    else if (labTest.equals(ImagingLabTest.class)) {
+    else if (labTest.equals(ImagingLab.class)) {
       normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3.png");
       rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3Rol.png");
       selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn3Sel.png");

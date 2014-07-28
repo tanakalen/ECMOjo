@@ -7,7 +7,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
  * @author   king
  * @since    August 19, 2008
  */
-public class ChemistryLabTest extends LabTest {
+public class ChemistryLab extends Lab {
   
   /** The Na (sodium) in mmol/l [100-180]. */
   private double na;

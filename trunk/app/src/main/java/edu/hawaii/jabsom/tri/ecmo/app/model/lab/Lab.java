@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author   king
  * @since    August 19, 2008
  */
-public abstract class LabTest implements Serializable {
+public abstract class Lab implements Serializable {
   
   /**
    * Returns the name of the test.

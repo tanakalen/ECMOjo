@@ -1,12 +1,12 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
 
 /**
- * The X-Ray lab test. 
+ * The Echo lab test. 
  *
  * @author   king
- * @since    August 19, 2008
+ * @since    June 26, 2009
  */
-public class XRayLabTest extends ImagingLabTest {
+public class EchoLab extends ImagingLab {
   
   /**
    * Returns the name of the component.
@@ -14,6 +14,6 @@ public class XRayLabTest extends ImagingLabTest {
    * @return  The name.
    */
   public String getName() {
-    return "X-Ray";
+    return "Echo";
   }
 }

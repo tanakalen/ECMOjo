@@ -6,7 +6,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
  * @author   king
  * @since    August 19, 2008
  */
-public abstract class ImagingLabTest extends LabTest {
+public abstract class ImagingLab extends Lab {
 
   /** The time in seconds relative to the start time. */
   private long time;

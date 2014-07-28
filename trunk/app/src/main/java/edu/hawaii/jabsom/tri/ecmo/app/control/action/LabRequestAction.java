@@ -10,15 +10,15 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Patient;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest.BloodGasType;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.Lab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLab.BloodGasType;
 
 /**
  * The lab request action. 
@@ -29,7 +29,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest.BloodGasType;
 public class LabRequestAction extends Action {
 
   /** The lab test assigned. */
-  private Class<? extends LabTest> labTest;
+  private Class<? extends Lab> labTest;
   
   
   /**
@@ -37,7 +37,7 @@ public class LabRequestAction extends Action {
    *
    * @return  The lab test.
    */
-  public Class<? extends LabTest> getLabTest() {
+  public Class<? extends Lab> getLabTest() {
     return labTest;
   }
 
@@ -46,7 +46,7 @@ public class LabRequestAction extends Action {
    *
    * @param labTest  The lab test to set.
    */
-  public void setLabTest(Class<? extends LabTest> labTest) {
+  public void setLabTest(Class<? extends Lab> labTest) {
     this.labTest = labTest;
   }
 
@@ -58,18 +58,18 @@ public class LabRequestAction extends Action {
   @Override
   public void execute(Game game) {
     // create a new lab result
-    LabTest result = null;
-    if (labTest.equals(BloodGasLabTest.class)) {
+    Lab result = null;
+    if (labTest.equals(BloodGasLab.class)) {
       result = getBloodGas(game.getPatient());
     }
-    else if (labTest.equals(ChemistryLabTest.class)) {
+    else if (labTest.equals(ChemistryLab.class)) {
       result = getChemistry(game.getPatient());
     }
-    else if (labTest.equals(HematologyLabTest.class)) {
+    else if (labTest.equals(HematologyLab.class)) {
       result = getHematology(game.getPatient());
     }
-    else if (labTest.equals(UltrasoundLabTest.class)) {
-      UltrasoundLabTest labTest = new UltrasoundLabTest();
+    else if (labTest.equals(UltrasoundLab.class)) {
+      UltrasoundLab labTest = new UltrasoundLab();
       labTest.setDescription("Ultrasound");
       
       // Create image name depending on the patient
@@ -85,17 +85,17 @@ public class LabRequestAction extends Action {
       labTest.setTime(game.getElapsedTime() / 1000);
       result = labTest;
     }
-    else if (labTest.equals(EchoLabTest.class)) {
+    else if (labTest.equals(EchoLab.class)) {
       TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
       LabComponent imagingComponent = null;
       for (Component component: game.getEquipment()) {
         if (component instanceof LabComponent) {
-          if (((LabComponent)component).getLabTest().isAssignableFrom(ImagingLabTest.class)) {
+          if (((LabComponent)component).getLabTest().isAssignableFrom(ImagingLab.class)) {
             imagingComponent = (LabComponent)component;
           }
         }
       }
-      EchoLabTest labTest = new EchoLabTest();
+      EchoLab labTest = new EchoLab();
       labTest.setDescription("Echo");
       if (imagingComponent.isScenarioEmpty() || (imagingComponent.getScenarioImaging("Echo").size() == 0)) {
         // Create image name depending on the patient
@@ -120,17 +120,17 @@ public class LabRequestAction extends Action {
         result = labTest;
       }
     }
-    else if (labTest.equals(XRayLabTest.class)) {
+    else if (labTest.equals(XRayLab.class)) {
       TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
       LabComponent imagingComponent = null;
       for (Component component: game.getEquipment()) {
         if (component instanceof LabComponent) {
-          if (((LabComponent)component).getLabTest().isAssignableFrom(ImagingLabTest.class)) {
+          if (((LabComponent)component).getLabTest().isAssignableFrom(ImagingLab.class)) {
             imagingComponent = (LabComponent)component;
           }
         }
       }
-      XRayLabTest labTest = new XRayLabTest();
+      XRayLab labTest = new XRayLab();
       labTest.setDescription("X-Ray");
       if (imagingComponent.isScenarioEmpty() || (imagingComponent.getScenarioImaging("X-Ray").size() == 0)) {
         // Create image name depending on the patient
@@ -178,9 +178,9 @@ public class LabRequestAction extends Action {
    * @param patient  Patient to get values from.
    * @return LabTest Lab test component.
    */
-  public LabTest getBloodGas(Patient patient) {
-    LabTest result = null;
-    BloodGasLabTest labTest = new BloodGasLabTest();
+  public Lab getBloodGas(Patient patient) {
+    Lab result = null;
+    BloodGasLab labTest = new BloodGasLab();
     
     //baby gas
     labTest.setBloodGasType(BloodGasType.BABY);
@@ -200,9 +200,9 @@ public class LabRequestAction extends Action {
    * @param patient  Patient to get values from.
    * @return LabTest Lab test component.
    */
-  public LabTest getChemistry(Patient patient) {
-    LabTest result = null;
-    ChemistryLabTest labTest = new ChemistryLabTest();
+  public Lab getChemistry(Patient patient) {
+    Lab result = null;
+    ChemistryLab labTest = new ChemistryLab();
     
     double weight = patient.getWeight();
     
@@ -259,9 +259,9 @@ public class LabRequestAction extends Action {
    * @param patient  Patient to get values from.
    * @return LabTest Lab test component.
    */
-  public LabTest getHematology(Patient patient) {
-    LabTest result = null;
-    HematologyLabTest labTest = new HematologyLabTest();
+  public Lab getHematology(Patient patient) {
+    Lab result = null;
+    HematologyLab labTest = new HematologyLab();
     
     double weight = patient.getWeight();
 

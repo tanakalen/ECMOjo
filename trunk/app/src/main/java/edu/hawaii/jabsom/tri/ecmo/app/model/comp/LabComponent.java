@@ -2,8 +2,8 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.comp;
 
 import java.util.HashMap;
 
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.Lab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabList;
 
 /**
  * The lab component. 
@@ -14,13 +14,13 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList;
 public class LabComponent extends Component {
   
   /** The lab test assigned. */
-  private Class<? extends LabTest> labTest;
+  private Class<? extends Lab> labTest;
   
   /** A hashmap (dictionary) of imaging. */
   private HashMap<String, HashMap> scnMap = new HashMap();
   
   /** A list of lab results. */
-  private LabTestList results = new LabTestList();
+  private LabList results = new LabList();
 
   
   /**
@@ -28,7 +28,7 @@ public class LabComponent extends Component {
    *
    * @return  The lab test.
    */
-  public Class<? extends LabTest> getLabTest() {
+  public Class<? extends Lab> getLabTest() {
     return labTest;
   }
 
@@ -37,7 +37,7 @@ public class LabComponent extends Component {
    *
    * @param labTest  The lab test to set.
    */
-  public void setLabTest(Class<? extends LabTest> labTest) {
+  public void setLabTest(Class<? extends Lab> labTest) {
     this.labTest = labTest;
   }
   
@@ -46,7 +46,7 @@ public class LabComponent extends Component {
    *
    * @return  The results.
    */
-  public LabTestList getResults() {
+  public LabList getResults() {
     return results;
   }
 
@@ -55,7 +55,7 @@ public class LabComponent extends Component {
    * 
    * @param labTest  The lab test to add.
    */
-  public void addResult(LabTest labTest) {
+  public void addResult(Lab labTest) {
     results.add(labTest);
     notifyUpdate();
   }

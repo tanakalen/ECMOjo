@@ -6,7 +6,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
  * @author   king
  * @since    August 19, 2008
  */
-public class UltrasoundLabTest extends ImagingLabTest {
+public class UltrasoundLab extends ImagingLab {
   
   /**
    * Returns the name of the component.
