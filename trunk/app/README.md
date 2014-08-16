@@ -47,8 +47,6 @@ Department of Defense (DoD), United States of America.
 Installation
 ------------
 
-**Ant:**
-
 **Windows:**  
   Unzip file. Copy specific application directory to desired location. Double-click application exe file.
 
