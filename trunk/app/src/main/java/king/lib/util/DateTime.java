@@ -5,24 +5,31 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 /**
  * The date and time class. The time is stored in UTC from the epoch. Please note that the timestamp is time
  * zone independent. Use getTimestamp() and setTimestamp(...) for time zone independence.
  * <p>
  * UTC from Epoch: A millisecond value that is an offset from the Epoch, January 1, 1970 00:00:00.000 UTC.
- *                 
+ * 
  * @author Christoph Aschwanden
  * @since September 2, 2008
  */
 public class DateTime implements Serializable, Comparable {
 
-  /** The timestamp. */
-  private long timestamp;
+  /** The old style timestamp [to be deprecated]. */
+  private long oldtimestamp;
   
   /** The underlying calendar object is only created when needed. */
   private GregorianCalendar calendar;
   
+  /** The timestamp. */
+  private OffsetDateTime timestamp;
+  
+  /** Access system clock with UTC timezone. */
+  Clock clock = Clock.system(ZoneId.of("UTC"));
   
   /**
    * Constructor for date/time using the current time in the current time zone. The current time is
@@ -38,7 +45,8 @@ public class DateTime implements Serializable, Comparable {
    * @param timestamp  The timestamp in UTC milliseconds from the epoch.
    */
   public DateTime(long timestamp) {
-    this.timestamp = timestamp;
+    this.oldtimestamp = timestamp;
+    this.timestamp = OffsetDateTime.now(clock);
   }
   
   /**
@@ -49,7 +57,7 @@ public class DateTime implements Serializable, Comparable {
   private synchronized GregorianCalendar calendar() {
     if (calendar == null) {
       calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-      calendar.setTimeInMillis(timestamp);
+      calendar.setTimeInMillis(oldtimestamp);
     }
     return calendar;
   }
@@ -176,7 +184,7 @@ public class DateTime implements Serializable, Comparable {
    * @param timestamp  The timestamp in UTC milliseconds from the epoch.
    */
   public void setTimestamp(long timestamp) {
-    this.timestamp = timestamp;
+    this.oldtimestamp = timestamp;
     if (calendar != null) {
       calendar.setTimeInMillis(timestamp);
     }
@@ -188,7 +196,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The timestamp in UTC milliseconds from the epoch.
    */
   public long getTimestamp() {
-    return timestamp;
+    return oldtimestamp;
   }
   
   /**
@@ -217,7 +225,7 @@ public class DateTime implements Serializable, Comparable {
     }
     calendar.set(year, month - 1, day, hour, minute, second);
     calendar.set(Calendar.MILLISECOND, millisecond);
-    timestamp = calendar.getTimeInMillis();
+    oldtimestamp = calendar.getTimeInMillis();
   }
   
   /**
@@ -247,7 +255,7 @@ public class DateTime implements Serializable, Comparable {
     calendar.set(year, month - 1, day, hour, minute, second);
     calendar.set(Calendar.MILLISECOND, millisecond);
     calendar().setTimeInMillis(calendar.getTimeInMillis());
-    timestamp = calendar.getTimeInMillis();
+    oldtimestamp = calendar.getTimeInMillis();
   }
   
   /**
@@ -278,7 +286,7 @@ public class DateTime implements Serializable, Comparable {
     calendar.set(year, month - 1, day, hour, minute, second);
     calendar.set(Calendar.MILLISECOND, millisecond);
     calendar().setTimeInMillis(calendar.getTimeInMillis());
-    timestamp = calendar.getTimeInMillis();
+    oldtimestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -504,7 +512,7 @@ public class DateTime implements Serializable, Comparable {
       case Calendar.SATURDAY:
         return 6;
       case Calendar.SUNDAY:
-        return 7;        
+        return 7;
       default:
         // invalid
         throw new RuntimeException("Illegal weekday encountered: " + day);
@@ -534,7 +542,7 @@ public class DateTime implements Serializable, Comparable {
       case Calendar.SATURDAY:
         return 6;
       case Calendar.SUNDAY:
-        return 7;        
+        return 7;
       default:
         // invalid
         throw new RuntimeException("Illegal weekday encountered: " + day);
@@ -565,7 +573,7 @@ public class DateTime implements Serializable, Comparable {
       case Calendar.SATURDAY:
         return 6;
       case Calendar.SUNDAY:
-        return 7;        
+        return 7;
       default:
         // invalid
         throw new RuntimeException("Illegal weekday encountered: " + day);
@@ -771,7 +779,7 @@ public class DateTime implements Serializable, Comparable {
   public void addYears(int years) {
     GregorianCalendar calendar = calendar();
     calendar.add(Calendar.YEAR, years);
-    timestamp = calendar.getTimeInMillis();
+    oldtimestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -782,7 +790,7 @@ public class DateTime implements Serializable, Comparable {
   public void addMonths(int months) {
     GregorianCalendar calendar = calendar();
     calendar.add(Calendar.MONTH, months);
-    timestamp = calendar.getTimeInMillis();
+    oldtimestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -793,7 +801,7 @@ public class DateTime implements Serializable, Comparable {
   public void addDays(int days) {
     GregorianCalendar calendar = calendar();
     calendar.add(Calendar.DAY_OF_MONTH, days);
-    timestamp = calendar.getTimeInMillis();
+    oldtimestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -804,7 +812,7 @@ public class DateTime implements Serializable, Comparable {
   public void addHours(int hours) {
     GregorianCalendar calendar = calendar();
     calendar().add(Calendar.HOUR, hours);
-    timestamp = calendar.getTimeInMillis();
+    oldtimestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -815,7 +823,7 @@ public class DateTime implements Serializable, Comparable {
   public void addMinutes(int minutes) {
     GregorianCalendar calendar = calendar();
     calendar.add(Calendar.MINUTE, minutes);
-    timestamp = calendar.getTimeInMillis();
+    oldtimestamp = calendar.getTimeInMillis();
   }
 
   /**
@@ -826,7 +834,7 @@ public class DateTime implements Serializable, Comparable {
   public void addSeconds(int seconds) {
     GregorianCalendar calendar = calendar();
     calendar.add(Calendar.SECOND, seconds);
-    timestamp = calendar.getTimeInMillis();
+    oldtimestamp = calendar.getTimeInMillis();
   }
   
   /**
@@ -837,7 +845,7 @@ public class DateTime implements Serializable, Comparable {
   public void addMilliseconds(int milliseconds) {
     GregorianCalendar calendar = calendar();
     calendar.add(Calendar.MILLISECOND, milliseconds);
-    timestamp = calendar.getTimeInMillis();
+    oldtimestamp = calendar.getTimeInMillis();
   }
   
   /**
@@ -847,7 +855,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  True if this date/time is before the inputed date/time.
    */
   public boolean before(DateTime dateTime) {
-    return timestamp < dateTime.timestamp;
+    return oldtimestamp < dateTime.oldtimestamp;
   }
   
   /**
@@ -857,7 +865,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  True if this date/time is after the inputed date/time.
    */
   public boolean after(DateTime dateTime) {
-    return timestamp > dateTime.timestamp;
+    return oldtimestamp > dateTime.oldtimestamp;
   }
 
   /**
@@ -1027,6 +1035,9 @@ public class DateTime implements Serializable, Comparable {
    * @return  The formated date/time.
    */
   public String toString() {
+    ZonedDateTime zdt = ZonedDateTime.from(this.timestamp);
+    System.out.println(zdt.format(DateTimeFormatter.ofPattern("yyyy.MM.dd G 'at' HH:mm:ss z")));
+    System.out.println(formatUTC("yyyy.MM.dd G 'at' HH:mm:ss z"));
     return formatUTC("yyyy.MM.dd G 'at' HH:mm:ss z");
   }
   
@@ -1036,7 +1047,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  An exact copy of this object.
    */
   public DateTime copy() {
-    return new DateTime(timestamp);
+    return new DateTime(oldtimestamp);
   }
   
   /**
@@ -1048,7 +1059,7 @@ public class DateTime implements Serializable, Comparable {
   public boolean equals(Object object) {
     if (object != null) {
       if (object instanceof DateTime) {
-        return timestamp == ((DateTime)object).timestamp;
+        return oldtimestamp == ((DateTime)object).oldtimestamp;
       }
       else {
         return false;
@@ -1065,7 +1076,7 @@ public class DateTime implements Serializable, Comparable {
    * @return  The hash code for this object.
    */
   public int hashCode() {
-    return (int)(timestamp ^ (timestamp >>> 32));
+    return (int)(oldtimestamp ^ (oldtimestamp >>> 32));
   }
   
   /**
@@ -1075,6 +1086,6 @@ public class DateTime implements Serializable, Comparable {
    * @return  The natural order. Returns one of -1, 0, or 1.
    */
   public int compareTo(Object object) {
-    return Long.valueOf(timestamp).compareTo(Long.valueOf(((DateTime)object).timestamp));
+    return Long.valueOf(oldtimestamp).compareTo(Long.valueOf(((DateTime)object).oldtimestamp));
   }
 }

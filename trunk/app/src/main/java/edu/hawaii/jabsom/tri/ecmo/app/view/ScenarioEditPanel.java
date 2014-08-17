@@ -1,5 +1,9 @@
 package edu.hawaii.jabsom.tri.ecmo.app.view;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -9,16 +13,14 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import edu.hawaii.jabsom.tri.ecmo.app.model.ScenarioFile;
-
 import jsyntaxpane.DefaultSyntaxKit;
-
 import king.lib.script.control.CompileException;
 import king.lib.script.control.ScriptCompiler;
 import king.lib.script.model.Language;
 import king.lib.script.model.Script;
 import king.lib.script.view.ScriptConsolePanel;
 import king.lib.script.view.ScriptSyntaxPanel;
-import king.lib.util.DateTime;
+//import king.lib.util.DateTime;
 import king.lib.util.Translator;
 
 /**
@@ -76,7 +78,9 @@ public class ScenarioEditPanel extends JPanel {
    */
   public void compile() {
     try {
-      String timestamp = new DateTime().toString();
+//      String timestamp = new DateTime().toString();
+      String timestamp = ZonedDateTime.now(ZoneId.of("UTC")).format(
+          DateTimeFormatter.ofPattern("yyyy.MM.dd G 'at' HH:mm:ss z"));
       consolePanel.setOutput(timestamp + " | " + Translator.getString("text.Compiling[i18n]: Compiling...") +"\n");
       ScriptCompiler.compile(scriptPanel.getScript());
       consolePanel.addSuccess(Translator.getString("text.CompiledOK[i18n]: Compiled. OK!") + "\n");
