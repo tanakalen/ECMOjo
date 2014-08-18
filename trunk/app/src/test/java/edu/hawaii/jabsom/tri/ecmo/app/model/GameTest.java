@@ -2,21 +2,24 @@ package edu.hawaii.jabsom.tri.ecmo.app.model;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-
-import king.lib.access.Access;
-import king.lib.access.AccessException;
-import king.lib.out.Error;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.File;
+import java.util.Iterator;
+
+import king.lib.access.Access;
+import king.lib.access.AccessException;
+import king.lib.out.Error;
 import edu.hawaii.jabsom.tri.ecmo.app.AppType;
 import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.loader.ScenarioCreator;
+import edu.hawaii.jabsom.tri.ecmo.app.model.comp.Component;
+import edu.hawaii.jabsom.tri.ecmo.app.control.Action;
+import edu.hawaii.jabsom.tri.ecmo.app.control.ActionList;
 
 /**
  * TestGame is a JUnit test for Game class.
@@ -78,6 +81,7 @@ public class GameTest {
     scenario = ScenarioCreator.create();
     ScenarioCreator.setup(scenario);
     user = "(user)";
+    game = new Game(scenario, user);
   }
 
   /**
@@ -95,8 +99,11 @@ public class GameTest {
    */
   @Test
   public void testGame() {
-    game = new Game(scenario, user);
-    assertNotNull("Game constructor yields new game object.", game);
+    Game newGame = new Game(scenario, user);
+    game = newGame;
+    assertNotNull("Game constructor creates a game object.", game);
+    assertSame("Game object is same.", game, newGame);
+    assertNotSame("Game object is different.", game, new Game(scenario, user));
   }
 
   /**
@@ -105,7 +112,7 @@ public class GameTest {
    */
   @Test
   public void testGetUser() {
-    assertEquals("Game yields user.", game.getUser(), this.user);
+    assertEquals("Game yields user.", this.user, game.getUser());
   }
 
   /**
@@ -114,7 +121,9 @@ public class GameTest {
    */
   @Test
   public void testGetName() {
-    assertEquals("Game yields scenario name.", game.getName(), this.scenario.getName());
+    assertEquals("Game yields scenario name.",
+                 this.scenario.getName(),
+                 game.getName());
   }
 
   /**
@@ -123,7 +132,7 @@ public class GameTest {
    */
   @Test
   public void testGetDescription() {
-    fail("Not yet implemented");
+    assertEquals("Game has empty description.", null, game.getDescription());
   }
 
   /**
@@ -132,7 +141,9 @@ public class GameTest {
    */
   @Test
   public void testGetGoal() {
-    fail("Not yet implemented");
+    assertSame("Game has same BaselineGoal class.",
+               this.scenario.getGoal(),
+               game.getGoal());
   }
 
   /**
@@ -141,7 +152,9 @@ public class GameTest {
    */
   @Test
   public void testGetBaseline() {
-    fail("Not yet implemented");
+    assertSame("Game has same Baseline class.",
+               this.scenario.getBaseline(),
+               game.getBaseline());
   }
 
   /**
@@ -150,25 +163,19 @@ public class GameTest {
    */
   @Test
   public void testGetScript() {
-    fail("Not yet implemented");
-  }
-
-  /**
-   * testGetElapsedTime: Tests Game class getElapsedTime() method.
-   * 
-   */
-  @Test
-  public void testGetElapsedTime() {
-    fail("Not yet implemented");
+    assertSame("Game has same script.",
+               this.scenario.getScript(), game.getScript());
   }
 
   /**
    * testSetElapsedTime: Tests Game class setElapsedTime() method.
+   * testGetElapsedTime: Tests Game class getElapsedTime() method.
    * 
    */
   @Test
   public void testSetElapsedTime() {
-    fail("Not yet implemented");
+    game.setElapsedTime(10);
+    assertEquals("Get set elapsed time to 10.", 10, game.getElapsedTime());
   }
 
   /**
@@ -177,16 +184,13 @@ public class GameTest {
    */
   @Test
   public void testGetEquipment() {
-    fail("Not yet implemented");
-  }
-
-  /**
-   * testSetEquipment: Tests Game class setEquipment() method.
-   * 
-   */
-  @Test
-  public void testSetEquipment() {
-    fail("Not yet implemented");
+    Iterator<Component> s = scenario.getEquipment().iterator();
+    Iterator<Component> g = game.getEquipment().iterator();
+    while (s.hasNext() && g.hasNext()) {
+      assertEquals("Scenario & game equipment name equal.",
+                   s.next().getName(), g.next().getName());
+      
+    }
   }
 
   /**
@@ -195,16 +199,11 @@ public class GameTest {
    */
   @Test
   public void testGetPatient() {
-    fail("Not yet implemented");
-  }
-
-  /**
-   * testSetPatient: Tests Game class setPatient() method.
-   * 
-   */
-  @Test
-  public void testSetPatient() {
-    fail("Not yet implemented");
+    // WARNING: tests only that species and age are same.
+    assertEquals("Patient from scenario is human.", scenario.getPatient().getSpecies(), 
+                 game.getPatient().getSpecies());
+    assertEquals("Patient from scenario is 1.", scenario.getPatient().getAge(), 
+                 game.getPatient().getAge(), 0);
   }
 
   /**
@@ -213,16 +212,7 @@ public class GameTest {
    */
   @Test
   public void testGetTracker() {
-    fail("Not yet implemented");
-  }
-
-  /**
-   * testSetTracker: Tests Game class setTracker() method.
-   * 
-   */
-  @Test
-  public void testSetTracker() {
-    fail("Not yet implemented");
+    assertNotNull("Tracker present in game.", game.getTracker());
   }
 
   /**
@@ -231,7 +221,8 @@ public class GameTest {
    */
   @Test
   public void testGetActions() {
-    fail("Not yet implemented");
+    assertNotNull("ActionList present in game.", game.getActions());
+    assertEquals("ActionList is 0.", 0, game.getActions().size());
   }
 
   /**
@@ -240,7 +231,32 @@ public class GameTest {
    */
   @Test
   public void testSetActions() {
-    fail("Not yet implemented");
+    ActionList actions = new ActionList();
+    game.setActions(actions);
+    assertEquals("Action list is same size.", actions.size(), game.getActions().size());
+    // Create mock for future, or stub in package?
+    actions.add(new Action() {
+
+      /* (non-Javadoc)
+       * @see edu.hawaii.jabsom.tri.ecmo.app.control.Action#execute(edu.hawaii.jabsom.tri.ecmo.app.model.Game)
+       */
+      @Override
+      public void execute(Game game) {
+        System.out.println("Stubbed Action.");
+      }
+
+      /* (non-Javadoc)
+       * @see edu.hawaii.jabsom.tri.ecmo.app.control.Action#toString()
+       */
+      @Override
+      public String toString() {
+        return "Stub Action in testSetActions.";
+      } 
+      
+    });
+    game.setActions(actions);
+    assertEquals("Action list is 1.", 1, game.getActions().size());
+    
   }
 
 }

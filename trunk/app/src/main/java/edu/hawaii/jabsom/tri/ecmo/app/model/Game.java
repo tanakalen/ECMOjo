@@ -53,7 +53,8 @@ public class Game implements Serializable {
     equipment = (Equipment)ObjectCloner.deepCopy(scenario.getEquipment());
     
     // for statistics
-    tracker = new Tracker();
+//    tracker = new Tracker();
+    this.setTracker(new Tracker());
     actions = new ActionList();
   }
   
@@ -179,7 +180,7 @@ public class Game implements Serializable {
    *
    * @param tracker  The tracker to set.
    */
-  public void setTracker(Tracker tracker) {
+  private void setTracker(Tracker tracker) {
     this.tracker = tracker;
   }
 
