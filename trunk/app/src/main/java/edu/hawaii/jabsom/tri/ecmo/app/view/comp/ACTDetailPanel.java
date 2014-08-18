@@ -71,16 +71,26 @@ public class ACTDetailPanel extends DetailPanel implements LabTestListener {
     titleLabel.setSize(150, 20);
     add(titleLabel);
 
+//    Image requestButtonImage = ImageLoader.getInstance().getImage(
+//        Translator.getString("image.ButtonLab[i18n]: conf/image/interface/game/Btn-Lab.png"));
+//    Image requestButtonRolloverImage = ImageLoader.getInstance().getImage(
+//        Translator.getString("image.ButtonLabRol[i18n]: conf/image/interface/game/Btn-LabRol.png"));
+//    Image requestButtonSelectedImage = ImageLoader.getInstance().getImage(
+//        Translator.getString("image.ButtonLabSel[i18n]: conf/image/interface/game/Btn-LabSel.png"));
+    
+    // Load button images
     Image requestButtonImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonLab[i18n]: conf/image/interface/game/Btn-Lab.png"));
+        "conf/image/interface/game/BtnSmall.png");
     Image requestButtonRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonLabRol[i18n]: conf/image/interface/game/Btn-LabRol.png"));
+        "conf/image/interface/game/BtnSmallRol.png");
     Image requestButtonSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonLabSel[i18n]: conf/image/interface/game/Btn-LabSel.png"));
+        "conf/image/interface/game/BtnSmallSel.png");
     
     // add lab request button
     ImageButton requestButton 
       = new ImageButton(requestButtonImage, requestButtonRolloverImage, requestButtonSelectedImage);
+    requestButton.setText(
+        Translator.getString("button.newLab[i18n]: Lab"));
     requestButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         ACTRequestAction action = new ACTRequestAction();
