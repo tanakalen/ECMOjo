@@ -53,6 +53,7 @@ public class AboutStatePanel extends JPanel {
     add(textLabel);
     
     // add text panel
+    // TODO: Can this text panel come from README and stitched in?
     InternetTextPane infoArea = new InternetTextPane();
     infoArea.setDefaultLineSpacing(0.25f);
     infoArea.addHTML(
