@@ -10,7 +10,7 @@ import org.junit.Test;
  * @author tanaka
  *
  */
-public class TestMediator {
+public class MediatorTest {
 
 //  @Test
 //  public void testFlowToPH() {

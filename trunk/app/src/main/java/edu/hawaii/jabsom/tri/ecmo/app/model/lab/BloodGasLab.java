@@ -6,7 +6,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
  * @author   king
  * @since    August 19, 2008
  */
-public class BloodGasLabTest extends LabTest {
+public class BloodGasLab extends Lab {
   
   /** The Blood Gas Type enumeration. */
   public enum BloodGasType { 

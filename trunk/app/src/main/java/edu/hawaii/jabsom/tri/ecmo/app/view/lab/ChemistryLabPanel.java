@@ -26,18 +26,18 @@ import org.jdesktop.swingx.JXTable;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList.LabTestListener;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabList.LabTestListener;
 import edu.hawaii.jabsom.tri.ecmo.app.view.comp.LabDetailPanel;
 
 /**
- * The hematology lab test panel. 
+ * The chemistry lab test panel. 
  *
  * @author   Christoph Aschwanden
  * @since    October 7, 2008
  */
-public class HematologyLabTestPanel extends LabDetailPanel implements LabTestListener {
-  
+public class ChemistryLabPanel extends LabDetailPanel implements LabTestListener {
+
   /** The lab component. */
   private LabComponent component;
   
@@ -52,12 +52,12 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
    * 
    * @param component  The component
    */
-  public HematologyLabTestPanel(final LabComponent component) {
+  public ChemistryLabPanel(final LabComponent component) {
     super(component);
     this.component = component;
     
     // add title
-    JLabel titleLabel = new JLabel(Translator.getString("title.Hematology[i18n]: Hematology"));
+    JLabel titleLabel = new JLabel(Translator.getString("title.Chemistry[i18n]: Chemistry"));
     titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
@@ -78,7 +78,7 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
     requestButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
-        action.setLabTest(HematologyLabTest.class);
+        action.setLabTest(ChemistryLab.class);
         notifyActionListeners(action);
       }    
     });
@@ -88,6 +88,7 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
 
     // add table with values
     tableModel = new DefaultTableModel() {
+      private DecimalFormat labHundredthsFormatter = new DecimalFormat("###.00");
       private DecimalFormat labTenthsFormatter = new DecimalFormat("###.0");
       private DecimalFormat labFormatter = new DecimalFormat("###");
       public int getColumnCount() {
@@ -98,8 +99,8 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
         return size + 1;
       }
       public int getRowCount() {
-        // hematology has 7 values! (Mark wants FSP deleted)
-        return 7;
+        // chemistry has 5 values!
+        return 5;
       }
       public String getColumnName(int col) {
         if (col == 0) {
@@ -119,19 +120,15 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
         if (col == 0) {
           switch (row) {
             case 0:
-              return "WBC";
+              return "Na";
             case 1:
-              return "Hgb";
+              return "K";
             case 2:
-              return "Hct";
+              return "iCa";
             case 3:
-              return "Platelets";
+              return "Gluc";
             case 4:
-              return "PT";
-            case 5:
-              return "PTT";
-            case 6:
-              return "Fibrinogen";
+              return "Lactate";
             default:
               // error condition
               return null;
@@ -142,19 +139,17 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
           if (col <= size) {
             switch (row) {
               case 0:
-                return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getWbc());
+                return labFormatter.format(((ChemistryLab)component.getResults().get(size - col)).getNa());
               case 1:
-                return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHgb());
+                return labFormatter.format(((ChemistryLab)component.getResults().get(size - col)).getK());
               case 2:
-                return labTenthsFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getHct());
+                return labHundredthsFormatter.format(((ChemistryLab)component.getResults().get(size 
+                    - col)).getIonCa());
               case 3:
-                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getPlatelets());
+                return labFormatter.format(((ChemistryLab)component.getResults().get(size - col)).getGluc());
               case 4:
-                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getPt());
-              case 5:
-                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getPtt());
-              case 6:
-                return labFormatter.format(((HematologyLabTest)component.getResults().get(size - col)).getFibrinogen());
+                return labTenthsFormatter.format(((ChemistryLab)component.getResults().get(size 
+                    - col)).getLactate());
               default:
                 // error condition
                 return null;
@@ -171,10 +166,6 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
               case 3:
                 return "N/A";
               case 4:
-                return "N/A";
-              case 5:
-                return "N/A";
-              case 6:
                 return "N/A";
               default:
                 // error condition

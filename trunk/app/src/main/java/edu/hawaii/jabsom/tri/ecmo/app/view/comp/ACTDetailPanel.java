@@ -28,7 +28,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.action.ACTRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent.ACT;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTestList.LabTestListener;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabList.LabTestListener;
 
 /**
  * The detail panel. 

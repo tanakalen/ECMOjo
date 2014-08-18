@@ -17,8 +17,8 @@ import edu.hawaii.jabsom.tri.ecmo.app.control.script.Console;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Notepad;
 import edu.hawaii.jabsom.tri.ecmo.app.control.script.Output;
 import edu.hawaii.jabsom.tri.ecmo.app.model.Game;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.EchoLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLab;
 
 /**
  * The manager. 
@@ -155,10 +155,10 @@ public class Manager implements Runnable {
     ACTRequestAction actact = new ACTRequestAction();
     actact.execute(game);
     LabRequestAction cxract = new LabRequestAction();
-    cxract.setLabTest(XRayLabTest.class);
+    cxract.setLabTest(XRayLab.class);
     cxract.execute(game);
     LabRequestAction echoact = new LabRequestAction();
-    echoact.setLabTest(EchoLabTest.class);
+    echoact.setLabTest(EchoLab.class);
     echoact.execute(game);
     
     Thread currentThread = Thread.currentThread();

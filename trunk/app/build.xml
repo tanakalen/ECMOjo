@@ -80,7 +80,7 @@
   <!-- *********************************************************************** -->
   <target name="post-init" depends="init">
     <!-- Global Test files -->
-    <property name="test.files" value="**/Test*" />
+    <property name="test.files" value="**/*Test.java" />
     <!-- Global directories -->
     <property name="build.dir" value="target/${subname}" />
     <property name="build.src.dir" value="${build.dir}/src" />

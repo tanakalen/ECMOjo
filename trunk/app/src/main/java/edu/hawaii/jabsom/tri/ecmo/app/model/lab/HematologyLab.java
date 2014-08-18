@@ -7,7 +7,7 @@ package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
  * @author   king
  * @since    August 19, 2008
  */
-public class HematologyLabTest extends LabTest {
+public class HematologyLab extends Lab {
   
   /** The Hct in percent / 100 [0.0, 1.0]. */
   private double hct;

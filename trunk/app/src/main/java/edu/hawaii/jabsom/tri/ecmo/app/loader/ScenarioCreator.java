@@ -27,10 +27,10 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.PumpComponent.PumpType;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
 import edu.hawaii.jabsom.tri.ecmo.app.model.engage.InterventionLocation;
 import edu.hawaii.jabsom.tri.ecmo.app.model.goal.BaselineGoal;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLab;
 
 /**
  * The scenario creator. 
@@ -167,19 +167,19 @@ public final class ScenarioCreator {
     equipment.add(interventionComponent4);
     
     LabComponent labComponent1 = new LabComponent();
-    labComponent1.setLabTest(BloodGasLabTest.class);
+    labComponent1.setLabTest(BloodGasLab.class);
     equipment.add(labComponent1);
 
     LabComponent labComponent2 = new LabComponent();
-    labComponent2.setLabTest(ChemistryLabTest.class);
+    labComponent2.setLabTest(ChemistryLab.class);
     equipment.add(labComponent2);
 
     LabComponent labComponent3 = new LabComponent();
-    labComponent3.setLabTest(HematologyLabTest.class);
+    labComponent3.setLabTest(HematologyLab.class);
     equipment.add(labComponent3);
 
     LabComponent labComponent4 = new LabComponent();
-    labComponent4.setLabTest(ImagingLabTest.class);
+    labComponent4.setLabTest(ImagingLab.class);
     equipment.add(labComponent4);
 
     // and return the scenario...

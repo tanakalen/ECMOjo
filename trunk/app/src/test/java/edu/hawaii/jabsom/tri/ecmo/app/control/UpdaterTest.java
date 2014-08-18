@@ -32,7 +32,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.comp.TubeComponent.Mode;
  * @author tanaka
  *
  */
-public class TestUpdater {
+public class UpdaterTest {
   
   /** Static game variable for testing. */
   static Game game;

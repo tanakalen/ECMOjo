@@ -6,15 +6,15 @@ import java.awt.Image;
 import king.lib.access.ImageLoader;
 
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.LabComponent;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.model.lab.LabTest;
-import edu.hawaii.jabsom.tri.ecmo.app.view.lab.BloodGasLabTestPanel;
-import edu.hawaii.jabsom.tri.ecmo.app.view.lab.ChemistryLabTestPanel;
-import edu.hawaii.jabsom.tri.ecmo.app.view.lab.HematologyLabTestPanel;
-import edu.hawaii.jabsom.tri.ecmo.app.view.lab.ImagingLabTestPanel;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ChemistryLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.HematologyLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.ImagingLab;
+import edu.hawaii.jabsom.tri.ecmo.app.model.lab.Lab;
+import edu.hawaii.jabsom.tri.ecmo.app.view.lab.BloodGasLabPanel;
+import edu.hawaii.jabsom.tri.ecmo.app.view.lab.ChemistryLabPanel;
+import edu.hawaii.jabsom.tri.ecmo.app.view.lab.HematologyLabPanel;
+import edu.hawaii.jabsom.tri.ecmo.app.view.lab.ImagingLabPanel;
 
 /**
  * The detail panel. 
@@ -52,18 +52,18 @@ public abstract class LabDetailPanel extends DetailPanel {
    * @return  The panel for the component or null if none matched.
    */
   protected static LabDetailPanel createInstance(LabComponent component) {
-    Class<? extends LabTest> labTest = component.getLabTest();
-    if (labTest.equals(BloodGasLabTest.class)) {
-      return new BloodGasLabTestPanel(component);
+    Class<? extends Lab> labTest = component.getLabTest();
+    if (labTest.equals(BloodGasLab.class)) {
+      return new BloodGasLabPanel(component);
     }
-    else if (labTest.equals(ChemistryLabTest.class)) {
-      return new ChemistryLabTestPanel(component);
+    else if (labTest.equals(ChemistryLab.class)) {
+      return new ChemistryLabPanel(component);
     }
-    else if (labTest.equals(HematologyLabTest.class)) {
-      return new HematologyLabTestPanel(component);
+    else if (labTest.equals(HematologyLab.class)) {
+      return new HematologyLabPanel(component);
     }
-    else if (labTest.equals(ImagingLabTest.class)) {
-      return new ImagingLabTestPanel(component);
+    else if (labTest.equals(ImagingLab.class)) {
+      return new ImagingLabPanel(component);
     }
     else {
       // not found

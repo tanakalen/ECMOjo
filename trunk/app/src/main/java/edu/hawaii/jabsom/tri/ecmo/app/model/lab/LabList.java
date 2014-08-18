@@ -10,7 +10,7 @@ import java.util.List;
  * @author   king
  * @since    August 20, 2008
  */
-public class LabTestList extends ArrayList<LabTest> implements Serializable {
+public class LabList extends ArrayList<Lab> implements Serializable {
   
   /** Listener for changes. */
   public static interface LabTestListener {
@@ -31,7 +31,7 @@ public class LabTestList extends ArrayList<LabTest> implements Serializable {
    * @param labTest  The lab test.
    */
   @Override
-  public void add(int index, LabTest labTest) {
+  public void add(int index, Lab labTest) {
     super.add(index, labTest);
     notifyLabTestUpdate();
   }
@@ -43,7 +43,7 @@ public class LabTestList extends ArrayList<LabTest> implements Serializable {
    * @return  The result.
    */
   @Override
-  public boolean add(LabTest labTest) {
+  public boolean add(Lab labTest) {
     boolean successful = super.add(labTest);
     notifyLabTestUpdate();
     return successful;
@@ -65,8 +65,8 @@ public class LabTestList extends ArrayList<LabTest> implements Serializable {
    * @return  The result.
    */
   @Override
-  public LabTest remove(int index) {
-    LabTest labTest = super.remove(index);
+  public Lab remove(int index) {
+    Lab labTest = super.remove(index);
     notifyLabTestUpdate();
     return labTest;
   }
@@ -92,7 +92,7 @@ public class LabTestList extends ArrayList<LabTest> implements Serializable {
    * @return  The result.
    */
   @Override
-  public LabTest set(int index, LabTest labTest) {
+  public Lab set(int index, Lab labTest) {
     labTest = super.set(index, labTest);
     notifyLabTestUpdate();
     return labTest;
