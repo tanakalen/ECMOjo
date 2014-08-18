@@ -35,6 +35,7 @@ import king.lib.util.Translator;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+import edu.hawaii.jabsom.tri.ecmo.app.Configuration;
 import edu.hawaii.jabsom.tri.ecmo.app.control.action.LabRequestAction;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageButton;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.LinkButton;
@@ -74,20 +75,32 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
     super(component);
     this.component = component;
     
+    // Load button images
+    Image normalImage = ImageLoader.getInstance().getImage(
+        "conf/image/interface/game/BtnSmall.png");
+    Image rolloverImage = ImageLoader.getInstance().getImage(
+        "conf/image/interface/game/BtnSmallRol.png");
+    Image selectedImage = ImageLoader.getInstance().getImage(
+        "conf/image/interface/game/BtnSmallSel.png");
+    
     // add title
     JLabel titleLabel = new JLabel(Translator.getString("title.Imaging[i18n]: Imaging"));
-    titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
+    // TODO: Imaging title is 2 char in Japanese so make bigger, fragile custom hack
+    if (Configuration.getInstance().getLang().equals("ja")) {
+      titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
+    }
+    else {
+      titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 12f));
+    }
     add(titleLabel);
     
-    Image echoButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Echo.png");
-    Image echoButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-EchoRol.png");
-    Image echoButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-EchoSel.png");
-    
     // add lab request button
-    ImageButton echoButton 
-      = new ImageButton(echoButtonImage, echoButtonRolloverImage, echoButtonSelectedImage);
+    ImageButton echoButton
+      = new ImageButton(normalImage, rolloverImage, selectedImage);
+    echoButton.setText(
+        Translator.getString("button.newEcho[i18n]: Echo"));
     echoButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
@@ -99,13 +112,11 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
     echoButton.setSize(54, 22);
     add(echoButton);
     
-    Image ultraButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Ultra.png");
-    Image ultraButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-UltraRol.png");
-    Image ultraButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-UltraSel.png");
-    
     // add lab request button
-    ImageButton ultraButton 
-      = new ImageButton(ultraButtonImage, ultraButtonRolloverImage, ultraButtonSelectedImage);
+    ImageButton ultraButton
+      = new ImageButton(normalImage, rolloverImage, selectedImage);
+    ultraButton.setText(
+        Translator.getString("button.newUS[i18n]: US"));
     ultraButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
@@ -116,14 +127,12 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
     ultraButton.setLocation(138, 34);
     ultraButton.setSize(54, 22);
     add(ultraButton);
-
-    Image xrayButtonImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRay.png");
-    Image xrayButtonRolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRayRol.png");
-    Image xrayButtonSelectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-XRaySel.png");
     
     // add lab request button
-    ImageButton xrayButton 
-      = new ImageButton(xrayButtonImage, xrayButtonRolloverImage, xrayButtonSelectedImage);
+    ImageButton xrayButton
+      = new ImageButton(normalImage, rolloverImage, selectedImage);
+    xrayButton.setText(
+        Translator.getString("button.newXray[i18n]: X-Ray"));
     xrayButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
@@ -234,7 +243,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
        
         // The edit button
         viewButton = new LinkButton();
-        viewButton.setOpaque(false);        
+        viewButton.setOpaque(false);
         viewButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent event) {
             // get the lab test image
@@ -305,7 +314,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
             });
             imageDialog.setVisible(true);
             fireEditingStopped();
-          }          
+          }
         });
         actionPanel.add(viewButton, cc.xy(1, 1));
       }
@@ -372,7 +381,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
         return this;
       }
     };   
-    table.getColumnModel().getColumn(1).setCellRenderer(timeRenderer); 
+    table.getColumnModel().getColumn(1).setCellRenderer(timeRenderer);
 
     // set column sizes (relative)
     for (int i = 0; i < tableModel.getColumnCount(); i++) {
@@ -383,7 +392,7 @@ public class ImagingLabTestPanel extends LabDetailPanel implements LabTestListen
       else if (i == 1) {
         column.setPreferredWidth(50);
       }
-    }       
+    }
   }
   
   /**

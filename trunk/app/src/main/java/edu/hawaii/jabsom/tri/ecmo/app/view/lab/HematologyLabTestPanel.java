@@ -62,17 +62,19 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
     add(titleLabel);
-
+    
     Image requestButtonImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonLab[i18n]: conf/image/interface/game/Btn-Lab.png"));
+        "conf/image/interface/game/BtnSmall.png");
     Image requestButtonRolloverImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonLabRol[i18n]: conf/image/interface/game/Btn-LabRol.png"));
+        "conf/image/interface/game/BtnSmallRol.png");
     Image requestButtonSelectedImage = ImageLoader.getInstance().getImage(
-        Translator.getString("image.ButtonLabSel[i18n]: conf/image/interface/game/Btn-LabSel.png"));
+        "conf/image/interface/game/BtnSmallSel.png");
     
     // add lab request button
     ImageButton requestButton 
       = new ImageButton(requestButtonImage, requestButtonRolloverImage, requestButtonSelectedImage);
+    requestButton.setText(
+        Translator.getString("button.newLab[i18n]: Lab"));
     requestButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         LabRequestAction action = new LabRequestAction();
@@ -117,7 +119,7 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
         if (col == 0) {
           switch (row) {
             case 0:
-              return "WBC";              
+              return "WBC";
             case 1:
               return "Hgb";
             case 2:
@@ -225,7 +227,7 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
   public void handleLabTestUpdate() {
     SwingUtilities.invokeLater(new Runnable() {
       public void run() {
-        tableModel.fireTableStructureChanged();       
+        tableModel.fireTableStructureChanged();
         tableModel.fireTableDataChanged();
         updateTable();
       }
@@ -247,7 +249,7 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
       }      
     };
     
-    TableCellRenderer firstRowStyle = new DefaultTableCellRenderer() {  
+    TableCellRenderer firstRowStyle = new DefaultTableCellRenderer() {
       public Component getTableCellRendererComponent(JTable table,
           Object value, boolean isSelected, boolean hasFocus, int row,
           int column) {
@@ -275,6 +277,6 @@ public class HematologyLabTestPanel extends LabDetailPanel implements LabTestLis
       table.getColumn(i).setCellRenderer(otherRowStyle); 
     }
     table.setFillsViewportHeight(true);
-    table.setHorizontalScrollEnabled(true);    
+    table.setHorizontalScrollEnabled(true);
   }
 }
