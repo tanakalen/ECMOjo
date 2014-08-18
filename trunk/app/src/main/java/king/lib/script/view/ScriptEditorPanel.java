@@ -3,6 +3,8 @@ package king.lib.script.view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -11,7 +13,7 @@ import javax.swing.JSplitPane;
 import king.lib.script.control.CompileException;
 import king.lib.script.control.ScriptCompiler;
 import king.lib.script.model.Script;
-import king.lib.util.DateTime;
+//import king.lib.util.DateTime;
 import king.lib.util.Translator;
 
 /**
@@ -53,7 +55,9 @@ public class ScriptEditorPanel extends JPanel {
     compileButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent event) {
         try {
-          String timestamp = new DateTime().toString();
+//          String timestamp = new DateTime().toString();
+          String timestamp = ZonedDateTime.now(ZoneId.of("UTC")).format(
+              DateTimeFormatter.ofPattern("yyyy.MM.dd G 'at' HH:mm:ss z"));
           consolePanel.setOutput(timestamp + " | " + Translator.getString("text.Compiling[i18n]: Compiling...") +"\n");
           ScriptCompiler.compile(getScript());
           consolePanel.addSuccess(Translator.getString("text.CompiledOK[i18n]: Compiled. OK!") + "\n");
