@@ -14,7 +14,7 @@ import org.junit.Test;
  * @author noblemaster
  * @since  October 28, 2009
  */
-public class TestSandbox {
+public class SandboxIT {
       
   /**
    * Test the sandboxing system.

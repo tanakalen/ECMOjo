@@ -10,7 +10,7 @@ import org.junit.Test;
  * @author noblemaster
  * @since  October 28, 2009
  */
-public class TestJavaThreadStopping {
+public class JavaThreadStoppingIT {
   
   /**
    * Test stopping a Java thread.

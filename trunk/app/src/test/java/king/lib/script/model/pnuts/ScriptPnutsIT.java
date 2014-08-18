@@ -21,7 +21,7 @@ import org.junit.Test;
  * @author noblemaster
  * @since  October 22, 2009
  */
-public class TestScriptPnuts {
+public class ScriptPnutsIT {
       
   /**
    * Try to pass and modify some parameters.

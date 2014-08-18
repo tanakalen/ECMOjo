@@ -21,7 +21,7 @@ import org.junit.Test;
  * @author noblemaster
  * @since  October 28, 2009
  */
-public class TestScriptJava {
+public class ScriptJavaIT {
 
   /**
    * Try to pass and modify some parameters.
