@@ -316,7 +316,7 @@ public final class Updater {
       // check tubing status (normal, kink, high or low) then location
       if (tube.isBrokenCannula()) {
         if (tube.getCannulaProblem() == TubeComponent.Status.KINK) {
-          if (tube.getCannlaProblemLocation() == TubeComponent.problemLocation.arterial) {
+          if (tube.getCannulaProblemLocation() == TubeComponent.problemLocation.arterial) {
             if (tube.getPreMembranePressure() > 750) {
               tube.setPreMembranePressure(750.0);
               tube.setPostMembranePressure(750.0);
@@ -356,7 +356,7 @@ public final class Updater {
             // patient gets worse
             patientDies(patient, ventilator, increment);
           }
-          else if (tube.getCannlaProblemLocation() == TubeComponent.problemLocation.venous) {
+          else if (tube.getCannulaProblemLocation() == TubeComponent.problemLocation.venous) {
             //TODO: venous kink
             // If roller pump then premembrane = mean BP, else if centrifugal then premembrane decreases. 
             if (pump.getPumpType() == PumpType.ROLLER) {

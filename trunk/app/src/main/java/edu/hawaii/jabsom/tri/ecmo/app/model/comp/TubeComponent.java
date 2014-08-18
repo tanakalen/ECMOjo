@@ -296,7 +296,7 @@ public class TubeComponent extends Component {
    *
    * @return  The location of the cannula problem.
    */
-  public problemLocation getCannlaProblemLocation() {
+  public problemLocation getCannulaProblemLocation() {
     return place;
   }
 
