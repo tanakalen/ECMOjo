@@ -672,9 +672,15 @@
       </keepclassmembers>
     </proguard>
     <!-- Sign all the jars (Eclipse problem: Preferences>Java>Installed JRE: Put JDK instead of JRE directory) -->
-    <signjar alias="${keystore.alias}" keystore="${keystore.file}" storepass="${keystore.storepass}">
+    <signjar 
+        alias="${keystore.alias}" keystore="${keystore.file}" 
+        storepass="${keystore.storepass}"
+        keypass="${keypass}"
+        sigalg="${keyalg}"
+        lazy="true">
       <fileset dir="${build.obfuscate.dir}" includes="*.jar" />
     </signjar>
+
     <echo message="Obfuscated and signed jar files can be found in ${build.obfuscate.dir}" />
   </target>
   <!-- *********************************************************************** -->
@@ -859,7 +865,12 @@
       <fileset dir="${build.webstart.dir}" includes="*.jar" />
     </delete>
     <!-- Sign all the jars (Eclipse problem: Preferences>Java>Installed JRE: Put JDK instead of JRE directory) -->
-    <signjar alias="${keystore.alias}" keystore="${keystore.file}" storepass="${keystore.storepass}">
+    <signjar 
+        alias="${keystore.alias}" keystore="${keystore.file}" 
+        storepass="${keystore.storepass}"
+        keypass="${keypass}"
+        sigalg="${keyalg}"
+        lazy="true">
       <fileset dir="${build.webstart.dir}/unpacked" includes="*.jar" />
     </signjar>
     <!-- Pack200: final pack -->
