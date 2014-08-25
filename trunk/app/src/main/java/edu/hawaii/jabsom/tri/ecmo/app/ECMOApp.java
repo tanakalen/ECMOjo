@@ -4,13 +4,12 @@ import king.lib.access.Access;
 import king.lib.access.AccessException;
 import king.lib.access.ImageLoader;
 
-import java.awt.Color;
-
 import javax.swing.JApplet;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.JFrame;
 
 import king.lib.out.Error;
 import king.lib.out.ErrorOutputUnit;
@@ -19,12 +18,11 @@ import king.lib.out.Info;
 import king.lib.out.MultiOutputUnit;
 import king.lib.util.Translator;
 
+import java.awt.Color;
 import java.awt.BorderLayout;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import javax.swing.JFrame;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import edu.hawaii.jabsom.tri.ecmo.app.gui.plaf.GameLookAndFeel;
 import edu.hawaii.jabsom.tri.ecmo.app.state.LoadState;
@@ -50,12 +48,12 @@ public final class ECMOApp extends JApplet {
   private static void initialize(String[] args) {
     // set info/error log
     try {
-      Calendar now = Calendar.getInstance();
-      SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+      String dateTimeStamp = LocalDateTime.now().format(
+          DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss"));
       String path = Access.getInstance().getScenarioDir() + "/logs/Log-"
-                  + timestampFormatter.format(now.getTime()) + ".txt";
+          + dateTimeStamp + ".txt";
       FileOutputUnit logOutput = new FileOutputUnit(path, false);
-      logOutput.out("# " + timestampFormatter.format(now.getTime()) + "\n");
+      logOutput.out("# " + dateTimeStamp + "\n");
       MultiOutputUnit multiOutput = new MultiOutputUnit();
       multiOutput.add(new ErrorOutputUnit());
       multiOutput.add(logOutput);
