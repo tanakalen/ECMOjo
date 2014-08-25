@@ -5,16 +5,16 @@
   </description>
   <!-- Globals for projects -->
   <property name="global.release.version" value="2.4.1" />
+  <!-- Global Release time -->
+  <tstamp>
+    <format property="TSTAMP" pattern="HH:mm:ss" />
+    <format property="MINUTESTAMP" pattern="HHmm" />
+    <format property="DAYSTAMP" pattern="dd" />
+    <format property="MONTHSTAMP" pattern="MM" />
+    <format property="YEARSTAMP" pattern="yyyy" />
+  </tstamp>
   <!-- *********************************************************************** -->
   <target name="pre-init">
-    <!-- Global Release time -->
-    <tstamp>
-      <format property="TSTAMP" pattern="HH:mm:ss" />
-      <format property="MINUTESTAMP" pattern="HHmm" />
-      <format property="DAYSTAMP" pattern="dd" />
-      <format property="MONTHSTAMP" pattern="MM" />
-      <format property="YEARSTAMP" pattern="yyyy" />
-    </tstamp>
     <property name="date" value="${MONTHSTAMP}/${DAYSTAMP}/${YEARSTAMP}" />
     <property name="time" value="${TSTAMP}" />
     <property name="release.time" value="${YEARSTAMP}-${MONTHSTAMP}-${DAYSTAMP}.${MINUTESTAMP}" />
@@ -591,6 +591,7 @@
         <argument>${executable.args}</argument>
       </application_desc>
     </jnlp>
+    <echo message="Add &quot;&lt;update check=&quot;timeout&quot; policy=&quot;always&quot;/&gt;&quot; between security and resources." />
   </target>
   <!-- *********************************************************************** -->
   <target name="obfuscate" depends="library"
