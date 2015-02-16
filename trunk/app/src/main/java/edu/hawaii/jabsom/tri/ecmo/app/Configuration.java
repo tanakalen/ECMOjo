@@ -13,19 +13,19 @@ import king.lib.access.LocalHookup;
 import king.lib.util.Translator;
 
 /**
- * The configuration. 
+ * The configuration.
  *
  * @author   king
  * @since    March 7, 2008
  */
 public class Configuration {
-  
+
   /** Language property. */
   private static final String LANG = "LANG";
-  
+
   /** Admin property. */
   private static final String ADMIN = "ADMIN";
-    
+
   /** The selection. */
   private static final String SELECTION_SCENARIO_TAB = "SELECTION_SCENARIO_TAB";
   /** The selection. */
@@ -36,26 +36,27 @@ public class Configuration {
   private static final String SELECTION_ROLLER_PUMP = "SELECTION_ROLLER_PUMP";
   /** The selection. */
   private static final String SELECTION_CONVENTIONAL_VENT = "SELECTION_CONVENTIONAL_VENT";
-  
+
   /** The configuration instance. */
   private static Configuration instance;
-  
+
   /** The application type. */
   private AppType appType;
-  
+
   /** The Locale using ISO-639-1 code for language (two char). Default is English. */
   private static Locale lang = Locale.ENGLISH;
-  
+
   /** Available language bundles. */
   private static Locale[] availableLanguages = new Locale[]{
     Locale.ENGLISH,
     Locale.JAPANESE,
-    new Locale("es")
+    new Locale("es"),
+    new Locale("pt")
   };
-  
+
   /** True for admin. */
   private boolean admin;
-  
+
   /** The selection. */
   private boolean selectionScenarioTab;
   /** The selection. */
@@ -66,20 +67,20 @@ public class Configuration {
   private boolean selectionRollerPump;
   /** The selection. */
   private boolean selectionConventionalVent;
-  
-  
+
+
   /**
    * Init function for configuration.
-   * 
+   *
    * @param appType  The application type.
    */
   public static void init(AppType appType) {
     instance = new Configuration();
     instance.appType = appType;
-    
+
     // load from the config file
     instance.loadConfiguration();
-    
+
     // set the language
     Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", lang));
   }
@@ -96,7 +97,7 @@ public class Configuration {
       InputStream inputStream = LocalHookup.getInstance().getInputStream(path);
       Properties properties = new Properties();
       properties.load(inputStream);
-   
+
       // read all properties
       lang = new Builder().setLanguage(properties.getProperty(LANG)).build();
       admin = Boolean.parseBoolean(properties.getProperty(ADMIN, "false"));
@@ -105,7 +106,7 @@ public class Configuration {
       selectionSiliconeOxygenator = Boolean.parseBoolean(properties.getProperty(SELECTION_SILICONE_OXYGENATOR, "true"));
       selectionRollerPump = Boolean.parseBoolean(properties.getProperty(SELECTION_ROLLER_PUMP, "true"));
       selectionConventionalVent = Boolean.parseBoolean(properties.getProperty(SELECTION_CONVENTIONAL_VENT, "true"));
-     
+
       // and close stream
       inputStream.close();
     }
@@ -114,7 +115,7 @@ public class Configuration {
     }
   }
 
-  /** 
+  /**
    * Saves the current configuration to file.
    */
   public void saveConfiguration() {
@@ -125,7 +126,7 @@ public class Configuration {
     try {
       OutputStream outputStream = LocalHookup.getInstance().getOutputStream(path, false);
       Properties properties = new Properties();
-      
+
       // set the properties
       properties.put(LANG, lang.toString());
       properties.put(ADMIN, String.valueOf(admin));
@@ -134,7 +135,7 @@ public class Configuration {
       properties.put(SELECTION_SILICONE_OXYGENATOR, String.valueOf(selectionSiliconeOxygenator));
       properties.put(SELECTION_ROLLER_PUMP, String.valueOf(selectionRollerPump));
       properties.put(SELECTION_CONVENTIONAL_VENT, String.valueOf(selectionConventionalVent));
-      
+
       // and close the stream
       properties.store(outputStream, "Default User Parameters");
       outputStream.close();
@@ -155,34 +156,34 @@ public class Configuration {
 
   /**
    * Returns the application type.
-   * 
+   *
    * @return  The application type.
    */
   public AppType getAppType() {
     return appType;
   }
-  
+
   /**
    * Returns the configured language tagged 'LANG'.
-   * 
+   *
    * @return  The configuration language using ISO-639-1 code for language (two char).
    */
   public String getLang() {
     return lang.toString();
   }
-  
+
   /**
    * Returns the configured language tagged 'LANG'.
-   * 
+   *
    * @return  The configuration language as string of displayed name.
    */
   public String getConfiguredLanguage() {
     return lang.getDisplayLanguage(lang);
   }
-  
+
   /**
    * Returns available languages for program.
-   * 
+   *
    * @return  String[] of available languages.
    */
   public String[] getAvailableLanguages() {
@@ -194,10 +195,10 @@ public class Configuration {
     }
     return l;
   }
-  
+
   /**
    * Sets the configured language from available languages by index.
-   * 
+   *
    * @param index  The index for availableLanguages to switch to 0 being first.
    */
   public void setLang(int index) {
@@ -205,7 +206,7 @@ public class Configuration {
     lang = availableLanguages[index];
     Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", lang));
   }
-  
+
   /**
    * Returns true for admin.
    *
@@ -214,7 +215,7 @@ public class Configuration {
   public boolean isAdmin() {
     return admin;
   }
-  
+
   /**
    * Returns the selectionScenarioTab.
    *
@@ -307,7 +308,7 @@ public class Configuration {
 
   /**
    * Returns the string for the given key.
-   * 
+   *
    * @param key  The key.
    * @return  The string belonging to the key or the key if it wasn't found.
    */
