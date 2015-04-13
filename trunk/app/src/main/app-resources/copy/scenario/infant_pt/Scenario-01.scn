@@ -1,0 +1,145 @@
+# Scenario Information
+name = Tutorial - Introdução
+desc = Execute o tutorial para uma introdução do ECMOjo.
+
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = *
+scenario-pump-type = *
+scenario-vent-type = *
+
+# Goal Information
+goal = Tutorial
+tutorial-item1-text = Bem-vindo à introdução. Tente identificar os componentes do ECMOjo.
+tutorial-item1-trigger = N/A
+tutorial-item2-text = Tarefa 1: Selecione o aparelho de TCA - Tempo de Coagulação Ativado.
+tutorial-item2-trigger = Action:View:ACTComponent
+tutorial-item3-text = Tarefa 2: Selecione o Detector de Bolhas.
+tutorial-item3-trigger = Action:View:BubbleDetectorComponent
+tutorial-item4-text = Tarefa 3: Selecione os Controles de Temperatura, também conhecido como Controles do Aquecedor.
+tutorial-item4-trigger = Action:View:HeaterComponent
+tutorial-item5-text = Tarefa 4: Selecione um dos pontos de intervenções demonstrados como Seringas de A a D.
+tutorial-item5-trigger = Action:View:InterventionComponent
+tutorial-item6-text = Tarefa 5: Selecione um dos Lab - Laboratórios nos botões no canto inferior esquerdo da tela.
+tutorial-item6-trigger = Action:View:LabComponent
+tutorial-item7-text = Tarefa 6: Selecione o "Blender"/Misturador de Gases.
+tutorial-item7-trigger = Action:View:OxygenatorComponent
+tutorial-item8-text = Tarefa 7: Clique sobre o Paciente.
+tutorial-item8-trigger = Action:View:Patient
+tutorial-item9-text = Tarefa 8: Selecione o Monitor de Pressões no canto superior direito da tela.
+tutorial-item9-trigger = Action:View:PressureMonitorComponent
+tutorial-item10-text = Tarefa 9: Selecione o Console/Controles da Bomba no canto inferior direito da tela.
+tutorial-item10-trigger = Action:View:PumpComponent
+tutorial-item11-text = Tarefa 10: Selecione o Ventilador do lado esquerdo logo acima do paciente.
+tutorial-item11-trigger = Action:View:VentilatorComponent
+tutorial-item12-text = Tarefa 11: Retire a Pinça da ponte (entre linha arterial e a linha venosa do circuito).
+tutorial-item12-trigger = Action:Tube:-BRIDGE
+tutorial-item13-text = Tarefa 12: Quando houver grandes alterações dos sinais vitais do paciente o ALARME começará a tocar. Para silenciar o alarme, clique no botão amarelo abaixo do alarme vermelho à direita.
+tutorial-item13-trigger = N/A
+tutorial-item14-text = Tarefa 13: Passando o cursor do mouse sobre a imagem do paciente você terá a Descrição do Cenário.
+tutorial-item14-trigger = N/A
+
+# Baseline Values
+baseline-sedated = true
+baseline-bleeding = false
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 180
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-urine-output = good
+baseline-suction-ETT = good
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 200
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 200
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-alarming = false
+
+# Patient Information
+patient-species = human
+patient-gender = male
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
+patient-heart-function = good
+patient-sedated = true
+patient-bleeding = false
+patient-temperature = 37
+
+# Heater
+heater-temperature = 37
+heater-broken = false
+
+# Oxygenator
+oxygenator-total-sweep = 0.6
+oxygenator-fio2 = 0.5
+oxygenator-broken = false
+oxygenator-clotting = 0.0
+
+# Pump
+pump-on = true
+pump-flow = 0.6
+
+# Intervention
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
+
+# Tube
+tube-clamp-arterial-A = open
+tube-clamp-arterial-B = open
+tube-clamp-venous-A = open
+tube-clamp-venous-B = open
+tube-clamp-bridge = closed
+tube-bubbles-arterial = false
+tube-bubbles-venous = false
+tube-cannula-broken = false
+tube-cannula-status = 
+tube-cannula-problem-location = 
+tube-cannula-arterial-B = open
+tube-cannula-venous-B = open
+tube-cannula-premembrane-pressure = 
+tube-cannula-postmembrane-pressure = 
+tube-coagulopathy = false
+
+# ACT
+act-value = 
+
+# Lab Component
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
+#lab-component-chem
+lab-component-heme-fibrinogen = 
+lab-component-heme-platelets = 
+lab-component-heme-pt = 
+lab-component-heme-ptt = 
+
+# Imaging Component
+lab-img-xray = xr-none
+lab-img-us = us-none
+lab-img-echo = echo-none
