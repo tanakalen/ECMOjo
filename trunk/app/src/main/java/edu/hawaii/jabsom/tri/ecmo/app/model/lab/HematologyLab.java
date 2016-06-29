@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
 
+import king.lib.util.Translator;
+
 
 /**
  * The hematology lab test. 
@@ -177,6 +179,6 @@ public class HematologyLab extends Lab {
    * @return  The name.
    */
   public String getName() {
-    return "Hematology";
+    return Translator.getString("label.Hematology[i18n]: Hematology");
   }
 }
