@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
 
+import king.lib.util.Translator;
+
 /**
  * The X-Ray lab test. 
  *
@@ -14,6 +16,6 @@ public class XRayLab extends ImagingLab {
    * @return  The name.
    */
   public String getName() {
-    return "X-Ray";
+    return Translator.getString("text.XRay[i18n]: X-Ray");
   }
 }

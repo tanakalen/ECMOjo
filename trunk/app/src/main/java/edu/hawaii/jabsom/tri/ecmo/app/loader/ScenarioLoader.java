@@ -54,6 +54,7 @@ import king.lib.script.model.Language;
 import king.lib.script.model.Script;
 import king.lib.access.Hookup;
 import king.lib.access.LocalHookup;
+import king.lib.util.Translator;
 
 /**
  * The scenario loader. 
@@ -470,7 +471,7 @@ public final class ScenarioLoader {
         }
         else {
           XRayLab labTest = new XRayLab();
-          labTest.setDescription("Chest, X-Ray");
+          labTest.setDescription(Translator.getString("text.Xray[i18n]: Chest, X-Ray"));
           labTest.setImageName(image + ".png");
           labTest.setTime(0);
           imagingComponent.addResult(labTest);
@@ -483,7 +484,7 @@ public final class ScenarioLoader {
       for (int i = 0; i < images.length; i++) {
         String image = images[i];
         UltrasoundLab labTest = new UltrasoundLab();
-        labTest.setDescription("Head, US");
+        labTest.setDescription(Translator.getString("text.HeadUS[i18n]: Head, US"));
         labTest.setImageName(image + ".png");
         labTest.setTime(0);
         imagingComponent.addResult(labTest);
@@ -504,7 +505,7 @@ public final class ScenarioLoader {
         }
         else {
           EchoLab labTest = new EchoLab();
-          labTest.setDescription("Echo");
+          labTest.setDescription(Translator.getString("text.Echo[i18n]: Echo"));
           labTest.setImageName(image + ".png");
           labTest.setTime(0);
           imagingComponent.addResult(labTest);

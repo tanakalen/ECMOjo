@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
 
+import king.lib.util.Translator;
+
 /**
  * The Echo lab test. 
  *
@@ -14,6 +16,6 @@ public class EchoLab extends ImagingLab {
    * @return  The name.
    */
   public String getName() {
-    return "Echo";
+    return Translator.getString("text.Echo[i18n]: Echo");
   }
 }
