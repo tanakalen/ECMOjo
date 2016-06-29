@@ -47,6 +47,9 @@ public class ChemistryLabPanel extends LabDetailPanel implements LabTestListener
   /** The table. */
   private JXTable table;
   
+  /** DEFAULT not applicable N/A i18n text string. **/
+  private String notApplicable = Translator.getString("text.NotApplicable[i18n]: N/A");
+  
   /**
    * Default constructor.
    * 
@@ -57,7 +60,7 @@ public class ChemistryLabPanel extends LabDetailPanel implements LabTestListener
     this.component = component;
     
     // add title
-    JLabel titleLabel = new JLabel(Translator.getString("title.Chemistry[i18n]: Chemistry"));
+    JLabel titleLabel = new JLabel(Translator.getString("label.Chemistry[i18n]: Chemistry"));
     titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
@@ -126,9 +129,9 @@ public class ChemistryLabPanel extends LabDetailPanel implements LabTestListener
             case 2:
               return "iCa";
             case 3:
-              return "Gluc";
+              return Translator.getString("text.Glucose[i18n]: Gluc");
             case 4:
-              return "Lactate";
+              return Translator.getString("text.Lactate[i18n]: Lactate");
             default:
               // error condition
               return null;
@@ -158,15 +161,15 @@ public class ChemistryLabPanel extends LabDetailPanel implements LabTestListener
           else {
             switch (row) {
               case 0:
-                return "N/A";
+                return notApplicable;
               case 1:
-                return "N/A";
+                return notApplicable;
               case 2:
-                return "N/A";
+                return notApplicable;
               case 3:
-                return "N/A";
+                return notApplicable;
               case 4:
-                return "N/A";
+                return notApplicable;
               default:
                 // error condition
                 return null;

@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
 
+import king.lib.util.Translator;
+
 
 /**
  * The chemistry lab test. 
@@ -117,6 +119,6 @@ public class ChemistryLab extends Lab {
    * @return  The name.
    */
   public String getName() {
-    return "Chemistry";
+    return Translator.getString("label.Chemistry[i18n]: Chemistry");
   }
 }
