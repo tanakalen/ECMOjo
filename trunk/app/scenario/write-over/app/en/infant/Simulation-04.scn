@@ -1,0 +1,122 @@
+# Scenario Information
+name = Simulation 4 (Roller & Silicon)
+desc = ECMO hour 220 (d9) for 4 kg female with severe sepsis. Improving pulmonary function. Worsening coagulation studies. The circuit was changed and you are in the process of reinitiating flow. The alarms begin to sound.
+info-success = This was a simulation of a clamp not being in the correct position after a circuit change. Rapid discovery and intervention is required to reduce damage to the oxygenator.\n\nCongratulations. With your expert training skills you easily detected the problem.\n\nRemember the ECMOism, "Everybody loves everybody, but nobody trusts anybody." Always check the circuit yourself.
+info-failure = This was a simulation of a clamp not being in the correct position after a circuit change. Rapid discovery and intervention is required to reduce damage to the oxygenator.\n\nThis was a simulation of a 5% sheer terror moment. The clamp was left on the arterial line, and someone overrode the post membrane pressure alarm, allowing the roller head pump to continue to pump against a high pressure may cause a membrane rupture.\n\nRemember the ECMOism, "Everybody loves everybody, but nobody trusts anybody." Always check the circuit yourself.
+
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = silicone
+scenario-pump-type = roller
+scenario-vent-type = *
+
+# Goal Information
+goal = Baseline
+time-init = 0
+time-limit = 300
+trigger = 
+
+# Baseline Values
+baseline-sedated = true
+baseline-bleeding = false
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 160
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-urine-output = good
+baseline-suction-ETT = good
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 300
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 300
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-alarming = false
+
+# Patient Information
+patient-species = human
+patient-gender = male
+patient-age = 3
+patient-weight = 4
+patient-lung-function = good
+patient-heart-function = good
+patient-sedated = true
+patient-bleeding = false
+patient-temperature = 37
+
+# Heater
+heater-temperature = 37
+heater-broken = false
+
+# Oxygenator
+oxygenator-total-sweep = 0.6
+oxygenator-fio2 = 0.5
+oxygenator-broken = false
+oxygenator-clotting = 0.0
+
+# Pump
+pump-on = true
+pump-flow = 0.6
+
+# Intervention
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
+
+# Tube
+tube-clamp-arterial-A = open
+tube-clamp-arterial-B = open
+tube-clamp-venous-A = open
+tube-clamp-venous-B = open
+tube-clamp-bridge = closed
+tube-bubbles-arterial = false
+tube-bubbles-venous = false
+tube-cannula-broken = false
+tube-cannula-status = 
+tube-cannula-problem-location = 
+tube-cannula-arterial-B = closed
+tube-cannula-venous-B = open
+tube-cannula-premembrane-pressure = 
+tube-cannula-postmembrane-pressure = 
+tube-coagulopathy = false
+
+# ACT
+act-value = 170
+
+# Lab Component
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
+#lab-component-chem
+lab-component-heme-fibrinogen = 90
+lab-component-heme-platelets = 50
+lab-component-heme-pt = 
+lab-component-heme-ptt = 100
+
+# Imaging Component
+lab-img-xray = xr-nb-vv-whiteout,xr-nb-va-whiteout
+lab-img-us = us-nb-vv-noivh
+lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal
