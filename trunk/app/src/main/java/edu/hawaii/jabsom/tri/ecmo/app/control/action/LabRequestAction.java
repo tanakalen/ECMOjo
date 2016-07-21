@@ -19,6 +19,7 @@ import edu.hawaii.jabsom.tri.ecmo.app.model.lab.Lab;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.UltrasoundLab;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.XRayLab;
 import edu.hawaii.jabsom.tri.ecmo.app.model.lab.BloodGasLab.BloodGasType;
+import king.lib.util.Translator;
 
 /**
  * The lab request action. 
@@ -70,7 +71,7 @@ public class LabRequestAction extends Action {
     }
     else if (labTest.equals(UltrasoundLab.class)) {
       UltrasoundLab labTest = new UltrasoundLab();
-      labTest.setDescription("Ultrasound");
+      labTest.setDescription(Translator.getString("text.Ultrasound[i18n]: Ultrasound"));
       
       // Create image name depending on the patient
       TubeComponent tube = (TubeComponent)game.getEquipment().getComponent(TubeComponent.class);
@@ -96,7 +97,7 @@ public class LabRequestAction extends Action {
         }
       }
       EchoLab labTest = new EchoLab();
-      labTest.setDescription("Echo");
+      labTest.setDescription(Translator.getString("text.Echo[i18n]: Echo"));
       if (imagingComponent.isScenarioEmpty() || (imagingComponent.getScenarioImaging("Echo").size() == 0)) {
         // Create image name depending on the patient
         String name = "echo-nb-";
@@ -131,7 +132,7 @@ public class LabRequestAction extends Action {
         }
       }
       XRayLab labTest = new XRayLab();
-      labTest.setDescription("X-Ray");
+      labTest.setDescription(Translator.getString("text.XRay[i18n]: X-Ray"));
       if (imagingComponent.isScenarioEmpty() || (imagingComponent.getScenarioImaging("X-Ray").size() == 0)) {
         // Create image name depending on the patient
         String name = "xr-nb-";

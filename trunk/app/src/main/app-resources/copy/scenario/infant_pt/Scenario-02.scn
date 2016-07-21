@@ -1,0 +1,167 @@
+# Scenario Information
+name = Tutorial - Detalhado
+desc = Execute o tutorial para uma explicação mais detalhada do ECMOjo. 
+
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = *
+scenario-pump-type = *
+scenario-vent-type = *
+
+# Goal Information
+goal = Tutorial
+tutorial-item1-text = Bem-vindo ao tutorial detalhado sobre como os componentes do ECMOjo podem ser manipulados.
+tutorial-item1-trigger = N/A
+tutorial-item2-text = Tarefa 1: Selecione o console da bomba.
+tutorial-item2-trigger = Action:View:PumpComponent
+tutorial-item3-text = Tarefa 2: Aumente o fluxo para maior do que um litro.
+tutorial-item3-trigger = Action:Pump:flow:>1.0
+tutorial-item4-text = Tarefa 3: Selecione o "blender"/misturador de gases.
+tutorial-item4-trigger = Action:View:OxygenatorComponent
+tutorial-item5-text = Tarefa 4: Aumente o fluxo total do "sweep"/gás de varredura para 1,3 ou um fluxo maior.
+tutorial-item5-trigger = Action:Oxy:totalSweep:>1.2
+tutorial-item6-text = Tarefa 5: Selecione o ponto de intervenção A (Seringa - A).
+tutorial-item6-trigger = Action:View:Intervention:PATIENT
+tutorial-item7-text = Tarefa 6: Administre hemácias, isto é, clique no botão [Concentrado de Hemácias].
+tutorial-item7-trigger = Action:Intervention:Blood
+tutorial-item8-text = Tarefa 7: Coloque uma pinça na linha arterial do circuito no ponto mais próximo do paciente.
+tutorial-item8-trigger = Action:Tube:+ARTERIAL_B
+tutorial-item9-text = Observe que o alarme dispara, porque você interrompeu a circulação do sangue!
+tutorial-item9-trigger = N/A
+tutorial-item10-text = Os componentes que estão com os alarmes tocando têm uma luz piscando em vermelho.
+tutorial-item10-trigger = N/A
+tutorial-item11-text = Para desligar os alarmes, você terá que corrigir os problemas de todos os componentes que estão com as luzes vermelhas piscando.
+tutorial-item11-trigger = N/A
+tutorial-item12-text = Tarefa 8: Retire a pinça que você acabou de colocar no circuito.
+tutorial-item12-trigger = Action:Tube:-ARTERIAL_B
+tutorial-item13-text = Tarefa 9: Selecione o console da bomba.
+tutorial-item13-trigger = Action:View:PumpComponent
+tutorial-item14-text = Tarefa 10: Tente ligar a bomba.
+tutorial-item14-trigger = Action:Pump:on
+tutorial-item15-text = Tarefa 11: Selecione o aquecedor.
+tutorial-item15-trigger = Action:View:HeaterComponent
+tutorial-item16-text = Tarefa 12: Aumente a temperatura para maior do que 37 graus centígrados.
+tutorial-item16-trigger = Action:Heater:>37.0
+tutorial-item17-text = Tarefa 13: Clique sobre o paciente.
+tutorial-item17-trigger = Action:View:Patient
+tutorial-item18-text = Tarefa 14: Verifique os Sítios de Canulação do paciente. Clique no botão [Checar Sítios de Canulação].
+tutorial-item18-trigger = Action:Patient:CANNULA_SITE
+tutorial-item19-text = Tarefa 15: Selecione o monitor de pressões.
+tutorial-item19-trigger = Action:View:PressureMonitorComponent
+tutorial-item20-text = As telas "veno", "pré" e "pós" correspondem as pressões venosa ou de acesso, pré-membrana e pós-membrana do circuito.
+tutorial-item20-trigger = N/A
+tutorial-item21-text = As pressões possuem valores mínimos e máximos, quando fora dos intervalos definidos os alarmes disparam.
+tutorial-item21-trigger = N/A
+tutorial-item22-text = Tarefa 16: Aumente o valor máximo da pressão venosa para maior do que 20.
+tutorial-item22-trigger = Action:Pressure:venousmax:>20
+tutorial-item23-text = Tarefa 17: Diminua o valor mínimo da pressão venosa para menor do que -50.
+tutorial-item23-trigger = Action:Pressure:venousmin:<-50
+tutorial-item24-text = Tarefa 18: Ligue os ajustes e parâmetros da ventilação de emergência. Pressione o botão [Ventilação de Emergência].
+tutorial-item24-trigger = Action:Ventilator:Emergency:on 
+tutorial-item25-text = Tarefa 19: Desligue os ajustes e parâmetros da ventilação de emergência.
+tutorial-item25-trigger = Action:Ventilator:Emergency:off
+
+# Baseline Values
+baseline-sedated = true
+baseline-bleeding = false
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 180
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-urine-output = good
+baseline-suction-ETT = good
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 200
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 200
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-alarming = false
+
+# Patient Information
+patient-species = human
+patient-gender = male
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
+patient-heart-function = good
+patient-sedated = true
+patient-bleeding = false
+patient-temperature = 37
+
+# Heater
+heater-temperature = 37
+heater-broken = false
+
+# Oxygenator
+oxygenator-total-sweep = 0.6
+oxygenator-fio2 = 0.5
+oxygenator-broken = false
+oxygenator-clotting = 0.0
+
+# Pump
+pump-on = true
+pump-flow = 0.6
+
+# Intervention
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
+
+# Tube
+tube-clamp-arterial-A = open
+tube-clamp-arterial-B = open
+tube-clamp-venous-A = open
+tube-clamp-venous-B = open
+tube-clamp-bridge = closed
+tube-bubbles-arterial = false
+tube-bubbles-venous = false
+tube-cannula-broken = false
+tube-cannula-status = 
+tube-cannula-problem-location = 
+tube-cannula-arterial-B = open
+tube-cannula-venous-B = open
+tube-cannula-premembrane-pressure = 
+tube-cannula-postmembrane-pressure = 
+tube-coagulopathy = false
+
+# ACT
+act-value = 
+
+# Lab Component
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
+#lab-component-chem
+lab-component-heme-fibrinogen = 
+lab-component-heme-platelets = 
+lab-component-heme-pt = 
+lab-component-heme-ptt = 
+
+# Imaging Component
+lab-img-xray = xr-none
+lab-img-us = us-none
+lab-img-echo = echo-none

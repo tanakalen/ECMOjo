@@ -47,6 +47,8 @@ public class BloodGasLabPanel extends LabDetailPanel implements LabTestListener 
   /** The table. */
   private JXTable table;
   
+  /** DEFAULT not applicable N/A i18n text string. **/
+  private String notApplicable = Translator.getString("text.NotApplicable[i18n]: N/A");
   
   /**
    * Default constructor.
@@ -58,7 +60,7 @@ public class BloodGasLabPanel extends LabDetailPanel implements LabTestListener 
     this.component = component;
     
     // add title
-    JLabel titleLabel = new JLabel("Blood Gas");
+    JLabel titleLabel = new JLabel(Translator.getString("label.BloodGas[i18n]: Blood Gas"));
     titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
@@ -120,7 +122,7 @@ public class BloodGasLabPanel extends LabDetailPanel implements LabTestListener 
         if (col == 0) {
           switch (row) {
             case 0:
-              return "Type";
+              return Translator.getString("text.Type[i18n]: Type");
             case 1:
               return "pH";
             case 2:
@@ -160,17 +162,17 @@ public class BloodGasLabPanel extends LabDetailPanel implements LabTestListener 
           else {
             switch (row) {
               case 0:
-                return "N/A";
+                return notApplicable;
               case 1:
-                return "N/A";
+                return notApplicable;
               case 2:
-                return "N/A";
+                return notApplicable;
               case 3:
-                return "N/A";
+                return notApplicable;
               case 4:
-                return "N/A";
+                return notApplicable;
               case 5:
-                return "N/A";
+                return notApplicable;
               default:
                 // error condition
                 return null;

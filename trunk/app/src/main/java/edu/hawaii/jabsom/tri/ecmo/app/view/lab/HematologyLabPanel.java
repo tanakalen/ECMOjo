@@ -47,6 +47,9 @@ public class HematologyLabPanel extends LabDetailPanel implements LabTestListene
   /** The table. */
   private JXTable table;
   
+  /** DEFAULT not applicable N/A i18n text string. **/
+  private String notApplicable = Translator.getString("text.NotApplicable[i18n]: N/A");
+  
   /**
    * Default constructor.
    * 
@@ -57,7 +60,7 @@ public class HematologyLabPanel extends LabDetailPanel implements LabTestListene
     this.component = component;
     
     // add title
-    JLabel titleLabel = new JLabel(Translator.getString("title.Hematology[i18n]: Hematology"));
+    JLabel titleLabel = new JLabel(Translator.getString("label.Hematology[i18n]: Hematology"));
     titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
@@ -119,19 +122,19 @@ public class HematologyLabPanel extends LabDetailPanel implements LabTestListene
         if (col == 0) {
           switch (row) {
             case 0:
-              return "WBC";
+              return Translator.getString("text.WBC[i18n]: WBC");
             case 1:
-              return "Hgb";
+              return Translator.getString("text.Hgb[i18n]: Hgb");
             case 2:
-              return "Hct";
+              return Translator.getString("text.Hct[i18n]: Hct");
             case 3:
-              return "Platelets";
+              return Translator.getString("text.Platelets[i18n]: Platelets");
             case 4:
-              return "PT";
+              return Translator.getString("text.PT[i18n]: PT");
             case 5:
-              return "PTT";
+              return Translator.getString("text.PTT[i18n]: PTT");
             case 6:
-              return "Fibrinogen";
+              return Translator.getString("text.Fibrinogen[i18n]: Fibrinogen");
             default:
               // error condition
               return null;
@@ -163,19 +166,19 @@ public class HematologyLabPanel extends LabDetailPanel implements LabTestListene
           else {
             switch (row) {
               case 0:
-                return "N/A";
+                return notApplicable;
               case 1:
-                return "N/A";
+                return notApplicable;
               case 2:
-                return "N/A";
+                return notApplicable;
               case 3:
-                return "N/A";
+                return notApplicable;
               case 4:
-                return "N/A";
+                return notApplicable;
               case 5:
-                return "N/A";
+                return notApplicable;
               case 6:
-                return "N/A";
+                return notApplicable;
               default:
                 // error condition
                 return null;

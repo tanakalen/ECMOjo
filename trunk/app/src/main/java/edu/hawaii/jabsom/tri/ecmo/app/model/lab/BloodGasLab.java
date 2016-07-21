@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
 
+import king.lib.util.Translator;
+
 /**
  * The blood gas lab test. 
  *
@@ -35,7 +37,7 @@ public class BloodGasLab extends Lab {
      * @return  The name.
      */
     public String getName() {
-      return name;
+      return Translator.getString("label."+name+"[i18n]: "+name);
     }
     
     /**
@@ -183,6 +185,6 @@ public class BloodGasLab extends Lab {
    * @return  The name.
    */
   public String getName() {
-    return "Blood Gas";
+    return Translator.getString("label.BloodGas[i18n]: Blood Gas");
   }
 }

@@ -1,5 +1,7 @@
 package edu.hawaii.jabsom.tri.ecmo.app.model.lab;
 
+import king.lib.util.Translator;
+
 /**
  * The Ultrasound lab test. 
  *
@@ -14,6 +16,6 @@ public class UltrasoundLab extends ImagingLab {
    * @return  The name.
    */
   public String getName() {
-    return "Ultrasound";
+    return Translator.getString("text.Ultrasound[i18n]: Ultrasound");
   }
 }

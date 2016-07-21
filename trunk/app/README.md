@@ -35,6 +35,7 @@ Credits
 * Takanari Ikeyama, MD, Translation (Japanese)
 * Yuko Shiima, MD, Translation (Japanese)
 * Felipe Amaya, Translation (Spanish)
+* Diego Goncalves, Translation (Portuguese)
 
 
 Acknowledgement

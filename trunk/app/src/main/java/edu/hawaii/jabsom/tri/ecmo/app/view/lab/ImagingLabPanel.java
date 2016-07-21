@@ -155,10 +155,10 @@ public class ImagingLabPanel extends LabDetailPanel implements LabTestListener {
       }
       public String getColumnName(int col) {
         if (col == 0) {
-          return "Description";
+          return Translator.getString("label.Description[i18n]: Description");
         }
         else if (col == 1){
-          return "Time"; 
+          return Translator.getString("label.Time[i18n]: Time"); 
         }
         else {
           // error condition
