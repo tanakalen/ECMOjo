@@ -1,0 +1,159 @@
+# Scenario Information
+name = Circuit Check
+desc = The circuit check is to ensure the integrity of the circuit and to catch problems early or real time.  This simulation represents a generic circuit and may not include all of the components used at your center.
+
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = *
+scenario-pump-type = *
+scenario-vent-type = *
+
+# Goal Information
+goal = Tutorial
+tutorial-item1-text = The purpose of the circuit check is to ensure the integrity of the circuit and to catch problems early!
+tutorial-item1-trigger = N/A
+tutorial-item2-text = The check involves a close scrutiny of the circuit components from arterial to venous ports.
+tutorial-item2-trigger = N/A
+tutorial-item3-text = Find the arterial cannula at the patient's neck.
+tutorial-item3-trigger = N/A
+tutorial-item4-text = Follow the arterial limb of the circuit tubing.  This is where you check the connectors for clots, air, leaks, fibrin strands.
+tutorial-item4-trigger = N/A
+tutorial-item5-text = Find the oxygenator.  This is where you check for air, clots/fibrin, secure gas line connection, open gas vent port, secure water heater connections, secure pressure/sample port connections, integrity.
+tutorial-item5-trigger = N/A
+tutorial-item6-text = Click on the Gas Blender.
+tutorial-item6-trigger = Action:View:OxygenatorComponent
+tutorial-item7-text = This is where you would check the gas source for function and connections to wall air and oxygen. Also check carbon dioxide or carbogen source if applicable.
+tutorial-item7-trigger = N/A
+tutorial-item8-text = Another part of the circuit check, is inspecting the connectors, stopcocks, and pigtails for cracks, leaks, clots/fibrin, air, security.
+tutorial-item8-trigger = N/A
+tutorial-item9-text = Click on the Pressure Monitor.
+tutorial-item9-trigger = Action:View:PressureMonitorComponent
+tutorial-item10-text = Here you will verify pre and post membrane pressures and the transmembrane pressure.  Inspect pressure transducers and cables.
+tutorial-item10-trigger = N/A
+tutorial-item11-text = Continue to inspect tubing between the oxygenator and the pump for kinks, clots/fibrin.
+tutorial-item11-trigger = N/A
+tutorial-item12-text = Continue on to the pump head or raceway, to check for air, function, sound, clots/fibrin, integrity.
+tutorial-item12-trigger = N/A
+tutorial-item13-text = Click on the Pump Control.
+tutorial-item13-trigger = Action:View:PumpComponent
+tutorial-item14-text = This is where you would check the pump console for proper function, flow rate, RPMs, alarms, power source, battery supply.
+tutorial-item14-trigger = N/A
+tutorial-item15-text = Click on the Heater Controls.
+tutorial-item15-trigger = Action:View:HeaterComponent
+tutorial-item16-text = Check heater for proper function, alarms, water bath temperature, temperature set point, patient blood temp, patient temperature, power source, reservoir level, lines to oxygenator.
+tutorial-item16-trigger = N/A
+tutorial-item17-text = Continue to inspect venous line tubing, connectors, stopcock, pigtails, bladder for cracks, leaks, clots/fibrin, air, security.
+tutorial-item17-trigger = N/A
+tutorial-item18-text = Continue up to the venous cannula and check for position, bleeding, clots/fibrin, kinking, air, security to mattress.
+tutorial-item18-trigger = N/A
+tutorial-item19-text = Verify medications and volume infusions into the circuit.
+tutorial-item19-trigger = N/A
+tutorial-item20-text = And always make sure you have your tubing clamps and emergency back-up supplies.
+tutorial-item20-trigger = N/A
+tutorial-item21-text = ECMOism: The best ECMO is boring ECMO
+tutorial-item21-trigger = N/A
+
+# Baseline Values
+baseline-sedated = true
+baseline-bleeding = false
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 180
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-urine-output = good
+baseline-suction-ETT = good
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 200
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 200
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-alarming = false
+
+# Patient Information
+patient-species = human
+patient-gender = male
+patient-age = 1
+patient-weight = 5
+patient-lung-function = good
+patient-heart-function = good
+patient-sedated = true
+patient-bleeding = false
+patient-temperature = 37
+
+# Heater
+heater-temperature = 37
+heater-broken = false
+
+# Oxygenator
+oxygenator-total-sweep = 0.6
+oxygenator-fio2 = 0.5
+oxygenator-broken = false
+oxygenator-clotting = 0.0
+
+# Pump
+pump-on = true
+pump-flow = 0.6
+
+# Intervention
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
+
+# Tube
+tube-clamp-arterial-A = open
+tube-clamp-arterial-B = open
+tube-clamp-venous-A = open
+tube-clamp-venous-B = open
+tube-clamp-bridge = closed
+tube-bubbles-arterial = false
+tube-bubbles-venous = false
+tube-cannula-broken = false
+tube-cannula-status = 
+tube-cannula-problem-location = 
+tube-cannula-arterial-B = open
+tube-cannula-venous-B = open
+tube-cannula-premembrane-pressure = 
+tube-cannula-postmembrane-pressure = 
+tube-coagulopathy = false
+
+# ACT
+act-value = 
+
+# Lab Component
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
+#lab-component-chem
+lab-component-heme-fibrinogen = 
+lab-component-heme-platelets = 
+lab-component-heme-pt = 
+lab-component-heme-ptt = 
+
+# Imaging Component
+lab-img-xray = xr-none
+lab-img-us = us-none
+lab-img-echo = echo-none
