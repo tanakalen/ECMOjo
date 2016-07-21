@@ -20,6 +20,8 @@
     <property name="release.time" value="${YEARSTAMP}-${MONTHSTAMP}-${DAYSTAMP}.${MINUTESTAMP}" />
     <!-- Global directories -->
     <property name="src.dir" value="src" />
+    <property name="src.main.dir" value="${src.dir}/main/java" />
+    <property name="src.test.dir" value="${src.dir}/test/java" />
     <property name="conf.dir" value="${src.dir}/main/resources/conf" />
     <!-- <property name="resource.dir" value="resource" /> -->
     <property name="jre.dir" value="jre" />
