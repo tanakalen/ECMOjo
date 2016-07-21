@@ -65,7 +65,7 @@ public class ACTDetailPanel extends DetailPanel implements LabTestListener {
     setOpaque(false);
     
     // add title
-    JLabel titleLabel = new JLabel("ACT");
+    JLabel titleLabel = new JLabel(Translator.getString("text.ACT[i18n]: ACT"));
     titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
     titleLabel.setLocation(28, 34);
     titleLabel.setSize(150, 20);
@@ -115,7 +115,7 @@ public class ACTDetailPanel extends DetailPanel implements LabTestListener {
           return "#";
         }
         else if (col == 1){
-          return "ACT"; 
+          return Translator.getString("text.ACT[i18n]: ACT");
         }
         else {
           return " ";
