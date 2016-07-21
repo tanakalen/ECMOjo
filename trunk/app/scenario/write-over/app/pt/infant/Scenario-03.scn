@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Tutorial - Avançado
+desc = Execute o tutorial para um exemplo avançado do ECMOjo.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,20 +10,30 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = Bem-vindo ao tutorial avançado do ECMOjo.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = Vamos dar uma olhada nos vários exames diagnósticos disponíveis.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
-tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
-tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
-tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
-tutorial-item7-trigger = N/A
+tutorial-item3-text = Tarefa 1: Selecione o Laboratório de Gases Sanguíneos no botão [GAS] do Lab para visualizar os resultados das gasometrias.
+tutorial-item3-trigger = Action:View:LabTest:BloodGasLabTest
+tutorial-item4-text = Tarefa 2: Clique no botão [Lab] para solicitar novos resultados laboratoriais.
+tutorial-item4-trigger = Action:LabRequest
+tutorial-item5-text = Tarefa 3: Selecione o Laboratório de Bioquímica no botão [BIOQ] do Lab para visualizar os resultados das análises bioquímicas.
+tutorial-item5-trigger = Action:View:LabTest:ChemistryLabTest
+tutorial-item6-text = Tarefa 4: Clique no botão [Lab] para solicitar novos resultados laboratoriais.
+tutorial-item6-trigger = Action:LabRequest
+tutorial-item7-text = Tarefa 5: Selecione o Laboratório de Hematologia no botão [HEMA] do Lab para visualizar os resultados do laboratório de hematologia e hemostasia.
+tutorial-item7-trigger = Action:View:LabTest:HematologyLabTest
+tutorial-item8-text = Tarefa 6: Clique no botão [Lab] para solicitar novos resultados laboratoriais.
+tutorial-item8-trigger = Action:LabRequest
+tutorial-item9-text = Tarefa 7: Selecione o Laboratório de Diagnóstico por Imagem no botão [IMG] do Lab para visualizar os resultados de exames de imagem.
+tutorial-item9-trigger = Action:View:LabTest:ImagingLabTest
+tutorial-item10-text = Clicando sobre o nome do Exame "ECO" ou "RAIO-X",  para visualizar a imagem ou o laudo atual. Clicando novamente na imagem ou no laudo irá removê-los da tela. Clique no botão da imagem correspondente para solicitar novos resultados.
+tutorial-item10-trigger = N/A
+tutorial-item11-text = Tarefa 8: Selecione o botão [TCA] para visualizar os resultados de TCA - Tempo de Coagulação Ativado.
+tutorial-item11-trigger = Action:View:ACTComponent
+tutorial-item12-text = Tarefa 9: Clique no botão [Lab] para solicitar novos resultados de TCA.
+tutorial-item12-trigger = Action:ACTRequest
 
 # Baseline Values
 baseline-sedated = true
@@ -126,6 +136,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-none
-lab-img-us = us-none
-lab-img-echo = echo-none
+lab-img-xray = xr-nb-vv-whiteout,xr-nb-va-whiteout
+lab-img-us = us-nb-vv-noivh
+lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal

@@ -1,28 +1,28 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Ar na Linha Venosa
+desc = Ações a serem executadas, quando ar é visto na linha venosa do circuito.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
-scenario-oxy-type = *
+scenario-oxy-type = quadrox
 scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = Durante uma das checagens do circuito que você executa de hora em hora, você identifica algumas bolhas de ar que se deslocam no lado venoso do circuito.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = Que decisão você deve tomar imediatamente?
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
+tutorial-item3-text = Este é um momento de "Puro Terror"? Ou tem tempo para fazer uma análise da situação e buscar um café?
 tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
+tutorial-item4-text = Vamos supor que não existe muito ar no lado venoso do circuito. Quais são os pontos mais prováveis para serem fontes de entrada de ar no lado venoso?
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
+tutorial-item5-text = As fontes de entrada de ar mais comuns no lado venoso do circuito são: a) Entrada de ar pelo sítio de inserção da cânula venosa, b) Torneirinha aberta ou rachada no lado venoso e c)  Ar introduzido por meio da infusão de medicamento no paciente por um cateter venoso central.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
+tutorial-item6-text = Depois de ter certeza que o paciente está em segurança, retire o ar do sistema.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
+tutorial-item7-text = Identifique e corrija a causa, se possível.
 tutorial-item7-trigger = N/A
 
 # Baseline Values
@@ -102,7 +102,7 @@ tube-clamp-venous-A = open
 tube-clamp-venous-B = open
 tube-clamp-bridge = closed
 tube-bubbles-arterial = false
-tube-bubbles-venous = false
+tube-bubbles-venous = true
 tube-cannula-broken = false
 tube-cannula-status = 
 tube-cannula-problem-location = 

@@ -1,0 +1,123 @@
+# Scenario Information
+name = Simulação 3
+desc = Fem. 9d, 4kg, 220h de ECMO por pneumonia por B. pertussis. Apresenta melhora da função pulmonar e piora nos resultados dos exames da coagulação. Os resultados de laboratório da rotina da manhã acabaram de chegar e você solicita novamente os resultados para reavaliar-los.
+info-success = Esta foi uma simulação de uma coagulopatia sugestiva de problema/falência do circuito. Nos laboratórios de hematologia e hemostasia, a contagem de plaquetas diminuiu e o valor do TTP aumentou, sugerindo uma coagulopatia de consumo. Depois de administrar plaquetas e PFC (Plasma Fresco Congelado), os resultados hematológicos corrigiram-se, mas a contagem de plaquetas e o fibrinogênio diminuíram novamente pouco tempo depois. Isto é sugestivo de uma coagulopatia de consumo. Se você executou uma checagem do circuito você deve ter identificado a presença de coágulos nos conectores e fibrina no circuito. Estes achados sugerem que o circuito está consumindo os produtos sanguíneos.\n\nParabéns. Você detectou o problema e indicou a intervenção correta para assegurar a continuidade da ECMO entediante enquanto o paciente estiver em ECMO.
+info-failure = Esta foi uma simulação de uma coagulopatia sugestiva de problema/falência do circuito. Nos laboratórios de hematologia e hemostasia, a contagem de plaquetas diminuiu e o valor do TTP aumentou, sugerindo uma coagulopatia de consumo. Depois de administrar plaquetas e PFC (Plasma Fresco Congelado), os resultados hematológicos corrigiram-se, mas a contagem de plaquetas e o fibrinogênio diminuíram novamente pouco tempo depois. Isto é sugestivo de uma coagulopatia de consumo. Se você executou uma checagem do circuito você deve ter identificado a presença de coágulos nos conectores e fibrina no circuito. Estes achados sugerem que o circuito está consumindo os produtos sanguíneos.\n\nO consumo contínuo de plaquetas e fibrinogênio, juntamente com a identificação de coágulos e fibrinas visíveis sugerem uma coagulopatia de consumo, devido a um problema/falência do circuito. Uma troca do circuito era indicada. Após a substituição do circuito, era importante observar que a bomba estava desligada e precisava ser reiniciada.
+
+# Scenario Parameters
+scenario-ecmo-mode = *
+scenario-oxy-type = *
+scenario-pump-type = *
+scenario-vent-type = *
+
+# Goal Information
+goal = Baseline
+time-init = 0
+time-limit = 300
+trigger = 
+
+# Baseline Values
+baseline-sedated = true
+baseline-bleeding = false
+baseline-min-heart-rate = 100
+baseline-max-heart-rate = 160
+baseline-min-O2-saturation = 0.85
+baseline-max-O2-saturation = 1.0
+baseline-min-HGB = 14.5
+baseline-max-HGB = 22.5
+baseline-min-pH = 7.35
+baseline-max-pH = 7.45
+baseline-min-pCO2 = 35
+baseline-max-pCO2 = 45
+baseline-min-ACT = 160
+baseline-max-ACT = 200
+baseline-min-temperature = 34
+baseline-max-temperature = 39
+baseline-arterial-A = open
+baseline-arterial-B = open
+baseline-venous-A = open
+baseline-venous-B = open
+baseline-bridge = closed
+baseline-cannula = good
+baseline-urine-output = good
+baseline-suction-ETT = good
+baseline-min-premembrane-pressure = 0
+baseline-max-premembrane-pressure = 300
+baseline-min-postmembrane-pressure = 0
+baseline-max-postmembrane-pressure = 300
+baseline-min-venous-pressure = -20
+baseline-max-venous-pressure = 20
+baseline-arterial-bubbles = false
+baseline-venous-bubbles = false
+baseline-min-fiO2 = 0.3
+baseline-max-fiO2 = 0.6
+baseline-broken = false
+baseline-power = on
+baseline-flow = 0.6
+baseline-alarming = false
+
+# Patient Information
+patient-species = human
+patient-gender = male
+patient-age = 3
+patient-weight = 4
+patient-lung-function = bad
+patient-heart-function = good
+patient-sedated = true
+patient-bleeding = false
+patient-temperature = 37
+
+# Heater
+heater-temperature = 37
+heater-broken = false
+
+# Oxygenator
+oxygenator-total-sweep = 1.6
+oxygenator-fio2 = 0.8
+oxygenator-broken = false
+oxygenator-clotting = 2.0
+
+# Pump
+pump-on = true
+pump-flow = 0.6
+
+# Intervention
+intervention-1-cracked-pigtail = false
+intervention-2-cracked-pigtail = false
+intervention-3-cracked-pigtail = false
+intervention-neck-cracked-pigtail = false
+
+# Tube
+tube-clamp-arterial-A = open
+tube-clamp-arterial-B = open
+tube-clamp-venous-A = open
+tube-clamp-venous-B = open
+tube-clamp-bridge = closed
+tube-bubbles-arterial = false
+tube-bubbles-venous = false
+tube-cannula-broken = false
+tube-cannula-status = 
+tube-cannula-problem-location = 
+tube-cannula-arterial-B = open
+tube-cannula-venous-B = open
+tube-cannula-premembrane-pressure = 
+tube-cannula-postmembrane-pressure = 
+tube-coagulopathy = true
+
+# ACT
+act-value = 220
+
+# Lab Component
+lab-component-abg-ph = 
+lab-component-abg-pco2 = 
+lab-component-abg-po2 = 
+#lab-component-chem
+lab-component-heme-fibrinogen = 90
+lab-component-heme-platelets = 50
+lab-component-heme-pt = 
+lab-component-heme-ptt = 100
+
+# Imaging Component
+lab-img-xray = xr-nb-vv-mas,xr-nb-va-normal
+lab-img-us = us-nb-vv-noivh
+lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal

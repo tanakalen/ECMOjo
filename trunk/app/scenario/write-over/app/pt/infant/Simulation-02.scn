@@ -1,6 +1,8 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Simulação 2
+desc = RN, GIG, 2d, 5kg, 52h de ECMO por Hipertensão Pulmonar Persistente Neonatal (HPPN). Sem alterações da função pulmonar, mantendo-se ruim. A função cardíaca é normal. O bebê está desperto e responsivo, mas adequadamente sedado. Recebeu uma transfusão de plaquetas e pós transfusão uma dose de lasix há duas horas atrás. A rotina de exames laboratoriais da manhã acabou de ser enviada.
+info-success = Esta foi uma simulação de um sangramento no sítio cirúrgico. Parâmetros indicativos de problemas relacionados com a volemia incluíam diminuição da PVC, diminuição da PA e aumento da FC.\n\nParabéns. Você identificou a origem do problema. Identificando o sangramento e aplicando compressão sobre o local é o primeiro passo correto. Devido à perda de sangue e as alterações hemodinâmicas, a reposição volêmica é necessária para corrigir a hipotensão. Se necessário, chamar o cirurgião também é recomendado.
+info-failure = Esta foi uma simulação de um sangramento no sítio cirúrgico. Parâmetros indicativos de problemas relacionados com a volemia incluíam diminuição da PVC, diminuição da PA e aumento da FC.\n\nIdentificando a fonte do sangramento e aplicando compressão sobre o local é o primeiro passo correto. Devido à perda de sangue e as alterações hemodinâmicas, a reposição volêmica também seria necessária para corrigir a hipovolemia. Na UTI, chamar o cirurgião também seria recomendado.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -9,21 +11,10 @@ scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
-goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
-tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
-tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
-tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
-tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
-tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
-tutorial-item7-trigger = N/A
+goal = Baseline
+time-init = 30
+time-limit = 480
+trigger = patient-bleeding
 
 # Baseline Values
 baseline-sedated = true
@@ -38,7 +29,7 @@ baseline-min-pH = 7.35
 baseline-max-pH = 7.45
 baseline-min-pCO2 = 35
 baseline-max-pCO2 = 45
-baseline-min-ACT = 180
+baseline-min-ACT = 160
 baseline-max-ACT = 200
 baseline-min-temperature = 34
 baseline-max-temperature = 39
@@ -51,9 +42,9 @@ baseline-cannula = good
 baseline-urine-output = good
 baseline-suction-ETT = good
 baseline-min-premembrane-pressure = 0
-baseline-max-premembrane-pressure = 200
+baseline-max-premembrane-pressure = 300
 baseline-min-postmembrane-pressure = 0
-baseline-max-postmembrane-pressure = 200
+baseline-max-postmembrane-pressure = 300
 baseline-min-venous-pressure = -20
 baseline-max-venous-pressure = 20
 baseline-arterial-bubbles = false
@@ -126,6 +117,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-none
-lab-img-us = us-none
-lab-img-echo = echo-none
+lab-img-xray = xr-nb-vv-mas,xr-nb-va-normal
+lab-img-us = us-nb-vv-noivh
+lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal

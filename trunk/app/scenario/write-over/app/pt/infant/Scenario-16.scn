@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Gases de Transporte/"Sweep Gases" 1
+desc = Ajustando a FiO2 ofertada para o oxigenador.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,20 +10,26 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
-tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item1-text = Clique no misturador de gases/"blender".
+tutorial-item1-trigger = Action:View:OxygenatorComponent
+tutorial-item2-text = Este dispositivo controla os gases ofertados para o oxigenador.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
-tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
+tutorial-item3-text = Aumente o fluxo de oxigênio (FiO2/"sweep gas FiO2") para a membrana.
+tutorial-item3-trigger = Action:Oxy:fiO2:>0.52
+tutorial-item4-text = Observe no monitor CDI as mudanças nos valores pós-membrana?
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
+tutorial-item5-text = A PaO2 no CDI aumentou.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
+tutorial-item6-text = A PaO2 no CDI aumentou, mas a SaO2 no CDI manteve-se em 100%. O conteúdo de oxigênio (CaO2) no sangue que sai da membrana permanece o mesmo. Por quê?
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
+tutorial-item7-text = O CaO2 depende principalmente da concentração de Hb e da saturação de oxigênio. Se a concentração de Hb permanece a mesma, e a saturação de oxigênio permanece em 100%, então o conteúdo de oxigênio deve permanecer o mesmo.
 tutorial-item7-trigger = N/A
+tutorial-item8-text = O que acontece com as saturações do paciente?
+tutorial-item8-trigger = N/A
+tutorial-item9-text = Selecione a melhor resposta para aumentar a oferta de oxigênio? a) Aumentando o fluxo de gás de varredura/"sweep gas flow rate" para o oxigenador; b) aumentando os parâmetros da ventilação; ou c) alterando o fluxo da bomba?
+tutorial-item9-trigger = N/A
+tutorial-item10-text = A oferta de oxigênio depende principalmente do débito cardíaco e o CaO2. Em ECMO VA, aumente o fluxo. O mesmo em ECMO VV, exceto com o cuidado da recirculação (próximos temas).
+tutorial-item10-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true

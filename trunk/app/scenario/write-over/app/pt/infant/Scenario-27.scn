@@ -1,29 +1,39 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Pressão Pós-Membrana Alta
+desc = Identificando a causa de uma pressão pós-membrana alta.
 
 # Scenario Parameters
-scenario-ecmo-mode = *
+scenario-ecmo-mode = VA
 scenario-oxy-type = *
 scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = Você está executando a sua checagem do circuito de horário e com sua visão aguçada você observa que a pressão pós-membrana aumentou.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = O que você deve inspecionar?
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
+tutorial-item3-text = Inspecione o lado do circuito no sentido do retorno em relação as regiões em monitoramento (posterior ao oxigenador em direção ao paciente até a cânula arterial).
 tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
+tutorial-item4-text = Verifique a cânula arterial quanto a torção/dobra (acotovelamento).
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
+tutorial-item5-text = Selecione o botão [IMG].
+tutorial-item5-trigger = Action:View:LabTest:ImagingLabTest
+tutorial-item6-text = Verifique o Raio-X.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
+tutorial-item7-text = Verifique a cânula arterial quanto ao posicionamento.
 tutorial-item7-trigger = N/A
+tutorial-item8-text = Se o paciente estiver agitado, a cânula pode ter-se deslocado. Considere sedar o paciente.
+tutorial-item8-trigger = N/A
+tutorial-item9-text = Clique sobre o paciente, em seguida, no botão [Avaliar Sedação].
+tutorial-item9-trigger = Action:Patient:SEDATION
+tutorial-item10-text = Clique paciente, então no botão [Avaliar Sítios das Cânulas].
+tutorial-item10-trigger = Action:Patient:CANNULA_SITE
+tutorial-item11-text = Na ECMO VA, uma pós-carga alta gerada pela hipertensão também podem aumentar as pressões pós-membrana. Considere o tratamento com anti-hipertensivos.
+tutorial-item11-trigger = N/A
+tutorial-item12-text = A pressão pós-membrana alta isoladamente sugere um problema em relação ao retorno em relação as regiões em monitoramento (posterior ao oxigenador em direção ao paciente até a cânula arterial).
+tutorial-item12-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -75,6 +85,10 @@ patient-sedated = true
 patient-bleeding = false
 patient-temperature = 37
 
+# Pump
+pump-on = true
+pump-flow = 0.6
+
 # Heater
 heater-temperature = 37
 heater-broken = false
@@ -84,10 +98,6 @@ oxygenator-total-sweep = 0.6
 oxygenator-fio2 = 0.5
 oxygenator-broken = false
 oxygenator-clotting = 0.0
-
-# Pump
-pump-on = true
-pump-flow = 0.6
 
 # Intervention
 intervention-1-cracked-pigtail = false
@@ -103,13 +113,13 @@ tube-clamp-venous-B = open
 tube-clamp-bridge = closed
 tube-bubbles-arterial = false
 tube-bubbles-venous = false
-tube-cannula-broken = false
-tube-cannula-status = 
-tube-cannula-problem-location = 
+tube-cannula-broken = true
+tube-cannula-status = Kink
+tube-cannula-problem-location = Arterial
 tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
-tube-cannula-premembrane-pressure = 
-tube-cannula-postmembrane-pressure = 
+tube-cannula-premembrane-pressure = 135
+tube-cannula-postmembrane-pressure = 130
 tube-coagulopathy = false
 
 # ACT
@@ -126,6 +136,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-none
+lab-img-xray = xr-nb-va-arthigh
 lab-img-us = us-none
-lab-img-echo = echo-none
+lab-img-echo = echo-nb-va-normal

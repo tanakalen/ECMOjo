@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Ruptura no Oxigenador
+desc = Descrição dos eventos que ocorrem com a ruptura no oxigenador.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,20 +10,10 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = MOMENTOS DE PURO TERROR devido a ruptura na membrana oxigenadora!
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = Da próxima vez troque o oxigenador, antes que seja tarde demais!
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
-tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
-tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
-tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
-tutorial-item7-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -82,7 +72,7 @@ heater-broken = false
 # Oxygenator
 oxygenator-total-sweep = 0.6
 oxygenator-fio2 = 0.5
-oxygenator-broken = false
+oxygenator-broken = true
 oxygenator-clotting = 0.0
 
 # Pump

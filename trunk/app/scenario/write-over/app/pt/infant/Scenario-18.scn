@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Controle da Temperatura
+desc = Funções do aquecedor.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,20 +10,22 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
-tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item1-text = Clique no controle do aquecedor.
+tutorial-item1-trigger = Action:View:HeaterComponent
+tutorial-item2-text = O aquecedor é uma maneira bastante eficiente para manutenção da normotermia.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
+tutorial-item3-text = Devido à grande área de superfície dos tubos, pode haver uma perda de calor significativa se o aquecedor não estiver funcionando corretamente.
 tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
+tutorial-item4-text = Com uma hipotermia significativa, observe o impacto sobre alguns resultados dos exames da coagulação.
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
+tutorial-item5-text = Clique no botão [HEMA] do Lab. Uma janela com a imagem dos resultados aparecerá. O TP, TTP e o TCA aumentaram. O fibrinogênio diminuiu.
+tutorial-item5-trigger = Action:View:LabTest:HematologyLabTest
+tutorial-item6-text = Se você suspeitar de uma falha no aquecedor, verifique os pontos de conexões do circuito de água, a conexão do cabo de energia elétrica e os ajustes de temperatura. 
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
-tutorial-item7-trigger = N/A
+tutorial-item7-text = Se todos estes itens estiverem corretos, o equipamento pode ter um defeito. Siga em frente e substitua o aquecedor; clique no botão [Substituir Aquecedor].
+tutorial-item7-trigger = Action:Heater:replace
+tutorial-item8-text = Você substituiu o aquecedor danificado. Os Valores de temperatura do paciente irão voltar ao normal.
+tutorial-item8-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -73,11 +75,11 @@ patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
-patient-temperature = 37
+patient-temperature = 35
 
 # Heater
-heater-temperature = 37
-heater-broken = false
+heater-temperature = 35
+heater-broken = true
 
 # Oxygenator
 oxygenator-total-sweep = 0.6

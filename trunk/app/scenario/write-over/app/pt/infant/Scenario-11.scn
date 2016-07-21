@@ -1,29 +1,37 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Saindo de ECMO com bomba centrífuga
+desc = Etapas para sair do Suporte de Vida Extracorpóreo com bomba centrífuga em situações de emergências.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
 scenario-oxy-type = *
-scenario-pump-type = *
+scenario-pump-type = centrifugal
 scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = ECMOismo: ECMO é 95% entediante, e 5% de puro terror.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = Você está agora nos 5% da elite que irá experimentar o terror da ECMO. Se você não puder identificar imediatamente o que está causando todos os alarmes, o que você deve fazer?
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
+tutorial-item3-text = Uma checagem do circuito.
 tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
+tutorial-item4-text = Chame AJUDA!
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
+tutorial-item5-text = Você encontra um problema catastrófico e você deve sair de ECMO.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
-tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
-tutorial-item7-trigger = N/A
+tutorial-item6-text = Clampeie o Circuito!\n - Pince a Linha Arterial, Retire a Pinça da Ponte, Pince a Linha Venosa
+tutorial-item6-trigger = Action:Tube:Clamped:true
+tutorial-item7-text = Aumente os parâmetros do ventilador para suporte adicional nas assistências respiratórias. Clique no botão [Vent. de Emergência].
+tutorial-item7-trigger = Action:Ventilator:Emergency:on
+tutorial-item8-text = Observe que neste ambiente de simulação, ventilar manualmente com bolsa-válvula-máscara ou acionar os parâmetros ventilatórios de emergência pré-ajustados, são realizados em uma única etapa.
+tutorial-item8-trigger = N/A
+tutorial-item9-text = Inicie ressuscitação cardiopulmonar do paciente, se necessário.
+tutorial-item9-trigger = N/A
+tutorial-item10-text = Você precisa de um cirurgião?
+tutorial-item10-trigger = N/A
+tutorial-item11-text = Se a emergência envolve as cânulas, a resposta é sim.
+tutorial-item11-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -69,7 +77,7 @@ patient-species = human
 patient-gender = male
 patient-age = 1
 patient-weight = 5
-patient-lung-function = good
+patient-lung-function = bad
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false

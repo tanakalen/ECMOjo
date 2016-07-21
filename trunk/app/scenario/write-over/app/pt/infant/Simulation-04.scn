@@ -1,29 +1,20 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Simulação 4 (Bomba Rolete e Membrana de Silicone)
+desc = Fem. 9d, 4kg, 220h de ECMO por sepse grave. Apresenta melhora da função pulmonar e piora nos resultados dos exames da coagulação. O circuito foi trocado e você está reiniciando o fluxo. Os alarmes começam a disparar.
+info-success = Esta foi uma simulação de uma pinça que não estava na posição correta após a troca do circuito. A rápida identificação e intervenção são necessárias para reduzir os danos ao oxigenador.\n\nParabéns. Com seu treinamento de habilidades e de especialista você identificou facilmente o problema.\n\nLembre-se do ECMOismo, "Todo mundo ama todo mundo, mas ninguém confia em ninguém". Sempre cheque o circuito você mesmo.
+info-failure = Esta foi uma simulação de uma pinça que não estava na posição correta após a troca do circuito. A Rápida identificação e intervenção eram necessárias para reduzir os danos ao oxigenador.\n\nEsta foi uma simulação de 5% de momentos de puro terror. Uma pinça foi deixada na linha arterial e alguém suspendeu o alarme da pressão pós-membrana, permitindo que a bomba rolete continuasse funcionando mesmo contra uma alta pressão que poderia causar a ruptura da membrana.\n\nLembre-se do ECMOismo, "Todo mundo ama todo mundo, mas ninguém confia em ninguém". Sempre cheque o circuito você mesmo.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
-scenario-oxy-type = *
-scenario-pump-type = *
+scenario-oxy-type = silicone
+scenario-pump-type = roller
 scenario-vent-type = *
 
 # Goal Information
-goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
-tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
-tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
-tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
-tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
-tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
-tutorial-item7-trigger = N/A
+goal = Baseline
+time-init = 0
+time-limit = 300
+trigger = 
 
 # Baseline Values
 baseline-sedated = true
@@ -38,7 +29,7 @@ baseline-min-pH = 7.35
 baseline-max-pH = 7.45
 baseline-min-pCO2 = 35
 baseline-max-pCO2 = 45
-baseline-min-ACT = 180
+baseline-min-ACT = 160
 baseline-max-ACT = 200
 baseline-min-temperature = 34
 baseline-max-temperature = 39
@@ -51,9 +42,9 @@ baseline-cannula = good
 baseline-urine-output = good
 baseline-suction-ETT = good
 baseline-min-premembrane-pressure = 0
-baseline-max-premembrane-pressure = 200
+baseline-max-premembrane-pressure = 300
 baseline-min-postmembrane-pressure = 0
-baseline-max-postmembrane-pressure = 200
+baseline-max-postmembrane-pressure = 300
 baseline-min-venous-pressure = -20
 baseline-max-venous-pressure = 20
 baseline-arterial-bubbles = false
@@ -67,8 +58,8 @@ baseline-alarming = false
 # Patient Information
 patient-species = human
 patient-gender = male
-patient-age = 1
-patient-weight = 5
+patient-age = 3
+patient-weight = 4
 patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
@@ -106,26 +97,26 @@ tube-bubbles-venous = false
 tube-cannula-broken = false
 tube-cannula-status = 
 tube-cannula-problem-location = 
-tube-cannula-arterial-B = open
+tube-cannula-arterial-B = closed
 tube-cannula-venous-B = open
 tube-cannula-premembrane-pressure = 
 tube-cannula-postmembrane-pressure = 
 tube-coagulopathy = false
 
 # ACT
-act-value = 
+act-value = 170
 
 # Lab Component
 lab-component-abg-ph = 
 lab-component-abg-pco2 = 
 lab-component-abg-po2 = 
 #lab-component-chem
-lab-component-heme-fibrinogen = 
-lab-component-heme-platelets = 
+lab-component-heme-fibrinogen = 90
+lab-component-heme-platelets = 50
 lab-component-heme-pt = 
-lab-component-heme-ptt = 
+lab-component-heme-ptt = 100
 
 # Imaging Component
-lab-img-xray = xr-none
-lab-img-us = us-none
-lab-img-echo = echo-none
+lab-img-xray = xr-nb-vv-whiteout,xr-nb-va-whiteout
+lab-img-us = us-nb-vv-noivh
+lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal

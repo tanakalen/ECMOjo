@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Pressão Venosa Negativa
+desc = Identificando as causas de uma pressão venosa ou pressão de /reservatório de complacência/"bladder" (se aplicável) muito negativa.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,20 +10,34 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = Você está executando a sua checagem do circuito de horário e sua memória afiada diz para você que a pressão venosa está aumentando, ou seja, ficando cada vez mais negativa.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = O que você deve inspecionar?
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
+tutorial-item3-text = Inspecione o lado do circuito no sentido da drenagem em relação as regiões em monitoramento (anterior a bomba em direção ao paciente até a cânula venosa).
 tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
-tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
+tutorial-item4-text = Clique paciente, então no botão [Avaliar Sítios das Cânulas].
+tutorial-item4-trigger = Action:Patient:CANNULA_SITE
+tutorial-item5-text = Verifique a cânula venosa quanto a torção/dobra (acotovelamento).
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
-tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
+tutorial-item6-text = Selecione o botão [IMG].
+tutorial-item6-trigger = Action:View:LabTest:ImagingLabTest
+tutorial-item7-text = Verifique o Raio-X.
 tutorial-item7-trigger = N/A
+tutorial-item8-text = Verifique cânula venosa quanto ao posicionamento.
+tutorial-item8-trigger = N/A
+tutorial-item9-text = Clique paciente, em seguida, no botão [Avaliar Sedação].
+tutorial-item9-trigger = Action:Patient:SEDATION
+tutorial-item10-text = Se o paciente estiver agitado, a cânula pode ter-se deslocado. Considere sedar o paciente.
+tutorial-item10-trigger = N/A
+tutorial-item11-text = Os parâmetros fisiológicos sugerem hipovolemia?
+tutorial-item11-trigger = N/A
+tutorial-item12-text = Se o paciente estiver hipovolêmico e tiver um Hb baixo, você pode administrar uma unidade de CH (concentrado de hemácias).
+tutorial-item12-trigger = N/A
+tutorial-item13-text = Clique sobre Intervenção A, em seguida, selecione o botão [Concentrado de Hemácias] para administrar uma unidade de CH.
+tutorial-item13-trigger = Action:Intervention:Blood
+tutorial-item14-text = Uma pressão venosa muito negativa sugere um problema em relação à drenagem em relação as regiões em monitoramento (anterior a bomba em direção ao paciente até a cânula venosa).
+tutorial-item14-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -73,6 +87,7 @@ patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
+patient-blood-volume = 350
 patient-temperature = 37
 
 # Heater
@@ -110,6 +125,7 @@ tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
 tube-cannula-premembrane-pressure = 
 tube-cannula-postmembrane-pressure = 
+tube-cannula-venous-pressure = -40
 tube-coagulopathy = false
 
 # ACT
@@ -124,8 +140,9 @@ lab-component-heme-fibrinogen =
 lab-component-heme-platelets = 
 lab-component-heme-pt = 
 lab-component-heme-ptt = 
+lab-component-heme-hgb = 12
 
 # Imaging Component
-lab-img-xray = xr-none
-lab-img-us = us-none
-lab-img-echo = echo-none
+lab-img-xray = xr-nb-vv-whiteout,xr-nb-va-whiteout
+lab-img-us = us-nb-vv-noivh
+lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal

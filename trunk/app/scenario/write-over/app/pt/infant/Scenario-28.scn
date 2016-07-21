@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = ECMOismos**
+desc = As leis não oficiais de ECMO, por J Devn Cornish, MD. (**Nota: o sufixo -ismo vem do grego e indica uma ideologia, um sistema a ser seguido, algo consolidado como regra ou que acredita ser uma regra e também refere-se ao ato de praticar e o processo de fazer algo, neste caso ECMO).
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,20 +10,22 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = Não existe nenhuma ECMO, igual a outra ECMO.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = ECMO é um trabalho em equipe.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
+tutorial-item3-text = Todo mundo ama todo mundo, mas ninguém confia em ninguém.
 tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
+tutorial-item4-text = ECMO é 95% entediante, e 5% de puro terror.
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
+tutorial-item5-text = Não há hora melhor do que agora.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
+tutorial-item6-text = O inimigo do bom é o ótimo.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
+tutorial-item7-text = Ainda não terminou até que esteja terminado.
 tutorial-item7-trigger = N/A
+tutorial-item8-text = A melhor ECMO é a ECMO entediante.
+tutorial-item8-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -126,6 +128,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-none
-lab-img-us = us-none
-lab-img-echo = echo-none
+lab-img-xray = xr-nb-vv-whiteout,xr-nb-va-whiteout
+lab-img-us = us-nb-vv-noivh
+lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal

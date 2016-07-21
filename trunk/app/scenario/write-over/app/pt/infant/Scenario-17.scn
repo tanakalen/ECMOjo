@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Gases de Transporte/"Sweep Gases" 2
+desc = Ajustando o fluxo total do gás de varredura/"sweep gas flow rate" fornecido para o oxigenador.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,20 +10,26 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
-tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item1-text = Clique no misturador de gases/"blender".
+tutorial-item1-trigger = Action:View:OxygenatorComponent
+tutorial-item2-text = Este dispositivo controla os gases ofertados para o oxigenador.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
-tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
+tutorial-item3-text = Aumente o fluxo total do gás de varredura/"sweep gas flow rate" para a membrana.
+tutorial-item3-trigger = Action:Oxy:totalSweep:>0.65
+tutorial-item4-text = Observe no monitor CDI as alterações nos valores pós-membrana?
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
+tutorial-item5-text = A PaCO2 no CDI diminuiu rapidamente e o pH aumentou.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
+tutorial-item6-text = A PaO2 no CDI e a SaO2 permaneceram inalteradas.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
-tutorial-item7-trigger = N/A
+tutorial-item7-text = O que acontece com a gasometria arterial do paciente?
+tutorial-item7-trigger = Action:View:LabTest:BloodGasLabTest
+tutorial-item8-text = Gasometria Arterial do Paciente: a PaCO2 diminui, o pH aumenta e a PaO2 permanece igual.
+tutorial-item8-trigger = N/A
+tutorial-item9-text = Selecione a melhor resposta para remoção do CO2; a) aumentando o fluxo do gás de varredura/ "sweep gas flow rate" para o oxigenador; b) aumentando os parâmetros da ventilação; ou c) alterando o fluxo da bomba?
+tutorial-item9-trigger = N/A
+tutorial-item10-text = A remoção do CO2 é uma função do fluxo total do gás de varredura/"sweep gas flow rate" através do oxigenador. Em ECMO VA ou VV, aumente o fluxo do gás de varredura/"sweep gas flow rate" para remover CO2.
+tutorial-item10-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true

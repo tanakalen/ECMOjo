@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Perda de Grande Quantidade de Sangue pelo Circuito
+desc = 5% dos Momentos de Puro Terror - Uma das quatro situações em que você deve reconhecer para sair de ECMO em caráter de emergência.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,19 +10,19 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = Na UTI, uma grande perda de sangue pode ser causada por uma torneirinha quebrada ou perfusor/"pigtail" rachado. O componente terá que ser substituído em caráter de urgência ou emergência.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = Observe as alterações nos parâmetros fisiológicos.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
+tutorial-item3-text = Você não poderá manejar esta situação sozinho. Chame ajuda!
 tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
-tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
+tutorial-item4-text = Clampeie o Circuito!\n  Bomba Rolete: Pince a Linha Venosa, Libere a Ponte, Pince a Linha Arterial\n  Centrífuga: Pince a Linha Arterial, Retire a Pinça da Ponte, Pince a Linha Venosa
+tutorial-item4-trigger = Action:Tube:Clamped:true
+tutorial-item5-text = Ajustes os parâmetros do ventilador para suporte adicional nas assistências respiratórias. Clique no botão [Vent. de Emergência].
+tutorial-item5-trigger = Action:Ventilator:Emergency:on
+tutorial-item6-text = Inicie ressuscitação cardiopulmonar do paciente, se necessário.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
+tutorial-item7-text = Na maioria das vezes as torneirinhas e os perfusores/"pigtails" podem rachar ou quebrar, causando um vazamento pequeno de sangue ou entrada de ar se na linha venosa. O componente terá que ser substituído podendo ser em caráter não emergencial e sim, sob condições controladas.
 tutorial-item7-trigger = N/A
 
 # Baseline Values
@@ -73,6 +73,7 @@ patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
 patient-bleeding = false
+patient-blood-volume = 250
 patient-temperature = 37
 
 # Heater
@@ -91,7 +92,7 @@ pump-flow = 0.6
 
 # Intervention
 intervention-1-cracked-pigtail = false
-intervention-2-cracked-pigtail = false
+intervention-2-cracked-pigtail = true
 intervention-3-cracked-pigtail = false
 intervention-neck-cracked-pigtail = false
 

@@ -1,29 +1,31 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Decanulação Arterial Acidental
+desc = 5% dos Momentos de Puro Terror - Uma das quatro situações em que você deve reconhecer para sair de ECMO em caráter de emergência.
 
 # Scenario Parameters
-scenario-ecmo-mode = *
+scenario-ecmo-mode = VA
 scenario-oxy-type = *
 scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = A enfermeira assistencial está auscultando o paciente e você percebe que o crachá de identificação dela está sob a cânula arterial. Ela levanta a cabeça e o crachá enrosca e puxa a cânula arterial decanulando o paciente.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = Observe as alterações nos parâmetros fisiológicos.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
+tutorial-item3-text = Você não poderá manejar esta situação sozinho.\n\ nChame ajuda!  ECMOismo: ECMO é um trabalho em equipe.
 tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
+tutorial-item4-text = Próximo ao leito você deve aplicar compressão no sítio da canulação.
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
-tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
+tutorial-item5-text = Clampeie o Circuito!\n  Bomba Rolete: Pince a Linha Venosa, Retire a Pinça da Ponte, Pince a Linha Arterial\n  Centrífuga: Pince a Linha Arterial, Retire a Pinça da Ponte, Pince a Linha Venosa
+tutorial-item5-trigger = Action:Tube:Clamped:true
+tutorial-item6-text = Ajustes os parâmetros do ventilador para suporte adicional nas assistências respiratórias. Clique no botão [Vent. de Emergência].
+tutorial-item6-trigger = Action:Ventilator:Emergency:on
+tutorial-item7-text = Inicie ressuscitação cardiopulmonar do paciente, se necessário.
 tutorial-item7-trigger = N/A
+tutorial-item8-text = Não se esqueça de chamar o cirurgião para trocar a cânula.
+tutorial-item8-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -72,7 +74,8 @@ patient-weight = 5
 patient-lung-function = good
 patient-heart-function = good
 patient-sedated = true
-patient-bleeding = false
+patient-bleeding = true
+patient-blood-volume = 250
 patient-temperature = 37
 
 # Heater
@@ -103,9 +106,9 @@ tube-clamp-venous-B = open
 tube-clamp-bridge = closed
 tube-bubbles-arterial = false
 tube-bubbles-venous = false
-tube-cannula-broken = false
-tube-cannula-status = 
-tube-cannula-problem-location = 
+tube-cannula-broken = true
+tube-cannula-status = kink
+tube-cannula-problem-location = arterial
 tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
 tube-cannula-premembrane-pressure = 

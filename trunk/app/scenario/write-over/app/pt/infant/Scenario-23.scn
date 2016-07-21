@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Falha no Oxigenador
+desc = Identificando uma falha no oxigenador.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,20 +10,28 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = O oxigenador pode ser um "buraco negro" para os fatores de coagulação.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = Este oxigenador está começando a preocupar você. Você pode identificar os sinais de alerta?
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
+tutorial-item3-text = Mudanças no Monitor de Pressões: Uma pressão de pré-membrana alta, levando a um gradiente transmembrana alto.
 tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
+tutorial-item4-text = Alterações nos resultados do Laboratório de Hematologia e Hemostasia: Diminuição das plaquetas e do fibrinogênio. Aumento do TCA, TTP e do TP.
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
+tutorial-item5-text = Gasometria pós-membrana e ajuste do gás de varredura/"sweep gas flow rate": a) pequenos aumentos da PaO2 e PaCO2 pós-membrana e b) fluxo aumentado do gás de varredura/"sweep gas flow rate".
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
+tutorial-item6-text = Você administrou produtos sanguíneos, mas os resultados laboratoriais não normalizaram-se.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
+tutorial-item7-text = Parece que pode haver um coágulo no oxigenador que está consumindo os produtos sanguíneos. O que você deveria sugerir neste momento?
 tutorial-item7-trigger = N/A
+tutorial-item8-text = Você incentiva fortemente a troca do oxigenador o mais breve possível. ECMOismo: Não há hora melhor do que agora.
+tutorial-item8-trigger = N/A
+tutorial-item9-text = Selecione o botão [Checar Circuito] e depois clique no botão [Trocar Circuito].
+tutorial-item9-trigger = Action:Tube:replace
+tutorial-item10-text = Vá em frente e aumente o fluxo conforme indicado para, pelo menos, 600 mL/min.
+tutorial-item10-trigger = Action:Pump:flow:>0.59
+tutorial-item11-text = Você trocou o circuito com sucesso e corrigiu o problema.
+tutorial-item11-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true
@@ -80,10 +88,10 @@ heater-temperature = 37
 heater-broken = false
 
 # Oxygenator
-oxygenator-total-sweep = 0.6
-oxygenator-fio2 = 0.5
+oxygenator-total-sweep = 2.3
+oxygenator-fio2 = 0.85
 oxygenator-broken = false
-oxygenator-clotting = 0.0
+oxygenator-clotting = 3.0
 
 # Pump
 pump-on = true
@@ -108,22 +116,22 @@ tube-cannula-status =
 tube-cannula-problem-location = 
 tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
-tube-cannula-premembrane-pressure = 
-tube-cannula-postmembrane-pressure = 
+tube-cannula-premembrane-pressure = 200
+tube-cannula-postmembrane-pressure = 150
 tube-coagulopathy = false
 
 # ACT
-act-value = 
+act-value = 220
 
 # Lab Component
 lab-component-abg-ph = 
 lab-component-abg-pco2 = 
 lab-component-abg-po2 = 
 #lab-component-chem
-lab-component-heme-fibrinogen = 
-lab-component-heme-platelets = 
-lab-component-heme-pt = 
-lab-component-heme-ptt = 
+lab-component-heme-fibrinogen = 100
+lab-component-heme-platelets = 50
+lab-component-heme-pt = 18
+lab-component-heme-ptt = 100
 
 # Imaging Component
 lab-img-xray = xr-none

@@ -1,29 +1,27 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = ECMO VA - Fluxo da Bomba (Veno-Arterial)
+desc = Parâmetros ​​fisiológicos e variáveis da ECMO que sofrem impacto em relação ao fluxo da bomba na ECMO VA.
 
 # Scenario Parameters
-scenario-ecmo-mode = *
+scenario-ecmo-mode = VA
 scenario-oxy-type = *
 scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
-tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item1-text = Clique no console/controles da bomba.
+tutorial-item1-trigger = Action:View:PumpComponent
+tutorial-item2-text = Observe que a bomba está girando. Para simplificar a simulação, o console da bomba mostra somente o fluxo em L/min sem as RPM.
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
-tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
+tutorial-item3-text = Gire o botão para aumentar o fluxo da bomba.
+tutorial-item3-trigger = Action:Pump:flow:>0.65
+tutorial-item4-text = Quais alterações você observa quando o fluxo da bomba é aumentado?
 tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
+tutorial-item5-text = Paciente: A pressão arterial e a SaO2 aumentam.  A saturação venosa mista (SvO2) aumenta.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
+tutorial-item6-text = Monitor de Pressões: A pressão venosa torna-se mais negativa e as pressões pré e pós-membrana aumentam.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
-tutorial-item7-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true

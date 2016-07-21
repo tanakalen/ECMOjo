@@ -1,29 +1,20 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Simulação 1
+desc = RN, GIG, 3,5d, 5kg, 84h de ECMO por SAM (Síndrome de Aspiração Meconial). Apresenta melhora da função pulmonar. O relaxante muscular foi suspenso logo após a canulação e o bebê foi sedado com infusão de morfina, porém ele agita facilmente. A troca de plantão está ocorrendo e o barulho no ambiente aumentou.
+info-success = Esta foi uma simulação de um acotovelamento (dobra) na cânula arterial. Ambas as pressões pré e pós-membrana foram aumentando. Parâmetros ​​fisiológicos do bebê também estavam em queda por causa da diminuição do fluxo arterial, portanto a oferta de oxigênio foi afetada.\n\nParabéns. Você identificou a origem do problema.
+info-failure = Esta foi uma simulação de um acotovelamento (dobra) na cânula arterial. Ambas as pressões pré e pós-membrana foram aumentando. Parâmetros ​​fisiológicos do bebê também estavam em queda por causa da diminuição do fluxo arterial, portanto a oferta de oxigênio foi afetada.\n\n A principal intervenção teria sido checar o circuito e a cânula e concentrar-se nas áreas à frente do oxigenador uma vez que ambas as pressões pré e pós foram aumentando.
 
 # Scenario Parameters
-scenario-ecmo-mode = *
+scenario-ecmo-mode = va
 scenario-oxy-type = *
 scenario-pump-type = *
 scenario-vent-type = *
 
 # Goal Information
-goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
-tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
-tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
-tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
-tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
-tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
-tutorial-item7-trigger = N/A
+goal = Baseline
+time-init = 15
+time-limit = 300
+trigger = arterial-cannula-kink
 
 # Baseline Values
 baseline-sedated = true
@@ -38,7 +29,7 @@ baseline-min-pH = 7.35
 baseline-max-pH = 7.45
 baseline-min-pCO2 = 35
 baseline-max-pCO2 = 45
-baseline-min-ACT = 180
+baseline-min-ACT = 160
 baseline-max-ACT = 200
 baseline-min-temperature = 34
 baseline-max-temperature = 39
@@ -51,9 +42,9 @@ baseline-cannula = good
 baseline-urine-output = good
 baseline-suction-ETT = good
 baseline-min-premembrane-pressure = 0
-baseline-max-premembrane-pressure = 200
+baseline-max-premembrane-pressure = 300
 baseline-min-postmembrane-pressure = 0
-baseline-max-postmembrane-pressure = 200
+baseline-max-postmembrane-pressure = 300
 baseline-min-venous-pressure = -20
 baseline-max-venous-pressure = 20
 baseline-arterial-bubbles = false
@@ -126,6 +117,6 @@ lab-component-heme-pt =
 lab-component-heme-ptt = 
 
 # Imaging Component
-lab-img-xray = xr-none
-lab-img-us = us-none
-lab-img-echo = echo-none
+lab-img-xray = xr-nb-vv-kink,xr-nb-va-arthigh
+lab-img-us = us-nb-vv-noivh
+lab-img-echo = echo-nb-vv-normal,echo-nb-va-normal

@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Tutorial - Introdução
+desc = Execute o tutorial para uma introdução do ECMOjo.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,20 +10,34 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = Bem-vindo à introdução. Tente identificar os componentes do ECMOjo.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
-tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
-tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
-tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
-tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
-tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
-tutorial-item7-trigger = N/A
+tutorial-item2-text = Tarefa 1: Selecione o aparelho de TCA - Tempo de Coagulação Ativado.
+tutorial-item2-trigger = Action:View:ACTComponent
+tutorial-item3-text = Tarefa 2: Selecione o Detector de Bolhas.
+tutorial-item3-trigger = Action:View:BubbleDetectorComponent
+tutorial-item4-text = Tarefa 3: Selecione os Controles de Temperatura, também conhecido como Controles do Aquecedor.
+tutorial-item4-trigger = Action:View:HeaterComponent
+tutorial-item5-text = Tarefa 4: Selecione um dos pontos de intervenções exibidos como Seringas de A a D.
+tutorial-item5-trigger = Action:View:InterventionComponent
+tutorial-item6-text = Tarefa 5: Selecione um dos Lab - Laboratórios nos botões no canto inferior esquerdo da tela.
+tutorial-item6-trigger = Action:View:LabComponent
+tutorial-item7-text = Tarefa 6: Selecione o Misturador de Gases/"Blender".
+tutorial-item7-trigger = Action:View:OxygenatorComponent
+tutorial-item8-text = Tarefa 7: Clique sobre o Paciente.
+tutorial-item8-trigger = Action:View:Patient
+tutorial-item9-text = Tarefa 8: Selecione o Monitor de Pressões no canto superior direito da tela.
+tutorial-item9-trigger = Action:View:PressureMonitorComponent
+tutorial-item10-text = Tarefa 9: Selecione os Controles da Bomba/Console no canto inferior direito da tela.
+tutorial-item10-trigger = Action:View:PumpComponent
+tutorial-item11-text = Tarefa 10: Selecione o Ventilador do lado esquerdo logo acima do paciente.
+tutorial-item11-trigger = Action:View:VentilatorComponent
+tutorial-item12-text = Tarefa 11: Retire a Pinça da ponte (entre linha arterial e a linha venosa do circuito).
+tutorial-item12-trigger = Action:Tube:-BRIDGE
+tutorial-item13-text = Tarefa 12: Quando ocorrer grandes alterações nos sinais vitais do paciente um ALARME começará a tocar. Para silenciar o alarme, clique no botão amarelo suspender, logo abaixo do alarme vermelho à direita.
+tutorial-item13-trigger = N/A
+tutorial-item14-text = Tarefa 13: Passando o cursor do mouse sobre a imagem do paciente você terá a descrição do cenário.
+tutorial-item14-trigger = N/A
 
 # Baseline Values
 baseline-sedated = true

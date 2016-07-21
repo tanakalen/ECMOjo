@@ -1,6 +1,6 @@
 # Scenario Information
-name = Tutorial - Visão Geral
-desc = Execute o tutorial para uma visão geral do ECMOjo. 
+name = Problema/Falha no circuito
+desc = Eventos associados com problemas/falhas no circuito.
 
 # Scenario Parameters
 scenario-ecmo-mode = *
@@ -10,20 +10,35 @@ scenario-vent-type = *
 
 # Goal Information
 goal = Tutorial
-tutorial-item1-text = Bem-vindo a uma visão geral do ECMOjo.
+tutorial-item1-text = Um dos objetivos da checagem do circuito é identificar desagradáveis coágulos que se formam e aumentam de forma silenciosa no circuito.
 tutorial-item1-trigger = N/A
-tutorial-item2-text = O paciente que está conectado ao circuito de ECMO é mostrado no canto inferior esquerdo da tela.
+tutorial-item2-text = Quais são as áreas mais comuns para a formação destes coágulos?
 tutorial-item2-trigger = N/A
-tutorial-item3-text = Os Parâmetros e Ajustes do Ventilador, o Monitor Fisiológico e o Monitor CDI (monitor contínuo de parâmetros sanguíneos) são mostrados logo acima do bebê.
+tutorial-item3-text = Coágulos podem formar-se no oxigenador, no trocador de calor (se aplicável), nos conectores e na ponte.
 tutorial-item3-trigger = N/A
-tutorial-item4-text = O circuito conecta o paciente ao equipamento de ECMO que está à direita.
-tutorial-item4-trigger = N/A
-tutorial-item5-text = Os principais componentes da ECMO estão localizados do lado direito: oxigenador, aquecedor, bomba e fluxômetros de gases.
+tutorial-item4-text = Vamos rever os resultados do Laboratório de Hematologia e Hemostasia e do TCA. Clique no botão [HEMA] do Lab em  seguida, clique no botão [Lab].
+tutorial-item4-trigger = Action:View:LabTest:HematologyLabTest
+tutorial-item5-text = Observe as diminuições das plaquetas, bem como a do fibrinogênio e os aumentos do TCA, TTP e TP.
 tutorial-item5-trigger = N/A
-tutorial-item6-text = Há uma luz indicadora de alarme à direita que começa a piscar sempre que existe um problema.
+tutorial-item6-text = Você administrou produtos sanguíneos, mas os resultados laboratoriais não normalizaram-se. Clique no botão [Lab] para solicitar novos resultados.
 tutorial-item6-trigger = N/A
-tutorial-item7-text = Observe que você pode sair de qualquer um dos cenários, pressionando [Esc] no seu teclado.
+tutorial-item7-text = Parece que o circuito está consumindo os produtos sanguíneos. O que você sugere neste momento?
 tutorial-item7-trigger = N/A
+tutorial-item8-text = Considere trocar o circuito. Selecione o botão [Checar Circuito] e clique no botão [Trocar Circuito].
+tutorial-item8-trigger = Action:Tube:replace
+tutorial-item9-text = Siga em frente e aumente o fluxo, conforme indicado para, pelo menos, 600 mL/min.
+tutorial-item9-trigger = Action:Pump:flow:>0.599
+tutorial-item10-text = Se a sua avaliação estava correta, os resultados laboratoriais irão normalizar-se.
+tutorial-item10-trigger = N/A
+tutorial-item11-text = Vamos rever novamente os resultados do Laboratório de Hematologia e Hemostasia. Clique no botão [HEMA] do Lab em seguida, no botão [Lab].
+tutorial-item11-trigger = Action:View:LabTest:HematologyLabTest
+tutorial-item12-text = Observe a melhora das plaquetas, do fibrinogênio e do TTP.
+tutorial-item12-trigger = N/A
+tutorial-item13-text = Vamos rever novamente os resultados do Laboratório de TCA. Clique no botão [TCA] do Lab em seguida, no botão [Lab].
+tutorial-item13-trigger = Action:ACTRequest
+tutorial-item14-text = Observe a melhora do TCA.
+tutorial-item14-trigger = N/A
+
 
 # Baseline Values
 baseline-sedated = true
@@ -110,20 +125,20 @@ tube-cannula-arterial-B = open
 tube-cannula-venous-B = open
 tube-cannula-premembrane-pressure = 
 tube-cannula-postmembrane-pressure = 
-tube-coagulopathy = false
+tube-coagulopathy = true
 
 # ACT
-act-value = 
+act-value = 200
 
 # Lab Component
 lab-component-abg-ph = 
 lab-component-abg-pco2 = 
 lab-component-abg-po2 = 
 #lab-component-chem
-lab-component-heme-fibrinogen = 
-lab-component-heme-platelets = 
-lab-component-heme-pt = 
-lab-component-heme-ptt = 
+lab-component-heme-fibrinogen = 80
+lab-component-heme-platelets = 50
+lab-component-heme-pt = 18
+lab-component-heme-ptt = 200
 
 # Imaging Component
 lab-img-xray = xr-none
