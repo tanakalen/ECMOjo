@@ -208,50 +208,6 @@ public class Configuration {
   }
 
   /**
-   * Returns the configured language tagged 'LANG'.
-   * 
-   * @return  The configuration language using ISO-639-1 code for language (two char).
-   */
-  public String getLang() {
-    return lang.toString();
-  }
-  
-  /**
-   * Returns the configured language tagged 'LANG'.
-   * 
-   * @return  The configuration language as string of displayed name.
-   */
-  public String getConfiguredLanguage() {
-    return lang.getDisplayLanguage(lang);
-  }
-  
-  /**
-   * Returns available languages for program.
-   * 
-   * @return  String[] of available languages.
-   */
-  public String[] getAvailableLanguages() {
-    String[] l = new String[availableLanguages.length];
-    int i = 0;
-    for (Locale language:availableLanguages) {
-      l[i] = language.getDisplayLanguage(lang);
-      i++;
-    }
-    return l;
-  }
-  
-  /**
-   * Sets the configured language from available languages by index.
-   * 
-   * @param index  The index for availableLanguages to switch to 0 being first.
-   */
-  public void setLang(int index) {
-    // Verify 2 char code?
-    lang = availableLanguages[index];
-    Translator.setBundle(ResourceBundle.getBundle("conf.bundle.MessagesBundle", lang));
-  }
-  
-  /**
    * Returns true for admin.
    *
    * @return  True for admin.
