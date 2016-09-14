@@ -71,13 +71,6 @@ public class ACTDetailPanel extends DetailPanel implements LabTestListener {
     titleLabel.setSize(150, 20);
     add(titleLabel);
 
-//    Image requestButtonImage = ImageLoader.getInstance().getImage(
-//        Translator.getString("image.ButtonLab[i18n]: conf/image/interface/game/Btn-Lab.png"));
-//    Image requestButtonRolloverImage = ImageLoader.getInstance().getImage(
-//        Translator.getString("image.ButtonLabRol[i18n]: conf/image/interface/game/Btn-LabRol.png"));
-//    Image requestButtonSelectedImage = ImageLoader.getInstance().getImage(
-//        Translator.getString("image.ButtonLabSel[i18n]: conf/image/interface/game/Btn-LabSel.png"));
-    
     // Load button images
     Image requestButtonImage = ImageLoader.getInstance().getImage(
         "conf/image/interface/game/BtnSmall.png");

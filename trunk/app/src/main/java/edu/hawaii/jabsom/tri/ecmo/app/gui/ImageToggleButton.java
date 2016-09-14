@@ -114,8 +114,9 @@ public class ImageToggleButton extends JToggleButton {
    *
    * @param g  Graphics context.
    */
+  @Override
   public void paintComponent(Graphics g) {
-    //super.paintComponent(g);  //BUG: duplicates button text when uncommented.
+//    super.paintComponent(g);  //BUG: duplicates button text when uncommented.
    
     int width = getSize().width;
     int height = getSize().height;
@@ -123,12 +124,12 @@ public class ImageToggleButton extends JToggleButton {
     int imageHeight = this.pressedImage.getHeight(this);
     
     // highlight depending on rollover or button pressed
-    if (isEnabled()) {
-      g.setColor(getForeground());
-    }
-    else {
-      g.setColor(getForeground().darker());
-    }
+//    if (isEnabled()) {
+//      g.setColor(getForeground());
+//    }
+//    else {
+//      g.setColor(getForeground().darker());
+//    }
     g.setFont(getFont());
     int textWidth = g.getFontMetrics().stringWidth(getText());
     int textHeight = g.getFontMetrics().getHeight();
@@ -148,15 +149,15 @@ public class ImageToggleButton extends JToggleButton {
         g.drawString(getText(), x, y + rolloverNonToggleYOffset);
       }
     }
-    else if (model.isPressed() || isSelected()) {
+    else if (model.isPressed() || model.isSelected()) {
       g.drawImage(this.pressedImage, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
+      g.setColor(getForeground());
       g.drawString(getText(), x, y + pressedYOffset);
     }
     else {
-      if (this.normalImage != null) {
-        g.drawImage(this.normalImage, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
-      }
+      g.drawImage(this.normalImage, (width - imageWidth) / 2, (height - imageHeight) / 2, this);
+      g.setColor(getForeground());
       g.drawString(getText(), x, y + normalYOffset);
-    }
-  }  
+    }   
+  }
 }

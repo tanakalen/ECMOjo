@@ -6,10 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 
 import king.lib.access.ImageLoader;
@@ -17,6 +14,9 @@ import king.lib.access.ImageLoader;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent.ACT;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import king.lib.util.Translator;
 
 /**
  * The ACT component panel. 
@@ -33,7 +33,7 @@ public class ACTComponentPanel extends ComponentPanel {
   private ACTComponent component;
   
   /** The selection button. */
-  private AbstractButton selectionButton;
+  private ImageToggleButton selectionButton;
 
   
   /**
@@ -53,19 +53,34 @@ public class ACTComponentPanel extends ComponentPanel {
     setLayout(null);
 
     // add toggle button
-    Image normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-Act.png");
-    Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ActRol.png");
-    Image selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ActSel.png");
-    selectionButton = new ImageToggleButton(normalImage, rolloverImage, selectedImage, selectedImage);
+    Image normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ACT.png");
+    Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ACTRol.png");
+    Image selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ACTSel.png");
+    selectionButton = new ImageToggleButton(normalImage, 0, rolloverImage, 0, selectedImage, 4, selectedImage, 4);
+    selectionButton.setText(Translator.getString("text.ACT[i18n]: ACT"));
+    selectionButton.setFont(new Font("Arial", Font.PLAIN, 18));
+    selectionButton.setForeground(Color.MAGENTA);
+    selectionButton.setRolloverColor(Color.GREEN);
     selectionButton.setToolTipText(component.getName());
-    selectionButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent arg0) {
-        notifyActivationListeners();
-      }
+    selectionButton.addChangeListener(new ChangeListener() {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            if (selectionButton.isSelected()) {
+              selectionButton.setForeground(Color.GRAY);
+              selectionButton.setRolloverColor(Color.GRAY);
+              selectionButton.setRolloverEnabled(false);
+              notifyActivationListeners();
+            }
+            else {
+              selectionButton.setRolloverEnabled(true);
+              selectionButton.setForeground(Color.MAGENTA);
+              selectionButton.setRolloverColor(Color.GREEN);
+            }            
+        }
     });
     selectionButton.setLocation(10, 0);
     selectionButton.setSize(64, 52);
-    add(selectionButton); 
+    add(selectionButton);
   }
 
   /**
