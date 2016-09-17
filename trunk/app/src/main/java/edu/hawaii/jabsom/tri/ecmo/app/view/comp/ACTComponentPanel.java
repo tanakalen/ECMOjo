@@ -11,7 +11,7 @@ import javax.swing.ButtonGroup;
 
 import king.lib.access.ImageLoader;
 
-import edu.hawaii.jabsom.tri.ecmo.app.gui.ImageToggleButton;
+import edu.hawaii.jabsom.tri.ecmo.app.gui.Toggle;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent.ACT;
 import javax.swing.event.ChangeEvent;
@@ -32,9 +32,8 @@ public class ACTComponentPanel extends ComponentPanel {
   /** The component. */
   private ACTComponent component;
   
-  /** The selection button. */
-  private ImageToggleButton selectionButton;
-
+  /** The selection toggle button. */
+  private Toggle toggle;
   
   /**
    * Constructor for panel.
@@ -56,31 +55,38 @@ public class ACTComponentPanel extends ComponentPanel {
     Image normalImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ACT.png");
     Image rolloverImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ACTRol.png");
     Image selectedImage = ImageLoader.getInstance().getImage("conf/image/interface/game/Btn-ACTSel.png");
-    selectionButton = new ImageToggleButton(normalImage, 0, rolloverImage, 0, selectedImage, 4, selectedImage, 4);
-    selectionButton.setText(Translator.getString("text.ACT[i18n]: ACT"));
-    selectionButton.setFont(new Font("Arial", Font.PLAIN, 18));
-    selectionButton.setForeground(Color.MAGENTA);
-    selectionButton.setRolloverColor(Color.GREEN);
-    selectionButton.setToolTipText(component.getName());
-    selectionButton.addChangeListener(new ChangeListener() {
+    toggle = new Toggle.ToggleBuilder(rolloverImage, selectedImage, selectedImage)
+                       .normalImage(normalImage)
+                       .normalYOffset(0)
+                       .rolloverYOffset(0)
+                       .rolloverToggleYOffset(4)
+                       .pressedYOffset(4)
+                       .rolloverColor(Color.GREEN)
+                       .build();
+    toggle.setText(Translator.getString("text.ACT[i18n]: ACT"));
+    toggle.setFont(new Font("Arial", Font.PLAIN, 18));
+    toggle.setForeground(Color.MAGENTA);
+    toggle.setToolTipText(component.getName());
+    
+    toggle.addChangeListener(new ChangeListener() {
         @Override
         public void stateChanged(ChangeEvent e) {
-            if (selectionButton.isSelected()) {
-              selectionButton.setForeground(Color.GRAY);
-              selectionButton.setRolloverColor(Color.GRAY);
-              selectionButton.setRolloverEnabled(false);
+            if (toggle.isSelected()) {
+              toggle.setForeground(Color.GRAY);
+              toggle.setRolloverColor(Color.GRAY);
+              toggle.setRolloverEnabled(false);
               notifyActivationListeners();
             }
-            else {
-              selectionButton.setRolloverEnabled(true);
-              selectionButton.setForeground(Color.MAGENTA);
-              selectionButton.setRolloverColor(Color.GREEN);
+            else {  //TODO: Bug remains green with change state
+              toggle.setRolloverEnabled(true);
+              toggle.setForeground(Color.MAGENTA);
+              toggle.setRolloverColor(Color.GREEN);
             }            
         }
     });
-    selectionButton.setLocation(10, 0);
-    selectionButton.setSize(64, 52);
-    add(selectionButton);
+    toggle.setLocation(10, 0);
+    toggle.setSize(64, 52);
+    add(toggle);
   }
 
   /**
@@ -124,6 +130,6 @@ public class ACTComponentPanel extends ComponentPanel {
    * @param group  The group.
    */
   public void assign(ButtonGroup group) {
-    group.add(selectionButton);
+    group.add(toggle);
   }
 }
