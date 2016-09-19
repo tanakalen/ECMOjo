@@ -10,8 +10,8 @@ import javax.swing.JToggleButton;
 /**
  * Represents an image type toggle button.
  *
- * @author    king
- * @since     August 22, 2007
+ * @author    Len Tanaka
+ * @since     September 16, 2016
  */
 public final class Toggle extends JToggleButton {
 
@@ -33,8 +33,12 @@ public final class Toggle extends JToggleButton {
   /** The text y offset for pressed. */
   private final int pressedYOffset;
 
+  /** The color of text. */
+  private final Color normalColor;
   /** The color of text for rollover. */
-  private Color rolColor;
+  private final Color rollColor;
+  /** The color of text when pressed. */
+  private final Color pressColor;
 
   /**
    * Constructor for the button.
@@ -50,7 +54,9 @@ public final class Toggle extends JToggleButton {
     this.rolloverToggleYOffset = builder.rolloverToggleYOffset;
     this.pressedImage = builder.pressedImage;
     this.pressedYOffset = builder.pressedYOffset;
-    this.rolColor = builder.rolColor;
+    this.normalColor = builder.nmlColor;
+    this.rollColor = builder.rolColor;
+    this.pressColor = builder.presColor;
 
     // set transparent
     setOpaque(false);
@@ -70,56 +76,34 @@ public final class Toggle extends JToggleButton {
   }
 
   /**
-   * Sets Rollover color.
-   *
-   * @param color  Color of rollover text.
-   */
-  public void setRolloverColor(final Color color) {
-    rolColor = color;
-  }
-
-  /**
    * Builder pattern for Toggle button.
    */  
   public static class ToggleBuilder {
-    /**
-     * Image for normal state.
-     */
+    /** Image for normal state. */
     private Image normalImage;
-    /**
-     * Image for rollover non toggle state.
-     */
+    /** REQUIRED Image for rollover non toggle state. */
     private final Image rolloverImage;
-    /**
-     * Image for rollover toggle state.
-     */
+    /** REQUIRED Image for rollover toggle state. */
     private final Image rolloverToggleImage;
-    /**
-     * Image for pressed state.
-     */
+    /** REQUIRED Image for pressed state. */
     private final Image pressedImage;
 
-    /**
-     * The text y offset for normal.
-     */
+    /** The text y offset for normal. */
     private int normalYOffset;
-    /**
-     * The text y offset for rollover non toggle.
-     */
+    /** The text y offset for rollover non toggle. */
     private int rolloverYOffset;
-    /**
-     * The text y offset for rollover toggle.
-     */
+    /** The text y offset for rollover toggle. */
     private int rolloverToggleYOffset;
-    /**
-     * The text y offset for pressed.
-     */
+    /** The text y offset for pressed. */
     private int pressedYOffset;
-    /**
-     * The color of text for rollover.
-     */
-    private Color rolColor;
     
+    /** The color of text for rollover. */
+    private Color nmlColor;
+    /** The color of text for rollover. */
+    private Color rolColor;
+    /** The color of text for rollover. */
+    private Color presColor;
+  
     /**
      * Build the toggle using builder pattern.
      * 
@@ -189,6 +173,17 @@ public final class Toggle extends JToggleButton {
     }
     
     /**
+     * Set optional normal text color.
+     * 
+     * @param color Set normal text color.
+     * @return Toggle updated class with normal text color.
+     */
+    public ToggleBuilder normalColor(Color color) {
+      this.nmlColor = color;
+      return this;
+    }
+    
+    /**
      * Set optional rollover color.
      * 
      * @param color Set rollover text color.
@@ -196,6 +191,17 @@ public final class Toggle extends JToggleButton {
      */
     public ToggleBuilder rolloverColor(Color color) {
       this.rolColor = color;
+      return this;
+    }
+    
+    /**
+     * Set optional pressed color.
+     * 
+     * @param color Set pressed button text color.
+     * @return Toggle updated class with pressed color.
+     */
+    public ToggleBuilder pressedColor(Color color) {
+      this.presColor = color;
       return this;
     }
     
@@ -216,7 +222,7 @@ public final class Toggle extends JToggleButton {
    */
   @Override
   public void paintComponent(final Graphics g) {
-    //super.paintComponent(g);  //BUG: duplicates button text when uncommented.
+    super.paintComponent(g);
 
     int width = getSize().width;
     int height = getSize().height;
@@ -225,10 +231,10 @@ public final class Toggle extends JToggleButton {
 
     // highlight depending on rollover or button pressed
     if (isEnabled()) {
-      g.setColor(getForeground());
+      g.setColor(normalColor);
     }
     else {
-      g.setColor(getForeground().darker());
+      g.setColor(normalColor.darker());
     }
     g.setFont(getFont());
     int textWidth = g.getFontMetrics().stringWidth(getText());
@@ -237,13 +243,21 @@ public final class Toggle extends JToggleButton {
     int x = (width - textWidth) / 2;
     int y = (height - textHeight) / 2 + ascent;
 
-    if (model.isRollover()) {
-      if (model.isSelected()) {
+    if (this.normalImage != null) {
+      g.drawImage(this.normalImage,
+              (width - imageWidth) / 2,
+              (height - imageHeight) / 2,
+              this);
+    }
+    g.setColor(normalColor);
+    g.drawString(getText(), x, y + normalYOffset);
+    if (getModel().isRollover()) {
+      if (getModel().isSelected()) {
         g.drawImage(this.rolloverToggleImage,
                 (width - imageWidth) / 2,
                 (height - imageHeight) / 2,
                 this);
-        g.setColor(rolColor);
+        g.setColor(pressColor);
         g.drawString(getText(), x, y + rolloverToggleYOffset);
       }
       else {
@@ -251,15 +265,16 @@ public final class Toggle extends JToggleButton {
                 (width - imageWidth) / 2,
                 (height - imageHeight) / 2,
                 this);
-        g.setColor(rolColor);
+        g.setColor(rollColor);
         g.drawString(getText(), x, y + rolloverNonToggleYOffset);
       }
     }
-    else if (model.isPressed() || isSelected()) {
+    else if (getModel().isPressed()) {
       g.drawImage(this.pressedImage,
               (width - imageWidth) / 2,
               (height - imageHeight) / 2,
               this);
+      g.setColor(pressColor);
       g.drawString(getText(), x, y + pressedYOffset);
     }
     else {
@@ -269,6 +284,7 @@ public final class Toggle extends JToggleButton {
                 (height - imageHeight) / 2,
                 this);
       }
+      g.setColor(normalColor);
       g.drawString(getText(), x, y + normalYOffset);
     }
   }

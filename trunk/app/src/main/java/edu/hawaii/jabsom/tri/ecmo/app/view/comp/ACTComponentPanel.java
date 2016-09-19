@@ -14,8 +14,8 @@ import king.lib.access.ImageLoader;
 import edu.hawaii.jabsom.tri.ecmo.app.gui.Toggle;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent;
 import edu.hawaii.jabsom.tri.ecmo.app.model.comp.ACTComponent.ACT;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import king.lib.util.Translator;
 
 /**
@@ -61,28 +61,27 @@ public class ACTComponentPanel extends ComponentPanel {
                        .rolloverYOffset(0)
                        .rolloverToggleYOffset(4)
                        .pressedYOffset(4)
+                       .normalColor(Color.MAGENTA)
                        .rolloverColor(Color.GREEN)
+                       .pressedColor(Color.GRAY)
                        .build();
     toggle.setText(Translator.getString("text.ACT[i18n]: ACT"));
     toggle.setFont(new Font("Arial", Font.PLAIN, 18));
-    toggle.setForeground(Color.MAGENTA);
     toggle.setToolTipText(component.getName());
     
-    toggle.addChangeListener(new ChangeListener() {
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            if (toggle.isSelected()) {
-              toggle.setForeground(Color.GRAY);
-              toggle.setRolloverColor(Color.GRAY);
-              toggle.setRolloverEnabled(false);
-              notifyActivationListeners();
-            }
-            else {  //TODO: Bug remains green with change state
-              toggle.setRolloverEnabled(true);
-              toggle.setForeground(Color.MAGENTA);
-              toggle.setRolloverColor(Color.GREEN);
-            }            
+    toggle.addItemListener(new ItemListener() {
+      @Override
+      public void itemStateChanged(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+          toggle.setRolloverEnabled(false);
+          notifyActivationListeners();
         }
+        else if (e.getStateChange() == ItemEvent.DESELECTED) {
+          //TODO: Bug remains green with change state
+          toggle.repaint();
+          toggle.setRolloverEnabled(true);
+        }
+      }
     });
     toggle.setLocation(10, 0);
     toggle.setSize(64, 52);
